@@ -8,7 +8,7 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        
+       
         <h:form id="form">
              
             <p:panelGrid columns="2">
@@ -40,12 +40,12 @@
                     <h:outputText value="#{elUsuario.nombreUsuario}"/>
                 </p:column>
 
-                <p:column headerText="Correo Electronico" sortBy="#{elUsuario.correo}" filterBy="#{elUsuario.correo}" filterMatchMode="contains">
-                    <h:outputText value="#{elUsuario.correo}"/>
+                <p:column headerText="Correo Electronico" sortBy="#{elUsuario.correoUsuario}" filterBy="#{elUsuario.correoUsuario}" filterMatchMode="contains">
+                    <h:outputText value="#{elUsuario.correoUsuario}"/>
                 </p:column>
 
                 <p:column headerText="Contraseña">
-                    <h:outputText value="#{elUsuario.password}"/>
+                    <h:outputText value="#{elUsuario.contrasenaUsuario}"/>
                 </p:column>
                 
                 <p:column>
@@ -93,11 +93,11 @@
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="mail">Correo</p:outputLabel>
-                            <p:inputText id="mail" value="#{userController.newUser.correo}"/>
+                            <p:inputText id="mail" value="#{userController.newUser.correoUsuario}"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="pass">Clave</p:outputLabel>
-                            <p:inputText id="pass" value="#{userController.newUser.password}"/>
+                            <p:inputText id="pass" value="#{userController.newUser.contrasenaUsuario}"/>
                         </div>
                         
                     </p:outputPanel>
