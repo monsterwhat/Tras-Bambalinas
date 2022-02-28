@@ -95,19 +95,23 @@ public class UserController implements Serializable {
         this.newUser = new UsuarioTO();
     }
     
-    public void agregarUsuarioTO(){
-        
-        if(newUser.getCedula() == usuarioTO.getCedula()){
+    public void agregarUsuarioTO1(){ 
+
+        if(this.newUser.getCedula() != this.listaUserBD.indexOf(0)){
             this.servicioUsuario.insertarUser(newUser);
         }else{
             this.servicioUsuario.actualizarUser(newUser);
-        }
-        
-        
-            
+        }    
     }
     
+    public void agregarUsuarioTO(){
+        this.servicioUsuario.insertarUser(newUser);
+    }
     
+    public void actualizarUsuarioTO(){
+        this.servicioUsuario.actualizarUser(newUser);
+    }
+
     public void eliminarUsuarioTO(){
         this.servicioUsuario.eliminarUser(newUser);
     }

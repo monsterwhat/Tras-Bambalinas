@@ -81,10 +81,8 @@ public class ServicioUsuario extends Servicio {
     
     
     public void insertarUser(UsuarioTO usuarioTO){
-        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
-    
-        
+
         try {
             conectar();
             String sql = "INSERT INTO usuarios (cedula, nombreUsuario, telefonoUsuario,correoUsuario,contrasenaUsuario,tipoUsuario) VALUES (?,?,?,?,?,?)";
@@ -96,41 +94,38 @@ public class ServicioUsuario extends Servicio {
             preparedStatement.setString(4, usuarioTO.getCorreoUsuario());
             preparedStatement.setString(5, usuarioTO.getContrasenaUsuario());
             preparedStatement.setString(6, usuarioTO.getTipoUsuario());
-
+            
             
             preparedStatement.executeUpdate();
 
         }catch(Exception e){
             e.printStackTrace();
-        }finally{
-            cerrarResultSet(resultSet);
+        }finally{    
             cerrarPreparedStatement(preparedStatement);
             desconectar();
         }
     }
     
     public void actualizarUser(UsuarioTO usuarioTO){
-        ResultSet resultSet = null;
-        PreparedStatement preparedStatement = null;
-    
         
+        PreparedStatement preparedStatement = null;
+ 
         try {
             conectar();
             String sql = "UPDATE usuarios SET nombreUsuario = ?, telefonoUsuario =?, correoUsuario=?, contrasenaUsuario=?, tipoUsuario=?  WHERE cedula=?";
             preparedStatement = conexion.prepareStatement(sql);
-            
 
             preparedStatement.setString(1, usuarioTO.getNombreUsuario());
             preparedStatement.setInt(2, usuarioTO.getTelefonoUsuario());
             preparedStatement.setString(3, usuarioTO.getCorreoUsuario());
             preparedStatement.setString(4, usuarioTO.getContrasenaUsuario());
             preparedStatement.setString(5, usuarioTO.getTipoUsuario());
+            preparedStatement.setInt(6, usuarioTO.getCedula());
             preparedStatement.executeUpdate();
 
         }catch(Exception e){
             e.printStackTrace();
         }finally{
-            cerrarResultSet(resultSet);
             cerrarPreparedStatement(preparedStatement);
             desconectar();
         }
@@ -140,8 +135,7 @@ public class ServicioUsuario extends Servicio {
     public void eliminarUser(UsuarioTO usuarioTO){
         ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
-    
-        
+
         try {
             conectar();
             String sql = "DELETE FROM usuarios WHERE cedula=?";

@@ -40,12 +40,20 @@
                     <h:outputText value="#{elUsuario.nombreUsuario}"/>
                 </p:column>
 
-                <p:column headerText="Correo Electronico" sortBy="#{elUsuario.correo}" filterBy="#{elUsuario.correo}" filterMatchMode="contains">
-                    <h:outputText value="#{elUsuario.correo}"/>
+                <p:column headerText="Telefono de Usuario">
+                    <h:outputText value="#{elUsuario.telefonoUsuario}"/>
+                </p:column>
+                
+                <p:column headerText="Correo Electronico" sortBy="#{elUsuario.correoUsuario}" filterBy="#{elUsuario.correoUsuario}" filterMatchMode="contains">
+                    <h:outputText value="#{elUsuario.correoUsuario}"/>
                 </p:column>
 
                 <p:column headerText="Contraseña">
-                    <h:outputText value="#{elUsuario.password}"/>
+                    <h:outputText value="#{elUsuario.contrasenaUsuario}"/>
+                </p:column>
+                
+                <p:column headerText="Tipo de Usuario">
+                    <h:outputText value="#{elUsuario.tipoUsuario}"/>
                 </p:column>
                 
                 <p:column>
@@ -92,13 +100,22 @@
                             <p:inputText id="name" value="#{userController.newUser.nombreUsuario}"/>
                         </div>
                         <div class="p-field">
+                            <p:outputLabel for="telefono">Telefono</p:outputLabel>
+                            <p:inputText id="telefono" value="#{userController.newUser.telefonoUsuario}"/>
+                        </div>
+                        <div class="p-field">
                             <p:outputLabel for="mail">Correo</p:outputLabel>
-                            <p:inputText id="mail" value="#{userController.newUser.correo}"/>
+                            <p:inputText id="mail" value="#{userController.newUser.correoUsuario}"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="pass">Clave</p:outputLabel>
-                            <p:inputText id="pass" value="#{userController.newUser.password}"/>
+                            <p:inputText id="pass" value="#{userController.newUser.contrasenaUsuario}"/>
                         </div>
+                        <div class="p-field">
+                            <p:outputLabel for="tipo">Tipo de Usuario</p:outputLabel>
+                            <p:inputText id="tipo" value="#{userController.newUser.tipoUsuario}"/>
+                        </div>
+                        
                         
                     </p:outputPanel>
                 </p:outputPanel>
@@ -106,6 +123,12 @@
                 <f:facet name="footer">     
                     <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{userController.agregarUsuarioTO}"
                                      update=":form:manage-user-content" process="manage-user-content @this"/>     
+
+                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{userController.agregarUsuarioTO}"
+                                     update=":form:manage-user-content" process="manage-user-content @this"/>
+                    
+                    <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{userController.actualizarUsuarioTO}"
+                                     update=":form:manage-user-content" process="manage-user-content @this"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageUserDialog').hide()"
                                      class="ui-button-secondary"/>

@@ -83,11 +83,11 @@ public class LoginController implements Serializable{
                 this.redireccionar("/faces/adminMenu.xhtml");
             }else if(usuarioTO.getTipoUsuario().equals("cliente")){
                 this.redireccionar("/faces/clienteMenu.xhtml");
-            }     
-//            {
-//                FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage
-//                    (FacesMessage.SEVERITY_ERROR, "Autenticacion", "Las credenciales son invalidas"));  
-//            }            
+            }else{
+               FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage
+                    (FacesMessage.SEVERITY_ERROR, "Autenticacion", "Las credenciales son invalidas"));  
+            
+            }                
         }        
     }
     
