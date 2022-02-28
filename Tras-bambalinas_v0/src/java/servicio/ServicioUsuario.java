@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import model.UsuarioTO;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
@@ -131,6 +132,34 @@ public class ServicioUsuario extends Servicio {
         }
 
     }
+    
+    
+    public void actualizarContrasena(String correoUsua, String clave, String claveNueva){
+        
+        PreparedStatement preparedStatement = null;
+ 
+        try {
+            conectar();
+            String sql = "UPDATE usuarios SET contrasenaUsuario=? WHERE correoUsuario = '"+correoUsua+"' AND contrasenaUsuario = '"+clave+"'";
+            preparedStatement = conexion.prepareStatement(sql);
+
+           
+            preparedStatement.setString(1, claveNueva);
+            preparedStatement.executeUpdate();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            cerrarPreparedStatement(preparedStatement);
+            desconectar();
+        }
+
+    }
+    
+    
+    
+    
+    
     
     public void eliminarUser(UsuarioTO usuarioTO){
         ResultSet resultSet = null;
