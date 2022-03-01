@@ -13,7 +13,7 @@ public class Servicio {
     protected Connection conexion = null;
     private String host = "localhost";
     private String puerto = "3306";
-    private String nombreBD = "tras-bambalinas";
+    private String nombreBD = "TrasBambalinas";
     private String usuario = "Telon";
     private String clave = "admin";
     

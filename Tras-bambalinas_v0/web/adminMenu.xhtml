@@ -8,54 +8,43 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-       
+
         <h:form id="form">
-             
-            <p:panelGrid columns="2">
-                <p:commandButton id="regresarId" styleClass="ui-button-success" value="Regresar al Inicio" action="#{loginController.salir()}" ></p:commandButton>                 
-               
-                <p:commandButton value="Nuevo usuario" icon="pi pi-plus" actionListener="#{userController.openNewUser}"
-                             update=":form:manage-user-content" oncomplete="PF('manageUserDialog').show()"
-                             styleClass="ui-button-success" style="margin-right: .5rem">
-                    <p:resetInput target=":form:manage-user-content"/>  
-                </p:commandButton> 
-            </p:panelGrid>
-       
-                
+
             <p:dataTable value ="#{userController.listaUserBD}" var="elUsuario" rows="10" paginator="true" paginatorPosition="bottom"
-                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     rowsPerPageTemplate="3,5,10,20,30,40,50,100"
-                     emptyMessage="No existe usuarios registrados"
-                     reflow="true">
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="3,5,10,20,30,40,50,100"
+                         emptyMessage="No existe usuarios registrados"
+                         reflow="true">
 
                 <f:facet name ="header">
                     Lista de Usuarios 
                 </f:facet>
 
-                <p:column headerText="Cedula de Usuario">
+                <p:column headerText="Cedula de Usuario" sortBy="#{elUsuario.cedula}" filterBy="#{elUsuario.cedula}" filterMatchMode="exact">
                     <h:outputText value="#{elUsuario.cedula}"/>
                 </p:column>
 
-                <p:column headerText="Nombre de Usuario" sortBy="#{elUsuario.nombreUsuario}" filterBy="#{elUsuario.nombreUsuario}" filterMatchMode="exact">
+                <p:column headerText="Nombre de Usuario" sortBy="#{elUsuario.nombreUsuario}" filterBy="#{elUsuario.nombreUsuario}" filterMatchMode="contains">
                     <h:outputText value="#{elUsuario.nombreUsuario}"/>
                 </p:column>
 
-                <p:column headerText="Telefono de Usuario">
+                <p:column headerText="Telefono de Usuario" sortBy="#{elUsuario.telefonoUsuario}" filterBy="#{elUsuario.telefonoUsuario}" filterMatchMode="exact">
                     <h:outputText value="#{elUsuario.telefonoUsuario}"/>
                 </p:column>
-                
-                <p:column headerText="Correo Electronico" sortBy="#{elUsuario.correoUsuario}" filterBy="#{elUsuario.correoUsuario}" filterMatchMode="contains">
+
+                <p:column headerText="Correo Electronico" sortBy="#{elUsuario.correoUsuario}" filterBy="#{elUsuario.correoUsuario}" filterMatchMode="exact">
                     <h:outputText value="#{elUsuario.correoUsuario}"/>
                 </p:column>
 
                 <p:column headerText="Contraseña">
                     <h:outputText value="#{elUsuario.contrasenaUsuario}"/>
                 </p:column>
-                
-                <p:column headerText="Tipo de Usuario">
+
+                <p:column headerText="Tipo de Usuario" sortBy="#{elUsuario.tipoUsuario}" filterBy="#{elUsuario.tipoUsuario}" filterMatchMode="contains">
                     <h:outputText value="#{elUsuario.tipoUsuario}"/>
                 </p:column>
-                
+
                 <p:column>
                     <p:commandButton icon="pi pi-pencil" update=":form:manage-user-content"
                                      oncomplete="PF('manageUserDialog').show()"
@@ -73,24 +62,24 @@
                 </p:column>
 
             </p:dataTable>
-             
+
             <p:confirmDialog widgetVar="deleteUserDialog" showEffect="fade" width="300"
                              message="Desea eliminar al usuario?" header="Confirmación" severity="warn">
-                
+
                 <p:commandButton value="Si" icon="pi pi-check" actionListener="#{userController.eliminarUsuarioTO}"
                                  process="@this" oncomplete="PF('deleteUserDialog').hide()"/>
-                
+
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                  onclick="PF('deleteUserDialog').hide()"/>
             </p:confirmDialog>
-             
-             
+
+
             <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
                       widgetVar="manageUserDialog" responsive="true">
-                
+
                 <p:outputPanel id="manage-user-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty userController.newUser}">
-                        
+
                         <div class="p-field">
                             <p:outputLabel for="cedula">Cedula</p:outputLabel>
                             <p:inputText id="cedula" value="#{userController.newUser.cedula}"/>
@@ -115,7 +104,7 @@
                             <p:outputLabel for="tipo">Tipo de Usuario</p:outputLabel>
                             <p:inputText id="tipo" value="#{userController.newUser.tipoUsuario}"/>
                         </div>
-   
+
                     </p:outputPanel>
                 </p:outputPanel>
 
@@ -125,16 +114,26 @@
 
                     <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{userController.agregarUsuarioTO}"
                                      update=":form:manage-user-content" process="manage-user-content @this"/>
-                    
+
                     <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{userController.actualizarUsuarioTO}"
                                      update=":form:manage-user-content" process="manage-user-content @this"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageUserDialog').hide()"
                                      class="ui-button-secondary"/>
                 </f:facet>
-                
+
             </p:dialog>
-             
+            <p:panelGrid columns="2">
+                <p:commandButton id="regresarId" styleClass="ui-button-success" value="Regresar al Inicio" action="#{loginController.salir()}" >
+                </p:commandButton>
+
+                <p:commandButton value="Nuevo usuario" icon="pi pi-plus" actionListener="#{userController.openNewUser}"
+                                 update=":form:manage-user-content" oncomplete="PF('manageUserDialog').show()"
+                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                    <p:resetInput target=":form:manage-user-content"/>  
+                </p:commandButton> 
+            </p:panelGrid>
+
         </h:form>
     </h:body>
 </html>
