@@ -1,4 +1,3 @@
-
 package servicio;
 
 import java.sql.Connection;
@@ -11,106 +10,104 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class ServicioUsuario extends Servicio {
-    
-    public UsuarioTO existeUsuario(String correoUsua, String clave){
-       
+
+    public UsuarioTO existeUsuario(String correoUsua, String clave) {
+
         Statement statement = null;
         ResultSet resultSet = null;
         UsuarioTO usuarioTO = null;
-        
-        try{
-            conectar();
-            
-            statement = conexion.createStatement();
-            String sql = "SELECT * FROM usuarios WHERE correoUsuario = '"+correoUsua+"' AND contrasenaUsuario = '"+clave+"'";
-            resultSet =statement.executeQuery(sql);
 
-            if(resultSet.next()){
+        try {
+            conectar();
+
+            statement = conexion.createStatement();
+            String sql = "SELECT * FROM usuarios WHERE correoUsuario = '" + correoUsua + "' AND contrasenaUsuario = '" + clave + "'";
+            resultSet = statement.executeQuery(sql);
+
+            if (resultSet.next()) {
                 int cedula = resultSet.getInt("cedula");
                 String nombreUsuario = resultSet.getString("nombreUsuario");
                 int telefonoUsuario = resultSet.getInt("telefonoUsuario");
                 String correoUsuario = resultSet.getString("correoUsuario");
                 String contrasenaUsuario = resultSet.getString("contrasenaUsuario");
                 String tipoUsuario = resultSet.getString("tipoUsuario");
-                usuarioTO = new UsuarioTO(cedula,nombreUsuario,telefonoUsuario,correoUsuario,contrasenaUsuario,tipoUsuario);     
+                usuarioTO = new UsuarioTO(cedula, nombreUsuario, telefonoUsuario, correoUsuario, contrasenaUsuario, tipoUsuario);
 
             }
-                  
-        }catch(Exception e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             cerrarResultSet(resultSet);
             cerrarStatement(statement);
             desconectar();
-        }   
-  
-       return usuarioTO;
+        }
+
+        return usuarioTO;
     }
-   
-    public List<UsuarioTO> listaUsuariosBD(){
+
+    public List<UsuarioTO> listaUsuariosBD() {
         Statement statement = null;
         ResultSet resultSet = null;
         List<UsuarioTO> listaRetorno = new ArrayList<>();
-        
-        try{
-            
+
+        try {
+
             conectar();
-            statement = conexion.createStatement();            
+            statement = conexion.createStatement();
             String sql = "SELECT * FROM usuarios";
             resultSet = statement.executeQuery(sql);
-            
-            while(resultSet.next()){
+
+            while (resultSet.next()) {
                 int cedula = resultSet.getInt("cedula");
                 String nombreUsuario = resultSet.getString("nombreUsuario");
                 int telefonoUsuario = resultSet.getInt("telefonoUsuario");
                 String correoUsuario = resultSet.getString("correoUsuario");
                 String contrasenaUsuario = resultSet.getString("contrasenaUsuario");
                 String tipoUsuario = resultSet.getString("tipoUsuario");
-                 
-                UsuarioTO usuarioTO = new UsuarioTO(cedula,nombreUsuario,telefonoUsuario,correoUsuario,contrasenaUsuario,tipoUsuario);    
+
+                UsuarioTO usuarioTO = new UsuarioTO(cedula, nombreUsuario, telefonoUsuario, correoUsuario, contrasenaUsuario, tipoUsuario);
                 listaRetorno.add(usuarioTO);
-            }   
-        }catch(Exception e){
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             cerrarResultSet(resultSet);
             cerrarStatement(statement);
             desconectar();
         }
         return listaRetorno;
     }
-    
-    
-    public void insertarUser(UsuarioTO usuarioTO){
+
+    public void insertarUser(UsuarioTO usuarioTO) {
         PreparedStatement preparedStatement = null;
 
         try {
             conectar();
             String sql = "INSERT INTO usuarios (cedula, nombreUsuario, telefonoUsuario,correoUsuario,contrasenaUsuario,tipoUsuario) VALUES (?,?,?,?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
-            
+
             preparedStatement.setInt(1, usuarioTO.getCedula());
             preparedStatement.setString(2, usuarioTO.getNombreUsuario());
             preparedStatement.setInt(3, usuarioTO.getTelefonoUsuario());
             preparedStatement.setString(4, usuarioTO.getCorreoUsuario());
             preparedStatement.setString(5, usuarioTO.getContrasenaUsuario());
             preparedStatement.setString(6, usuarioTO.getTipoUsuario());
-            
-            
+
             preparedStatement.executeUpdate();
 
-        }catch(Exception e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally{    
+        } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
         }
     }
-    
-    public void actualizarUser(UsuarioTO usuarioTO){
-        
+
+    public void actualizarUser(UsuarioTO usuarioTO) {
+
         PreparedStatement preparedStatement = null;
- 
+
         try {
             conectar();
             String sql = "UPDATE usuarios SET nombreUsuario = ?, telefonoUsuario =?, correoUsuario=?, contrasenaUsuario=?, tipoUsuario=?  WHERE cedula=?";
@@ -124,44 +121,37 @@ public class ServicioUsuario extends Servicio {
             preparedStatement.setInt(6, usuarioTO.getCedula());
             preparedStatement.executeUpdate();
 
-        }catch(Exception e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
         }
 
     }
-    
-    
-    public void actualizarContrasena(String correoUsua, String clave, String claveNueva){
-        
+
+    public void actualizarContrasena(String correoUsua, String clave, String claveNueva) {
+
         PreparedStatement preparedStatement = null;
- 
+
         try {
             conectar();
-            String sql = "UPDATE usuarios SET contrasenaUsuario=? WHERE correoUsuario = '"+correoUsua+"' AND contrasenaUsuario = '"+clave+"'";
+            String sql = "UPDATE usuarios SET contrasenaUsuario=? WHERE correoUsuario = '" + correoUsua + "' AND contrasenaUsuario = '" + clave + "'";
             preparedStatement = conexion.prepareStatement(sql);
 
-           
             preparedStatement.setString(1, claveNueva);
             preparedStatement.executeUpdate();
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
         }
 
     }
-    
-    
-    
-    
-    
-    
-    public void eliminarUser(UsuarioTO usuarioTO){
+
+    public void eliminarUser(UsuarioTO usuarioTO) {
         ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
@@ -169,23 +159,18 @@ public class ServicioUsuario extends Servicio {
             conectar();
             String sql = "DELETE FROM usuarios WHERE cedula=?";
             preparedStatement = conexion.prepareStatement(sql);
-            
+
             preparedStatement.setInt(1, usuarioTO.getCedula());
 
             preparedStatement.executeUpdate();
 
-        }catch(Exception e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             cerrarResultSet(resultSet);
             cerrarPreparedStatement(preparedStatement);
             desconectar();
         }
     }
-    
-    
-    
+
 }
-
-
-

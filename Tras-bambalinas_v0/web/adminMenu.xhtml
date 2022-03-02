@@ -9,7 +9,6 @@
     </h:head>
     <h:body>
 
-
         <h:form id="form">
 
             <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
@@ -180,13 +179,65 @@
                 </f:facet>
 
             </p:dialog>
+            
+            
+            <p:dialog header="Productos" showEffect="fade" modal="true"
+                      widgetVar="showProductInformation" responsive="true">
+                <p:outputPanel id="show-product-information" class="ui-fluid">
+
+                    <p:dataTable value ="#{productController.listaProductosBD}" var="elProducto" rows="10" paginator="true" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="3,5,10,20,30,40,50,100"
+                                 emptyMessage="No existen productos registrados"
+                                 reflow="true" id="productTable">
+
+                        <f:facet name ="header">
+                            Lista de Productos 
+                        </f:facet>
+
+                        <p:column headerText="Cedula de Usuario" sortBy="#{elProducto}" filterBy="#{elProducto}" filterMatchMode="exact">
+                            <h:outputText value="#{elProducto}"/>
+                        </p:column>
+
+                        <p:column>
+                            <p:commandButton icon="pi pi-pencil" update=":form:manage-product-content"
+                                             oncomplete="PF('manageProductDialog').show()"
+                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                <f:setPropertyActionListener value="#{elProducto}" target="#{productController.editProduct}"/>
+                                <p:resetInput target=":form:manage-product-content"/>
+                            </p:commandButton>
+                        </p:column>
+
+                        <p:column>
+                            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                             oncomplete="PF('deleteProductDialog').show()">
+                                <f:setPropertyActionListener value="#{elProducto}" target="#{productoController.deleteProduct}"/>
+                            </p:commandButton>                    
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:commandButton value="Nuevo Producto" icon="pi pi-plus" actionListener="#{productController.openNewProduct}"
+                                     update=":form:create-product-content" oncomplete="PF('createProductDialog').show()"
+                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":form:create-product-content"/>
+                    </p:commandButton>
+
+                    <f:facet name="footer">
+
+                    </f:facet>
+
+                </p:outputPanel>  
+            </p:dialog>
+            
 
             <p:panelGrid columns="1">
                 <p:commandButton id="regresarId" styleClass="ui-button-success" value="Regresar al Inicio" action="#{loginController.salir()}" >
                 </p:commandButton>
                 <p:commandButton id="mostrarUsuarios" styleClass="ui-button-success" value="Mostrar Usuarios" update=":form:show-user-information" oncomplete="PF('showUserInformation').show()">
                 </p:commandButton>
-
+                <p:commandButton id="mostrarProductos" styleClass="ui-button-success" value="Mostrar Productos" update=":form:show-product-information" oncomplete="PF('showProductInformation').show()">
+                </p:commandButton>
             </p:panelGrid>
 
         </h:form>
