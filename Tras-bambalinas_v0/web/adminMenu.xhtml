@@ -9,70 +9,133 @@
     </h:head>
     <h:body>
 
+
         <h:form id="form">
 
-            <p:dataTable value ="#{userController.listaUserBD}" var="elUsuario" rows="10" paginator="true" paginatorPosition="bottom"
-                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="3,5,10,20,30,40,50,100"
-                         emptyMessage="No existe usuarios registrados"
-                         reflow="true">
+            <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
+                      widgetVar="showUserInformation" responsive="true">
+                <p:outputPanel id="show-user-information" class="ui-fluid">
 
-                <f:facet name ="header">
-                    Lista de Usuarios 
-                </f:facet>
+                    <p:dataTable value ="#{userController.listaUserBD}" var="elUsuario" rows="10" paginator="true" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="3,5,10,20,30,40,50,100"
+                                 emptyMessage="No existe usuarios registrados"
+                                 reflow="true" id="userTable">
 
-                <p:column headerText="Cedula de Usuario" sortBy="#{elUsuario.cedula}" filterBy="#{elUsuario.cedula}" filterMatchMode="exact">
-                    <h:outputText value="#{elUsuario.cedula}"/>
-                </p:column>
+                        <f:facet name ="header">
+                            Lista de Usuarios 
+                        </f:facet>
 
-                <p:column headerText="Nombre de Usuario" sortBy="#{elUsuario.nombreUsuario}" filterBy="#{elUsuario.nombreUsuario}" filterMatchMode="contains">
-                    <h:outputText value="#{elUsuario.nombreUsuario}"/>
-                </p:column>
+                        <p:column headerText="Cedula de Usuario" sortBy="#{elUsuario.cedula}" filterBy="#{elUsuario.cedula}" filterMatchMode="exact">
+                            <h:outputText value="#{elUsuario.cedula}"/>
+                        </p:column>
 
-                <p:column headerText="Telefono de Usuario" sortBy="#{elUsuario.telefonoUsuario}" filterBy="#{elUsuario.telefonoUsuario}" filterMatchMode="exact">
-                    <h:outputText value="#{elUsuario.telefonoUsuario}"/>
-                </p:column>
+                        <p:column headerText="Nombre de Usuario" sortBy="#{elUsuario.nombreUsuario}" filterBy="#{elUsuario.nombreUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{elUsuario.nombreUsuario}"/>
+                        </p:column>
 
-                <p:column headerText="Correo Electronico" sortBy="#{elUsuario.correoUsuario}" filterBy="#{elUsuario.correoUsuario}" filterMatchMode="exact">
-                    <h:outputText value="#{elUsuario.correoUsuario}"/>
-                </p:column>
+                        <p:column headerText="Telefono de Usuario" sortBy="#{elUsuario.telefonoUsuario}" filterBy="#{elUsuario.telefonoUsuario}" filterMatchMode="exact">
+                            <h:outputText value="#{elUsuario.telefonoUsuario}"/>
+                        </p:column>
 
-                <p:column headerText="Contraseña">
-                    <h:outputText value="#{elUsuario.contrasenaUsuario}"/>
-                </p:column>
+                        <p:column headerText="Correo Electronico" sortBy="#{elUsuario.correoUsuario}" filterBy="#{elUsuario.correoUsuario}" filterMatchMode="exact">
+                            <h:outputText value="#{elUsuario.correoUsuario}"/>
+                        </p:column>
 
-                <p:column headerText="Tipo de Usuario" sortBy="#{elUsuario.tipoUsuario}" filterBy="#{elUsuario.tipoUsuario}" filterMatchMode="contains">
-                    <h:outputText value="#{elUsuario.tipoUsuario}"/>
-                </p:column>
+                        <p:column headerText="Contraseña">
+                            <h:outputText value="#{elUsuario.contrasenaUsuario}"/>
+                        </p:column>
 
-                <p:column>
-                    <p:commandButton icon="pi pi-pencil" update=":form:manage-user-content"
-                                     oncomplete="PF('manageUserDialog').show()"
-                                     styleClass="edit-button rounded-button ui-button-success" process="@this">
-                        <f:setPropertyActionListener value="#{elUsuario}" target="#{userController.newUser}"/>
-                        <p:resetInput target=":form:manage-user-content"/>
+                        <p:column headerText="Tipo de Usuario" sortBy="#{elUsuario.tipoUsuario}" filterBy="#{elUsuario.tipoUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{elUsuario.tipoUsuario}"/>
+                        </p:column>
+
+                        <p:column>
+                            <p:commandButton icon="pi pi-pencil" update=":form:manage-user-content"
+                                             oncomplete="PF('manageUserDialog').show()"
+                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                <f:setPropertyActionListener value="#{elUsuario}" target="#{userController.newUser}"/>
+                                <p:resetInput target=":form:manage-user-content"/>
+                            </p:commandButton>
+                        </p:column>
+
+                        <p:column>
+                            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                             oncomplete="PF('deleteUserDialog').show()">
+                                <f:setPropertyActionListener value="#{elUsuario}" target="#{userController.newUser}"/>
+                            </p:commandButton>                    
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:commandButton value="Nuevo usuario" icon="pi pi-plus" actionListener="#{userController.openNewUser}"
+                                     update=":form:create-user-content" oncomplete="PF('createUserDialog').show()"
+                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":form:create-user-content"/>
                     </p:commandButton>
-                </p:column>
 
-                <p:column>
-                    <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
-                                     oncomplete="PF('deleteUserDialog').show()">
-                        <f:setPropertyActionListener value="#{elUsuario}" target="#{userController.newUser}"/>
-                    </p:commandButton>                    
-                </p:column>
+                    <f:facet name="footer">
 
-            </p:dataTable>
+                    </f:facet>
+
+                </p:outputPanel>  
+            </p:dialog>
+
 
             <p:confirmDialog widgetVar="deleteUserDialog" showEffect="fade" width="300"
                              message="Desea eliminar al usuario?" header="Confirmación" severity="warn">
 
                 <p:commandButton value="Si" icon="pi pi-check" actionListener="#{userController.eliminarUsuarioTO}"
-                                 process="@this" oncomplete="PF('deleteUserDialog').hide()"/>
+                                 process="@this"  update="userTable" oncomplete="PF('deleteUserDialog').hide()"/>
 
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                  onclick="PF('deleteUserDialog').hide()"/>
             </p:confirmDialog>
 
+
+            <p:dialog header="Crear Usuario" showEffect="fade" modal="true"
+                      widgetVar="createUserDialog" responsive="true">
+
+                <p:outputPanel id="create-user-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty userController.newUser}">
+
+                        <div class="p-field">
+                            <p:outputLabel for="cedula">Cedula</p:outputLabel>
+                            <p:inputText id="Ncedula" value="#{userController.newUser.cedula}"/>
+                        </div>                        
+                        <div class="p-field">
+                            <p:outputLabel for="name">Nombre</p:outputLabel>
+                            <p:inputText id="Nname" value="#{userController.newUser.nombreUsuario}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="telefono">Telefono</p:outputLabel>
+                            <p:inputText id="Ntelefono" value="#{userController.newUser.telefonoUsuario}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="mail">Correo</p:outputLabel>
+                            <p:inputText id="Nmail" value="#{userController.newUser.correoUsuario}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="pass">Clave</p:outputLabel>
+                            <p:inputText id="Npass" value="#{userController.newUser.contrasenaUsuario}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="tipo">Tipo de Usuario</p:outputLabel>
+                            <p:inputText id="Ntipo" value="#{userController.newUser.tipoUsuario}"/>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">        
+                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{userController.agregarUsuarioTO}"
+                                     update=":form:create-user-content, userTable" process="create-user-content @this" onclick="PF('createUserDialog').hide()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createUserDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+
+            </p:dialog>
 
             <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
                       widgetVar="manageUserDialog" responsive="true">
@@ -109,29 +172,21 @@
                 </p:outputPanel>
 
                 <f:facet name="footer">     
-                    <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{userController.agregarUsuarioTO}"
-                                     update=":form:manage-user-content" process="manage-user-content @this"/>     
-
-                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{userController.agregarUsuarioTO}"
-                                     update=":form:manage-user-content" process="manage-user-content @this"/>
-
                     <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{userController.actualizarUsuarioTO}"
-                                     update=":form:manage-user-content" process="manage-user-content @this"/>
+                                     update=":form:manage-user-content, userTable" process="manage-user-content @this" onclick="PF('manageUserDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageUserDialog').hide()"
                                      class="ui-button-secondary"/>
                 </f:facet>
 
             </p:dialog>
-            <p:panelGrid columns="2">
+
+            <p:panelGrid columns="1">
                 <p:commandButton id="regresarId" styleClass="ui-button-success" value="Regresar al Inicio" action="#{loginController.salir()}" >
                 </p:commandButton>
+                <p:commandButton id="mostrarUsuarios" styleClass="ui-button-success" value="Mostrar Usuarios" update=":form:show-user-information" oncomplete="PF('showUserInformation').show()">
+                </p:commandButton>
 
-                <p:commandButton value="Nuevo usuario" icon="pi pi-plus" actionListener="#{userController.openNewUser}"
-                                 update=":form:manage-user-content" oncomplete="PF('manageUserDialog').show()"
-                                 styleClass="ui-button-success" style="margin-right: .5rem">
-                    <p:resetInput target=":form:manage-user-content"/>  
-                </p:commandButton> 
             </p:panelGrid>
 
         </h:form>

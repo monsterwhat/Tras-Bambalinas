@@ -1,4 +1,3 @@
-
 package controller;
 
 import java.io.Serializable;
@@ -10,30 +9,29 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
 import javax.annotation.PostConstruct;
 
-
 @ManagedBean(name = "userController")
 @ViewScoped
 public class UserController implements Serializable {
-    
+
     private int idUser;
     private String nombreUser;
     private String correoElectronico;
     private String passwordUser;
-    
+
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
     private UsuarioTO usuarioTO = null;
     List<UsuarioTO> listaUserBD = new ArrayList<UsuarioTO>();
     private UsuarioTO newUser = null;
 
     public UserController() {
-       
+
     }
-    
+
     @PostConstruct
-    public void cargar(){
+    public void cargar() {
         this.listaUserBD = servicioUsuario.listaUsuariosBD();
     }
-    
+
     public int getIdUser() {
         return idUser;
     }
@@ -89,32 +87,33 @@ public class UserController implements Serializable {
     public void setNewUser(UsuarioTO newUser) {
         this.newUser = newUser;
     }
-    
-    
+
     public void openNewUser() {
         this.newUser = new UsuarioTO();
     }
-    
-    public void agregarUsuarioTO1(){ 
 
-        if(this.newUser.getCedula() != this.listaUserBD.indexOf(0)){
+    public void agregarUsuarioTO1() {
+
+        if (this.newUser.getCedula() != this.listaUserBD.indexOf(0)) {
             this.servicioUsuario.insertarUser(newUser);
-        }else{
+        } else {
             this.servicioUsuario.actualizarUser(newUser);
-        }    
-    }
-    
-    public void agregarUsuarioTO(){
-        this.servicioUsuario.insertarUser(newUser);
-    }
-    
-    public void actualizarUsuarioTO(){
-        this.servicioUsuario.actualizarUser(newUser);
+        }
     }
 
-    public void eliminarUsuarioTO(){
-        this.servicioUsuario.eliminarUser(newUser);
+    public void agregarUsuarioTO() {
+        this.servicioUsuario.insertarUser(newUser);
+        this.cargar();
     }
-    
-    
+
+    public void actualizarUsuarioTO() {
+        this.servicioUsuario.actualizarUser(newUser);
+        this.cargar();
+    }
+
+    public void eliminarUsuarioTO() {
+        this.servicioUsuario.eliminarUser(newUser);
+        this.cargar();
+    }
+
 }
