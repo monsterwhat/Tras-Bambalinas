@@ -25,18 +25,6 @@
                             Lista de Usuarios 
                         </f:facet>
 
-                        <p:column headerText="Cedula de Usuario" sortBy="#{elUsuario.cedula}" filterBy="#{elUsuario.cedula}" filterMatchMode="exact">
-                            <h:outputText value="#{elUsuario.cedula}"/>
-                        </p:column>
-
-                        <p:column headerText="Nombre de Usuario" sortBy="#{elUsuario.nombreUsuario}" filterBy="#{elUsuario.nombreUsuario}" filterMatchMode="contains">
-                            <h:outputText value="#{elUsuario.nombreUsuario}"/>
-                        </p:column>
-
-                        <p:column headerText="Telefono de Usuario" sortBy="#{elUsuario.telefonoUsuario}" filterBy="#{elUsuario.telefonoUsuario}" filterMatchMode="exact">
-                            <h:outputText value="#{elUsuario.telefonoUsuario}"/>
-                        </p:column>
-
                         <p:column headerText="Correo Electronico" sortBy="#{elUsuario.correoUsuario}" filterBy="#{elUsuario.correoUsuario}" filterMatchMode="exact">
                             <h:outputText value="#{elUsuario.correoUsuario}"/>
                         </p:column>
@@ -99,18 +87,6 @@
                     <p:outputPanel rendered="#{not empty userController.newUser}">
 
                         <div class="p-field">
-                            <p:outputLabel for="cedula">Cedula</p:outputLabel>
-                            <p:inputText id="Ncedula" value="#{userController.newUser.cedula}"/>
-                        </div>                        
-                        <div class="p-field">
-                            <p:outputLabel for="name">Nombre</p:outputLabel>
-                            <p:inputText id="Nname" value="#{userController.newUser.nombreUsuario}"/>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="telefono">Telefono</p:outputLabel>
-                            <p:inputText id="Ntelefono" value="#{userController.newUser.telefonoUsuario}"/>
-                        </div>
-                        <div class="p-field">
                             <p:outputLabel for="mail">Correo</p:outputLabel>
                             <p:inputText id="Nmail" value="#{userController.newUser.correoUsuario}"/>
                         </div>
@@ -142,18 +118,7 @@
                 <p:outputPanel id="manage-user-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty userController.newUser}">
 
-                        <div class="p-field">
-                            <p:outputLabel for="cedula">Cedula</p:outputLabel>
-                            <p:inputText id="cedula" value="#{userController.newUser.cedula}"/>
-                        </div>                        
-                        <div class="p-field">
-                            <p:outputLabel for="name">Nombre</p:outputLabel>
-                            <p:inputText id="name" value="#{userController.newUser.nombreUsuario}"/>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="telefono">Telefono</p:outputLabel>
-                            <p:inputText id="telefono" value="#{userController.newUser.telefonoUsuario}"/>
-                        </div>
+         
                         <div class="p-field">
                             <p:outputLabel for="mail">Correo</p:outputLabel>
                             <p:inputText id="mail" value="#{userController.newUser.correoUsuario}"/>

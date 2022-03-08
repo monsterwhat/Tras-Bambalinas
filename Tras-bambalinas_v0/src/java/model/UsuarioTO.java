@@ -5,47 +5,27 @@ import java.io.Serializable;
 
 
 public class UsuarioTO implements Serializable{
-    private int cedula;
-    private String nombreUsuario;
-    private int telefonoUsuario; 
+    private int idusuarios;
     private String correoUsuario;
     private String contrasenaUsuario;
     private String tipoUsuario;
 
-    public UsuarioTO(int cedula, String nombreUsuario, int telefonoUsuario, String correoUsuario, String contrasenaUsuario, String tipoUsuario) {
-        this.cedula = cedula;
-        this.nombreUsuario = nombreUsuario;
-        this.telefonoUsuario = telefonoUsuario;
+    public UsuarioTO(int idusuarios, String correoUsuario, String contrasenaUsuario, String tipoUsuario) {
+        this.idusuarios = idusuarios;
         this.correoUsuario = correoUsuario;
         this.contrasenaUsuario = contrasenaUsuario;
         this.tipoUsuario = tipoUsuario;
     }
-    
     public UsuarioTO(){
+    
     }
 
-    public int getCedula() {
-        return cedula;
+    public int getIdusuarios() {
+        return idusuarios;
     }
 
-    public void setCedula(int cedula) {
-        this.cedula = cedula;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
-
-    public int getTelefonoUsuario() {
-        return telefonoUsuario;
-    }
-
-    public void setTelefonoUsuario(int telefonoUsuario) {
-        this.telefonoUsuario = telefonoUsuario;
+    public void setIdusuarios(int idusuarios) {
+        this.idusuarios = idusuarios;
     }
 
     public String getCorreoUsuario() {
@@ -71,6 +51,8 @@ public class UsuarioTO implements Serializable{
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+    
+
 
 
 }

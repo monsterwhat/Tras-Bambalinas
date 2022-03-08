@@ -94,7 +94,7 @@ public class UserController implements Serializable {
 
     public void agregarUsuarioTO1() {
 
-        if (this.newUser.getCedula() != this.listaUserBD.indexOf(0)) {
+        if (this.newUser.getIdusuarios() != this.listaUserBD.indexOf(0)) {
             this.servicioUsuario.insertarUser(newUser);
         } else {
             this.servicioUsuario.actualizarUser(newUser);

@@ -23,18 +23,14 @@ public class ServicioUsuario extends Servicio {
             statement = conexion.createStatement();
             String sql = "SELECT * FROM usuarios WHERE correoUsuario = '" + correoUsua + "' AND contrasenaUsuario = '" + clave + "'";
             resultSet = statement.executeQuery(sql);
-
             if (resultSet.next()) {
-                int cedula = resultSet.getInt("cedula");
-                String nombreUsuario = resultSet.getString("nombreUsuario");
-                int telefonoUsuario = resultSet.getInt("telefonoUsuario");
+                 int idUsuario = resultSet.getInt("idusuario");
                 String correoUsuario = resultSet.getString("correoUsuario");
                 String contrasenaUsuario = resultSet.getString("contrasenaUsuario");
                 String tipoUsuario = resultSet.getString("tipoUsuario");
-                usuarioTO = new UsuarioTO(cedula, nombreUsuario, telefonoUsuario, correoUsuario, contrasenaUsuario, tipoUsuario);
 
+                usuarioTO = new UsuarioTO(idUsuario, correoUsuario, contrasenaUsuario, tipoUsuario);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -42,7 +38,6 @@ public class ServicioUsuario extends Servicio {
             cerrarStatement(statement);
             desconectar();
         }
-
         return usuarioTO;
     }
 
@@ -59,14 +54,12 @@ public class ServicioUsuario extends Servicio {
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                int cedula = resultSet.getInt("cedula");
-                String nombreUsuario = resultSet.getString("nombreUsuario");
-                int telefonoUsuario = resultSet.getInt("telefonoUsuario");
+                int idUsuario = resultSet.getInt("idusuario");
                 String correoUsuario = resultSet.getString("correoUsuario");
                 String contrasenaUsuario = resultSet.getString("contrasenaUsuario");
                 String tipoUsuario = resultSet.getString("tipoUsuario");
 
-                UsuarioTO usuarioTO = new UsuarioTO(cedula, nombreUsuario, telefonoUsuario, correoUsuario, contrasenaUsuario, tipoUsuario);
+                UsuarioTO usuarioTO = new UsuarioTO(idUsuario, correoUsuario, contrasenaUsuario, tipoUsuario);
                 listaRetorno.add(usuarioTO);
             }
         } catch (SQLException e) {
@@ -84,15 +77,12 @@ public class ServicioUsuario extends Servicio {
 
         try {
             conectar();
-            String sql = "INSERT INTO usuarios (cedula, nombreUsuario, telefonoUsuario,correoUsuario,contrasenaUsuario,tipoUsuario) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO usuarios (correoUsuario,contrasenaUsuario,tipoUsuario) VALUES (?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
 
-            preparedStatement.setInt(1, usuarioTO.getCedula());
-            preparedStatement.setString(2, usuarioTO.getNombreUsuario());
-            preparedStatement.setInt(3, usuarioTO.getTelefonoUsuario());
-            preparedStatement.setString(4, usuarioTO.getCorreoUsuario());
-            preparedStatement.setString(5, usuarioTO.getContrasenaUsuario());
-            preparedStatement.setString(6, usuarioTO.getTipoUsuario());
+            preparedStatement.setString(1, usuarioTO.getCorreoUsuario());
+            preparedStatement.setString(2, usuarioTO.getContrasenaUsuario());
+            preparedStatement.setString(3, usuarioTO.getTipoUsuario());
 
             preparedStatement.executeUpdate();
 
@@ -110,15 +100,13 @@ public class ServicioUsuario extends Servicio {
 
         try {
             conectar();
-            String sql = "UPDATE usuarios SET nombreUsuario = ?, telefonoUsuario =?, correoUsuario=?, contrasenaUsuario=?, tipoUsuario=?  WHERE cedula=?";
+            String sql = "UPDATE usuarios SET correoUsuario=?, contrasenaUsuario=?, tipoUsuario=?  WHERE idusuarios='"+usuarioTO.getIdusuarios()+"'";
             preparedStatement = conexion.prepareStatement(sql);
 
-            preparedStatement.setString(1, usuarioTO.getNombreUsuario());
-            preparedStatement.setInt(2, usuarioTO.getTelefonoUsuario());
-            preparedStatement.setString(3, usuarioTO.getCorreoUsuario());
-            preparedStatement.setString(4, usuarioTO.getContrasenaUsuario());
-            preparedStatement.setString(5, usuarioTO.getTipoUsuario());
-            preparedStatement.setInt(6, usuarioTO.getCedula());
+            preparedStatement.setString(1, usuarioTO.getCorreoUsuario());
+            preparedStatement.setString(2, usuarioTO.getContrasenaUsuario());
+            preparedStatement.setString(3, usuarioTO.getTipoUsuario());
+    
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -157,10 +145,10 @@ public class ServicioUsuario extends Servicio {
 
         try {
             conectar();
-            String sql = "DELETE FROM usuarios WHERE cedula=?";
+            String sql = "DELETE FROM usuarios WHERE idusuario='"+usuarioTO.getIdusuarios()+"'";
             preparedStatement = conexion.prepareStatement(sql);
 
-            preparedStatement.setInt(1, usuarioTO.getCedula());
+           // preparedStatement.setInt(1, usuarioTO.getCedula());
 
             preparedStatement.executeUpdate();
 
