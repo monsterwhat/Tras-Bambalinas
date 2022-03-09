@@ -22,7 +22,7 @@ public class UserController implements Serializable {
     public void setServicioUsuario(ServicioUsuario servicioUsuario) {
         this.servicioUsuario = servicioUsuario;
     }
-    private String nombreUser;
+    //private String nombreUser;
     private String correoElectronico;
     private String passwordUser;
 
@@ -52,13 +52,6 @@ public class UserController implements Serializable {
         this.idUser = idUser;
     }
 
-    public String getNombreUser() {
-        return nombreUser;
-    }
-
-    public void setNombreUser(String nombreUser) {
-        this.nombreUser = nombreUser;
-    }
 
     public String getCorreoElectronico() {
         return correoElectronico;
@@ -102,15 +95,6 @@ public class UserController implements Serializable {
 
     public void openNewUser() {
         this.newUser = new UsuarioTO();
-    }
-
-    public void agregarUsuarioTO1() {
-
-        if (this.newUser.getIdusuarios() != this.listaUserBD.indexOf(0)) {
-            this.servicioUsuario.insertarUser(newUser);
-        } else {
-            this.servicioUsuario.actualizarUser(newUser);
-        }
     }
 
     public void agregarUsuarioTO() {
