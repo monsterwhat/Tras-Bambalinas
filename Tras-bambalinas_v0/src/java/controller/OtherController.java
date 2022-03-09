@@ -1,4 +1,3 @@
-
 package controller;
 //Controller Categoria /Caracteristicas
 
@@ -14,20 +13,20 @@ import servicio.ServicioCategoria;
 
 @ManagedBean(name = "userController")
 
-public class OtherController implements Serializable{
-    
+public class OtherController implements Serializable {
+
     private ServicioCategoria servicioCategoria = new ServicioCategoria();
     private ServicioCaracteristica servicioCaracteristica = new ServicioCaracteristica();
-    
+
     private CategoriaTO categoriaTO;
     private CaracteristicaTO caracteristicaTO;
-    
+
     private CategoriaTO newCategoria;
     private CaracteristicaTO newCaracteristica;
-    
-    List<CategoriaTO> listaCategorias = new ArrayList<CategoriaTO>();
-    List<CaracteristicaTO> listaCaracteristicas = new ArrayList<CaracteristicaTO>();
-    
+
+    List<CategoriaTO> listaCategorias = new ArrayList<>();
+    List<CaracteristicaTO> listaCaracteristicas = new ArrayList<>();
+
     private int idCategoria;
     private String nombreCategoria;
     private String descripcionCategoria;
@@ -38,12 +37,32 @@ public class OtherController implements Serializable{
     private int prioridadCaracteristica;
     private double precioCaracteristica;
 
+    public ServicioCategoria getServicioCategoria() {
+        return servicioCategoria;
+    }
+
+    public void setServicioCategoria(ServicioCategoria servicioCategoria) {
+        this.servicioCategoria = servicioCategoria;
+    }
+
+    public ServicioCaracteristica getServicioCaracteristica() {
+        return servicioCaracteristica;
+    }
+
+    public void setServicioCaracteristica(ServicioCaracteristica servicioCaracteristica) {
+        this.servicioCaracteristica = servicioCaracteristica;
+    }
+
     public OtherController() {
     }
-    
-     @PostConstruct
+
+    @PostConstruct
     public void cargarCategoria() {
-        this.listaCategorias = servicioCategoria.listaCategoriasBD();
+        try {
+            this.listaCategorias = servicioCategoria.listaCategoriasBD();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public CategoriaTO getCategoriaTO() {
@@ -61,7 +80,7 @@ public class OtherController implements Serializable{
     public void setCaracteristicaTO(CaracteristicaTO caracteristicaTO) {
         this.caracteristicaTO = caracteristicaTO;
     }
-     
+
     public List<CategoriaTO> getListaCategorias() {
         return listaCategorias;
     }
@@ -162,54 +181,53 @@ public class OtherController implements Serializable{
         return newCaracteristica;
     }
 
-    public void setNewcCaracteristica(CaracteristicaTO newcCaracteristica) {
+    public void setNewCaracteristica(CaracteristicaTO newcCaracteristica) {
         this.newCaracteristica = newcCaracteristica;
     }
-    
-    public void openNewCategoria(){
+
+    public void openNewCategoria() {
         this.newCategoria = new CategoriaTO();
     }
-    
-    public void openNewCaracteristica(){
+
+    public void openNewCaracteristica() {
         this.newCaracteristica = new CaracteristicaTO();
     }
-    
-    public void agregarCategoriaTO(){
+
+    public void agregarCategoriaTO() {
         this.servicioCategoria.insertarCategoria(newCategoria);
         this.cargarCategoria();
     }
-    public void actualizarCategoriaTO(){
+
+    public void actualizarCategoriaTO() {
         this.servicioCategoria.actualizarCategoria(newCategoria);
         this.cargarCategoria();
-        
+
     }
-    public void eliminarCategoriaTO(){
+
+    public void eliminarCategoriaTO() {
         this.servicioCategoria.eliminarCategoria(newCategoria);
         this.cargarCategoria();
-        
+
     }
-    
-    public void agregarCaracteristicaTO(){
+
+    public void agregarCaracteristicaTO() {
         this.servicioCaracteristica.insertarCaracteristica(newCaracteristica);
         cargarCaracteristicaTO();
     }
-    public void actualizarCaracteristicaTO(){
+
+    public void actualizarCaracteristicaTO() {
         this.servicioCaracteristica.actualizarCaracteristica(newCaracteristica);
         cargarCaracteristicaTO();
     }
-    public void eliminarCaracteristicaTO(){
+
+    public void eliminarCaracteristicaTO() {
         this.servicioCaracteristica.eliminarCaracteristica(newCaracteristica);
         cargarCaracteristicaTO();
     }
-    
-    public void cargarCaracteristicaTO(){
+
+    public void cargarCaracteristicaTO() {
         this.listaCaracteristicas = this.servicioCaracteristica.listaCaracteristicasBD();
-    
+
     }
-    
-    
-    
-    
-    
-    
+
 }

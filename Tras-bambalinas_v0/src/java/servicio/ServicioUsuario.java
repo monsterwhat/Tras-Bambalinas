@@ -1,6 +1,5 @@
 package servicio;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import model.UsuarioTO;
 import java.sql.ResultSet;
@@ -24,7 +23,7 @@ public class ServicioUsuario extends Servicio {
             String sql = "SELECT * FROM usuarios WHERE correoUsuario = '" + correoUsua + "' AND contrasenaUsuario = '" + clave + "'";
             resultSet = statement.executeQuery(sql);
             if (resultSet.next()) {
-                 int idUsuario = resultSet.getInt("idusuario");
+                 int idUsuario = resultSet.getInt("idusuarios");
                 String correoUsuario = resultSet.getString("correoUsuario");
                 String contrasenaUsuario = resultSet.getString("contrasenaUsuario");
                 String tipoUsuario = resultSet.getString("tipoUsuario");
@@ -32,7 +31,7 @@ public class ServicioUsuario extends Servicio {
                 usuarioTO = new UsuarioTO(idUsuario, correoUsuario, contrasenaUsuario, tipoUsuario);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+             System.out.println(e);
         } finally {
             cerrarResultSet(resultSet);
             cerrarStatement(statement);
@@ -54,7 +53,7 @@ public class ServicioUsuario extends Servicio {
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                int idUsuario = resultSet.getInt("idusuario");
+                int idUsuario = resultSet.getInt("idusuarios");
                 String correoUsuario = resultSet.getString("correoUsuario");
                 String contrasenaUsuario = resultSet.getString("contrasenaUsuario");
                 String tipoUsuario = resultSet.getString("tipoUsuario");
@@ -63,7 +62,7 @@ public class ServicioUsuario extends Servicio {
                 listaRetorno.add(usuarioTO);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+             System.out.println(e);
         } finally {
             cerrarResultSet(resultSet);
             cerrarStatement(statement);
@@ -83,11 +82,10 @@ public class ServicioUsuario extends Servicio {
             preparedStatement.setString(1, usuarioTO.getCorreoUsuario());
             preparedStatement.setString(2, usuarioTO.getContrasenaUsuario());
             preparedStatement.setString(3, usuarioTO.getTipoUsuario());
-
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e);
         } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
@@ -95,7 +93,6 @@ public class ServicioUsuario extends Servicio {
     }
 
     public void actualizarUser(UsuarioTO usuarioTO) {
-
         PreparedStatement preparedStatement = null;
 
         try {
@@ -106,20 +103,17 @@ public class ServicioUsuario extends Servicio {
             preparedStatement.setString(1, usuarioTO.getCorreoUsuario());
             preparedStatement.setString(2, usuarioTO.getContrasenaUsuario());
             preparedStatement.setString(3, usuarioTO.getTipoUsuario());
-    
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           System.out.println(e);
         } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
         }
-
     }
 
     public void actualizarContrasena(String correoUsua, String clave, String claveNueva) {
-
         PreparedStatement preparedStatement = null;
 
         try {
@@ -131,7 +125,7 @@ public class ServicioUsuario extends Servicio {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e);
         } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
@@ -140,22 +134,18 @@ public class ServicioUsuario extends Servicio {
     }
 
     public void eliminarUser(UsuarioTO usuarioTO) {
-        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         try {
             conectar();
-            String sql = "DELETE FROM usuarios WHERE idusuario='"+usuarioTO.getIdusuarios()+"'";
+            String sql = "DELETE FROM usuarios WHERE idusuarios='"+usuarioTO.getIdusuarios()+"'";
             preparedStatement = conexion.prepareStatement(sql);
-
-           // preparedStatement.setInt(1, usuarioTO.getCedula());
 
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e);
         } finally {
-            cerrarResultSet(resultSet);
             cerrarPreparedStatement(preparedStatement);
             desconectar();
         }

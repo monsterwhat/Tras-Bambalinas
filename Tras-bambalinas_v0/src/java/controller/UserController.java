@@ -14,13 +14,21 @@ import javax.annotation.PostConstruct;
 public class UserController implements Serializable {
 
     private int idUser;
+
+    public ServicioUsuario getServicioUsuario() {
+        return servicioUsuario;
+    }
+
+    public void setServicioUsuario(ServicioUsuario servicioUsuario) {
+        this.servicioUsuario = servicioUsuario;
+    }
     private String nombreUser;
     private String correoElectronico;
     private String passwordUser;
 
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
     private UsuarioTO usuarioTO = null;
-    List<UsuarioTO> listaUserBD = new ArrayList<UsuarioTO>();
+    List<UsuarioTO> listaUserBD = new ArrayList<>();
     private UsuarioTO newUser = null;
 
     public UserController() {
@@ -29,7 +37,11 @@ public class UserController implements Serializable {
 
     @PostConstruct
     public void cargar() {
-        this.listaUserBD = servicioUsuario.listaUsuariosBD();
+        try {
+            this.listaUserBD = servicioUsuario.listaUsuariosBD();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public int getIdUser() {
