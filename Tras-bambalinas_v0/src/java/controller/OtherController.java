@@ -18,11 +18,11 @@ public class OtherController implements Serializable {
     private ServicioCategoria servicioCategoria = new ServicioCategoria();
     private ServicioCaracteristica servicioCaracteristica = new ServicioCaracteristica();
 
-    private CategoriaTO categoriaTO;
-    private CaracteristicaTO caracteristicaTO;
+    private CategoriaTO categoriaTO = null ;
+    private CaracteristicaTO caracteristicaTO = null;
 
-    private CategoriaTO newCategoria;
-    private CaracteristicaTO newCaracteristica;
+    private CategoriaTO newCategoria = null;
+    private CaracteristicaTO newCaracteristica = null;
 
     List<CategoriaTO> listaCategorias = new ArrayList<CategoriaTO>();
     List<CaracteristicaTO> listaCaracteristicas = new ArrayList<CaracteristicaTO>();
