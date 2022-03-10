@@ -9,7 +9,7 @@
     </h:head>
     <h:body>
 
-        <h:form id="Detalle-Usuarios">
+        <h:form id="form">
 
             <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
                       widgetVar="showUserInformation" responsive="true">
@@ -25,10 +25,6 @@
                             Lista de Usuarios 
                         </f:facet>
 
-                        <p:column headerText="ID Usuario" sortBy="#{elUsuario.idusuarios}" filterBy="#{elUsuario.idusuarios}" filterMatchMode="exact">
-                            <h:outputText value="#{elUsuario.idusuarios}"/>
-                        </p:column>
-
                         <p:column headerText="Correo Electronico" sortBy="#{elUsuario.correoUsuario}" filterBy="#{elUsuario.correoUsuario}" filterMatchMode="exact">
                             <h:outputText value="#{elUsuario.correoUsuario}"/>
                         </p:column>
@@ -42,11 +38,11 @@
                         </p:column>
 
                         <p:column>
-
-                            <p:commandButton icon="pi pi-pencil" oncomplete="PF('showUserInformation').show()"
+                            <p:commandButton icon="pi pi-pencil" update=":form:manage-user-content"
+                                             oncomplete="PF('manageUserDialog').show()"
                                              styleClass="edit-button rounded-button ui-button-success" process="@this">
                                 <f:setPropertyActionListener value="#{elUsuario}" target="#{userController.newUser}"/>
-                                <p:resetInput target=":form:show-user-information"/>
+                                <p:resetInput target=":form:manage-user-content"/>
                             </p:commandButton>
                         </p:column>
 
@@ -54,18 +50,24 @@
                             <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
                                              oncomplete="PF('deleteUserDialog').show()">
                                 <f:setPropertyActionListener value="#{elUsuario}" target="#{userController.newUser}"/>
-                            </p:commandButton>
+                            </p:commandButton>                    
                         </p:column>
 
                     </p:dataTable>
 
                     <p:commandButton value="Nuevo usuario" icon="pi pi-plus" actionListener="#{userController.openNewUser}"
-                                     oncomplete="PF('createUserDialog').show()"
+                                     update=":form:create-user-content" oncomplete="PF('createUserDialog').show()"
                                      styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":form:create-user-content"/>
                     </p:commandButton>
+
+                    <f:facet name="footer">
+
+                    </f:facet>
 
                 </p:outputPanel>  
             </p:dialog>
+
 
             <p:confirmDialog widgetVar="deleteUserDialog" showEffect="fade" width="300"
                              message="Desea eliminar al usuario?" header="Confirmación" severity="warn">
@@ -80,10 +82,9 @@
 
             <p:dialog header="Crear Usuario" showEffect="fade" modal="true"
                       widgetVar="createUserDialog" responsive="true">
-                <p:outputPanel id="create-user-content" class="ui-fluid">
-                    
-                    <p:outputPanel rendered="#{not empty userController.newUser}">
 
+                <p:outputPanel id="create-user-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty userController.newUser}">
                         <div class="p-field">
                             <p:outputLabel for="mail">Correo</p:outputLabel>
                             <p:inputText id="Nmail" value="#{userController.newUser.correoUsuario}"/>
@@ -101,15 +102,48 @@
                 </p:outputPanel>
 
                 <f:facet name="footer">        
-                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{userController.agregarUsuarioTO()}"
-                                     update="userTable" process="create-user-content @this" onclick="PF('createUserDialog').hide()"/>
+                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{userController.agregarUsuarioTO}"
+                                     update=":form:create-user-content, userTable" process="create-user-content @this" onclick="PF('createUserDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createUserDialog').hide()"
                                      class="ui-button-secondary"/>
                 </f:facet>
+
             </p:dialog>
-        </h:form>
+
+            <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
+                      widgetVar="manageUserDialog" responsive="true">
+
+                <p:outputPanel id="manage-user-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty userController.newUser}">
+                        <div class="p-field">
+                            <p:outputLabel for="mail">Correo</p:outputLabel>
+                            <p:inputText id="mail" value="#{userController.newUser.correoUsuario}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="pass">Clave</p:outputLabel>
+                            <p:inputText id="pass" value="#{userController.newUser.contrasenaUsuario}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="tipo">Tipo de Usuario</p:outputLabel>
+                            <p:inputText id="tipo" value="#{userController.newUser.tipoUsuario}"/>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">     
+                    <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{userController.actualizarUsuarioTO}"
+                                     update=":form:manage-user-content, userTable" process="manage-user-content @this" onclick="PF('manageUserDialog').hide()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageUserDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+
+            </p:dialog>
         
+        </h:form>
+            
         <p:panelGrid columns="1">
             <p:commandButton id="regresarId" styleClass="ui-button-success" value="Regresar al Inicio" action="#{loginController.salir()}" >
             </p:commandButton>

@@ -24,8 +24,8 @@ public class OtherController implements Serializable {
     private CategoriaTO newCategoria;
     private CaracteristicaTO newCaracteristica;
 
-    List<CategoriaTO> listaCategorias = new ArrayList<>();
-    List<CaracteristicaTO> listaCaracteristicas = new ArrayList<>();
+    List<CategoriaTO> listaCategorias = new ArrayList<CategoriaTO>();
+    List<CaracteristicaTO> listaCaracteristicas = new ArrayList<CaracteristicaTO>();
 
     private int idCategoria;
     private String nombreCategoria;

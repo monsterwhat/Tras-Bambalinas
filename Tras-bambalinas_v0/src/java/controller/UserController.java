@@ -28,7 +28,7 @@ public class UserController implements Serializable {
 
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
     private UsuarioTO usuarioTO = null;
-    List<UsuarioTO> listaUserBD = new ArrayList<>();
+    List<UsuarioTO> listaUserBD = new ArrayList<UsuarioTO>();
     private UsuarioTO newUser = null;
 
     public UserController() {
