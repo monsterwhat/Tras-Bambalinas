@@ -93,7 +93,7 @@ public class LoginController implements Serializable {
 
             if (usuarioTO.getTipoUsuario().equals("admin")) {
                 this.listaUsuarios = servicioUsuario.listaUsuariosBD();
-                this.redireccionar("/faces/adminMenu.xhtml");
+                this.redireccionar("/faces/adminCategoria.xhtml");
             } else if (usuarioTO.getTipoUsuario().equals("cliente")) {
                 this.redireccionar("/faces/clienteMenu.xhtml");
             } else {
