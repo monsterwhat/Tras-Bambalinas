@@ -149,7 +149,11 @@
             </p:commandButton>
             <p:commandButton id="mostrarUsuarios" styleClass="ui-button-success" value="Mostrar Usuarios" update=":form:show-user-information" oncomplete="PF('showUserInformation').show()">
             </p:commandButton>
+            <p:commandButton id="iraCategoria" styleClass="ui-button-success" value="Ingresar a Categoria" actionListener="#{loginController.testCategoria()}" >
+            </p:commandButton>
+   
         </p:panelGrid>
+        
 
     </h:body>
 

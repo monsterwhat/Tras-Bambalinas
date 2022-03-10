@@ -11,7 +11,7 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-         <h:form id="form">
+         <h:form id="form1">
 
             <p:dialog header="Categoria" showEffect="fade" modal="true"
                       widgetVar="showCategoriaInformation" responsive="true">
@@ -42,7 +42,7 @@
                                              oncomplete="PF('showCategoriaInformation').show()"
                                              styleClass="edit-button rounded-button ui-button-success" process="@this">
                                 <f:setPropertyActionListener value="#{laCategoria}" target="#{OtherController.actualizarCategoriaTO}"/>
-                                <p:resetInput target=":form:show-categoria-information"/>
+                                <p:resetInput target=":form1:show-categoria-information"/>
                             </p:commandButton>
                         </p:column>
 
@@ -57,8 +57,8 @@
 
                     <p:commandButton value="Nueva Categoria" icon="pi pi-plus" actionListener="#{OtherController.agregarCategoriaTO}"
                                      oncomplete="PF('createCategoriaDialog').show()"
-                                     update=":form:show-categoria-information" styleClass="ui-button-success" style="margin-right: .5rem">
-                        <p:resetInput target=":form:show-categoria-information"/>
+                                     update=":form1:show-categoria-information" styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":form1:show-categoria-information"/>
                     </p:commandButton>
 
                 </p:outputPanel>  
@@ -94,7 +94,7 @@
 
                 <f:facet name="footer">        
                     <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.openNewCategoria}"
-                                     update=":form:create-categoria-content, categoriaTable" process="create-categoria-content @this" onclick="PF('createCategoriaDialog').hide()"/>
+                                     update=":form1:create-categoria-content, categoriaTable" process="create-categoria-content @this" onclick="PF('createCategoriaDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCategoriaDialog').hide()"
                                      class="ui-button-secondary"/>
@@ -121,7 +121,7 @@
 
                 <f:facet name="footer">     
                     <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{OtherController.actualizarCategoriaTO}"
-                                     update=":form:manage-categoria-content, categoriaTable" process="manage-categoria-content @this" onclick="PF('manageCategoriaDialog').hide()"/>
+                                     update=":form1:manage-categoria-content, categoriaTable" process="manage-categoria-content @this" onclick="PF('manageCategoriaDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageCategoriaDialog').hide()"
                                      class="ui-button-secondary"/>
