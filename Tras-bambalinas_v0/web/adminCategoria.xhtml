@@ -26,7 +26,6 @@
                         <f:facet name ="header">
                             Lista de Categorias
                         </f:facet>
-
                         <p:column headerText="ID Categoria" sortBy="#{laCategoria.idCategoria}" filterBy="#{laCategoria.idCategoria}" filterMatchMode="exact">
                             <h:outputText value="#{laCategoria.idCategoria}"/>
                         </p:column>
@@ -38,11 +37,11 @@
                         </p:column>
 
                         <p:column>
-                            <p:commandButton icon="pi pi-pencil" update=":form:show-categoria-information"
-                                             oncomplete="PF('showCategoriaInformation').show()"
+                            <p:commandButton icon="pi pi-pencil" update=":form:manage-categoria-content"
+                                             oncomplete="PF('manageCategoriaDialog').show()"
                                              styleClass="edit-button rounded-button ui-button-success" process="@this">
                                 <f:setPropertyActionListener value="#{laCategoria}" target="#{OtherController.actualizarCategoriaTO}"/>
-                                <p:resetInput target=":form:show-categoria-information"/>
+                                <p:resetInput target=":form:manage-categoria-content"/>
                             </p:commandButton>
                         </p:column>
 
@@ -55,10 +54,10 @@
 
                     </p:dataTable>
 
-                    <p:commandButton value="Nueva Categoria" icon="pi pi-plus" actionListener="#{OtherController.agregarCategoriaTO}"
+                    <p:commandButton value="Nueva Categoria" icon="pi pi-plus" actionListener="#{OtherController.openNewCategoria()}"
                                      oncomplete="PF('createCategoriaDialog').show()"
-                                     update=":form:show-categoria-information" styleClass="ui-button-success" style="margin-right: .5rem">
-                        <p:resetInput target=":form:show-categoria-information"/>
+                                     update=":form:create-categoria-content" styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":form:create-categoria-content"/>
                     </p:commandButton>
 
                 </p:outputPanel>  
@@ -81,11 +80,11 @@
                     <p:outputPanel rendered="#{not empty OtherController.newCategoria}">
 
                         <div class="p-field">
-                            <p:outputLabel for="Nombre">Nombre</p:outputLabel>
+                            <p:outputLabel for="nombre">Nombre</p:outputLabel>
                             <p:inputText id="Cnombre" value="#{OtherController.newCategoria.nombreCategoria}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="Descripcion">Descripcion</p:outputLabel>
+                            <p:outputLabel for="descripcion">Descripcion</p:outputLabel>
                             <p:inputText id="Cdescripcion" value="#{OtherController.newCategoria.descripcionCategoria}"/>
                         </div>
 
@@ -93,7 +92,7 @@
                 </p:outputPanel>
 
                 <f:facet name="footer">        
-                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.openNewCategoria}"
+                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCategoriaTO()}"
                                      update=":form:create-categoria-content, categoriaTable" process="create-categoria-content @this" onclick="PF('createCategoriaDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCategoriaDialog').hide()"
@@ -109,11 +108,11 @@
 
                         <div class="p-field">
                             <p:outputLabel for="Nombre">Nombre</p:outputLabel>
-                            <p:inputText id="mail" value="#{OtherController.newCategoria.nombreCategoria}"/>
+                            <p:inputText id="Nombre" value="#{OtherController.newCategoria.nombreCategoria}"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="Descripcion">Descripcion</p:outputLabel>
-                            <p:inputText id="pass" value="#{OtherController.newCategoria.descripcionCategoria}"/>
+                            <p:inputText id="Descripcion" value="#{OtherController.newCategoria.descripcionCategoria}"/>
                         </div>
 
                     </p:outputPanel>
