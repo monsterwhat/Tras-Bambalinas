@@ -11,7 +11,7 @@ import model.CategoriaTO;
 import servicio.ServicioCaracteristica;
 import servicio.ServicioCategoria;
 
-@ManagedBean(name = "userController")
+@ManagedBean(name = "OtherController")
 
 public class OtherController implements Serializable {
 

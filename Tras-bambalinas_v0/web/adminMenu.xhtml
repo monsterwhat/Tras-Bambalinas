@@ -141,13 +141,134 @@
                 </f:facet>
 
             </p:dialog>
-        
+
         </h:form>
-            
+
+        <h:form id="DetalleCategoria">
+
+            <p:dialog header="Categoria" showEffect="fade" modal="true"
+                      widgetVar="showCategoriaInformation" responsive="true">
+                <p:outputPanel id="show-categoria-information" class="ui-fluid">
+
+                    <p:dataTable value ="#{OtherController.listaCategorias}" var="laCategoria" rows="10" paginator="true" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="3,5,10,20,30,40,50,100"
+                                 emptyMessage="No existen categorias registradas"
+                                 reflow="true" id="categoriaTable">
+
+                        <f:facet name ="header">
+                            Lista de Categorias
+                        </f:facet>
+
+                        <p:column headerText="ID Categoria" sortBy="#{laCategoria.idCategoria}" filterBy="#{laCategoria.idCategoria}" filterMatchMode="exact">
+                            <h:outputText value="#{laCategoria.idCategoria}"/>
+                        </p:column>
+                        <p:column headerText="Nombre Categoria" sortBy="#{laCategoria.nombreCategoria}" filterBy="#{laCategoria.nombreCategoria}" filterMatchMode="exact">
+                            <h:outputText value="#{laCategoria.nombreCategoria}"/>
+                        </p:column>
+                        <p:column headerText="Descripcion Categoria" sortBy="#{laCategoria.descripcionCategoria}" filterBy="#{laCategoria.descripcionCategoria}" filterMatchMode="contains">
+                            <h:outputText value="#{laCategoria.descripcionCategoria}"/>
+                        </p:column>
+
+                        <p:column>
+                            <p:commandButton icon="pi pi-pencil" update=":form:show-categoria-information"
+                                             oncomplete="PF('showCategoriaInformation').show()"
+                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                <f:setPropertyActionListener value="#{laCategoria}" target="#{OtherController.actualizarCategoriaTO}"/>
+                                <p:resetInput target=":form:show-categoria-information"/>
+                            </p:commandButton>
+                        </p:column>
+
+                        <p:column>
+                            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                             oncomplete="PF('deleteCategoriaDialog').show()">
+                                <f:setPropertyActionListener value="#{laCategoria}" target="#{OtherController.eliminarCategoriaTO}"/>
+                            </p:commandButton>                    
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:commandButton value="Nueva Categoria" icon="pi pi-plus" actionListener="#{OtherController.agregarCategoriaTO}"
+                                     oncomplete="PF('createCategoriaDialog').show()"
+                                     update=":form:show-categoria-content" styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":form:show-categoria-information"/>
+                    </p:commandButton>
+
+                </p:outputPanel>  
+            </p:dialog>
+
+            <p:confirmDialog widgetVar="deleteCategoriaDialog" showEffect="fade" width="300"
+                             message="Desea eliminar la categoria?" header="Confirmación" severity="warn">
+
+                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{OtherController.eliminarCategoriaTO}"
+                                 process="@this"  update="categoriaTable" oncomplete="PF('deleteCategoriaDialog').hide()"/>
+
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteCategoriaDialog').hide()"/>
+            </p:confirmDialog>
+
+            <p:dialog header="Crear Categoria" showEffect="fade" modal="true"
+                      widgetVar="createCategoriaDialog" responsive="true">
+
+                <p:outputPanel id="create-categoria-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty OtherController.openNewCategoria}">
+
+                        <div class="p-field">
+                            <p:outputLabel for="Nombre">Nombre</p:outputLabel>
+                            <p:inputText id="Cnombre" value="#{OtherController.openNewCategoria.nombreCategoria}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="Descripcion">Descripcion</p:outputLabel>
+                            <p:inputText id="Cdescripcion" value="#{OtherController.openNewCategoria.descripcionCategoria}"/>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">        
+                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.openNewCategoria}"
+                                     update=":form:create-categoria-content, categoriaTable" process="create-categoria-content @this" onclick="PF('createCategoriaDialog').hide()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCategoriaDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+            </p:dialog>
+
+            <p:dialog header="Detalle de Categoria" showEffect="fade" modal="true"
+                      widgetVar="manageCategoriaDialog" responsive="true">
+
+                <p:outputPanel id="manage-categoria-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty OtherController.newCategoria}">
+
+                        <div class="p-field">
+                            <p:outputLabel for="Nombre">Nombre</p:outputLabel>
+                            <p:inputText id="mail" value="#{OtherController.newCategoria.nombreCategoria}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="Descripcion">Descripcion</p:outputLabel>
+                            <p:inputText id="pass" value="#{OtherController.newCategoria.descripcionCategoria}"/>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">     
+                    <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{OtherController.actualizarCategoriaTO}"
+                                     update=":form:manage-categoria-content, categoriaTable" process="manage-categoria-content @this" onclick="PF('manageCategoriaDialog').hide()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageCategoriaDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+            </p:dialog>
+
+        </h:form>
+
         <p:panelGrid columns="1">
             <p:commandButton id="regresarId" styleClass="ui-button-success" value="Regresar al Inicio" action="#{loginController.salir()}" >
             </p:commandButton>
             <p:commandButton id="mostrarUsuarios" styleClass="ui-button-success" value="Mostrar Usuarios" update=":form:show-user-information" oncomplete="PF('showUserInformation').show()">
+            </p:commandButton>
+            <p:commandButton id="mostrarCategorias" styleClass="ui-button-success" value="Mostrar Categorias" update=":form:show-categoria-information" oncomplete="PF('showCategoriaInformation').show()">
             </p:commandButton>
         </p:panelGrid>
 
