@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import model.UsuarioTO;
 import servicio.ServicioUsuario;
 import javax.servlet.http.HttpServletRequest;
+import servicio.ServicioCifrar;
 
 @ManagedBean(name = "loginController")
 @SessionScoped
@@ -36,6 +37,10 @@ public class LoginController implements Serializable {
 
     public String getVerificarClave() {
         return verificarClave;
+    }
+
+    public String getClavecifrada() {
+        return ServicioCifrar.encrypt(clave);
     }
 
     public void setVerificarClave(String verificarClave) {
@@ -83,47 +88,76 @@ public class LoginController implements Serializable {
     }
 
     public void ingresar() {
-        System.out.println("El valor digitado por el usuario (Correo) es: " + this.getCorreo());
-        System.out.println("El valor digitado por el usuario (password) es: " + this.getClave());
+        try {
+            System.out.println("El valor digitado por el usuario (Correo) es: " + this.getCorreo());
+            System.out.println("El valor digitado por el usuario (password) es: " + this.getClave());
 
-        if (this.getCorreo() == null || "".equals(this.getCorreo())) {
-            FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos invalidos", "El correo electronico es incorrecto"));
-        } else {
-            usuarioTO = servicioUsuario.existeUsuario(this.getCorreo(), this.getClave());
-
-            if (usuarioTO.getTipoUsuario().equals("admin")) {
-                this.listaUsuarios = servicioUsuario.listaUsuariosBD();
-                this.redireccionar("/faces/adminMenu.xhtml");
-            } else if (usuarioTO.getTipoUsuario().equals("cliente")) {
-                this.redireccionar("/faces/clienteMenu.xhtml");
+            if (this.getCorreo() == null || "".equals(this.getCorreo())) {
+                FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos invalidos", "El correo electronico es incorrecto"));
             } else {
-                FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Autenticacion", "Las credenciales son invalidas"));
+                usuarioTO = servicioUsuario.existeUsuario(this.getCorreo(), this.getClave());
 
+                switch (usuarioTO.getTipoUsuario()) {
+                    case "admin":
+                        this.listaUsuarios = servicioUsuario.listaUsuariosBD();
+                        this.redireccionar("/faces/adminMenu.xhtml");
+                        break;
+                    case "cliente":
+                        this.redireccionar("/faces/clienteMenu.xhtml");
+                        break;
+                    default:
+                        FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Autenticacion", "Las credenciales son invalidas"));
+                        break;
+                }
             }
+        } catch (Exception e) {
+            System.out.println("Error al ingresar el usuario! " + e);
         }
+
     }
 
     public void cambiarContrasena() {
-        System.out.println("El valor digitado por el usuario (Correo) es: " + this.getCorreo());
-        System.out.println("El valor digitado por el usuario (password) es: " + this.getClave());
-        System.out.println("El valor digitado por el usuario (passwordNuevo) es: " + this.getClaveNueva());
+        try {
+            System.out.println("El valor digitado por el usuario (Correo) es: " + this.getCorreo());
+            System.out.println("El valor digitado por el usuario (password) es: " + this.getClave());
+            System.out.println("El valor digitado por el usuario (passwordNuevo) es: " + this.getClaveNueva());
 
-        if (this.getCorreo() == null || "".equals(this.getCorreo())) {
-            FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos invalidos", "El correo electronico es incorrecto"));
-        } else if (this.claveNueva == null ? this.verificarClave == null : this.claveNueva.equals(this.verificarClave)) {
-            this.servicioUsuario.actualizarContrasena(this.getCorreo(), this.getClave(), this.getClaveNueva());
-            FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "La Contraseña se guardo con exito"));
+            if (this.getCorreo() == null || "".equals(this.getCorreo())) {
+                FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos invalidos", "El correo electronico es incorrecto"));
+            } else if (this.claveNueva == null ? this.verificarClave == null : this.claveNueva.equals(this.verificarClave)) {
+                this.servicioUsuario.actualizarContrasena(this.getCorreo(), this.getClave(), this.getClaveNueva());
+                FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "La Contraseña se guardo con exito"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error al cambiar contrasena! " + e);
         }
-
+    }
+    
+    public void registrarUsuario(){
+        try {
+            System.out.println("El valor digitado por el usuario (Correo) es: " + this.getCorreo());
+            System.out.println("El valor digitado por el usuario (password) es: " + this.getClaveNueva());
+            
+            if(this.getCorreo()==null || "".equals(this.getCorreo())){
+            FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos invalidos", "El correo electronico es incorrecto"));
+            } else if (this.claveNueva == null){
+            FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos invalidos", "La contrasena no puede estar vacia"));
+            }
+            UsuarioTO nuevoUsuario = new UsuarioTO(this.getCorreo(),this.getClaveNueva(),"admin");
+            this.servicioUsuario.insertarUser(nuevoUsuario);
+            
+        } catch (Exception e) {
+            System.out.println("Error al registrar Usuario! " + e);
+        }
     }
 
     public void redireccionar(String ruta) {
-        HttpServletRequest request;
         try {
+            HttpServletRequest request;
             request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             FacesContext.getCurrentInstance().getExternalContext().redirect(request.getContextPath() + ruta);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error redireccionando. " + e);
         }
     }
 
@@ -135,7 +169,7 @@ public class LoginController implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().redirect(request.getContextPath()
                     + "/faces/index.xhtml?faces-redirect=true");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error al salir. " + e);
         }
 
     }

@@ -20,6 +20,12 @@ public class UsuarioTO implements Serializable{
     
     }
 
+    public UsuarioTO(String correoUsuario, String contrasenaUsuario, String tipoUsuario) {
+        this.correoUsuario = correoUsuario;
+        this.contrasenaUsuario = contrasenaUsuario;
+        this.tipoUsuario = tipoUsuario;
+    }
+
     public int getIdusuarios() {
         return idusuarios;
     }

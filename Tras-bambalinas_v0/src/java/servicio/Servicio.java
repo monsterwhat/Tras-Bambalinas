@@ -23,11 +23,9 @@ public class Servicio {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conexion = DriverManager.getConnection("jdbc:mysql://"+
                         host+":"+puerto+"/"+nombreBD+"?serverTimezone=UTC",usuario,clave);
-        }catch(ClassNotFoundException e){
-            e.printStackTrace();
+        }catch(ClassNotFoundException | SQLException e){
+            System.out.println("Error al conectarse a la base de datos! " + e);
             
-        }catch(SQLException e){
-            e.printStackTrace();
         }
     }
     
@@ -38,7 +36,7 @@ public class Servicio {
                 statement = null;
             }
         } catch(SQLException e){
-            e.printStackTrace();       
+            System.out.println("Error cerrando el Statement! " + e);   
         }
     }
     
@@ -49,9 +47,8 @@ public class Servicio {
                 resultSet = null;
             }
         } catch(SQLException e){
-            e.printStackTrace();       
+            System.out.println("Error cerrando el ResultSet! " + e);      
         }
-        
     }
     
     public void cerrarPreparedStatement(PreparedStatement preparedStatement){
@@ -61,9 +58,8 @@ public class Servicio {
                 preparedStatement = null;
             }
         } catch(SQLException e){
-            e.printStackTrace();       
+            System.out.println("Error al cerrar el preparedStatement! " + e);
         }
-        
     }
     
     public void desconectar(){
@@ -73,9 +69,8 @@ public class Servicio {
                 conexion = null;
             }
         } catch(SQLException e){
-            e.printStackTrace();       
+            System.out.println("Error al tratar de cerrar la conecion! " + e);   
         } 
-    
     }
     
 }

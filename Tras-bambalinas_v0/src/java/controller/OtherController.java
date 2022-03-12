@@ -194,40 +194,66 @@ public class OtherController implements Serializable {
     }
 
     public void agregarCategoriaTO() {
-        this.servicioCategoria.insertarCategoria(newCategoria);
-        this.cargarCategoria();
+        try {
+            this.servicioCategoria.insertarCategoria(newCategoria);
+            this.cargarCategoria();
+        } catch (Exception e) {
+            System.out.println("Error agregando caegoria! " + e);
+        }
     }
 
     public void actualizarCategoriaTO() {
-        this.servicioCategoria.actualizarCategoria(newCategoria);
-        this.cargarCategoria();
-
+        try {
+            this.servicioCategoria.actualizarCategoria(newCategoria);
+            this.cargarCategoria();
+        } catch (Exception e) {
+            System.out.println("Error actualizando caegoria! " + e);
+        }
     }
 
     public void eliminarCategoriaTO() {
-        this.servicioCategoria.eliminarCategoria(newCategoria);
-        this.cargarCategoria();
-
+        try {
+            this.servicioCategoria.eliminarCategoria(newCategoria);
+            this.cargarCategoria();
+        } catch (Exception e) {
+            System.out.println("Error eliminando caegoria! " + e);
+        }
     }
 
     public void agregarCaracteristicaTO() {
-        this.servicioCaracteristica.insertarCaracteristica(newCaracteristica);
-        cargarCaracteristicaTO();
+        try {
+            this.servicioCaracteristica.insertarCaracteristica(newCaracteristica);
+            cargarCaracteristicaTO();
+        } catch (Exception e) {
+            System.out.println("Error agregando caracteristica! " + e);
+        }
     }
 
     public void actualizarCaracteristicaTO() {
-        this.servicioCaracteristica.actualizarCaracteristica(newCaracteristica);
-        cargarCaracteristicaTO();
+        try {
+            this.servicioCaracteristica.actualizarCaracteristica(newCaracteristica);
+            cargarCaracteristicaTO();
+        } catch (Exception e) {
+            System.out.println("Error actualizando caracteristica! " + e);
+        }
     }
 
     public void eliminarCaracteristicaTO() {
-        this.servicioCaracteristica.eliminarCaracteristica(newCaracteristica);
-        cargarCaracteristicaTO();
+        try {
+            this.servicioCaracteristica.eliminarCaracteristica(newCaracteristica);
+            cargarCaracteristicaTO();
+        } catch (Exception e) {
+            System.out.println("Error eliminanddo caracteristica! " + e);
+        }
     }
 
     public void cargarCaracteristicaTO() {
-        this.listaCaracteristicas = this.servicioCaracteristica.listaCaracteristicasBD();
+        try {
+            this.listaCaracteristicas = this.servicioCaracteristica.listaCaracteristicasBD();
 
+        } catch (Exception e) {
+            System.out.println("Error cargando caracteristicas! " + e);
+
+        }
     }
-
 }

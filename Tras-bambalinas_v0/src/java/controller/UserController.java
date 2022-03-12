@@ -52,7 +52,6 @@ public class UserController implements Serializable {
         this.idUser = idUser;
     }
 
-
     public String getCorreoElectronico() {
         return correoElectronico;
     }
@@ -98,18 +97,30 @@ public class UserController implements Serializable {
     }
 
     public void agregarUsuarioTO() {
-        this.servicioUsuario.insertarUser(newUser);
-        this.cargar();
+        try {
+            this.servicioUsuario.insertarUser(newUser);
+            this.cargar();
+        } catch (Exception e) {
+            System.out.println("Error agregando usuario! " + e);
+        }
     }
 
     public void actualizarUsuarioTO() {
-        this.servicioUsuario.actualizarUser(newUser);
-        this.cargar();
+        try {
+            this.servicioUsuario.actualizarUser(newUser);
+            this.cargar();
+        } catch (Exception e) {
+            System.out.println("Error actualizando usuario! " + e);
+        }
     }
 
     public void eliminarUsuarioTO() {
-        this.servicioUsuario.eliminarUser(newUser);
-        this.cargar();
+        try {
+            this.servicioUsuario.eliminarUser(newUser);
+            this.cargar();
+        } catch (Exception e) {
+            System.out.println("Error elimando usuario! " + e);
+        }
     }
 
 }

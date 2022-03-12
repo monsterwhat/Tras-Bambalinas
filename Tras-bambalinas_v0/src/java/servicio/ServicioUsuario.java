@@ -20,7 +20,7 @@ public class ServicioUsuario extends Servicio {
             conectar();
 
             statement = conexion.createStatement();
-            String sql = "SELECT * FROM usuarios WHERE correoUsuario = '" + correoUsua + "' AND contrasenaUsuario = '" + clave + "'";
+            String sql = "SELECT * FROM usuarios WHERE correoUsuario = '" + correoUsua + "' AND contrasenaUsuario = '" + ServicioCifrar.encrypt(clave) + "'";
             resultSet = statement.executeQuery(sql);
             if (resultSet.next()) {
                  int idUsuario = resultSet.getInt("idusuarios");
@@ -31,7 +31,7 @@ public class ServicioUsuario extends Servicio {
                 usuarioTO = new UsuarioTO(idUsuario, correoUsuario, contrasenaUsuario, tipoUsuario);
             }
         } catch (SQLException e) {
-             System.out.println(e);
+             System.out.println("Error tratando de cargar datos de usuario (conectando!)! "+e);
         } finally {
             cerrarResultSet(resultSet);
             cerrarStatement(statement);
@@ -62,7 +62,7 @@ public class ServicioUsuario extends Servicio {
                 listaRetorno.add(usuarioTO);
             }
         } catch (SQLException e) {
-             System.out.println(e);
+             System.out.println("Error al cargar la lista de usuarios! " + e);
         } finally {
             cerrarResultSet(resultSet);
             cerrarStatement(statement);
@@ -80,12 +80,12 @@ public class ServicioUsuario extends Servicio {
             preparedStatement = conexion.prepareStatement(sql);
 
             preparedStatement.setString(1, usuarioTO.getCorreoUsuario());
-            preparedStatement.setString(2, usuarioTO.getContrasenaUsuario());
+            preparedStatement.setString(2, ServicioCifrar.encrypt(usuarioTO.getContrasenaUsuario()));
             preparedStatement.setString(3, usuarioTO.getTipoUsuario());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error al insertar usuario! " + e);
         } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
@@ -101,12 +101,12 @@ public class ServicioUsuario extends Servicio {
             preparedStatement = conexion.prepareStatement(sql);
 
             preparedStatement.setString(1, usuarioTO.getCorreoUsuario());
-            preparedStatement.setString(2, usuarioTO.getContrasenaUsuario());
+            preparedStatement.setString(2, ServicioCifrar.encrypt(usuarioTO.getContrasenaUsuario()));
             preparedStatement.setString(3, usuarioTO.getTipoUsuario());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-           System.out.println(e);
+           System.out.println("Error al actualizar el usuario! " + e);
         } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
@@ -121,11 +121,11 @@ public class ServicioUsuario extends Servicio {
             String sql = "UPDATE usuarios SET contrasenaUsuario=? WHERE correoUsuario = '" + correoUsua + "' AND contrasenaUsuario = '" + clave + "'";
             preparedStatement = conexion.prepareStatement(sql);
 
-            preparedStatement.setString(1, claveNueva);
+            preparedStatement.setString(1, ServicioCifrar.encrypt(claveNueva));
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error al actualizar la contrasena! " + e);
         } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
@@ -144,7 +144,7 @@ public class ServicioUsuario extends Servicio {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error al eliminar usuario! " + e);
         } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
