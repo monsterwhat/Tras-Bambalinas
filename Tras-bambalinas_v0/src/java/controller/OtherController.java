@@ -198,7 +198,7 @@ public class OtherController implements Serializable {
             this.servicioCategoria.insertarCategoria(newCategoria);
             this.cargarCategoria();
         } catch (Exception e) {
-            System.out.println("Error agregando caegoria! " + e);
+            System.out.println("Error agregando categoria! " + e);
         }
     }
 

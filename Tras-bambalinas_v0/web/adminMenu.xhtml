@@ -174,7 +174,7 @@
                             <p:commandButton icon="pi pi-pencil" update=":DetalleCategoria:manage-categoria-content"
                                              oncomplete="PF('showCategoriaInformation').show()"
                                              styleClass="edit-button rounded-button ui-button-success" process="@this">
-                                <f:setPropertyActionListener value="#{laCategoria}" target="#{OtherController.actualizarCategoriaTO}"/>
+                                <f:setPropertyActionListener value="#{laCategoria}" target="#{OtherController.newCategoria}"/>
                                 <p:resetInput target=":DetalleCategoria:manage-categoria-content"/>
                             </p:commandButton>
                         </p:column>
@@ -182,13 +182,13 @@
                         <p:column>
                             <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
                                              oncomplete="PF('deleteCategoriaDialog').show()">
-                                <f:setPropertyActionListener value="#{laCategoria}" target="#{OtherController.eliminarCategoriaTO}"/>
+                                <f:setPropertyActionListener value="#{laCategoria}" target="#{OtherController.newCategoria}"/>
                             </p:commandButton>                    
                         </p:column>
 
                     </p:dataTable>
 
-                    <p:commandButton value="Nueva Categoria" icon="pi pi-plus" actionListener="#{OtherController.agregarCategoriaTO}"
+                    <p:commandButton value="Nueva Categoria" icon="pi pi-plus" actionListener="#{OtherController.openNewCategoria}"
                                      update=":DetalleCategoria:create-categoria-content" oncomplete="PF('createCategoriaDialog').show()"
                                      styleClass="ui-button-success" style="margin-right: .5rem">
                         <p:resetInput target=":DetalleCategoria:create-categoria-content"/>
@@ -214,19 +214,19 @@
                     <p:outputPanel rendered="#{not empty OtherController.newCategoria}">
 
                         <div class="p-field">
-                            <p:outputLabel for="Nombre">Nombre</p:outputLabel>
-                            <p:inputText id="Cnombre" value="#{OtherController.newCategoria.nombreCategoria}"/>
+                            <p:outputLabel for="CnombreCategoria">Nombre</p:outputLabel>
+                            <p:inputText id="CnombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="Descripcion">Descripcion</p:outputLabel>
-                            <p:inputText id="Cdescripcion" value="#{OtherController.newCategoria.descripcionCategoria}"/>
+                            <p:outputLabel for="CdescripcionCategoria">Descripcion</p:outputLabel>
+                            <p:inputText id="CdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
                         </div>
 
                     </p:outputPanel>
                 </p:outputPanel>
 
                 <f:facet name="footer">        
-                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.openNewCategoria}"
+                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCategoriaTO()}"
                                      update=":DetalleCategoria:create-categoria-content, categoriaTable" process="create-categoria-content @this" onclick="PF('createCategoriaDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCategoriaDialog').hide()"
@@ -235,19 +235,19 @@
                 
             </p:dialog>
 
-            <p:dialog header="Detalle de Categoria" showEffect="fade" modal="true"
+            <p:dialog header="Detalle de la Categoria" showEffect="fade" modal="true"
                       widgetVar="manageCategoriaDialog" responsive="true">
 
                 <p:outputPanel id="manage-categoria-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty OtherController.newCategoria}">
 
                         <div class="p-field">
-                            <p:outputLabel for="Nombre">Nombre</p:outputLabel>
-                            <p:inputText id="mail" value="#{OtherController.newCategoria.nombreCategoria}"/>
+                            <p:outputLabel for="DnombreCategoria">Nombre de la Categoria</p:outputLabel>
+                            <p:inputText id="DnombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="Descripcion">Descripcion</p:outputLabel>
-                            <p:inputText id="pass" value="#{OtherController.newCategoria.descripcionCategoria}"/>
+                            <p:outputLabel for="DdescripcionCategoria">Descripcion de la Categoria</p:outputLabel>
+                            <p:inputText id="DdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
                         </div>
 
                     </p:outputPanel>
