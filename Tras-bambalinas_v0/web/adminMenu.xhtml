@@ -188,7 +188,7 @@
 
                     </p:dataTable>
 
-                    <p:commandButton value="Nueva Categoria" icon="pi pi-plus" actionListener="#{OtherController.newCategoria}"
+                    <p:commandButton value="Nueva Categoria" icon="pi pi-plus" actionListener="#{OtherController.openNewCategoria()}"
                                      update=":DetalleCategoria:create-categoria-content" oncomplete="PF('createCategoriaDialog').show()"
                                      styleClass="ui-button-success" style="margin-right: .5rem">
                         <p:resetInput target=":DetalleCategoria:create-categoria-content"/>
@@ -215,18 +215,18 @@
 
                         <div class="p-field">
                             <p:outputLabel for="nombreCategoria" value="Nombre de la Categoria"/>
-                            <p:inputText id="nombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}"/>
+                            <p:inputText id="NnombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="descripcionCategoria" value="Descripcion de la Categoria"/>
-                            <p:inputText id="descripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
+                            <p:inputText id="NdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
                         </div>
 
                     </p:outputPanel>
                 </p:outputPanel>
 
                 <f:facet name="footer">        
-                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCategoriaTO()}"
+                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCategoriaTO}"
                                      update=":DetalleCategoria:create-categoria-content, categoriaTable" process="create-categoria-content @this" onclick="PF('createCategoriaDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCategoriaDialog').hide()"
@@ -242,12 +242,12 @@
                     <p:outputPanel rendered="#{not empty OtherController.newCategoria}">
 
                         <div class="p-field">
-                            <p:outputLabel for="nombreCategoria1" value="Nombre de la Categoria"/>
-                            <p:inputText id="nombreCategoria1" value="#{OtherController.newCategoria.nombreCategoria}"/>
+                            <p:outputLabel for="nombreCategoria" value="Nombre de la Categoria"/>
+                            <p:inputText id="nombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="descripcionCategoria1" value="Descripcion de la Categoria"/>
-                            <p:inputText id="descripcionCategoria1" value="#{OtherController.newCategoria.descripcionCategoria}"/>
+                            <p:outputLabel for="descripcionCategoria" value="Descripcion de la Categoria"/>
+                            <p:inputText id="descripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
                         </div>
 
                     </p:outputPanel>
@@ -317,7 +317,7 @@
 
                     </p:dataTable>
 
-                    <p:commandButton value="Nueva Caracteristica" icon="pi pi-plus" actionListener="#{OtherController.newCaracteristica}"
+                    <p:commandButton value="Nueva Caracteristica" icon="pi pi-plus" actionListener="#{OtherController.openNewCaracteristica}"
                                      update=":DetalleCaracteristica:create-caracteristica-dialog" oncomplete="PF('createCaracteristicaDialog').show()"
                                      styleClass="ui-button-success" style="margin-right: .5rem">
                         <p:resetInput target=":DetalleCaracteristica:create-caracteristica-dialog"/>
@@ -344,6 +344,46 @@
 
                         <div class="p-field">
                             <p:outputLabel for="nombreCaracteristica" value="Nombre de la Caracteristica"/>
+                            <p:inputText id="NnombreCaracteristica" value="#{OtherController.newCaracteristica.nombreCaracteristica}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="descripcionCaracteristica" value="Descripcion de la Caracteristica"/>
+                            <p:inputText id="NdescripcionCaracteristica" value="#{OtherController.newCaracteristica.descripcionCaracteristica}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="cantidadCaracteristica" value="Cantidad"/>
+                            <p:inputText id="NcantidadCaracteristica" value="#{OtherController.newCaracteristica.cantidadCaracteristica}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="precioCaracteristica" value="Precio"/>
+                            <p:inputText id="NprecioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="prioridadCaracteristica" value="Peso de Prioridad"/>
+                            <p:inputText id="NprioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}"/>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">        
+                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCaracteristicaTO}"
+                                     update=":DetalleCaracteristica:create-caracteristica-dialog, caracteristicaTable" process="create-caracteristica-dialog @this" onclick="PF('createCaracteristicaDialog').hide()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCaracteristicaDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+                
+            </p:dialog>
+
+            <p:dialog header="Detalle de la Caracteristica" showEffect="fade" modal="true"
+                      widgetVar="manageCaracteristicaDialog" responsive="true">
+
+                <p:outputPanel id="manage-caracteristica-dialog" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty OtherController.newCaracteristica}">
+
+                        <div class="p-field">
+                            <p:outputLabel for="nombreCaracteristica" value="Nombre de la Caracteristica"/>
                             <p:inputText id="nombreCaracteristica" value="#{OtherController.newCaracteristica.nombreCaracteristica}"/>
                         </div>
                         <div class="p-field">
@@ -361,46 +401,6 @@
                         <div class="p-field">
                             <p:outputLabel for="prioridadCaracteristica" value="Peso de Prioridad"/>
                             <p:inputText id="prioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}"/>
-                        </div>
-
-                    </p:outputPanel>
-                </p:outputPanel>
-
-                <f:facet name="footer">        
-                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCaracteristicaTO()}"
-                                     update=":DetalleCaracteristica:create-caracteristica-dialog, caracteristicaTable" process="create-caracteristica-dialog @this" onclick="PF('createCaracteristicaDialog').hide()"/>
-
-                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCaracteristicaDialog').hide()"
-                                     class="ui-button-secondary"/>
-                </f:facet>
-                
-            </p:dialog>
-
-            <p:dialog header="Detalle de la Caracteristica" showEffect="fade" modal="true"
-                      widgetVar="manageCaracteristicaDialog" responsive="true">
-
-                <p:outputPanel id="manage-caracteristica-dialog" class="ui-fluid">
-                    <p:outputPanel rendered="#{not empty OtherController.newCaracteristica}">
-
-                        <div class="p-field">
-                            <p:outputLabel for="nombreCaracteristica1" value="Nombre de la Caracteristica"/>
-                            <p:inputText id="nombreCaracteristica1" value="#{OtherController.newCaracteristica.nombreCaracteristica}"/>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="descripcionCaracteristica1" value="Descripcion de la Caracteristica"/>
-                            <p:inputText id="descripcionCaracteristica1" value="#{OtherController.newCaracteristica.descripcionCaracteristica}"/>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="cantidadCaracteristica1" value="Cantidad"/>
-                            <p:inputText id="cantidadCaracteristica1" value="#{OtherController.newCaracteristica.cantidadCaracteristica}"/>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="precioCaracteristica1" value="Precio"/>
-                            <p:inputText id="precioCaracteristica1" value="#{OtherController.newCaracteristica.precioCaracteristica}"/>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="prioridadCaracteristica1" value="Peso de Prioridad"/>
-                            <p:inputText id="prioridadCaracteristica1" value="#{OtherController.newCaracteristica.prioridadCaracteristica}"/>
                         </div>
 
                     </p:outputPanel>

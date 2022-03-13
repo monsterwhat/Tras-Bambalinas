@@ -195,25 +195,36 @@ public class OtherController implements Serializable {
 
     public void agregarCategoriaTO() {
         try {
-            System.out.println(newCategoria);
+            if(newCategoria==null){
+                System.out.println("La categoria se encuentra nula");
+                return;
+            }
             this.servicioCategoria.insertarCategoria(newCategoria);
             this.cargarCategoria();
         } catch (Exception e) {
-            System.out.println("Error agregando categoria! " + e);
+            System.out.println("Error agregando la categoria! " + e);
         }
     }
 
     public void actualizarCategoriaTO() {
         try {
+            if(newCategoria==null){
+                System.out.println("La categoria se encuentra nula");
+                return;
+            }
             this.servicioCategoria.actualizarCategoria(newCategoria);
             this.cargarCategoria();
         } catch (Exception e) {
-            System.out.println("Error actualizando caegoria! " + e);
+            System.out.println("Error actualizando la categoria! " + e);
         }
     }
 
     public void eliminarCategoriaTO() {
         try {
+            if(newCategoria==null){
+                System.out.println("La categoria se encuentra nula");
+                return;
+            }
             this.servicioCategoria.eliminarCategoria(newCategoria);
             this.cargarCategoria();
         } catch (Exception e) {
@@ -223,6 +234,10 @@ public class OtherController implements Serializable {
 
     public void agregarCaracteristicaTO() {
         try {
+            if(newCaracteristica==null){
+                System.out.println("La caracterisitica se encuentra nula");
+                return;
+            }
             this.servicioCaracteristica.insertarCaracteristica(newCaracteristica);
             cargarCaracteristicaTO();
         } catch (Exception e) {
@@ -232,6 +247,10 @@ public class OtherController implements Serializable {
 
     public void actualizarCaracteristicaTO() {
         try {
+             if(newCaracteristica==null){
+                System.out.println("La caracterisitica se encuentra nula");
+                return;
+            }
             this.servicioCaracteristica.actualizarCaracteristica(newCaracteristica);
             cargarCaracteristicaTO();
         } catch (Exception e) {
@@ -241,6 +260,10 @@ public class OtherController implements Serializable {
 
     public void eliminarCaracteristicaTO() {
         try {
+             if(newCaracteristica==null){
+                System.out.println("La caracterisitica se encuentra nula");
+                return;
+            }
             this.servicioCaracteristica.eliminarCaracteristica(newCaracteristica);
             cargarCaracteristicaTO();
         } catch (Exception e) {

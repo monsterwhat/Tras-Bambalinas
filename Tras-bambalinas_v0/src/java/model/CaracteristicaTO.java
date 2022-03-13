@@ -21,6 +21,13 @@ public class CaracteristicaTO implements Serializable {
         this.precioCaracteristica = precioCaracteristica;
     }
 
+    public CaracteristicaTO(String nombreCaracteristica, String descripcionCaracteristica, int cantidadCaracteristica, int prioridadCaracteristica, double precioCaracteristica) {
+        this.nombreCaracteristica = nombreCaracteristica;
+        this.descripcionCaracteristica = descripcionCaracteristica;
+        this.cantidadCaracteristica = cantidadCaracteristica;
+        this.prioridadCaracteristica = prioridadCaracteristica;
+        this.precioCaracteristica = precioCaracteristica;
+    }
 
     public CaracteristicaTO(){
     }
