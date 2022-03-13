@@ -18,6 +18,12 @@ public class CategoriaTO implements Serializable {
     public CategoriaTO(){
     }
 
+    public CategoriaTO(String nombreCategoria, String descripcionCategoria) {
+        this.nombreCategoria = nombreCategoria;
+        this.descripcionCategoria = descripcionCategoria;
+    }
+    
+
     public int getIdCategoria() {
         return idCategoria;
     }

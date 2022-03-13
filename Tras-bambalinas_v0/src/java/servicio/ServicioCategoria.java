@@ -65,6 +65,9 @@ public class ServicioCategoria extends Servicio {
     }
 
     public void insertarCategoria(CategoriaTO CategoriaTO) {
+        if(CategoriaTO==null){
+            return;
+        }
         PreparedStatement preparedStatement = null;
 
         try {

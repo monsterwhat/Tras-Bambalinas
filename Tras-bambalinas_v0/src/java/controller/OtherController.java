@@ -177,12 +177,12 @@ public class OtherController implements Serializable {
         this.newCategoria = newCategoria;
     }
 
-    public CaracteristicaTO getNewcCaracteristica() {
+    public CaracteristicaTO getNewCaracteristica() {
         return newCaracteristica;
     }
 
-    public void setNewCaracteristica(CaracteristicaTO newcCaracteristica) {
-        this.newCaracteristica = newcCaracteristica;
+    public void setNewCaracteristica(CaracteristicaTO newCaracteristica) {
+        this.newCaracteristica = newCaracteristica;
     }
 
     public void openNewCategoria() {
@@ -195,6 +195,7 @@ public class OtherController implements Serializable {
 
     public void agregarCategoriaTO() {
         try {
+            System.out.println(newCategoria);
             this.servicioCategoria.insertarCategoria(newCategoria);
             this.cargarCategoria();
         } catch (Exception e) {

@@ -16,7 +16,7 @@
                 Contraseña:<p:password value="#{loginController.clave}"/>
             </p:panelGrid>
             <p:panelGrid columns="3"> 
-                <p:commandButton value="Ingresar" actionListener="#{loginController.ingresar()}" update="growl_msg"></p:commandButton>
+                <p:commandButton value="Ingresar" actionListener="#{loginController.ingresar()}" update="growl_msg" oncomplete="PF('loadingDialog').show()"></p:commandButton>
 
                 <p:commandButton value="Cambiar Contraseña" icon="pi pi-user-edit"
                                  update=":cambiarContrasena:change-password-dialog" oncomplete="PF('changePasswordDialog').show()"
@@ -33,6 +33,14 @@
             </p:panelGrid>
         </h:form>
 
+        <h:form id="loading">
+            <p:dialog header="Cargando" showEffect="fade" modal="true" widgetVar="loadingDialog" responsive="true">
+                <p:outputPanel id="loading-dialog" class="ui-fluid">
+                    <p:progressBar id="progressBarIndeterminate" style="height:6px" mode="indeterminate"/>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+        
         <h:form id="registrarUsuario">
 
             <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"

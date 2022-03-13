@@ -15,7 +15,7 @@
                       widgetVar="showUserInformation" responsive="true">
                 <p:outputPanel id="show-user-information" class="ui-fluid">
 
-                    <p:dataTable value ="#{userController.listaUserBD}" var="elUsuario" rows="10" paginator="true" paginatorPosition="bottom"
+                    <p:dataTable value ="#{userController.listaUserBD}" var="elUsuario" rows="5" paginator="true" paginatorPosition="bottom"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="3,5,10,20,30,40,50,100"
                                  emptyMessage="No existe usuarios registrados"
@@ -86,15 +86,15 @@
                 <p:outputPanel id="create-user-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty userController.newUser}">
                         <div class="p-field">
-                            <p:outputLabel for="mail">Correo</p:outputLabel>
+                            <p:outputLabel for="mail" value="Correo"/>
                             <p:inputText id="Nmail" value="#{userController.newUser.correoUsuario}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="pass">Clave</p:outputLabel>
+                            <p:outputLabel for="pass" value="Clave"/>
                             <p:inputText id="Npass" value="#{userController.newUser.contrasenaUsuario}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="tipo">Tipo de Usuario</p:outputLabel>
+                            <p:outputLabel for="tipo" value="Tipo de Usuario"/>
                             <p:inputText id="Ntipo" value="#{userController.newUser.tipoUsuario}"/>
                         </div>
 
@@ -117,15 +117,15 @@
                 <p:outputPanel id="manage-user-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty userController.newUser}">
                         <div class="p-field">
-                            <p:outputLabel for="mail">Correo</p:outputLabel>
+                            <p:outputLabel for="mail" value="Correo"/>
                             <p:inputText id="mail" value="#{userController.newUser.correoUsuario}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="pass">Clave</p:outputLabel>
+                            <p:outputLabel for="pass" value="Clave"/>
                             <p:inputText id="pass" value="#{userController.newUser.contrasenaUsuario}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="tipo">Tipo de Usuario</p:outputLabel>
+                            <p:outputLabel for="tipo" value="Tipo de Usuario"/>
                             <p:inputText id="tipo" value="#{userController.newUser.tipoUsuario}"/>
                         </div>
 
@@ -150,7 +150,7 @@
                       widgetVar="showCategoriaInformation" responsive="true">
                 <p:outputPanel id="show-categoria-information" class="ui-fluid">
 
-                    <p:dataTable value ="#{OtherController.listaCategorias}" var="laCategoria" rows="10" paginator="true" paginatorPosition="bottom"
+                    <p:dataTable value ="#{OtherController.listaCategorias}" var="laCategoria" rows="5" paginator="true" paginatorPosition="bottom"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="3,5,10,20,30,40,50,100"
                                  emptyMessage="No existen categorias registradas"
@@ -171,11 +171,11 @@
                         </p:column>
 
                         <p:column>
-                            <p:commandButton icon="pi pi-pencil" update=":DetalleCategoria:manage-categoria-content"
-                                             oncomplete="PF('showCategoriaInformation').show()"
+                            <p:commandButton icon="pi pi-pencil" update=":DetalleCategoria:manage-categoria-dialog"
+                                             oncomplete="PF('manageCategoriaDialog').show()"
                                              styleClass="edit-button rounded-button ui-button-success" process="@this">
                                 <f:setPropertyActionListener value="#{laCategoria}" target="#{OtherController.newCategoria}"/>
-                                <p:resetInput target=":DetalleCategoria:manage-categoria-content"/>
+                                <p:resetInput target=":DetalleCategoria:manage-categoria-dialog"/>
                             </p:commandButton>
                         </p:column>
 
@@ -188,7 +188,7 @@
 
                     </p:dataTable>
 
-                    <p:commandButton value="Nueva Categoria" icon="pi pi-plus" actionListener="#{OtherController.openNewCategoria}"
+                    <p:commandButton value="Nueva Categoria" icon="pi pi-plus" actionListener="#{OtherController.newCategoria}"
                                      update=":DetalleCategoria:create-categoria-content" oncomplete="PF('createCategoriaDialog').show()"
                                      styleClass="ui-button-success" style="margin-right: .5rem">
                         <p:resetInput target=":DetalleCategoria:create-categoria-content"/>
@@ -214,12 +214,12 @@
                     <p:outputPanel rendered="#{not empty OtherController.newCategoria}">
 
                         <div class="p-field">
-                            <p:outputLabel for="CnombreCategoria">Nombre</p:outputLabel>
-                            <p:inputText id="CnombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}"/>
+                            <p:outputLabel for="nombreCategoria" value="Nombre de la Categoria"/>
+                            <p:inputText id="nombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="CdescripcionCategoria">Descripcion</p:outputLabel>
-                            <p:inputText id="CdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
+                            <p:outputLabel for="descripcionCategoria" value="Descripcion de la Categoria"/>
+                            <p:inputText id="descripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
                         </div>
 
                     </p:outputPanel>
@@ -238,16 +238,16 @@
             <p:dialog header="Detalle de la Categoria" showEffect="fade" modal="true"
                       widgetVar="manageCategoriaDialog" responsive="true">
 
-                <p:outputPanel id="manage-categoria-content" class="ui-fluid">
+                <p:outputPanel id="manage-categoria-dialog" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty OtherController.newCategoria}">
 
                         <div class="p-field">
-                            <p:outputLabel for="DnombreCategoria">Nombre de la Categoria</p:outputLabel>
-                            <p:inputText id="DnombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}"/>
+                            <p:outputLabel for="nombreCategoria1" value="Nombre de la Categoria"/>
+                            <p:inputText id="nombreCategoria1" value="#{OtherController.newCategoria.nombreCategoria}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="DdescripcionCategoria">Descripcion de la Categoria</p:outputLabel>
-                            <p:inputText id="DdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
+                            <p:outputLabel for="descripcionCategoria1" value="Descripcion de la Categoria"/>
+                            <p:inputText id="descripcionCategoria1" value="#{OtherController.newCategoria.descripcionCategoria}"/>
                         </div>
 
                     </p:outputPanel>
@@ -255,9 +255,162 @@
 
                 <f:facet name="footer">     
                     <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{OtherController.actualizarCategoriaTO}"
-                                     update=":DetalleCategoria:manage-categoria-content, categoriaTable" process="manage-categoria-content @this" onclick="PF('manageCategoriaDialog').hide()"/>
+                                     update=":DetalleCategoria:manage-categoria-dialog, categoriaTable" process="manage-categoria-dialog @this" onclick="PF('manageCategoriaDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageCategoriaDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+            </p:dialog>
+
+        </h:form>
+        
+        <h:form id="DetalleCaracteristica">
+
+            <p:dialog header="Caracteristica" showEffect="fade" modal="true"
+                      widgetVar="showCaracteristicaInformation" responsive="true">
+                <p:outputPanel id="show-caracteristica-informacion" class="ui-fluid">
+
+                    <p:dataTable value ="#{OtherController.listaCaracteristicas}" var="laCaracteristica" rows="5" paginator="true" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="3,5,10,20,30,40,50,100"
+                                 emptyMessage="No existen Caracteristicas registradas"
+                                 reflow="true" id="caracteristicaTable">
+
+                        <f:facet name ="header">
+                            Lista de Caracteristicas
+                        </f:facet>
+
+                        <p:column headerText="ID de la Caracteristica" sortBy="#{laCaracteristica.idCaracteristica}" filterBy="#{laCaracteristica.idCaracteristica}" filterMatchMode="exact">
+                            <h:outputText value="#{laCaracteristica.idCaracteristica}"/>
+                        </p:column>
+                        <p:column headerText="Nombre de la Caracteristica" sortBy="#{laCaracteristica.nombreCaracteristica}" filterBy="#{laCaracteristica.nombreCaracteristica}" filterMatchMode="exact">
+                            <h:outputText value="#{laCaracteristica.nombreCaracteristica}"/>
+                        </p:column>
+                        <p:column headerText="Descripcion de la Caracteristica" sortBy="#{laCaracteristica.descripcionCaracteristica}" filterBy="#{laCaracteristica.descripcionCaracteristica}" filterMatchMode="contains">
+                            <h:outputText value="#{laCaracteristica.descripcionCaracteristica}"/>
+                        </p:column>
+                        <p:column headerText="Cantidad" sortBy="#{laCaracteristica.cantidadCaracteristica}" filterBy="#{laCaracteristica.cantidadCaracteristica}" filterMatchMode="exact">
+                            <h:outputText value="#{laCaracteristica.cantidadCaracteristica}"/>
+                        </p:column>
+                        <p:column headerText="Precio" sortBy="#{laCaracteristica.precioCaracteristica}" filterBy="#{laCaracteristica.precioCaracteristica}" filterMatchMode="exact">
+                            <h:outputText value="#{laCaracteristica.precioCaracteristica}"/>
+                        </p:column>
+                        <p:column headerText="Peso de Prioridad" sortBy="#{laCaracteristica.prioridadCaracteristica}" filterBy="#{laCaracteristica.prioridadCaracteristica}" filterMatchMode="exact">
+                            <h:outputText value="#{laCaracteristica.prioridadCaracteristica}"/>
+                        </p:column>
+
+                        <p:column>
+                            <p:commandButton icon="pi pi-pencil" update=":DetalleCaracteristica:manage-caracteristica-dialog"
+                                             oncomplete="PF('manageCaracteristicaDialog').show()"
+                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                <f:setPropertyActionListener value="#{laCaracteristica}" target="#{OtherController.newCaracteristica}"/>
+                                <p:resetInput target=":DetalleCaracteristica:manage-caracteristica-dialog"/>
+                            </p:commandButton>
+                        </p:column>
+
+                        <p:column>
+                            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                             oncomplete="PF('deleteCaracteristicaDialog').show()">
+                                <f:setPropertyActionListener value="#{laCaracteristica}" target="#{OtherController.newCaracteristica}"/>
+                            </p:commandButton>                    
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:commandButton value="Nueva Caracteristica" icon="pi pi-plus" actionListener="#{OtherController.newCaracteristica}"
+                                     update=":DetalleCaracteristica:create-caracteristica-dialog" oncomplete="PF('createCaracteristicaDialog').show()"
+                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":DetalleCaracteristica:create-caracteristica-dialog"/>
+                    </p:commandButton>
+
+                </p:outputPanel>  
+            </p:dialog>
+
+            <p:confirmDialog widgetVar="deleteCaracteristicaDialog" showEffect="fade" width="300"
+                             message="Desea eliminar la Caracteristica?" header="Confirmación" severity="warn">
+
+                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{OtherController.eliminarCaracteristicaTO}"
+                                 process="@this"  update="caracteristicaTable" oncomplete="PF('deleteCaracteristicaDialog').hide()"/>
+
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteCaracteristicaDialog').hide()"/>
+            </p:confirmDialog>
+
+            <p:dialog header="Crear Caracteristica" showEffect="fade" modal="true"
+                      widgetVar="createCaracteristicaDialog" responsive="true">
+
+                <p:outputPanel id="create-caracteristica-dialog" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty OtherController.newCaracteristica}">
+
+                        <div class="p-field">
+                            <p:outputLabel for="nombreCaracteristica" value="Nombre de la Caracteristica"/>
+                            <p:inputText id="nombreCaracteristica" value="#{OtherController.newCaracteristica.nombreCaracteristica}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="descripcionCaracteristica" value="Descripcion de la Caracteristica"/>
+                            <p:inputText id="descripcionCaracteristica" value="#{OtherController.newCaracteristica.descripcionCaracteristica}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="cantidadCaracteristica" value="Cantidad"/>
+                            <p:inputText id="cantidadCaracteristica" value="#{OtherController.newCaracteristica.cantidadCaracteristica}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="precioCaracteristica" value="Precio"/>
+                            <p:inputText id="precioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="prioridadCaracteristica" value="Peso de Prioridad"/>
+                            <p:inputText id="prioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}"/>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">        
+                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCaracteristicaTO()}"
+                                     update=":DetalleCaracteristica:create-caracteristica-dialog, caracteristicaTable" process="create-caracteristica-dialog @this" onclick="PF('createCaracteristicaDialog').hide()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCaracteristicaDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+                
+            </p:dialog>
+
+            <p:dialog header="Detalle de la Caracteristica" showEffect="fade" modal="true"
+                      widgetVar="manageCaracteristicaDialog" responsive="true">
+
+                <p:outputPanel id="manage-caracteristica-dialog" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty OtherController.newCaracteristica}">
+
+                        <div class="p-field">
+                            <p:outputLabel for="nombreCaracteristica1" value="Nombre de la Caracteristica"/>
+                            <p:inputText id="nombreCaracteristica1" value="#{OtherController.newCaracteristica.nombreCaracteristica}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="descripcionCaracteristica1" value="Descripcion de la Caracteristica"/>
+                            <p:inputText id="descripcionCaracteristica1" value="#{OtherController.newCaracteristica.descripcionCaracteristica}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="cantidadCaracteristica1" value="Cantidad"/>
+                            <p:inputText id="cantidadCaracteristica1" value="#{OtherController.newCaracteristica.cantidadCaracteristica}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="precioCaracteristica1" value="Precio"/>
+                            <p:inputText id="precioCaracteristica1" value="#{OtherController.newCaracteristica.precioCaracteristica}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="prioridadCaracteristica1" value="Peso de Prioridad"/>
+                            <p:inputText id="prioridadCaracteristica1" value="#{OtherController.newCaracteristica.prioridadCaracteristica}"/>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">     
+                    <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{OtherController.actualizarCaracteristicaTO}"
+                                     update=":DetalleCaracteristica:manage-caracteristica-dialog, caracteristicaTable" process="manage-caracteristica-dialog @this" onclick="PF('manageCaracteristicaDialog').hide()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageCaracteristicaDialog').hide()"
                                      class="ui-button-secondary"/>
                 </f:facet>
             </p:dialog>
@@ -271,6 +424,8 @@
                 <p:commandButton id="mostrarUsuarios" styleClass="ui-button-success" value="Mostrar Usuarios" update=":form:show-user-information" oncomplete="PF('showUserInformation').show()">
                 </p:commandButton>
                 <p:commandButton id="mostrarCategorias" styleClass="ui-button-success" value="Mostrar Categorias" update=":DetalleCategoria:show-categoria-information" oncomplete="PF('showCategoriaInformation').show()">
+                </p:commandButton>
+                <p:commandButton id="mostrarCaracteristicas" styleClass="ui-button-success" value="Mostrar Caracteristicas" update=":DetalleCaracteristica:show-caracteristica-informacion" oncomplete="PF('showCaracteristicaInformation').show()">
                 </p:commandButton>
             </p:panelGrid>
         </h:form>
