@@ -84,6 +84,7 @@ public class ServicioCategoria extends Servicio {
             desconectar();
         }
     }
+    
 
     public void actualizarCategoria(CategoriaTO categoriaTO) {
         PreparedStatement preparedStatement = null;

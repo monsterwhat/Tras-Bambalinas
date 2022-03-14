@@ -199,6 +199,9 @@ public class OtherController implements Serializable {
                 System.out.println("La categoria se encuentra nula");
                 return;
             }
+            System.out.println(newCategoria.getIdCategoria());
+            System.out.println(newCategoria.getNombreCategoria());
+            System.out.println(newCategoria.getDescripcionCategoria());
             this.servicioCategoria.insertarCategoria(newCategoria);
             this.cargarCategoria();
         } catch (Exception e) {

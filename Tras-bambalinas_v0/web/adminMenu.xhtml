@@ -221,10 +221,17 @@
                             <p:outputLabel for="descripcionCategoria" value="Descripcion de la Categoria"/>
                             <p:inputText id="NdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
                         </div>
+                             
+                 
+                
 
                     </p:outputPanel>
                 </p:outputPanel>
 
+                
+              
+                 
+             
                 <f:facet name="footer">        
                     <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCategoriaTO}"
                                      update=":DetalleCategoria:create-categoria-content, categoriaTable" process="create-categoria-content @this" onclick="PF('createCategoriaDialog').hide()"/>
@@ -298,6 +305,8 @@
                         <p:column headerText="Peso de Prioridad" sortBy="#{laCaracteristica.prioridadCaracteristica}" filterBy="#{laCaracteristica.prioridadCaracteristica}" filterMatchMode="exact">
                             <h:outputText value="#{laCaracteristica.prioridadCaracteristica}"/>
                         </p:column>
+                     
+                       
 
                         <p:column>
                             <p:commandButton icon="pi pi-pencil" update=":DetalleCaracteristica:manage-caracteristica-dialog"
@@ -338,6 +347,7 @@
 
             <p:dialog header="Crear Caracteristica" showEffect="fade" modal="true"
                       widgetVar="createCaracteristicaDialog" responsive="true">
+               
 
                 <p:outputPanel id="create-caracteristica-dialog" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty OtherController.newCaracteristica}">
@@ -354,15 +364,26 @@
                             <p:outputLabel for="cantidadCaracteristica" value="Cantidad"/>
                             <p:inputText id="NcantidadCaracteristica" value="#{OtherController.newCaracteristica.cantidadCaracteristica}"/>
                         </div>
+                 
                         <div class="p-field">
                             <p:outputLabel for="precioCaracteristica" value="Precio"/>
                             <p:inputText id="NprecioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="prioridadCaracteristica" value="Peso de Prioridad"/>
-                            <p:inputText id="NprioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}"/>
-                        </div>
-
+                          <p:inputText id="NprioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}"/>
+                           </div>
+                       
+                       <div class="p-field p-col-12 p-md-4">
+                       <p:outputLabel for="@next" value="Categoria"/>
+                       <p:selectOneMenu id="option" value="#{OtherController.categoriaTO}">
+                       <!--<f:selectItem itemLabel="Categorias" itemValue=""/>-->
+                       <f:selectItems value="#{OtherController.listaCategorias}" var="laCategoria" itemLabel="#{laCategoria.nombreCategoria}" itemValue="#{laCategoria}"/>
+            
+                      </p:selectOneMenu>
+                       </div>
+                  
+                  
                     </p:outputPanel>
                 </p:outputPanel>
 

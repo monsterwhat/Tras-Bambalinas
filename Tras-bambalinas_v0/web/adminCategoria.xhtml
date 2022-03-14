@@ -56,7 +56,7 @@
 
                     <p:commandButton value="Nueva Categoria" icon="pi pi-plus" actionListener="#{OtherController.openNewCategoria()}"
                                      oncomplete="PF('createCategoriaDialog').show()"
-                                     update=":DetalleCategoria:show-categoria-information" styleClass="ui-button-success" style="margin-right: .5rem">
+                                     update=":DetalleCategoria:show-categoria-information" styleClass="ui-button-showsuccess" style="margin-right: .5rem">
                         <p:resetInput target=":DetalleCategoria:show-categoria-information"/>
                     </p:commandButton>
 
@@ -92,7 +92,7 @@
                 </p:outputPanel>
 
                 <f:facet name="footer">        
-                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.openNewCategoria}"
+                    <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCategoriaTO()}"
                                      update=":DetalleCategoria:create-categoria-content, categoriaTable" process="create-categoria-content @this" onclick="PF('createCategoriaDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCategoriaDialog').hide()"

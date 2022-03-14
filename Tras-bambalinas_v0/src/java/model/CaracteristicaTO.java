@@ -11,22 +11,25 @@ public class CaracteristicaTO implements Serializable {
     private int cantidadCaracteristica;
     private int prioridadCaracteristica;
     private double precioCaracteristica;
+    private int idCategoria;
 
-    public CaracteristicaTO(int idCaracteristica, String nombreCaracteristica, String descripcionCaracteristica, int cantidadCaracteristica, int prioridadCaracteristica, double precioCaracteristica) {
+    public CaracteristicaTO(int idCaracteristica, String nombreCaracteristica, String descripcionCaracteristica, int cantidadCaracteristica, int prioridadCaracteristica, double precioCaracteristica, int idCategoria) {
         this.idCaracteristica = idCaracteristica;
         this.nombreCaracteristica = nombreCaracteristica;
         this.descripcionCaracteristica = descripcionCaracteristica;
         this.cantidadCaracteristica = cantidadCaracteristica;
         this.prioridadCaracteristica = prioridadCaracteristica;
         this.precioCaracteristica = precioCaracteristica;
+        this.idCategoria=idCategoria;
     }
 
-    public CaracteristicaTO(String nombreCaracteristica, String descripcionCaracteristica, int cantidadCaracteristica, int prioridadCaracteristica, double precioCaracteristica) {
+    public CaracteristicaTO(String nombreCaracteristica, String descripcionCaracteristica, int cantidadCaracteristica, int prioridadCaracteristica, double precioCaracteristica,int idCategoria) {
         this.nombreCaracteristica = nombreCaracteristica;
         this.descripcionCaracteristica = descripcionCaracteristica;
         this.cantidadCaracteristica = cantidadCaracteristica;
         this.prioridadCaracteristica = prioridadCaracteristica;
         this.precioCaracteristica = precioCaracteristica;
+        this.idCategoria=idCategoria;
     }
 
     public CaracteristicaTO(){
@@ -79,7 +82,13 @@ public class CaracteristicaTO implements Serializable {
     public void setPrecioCaracteristica(double precioCaracteristica) {
         this.precioCaracteristica = precioCaracteristica;
     }
+    public double getidCategoria() {
+        return idCategoria;
+    }
 
+    public void setidCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
   
     
 }
