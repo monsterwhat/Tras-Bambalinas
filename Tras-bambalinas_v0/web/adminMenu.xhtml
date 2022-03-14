@@ -206,7 +206,7 @@
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                  onclick="PF('deleteCategoriaDialog').hide()"/>
             </p:confirmDialog>
-            
+
             <p:dialog header="Crear Categoria" showEffect="fade" modal="true"
                       widgetVar="createCategoriaDialog" responsive="true">
 
@@ -375,7 +375,7 @@
 
                             </p:selectOneMenu>
                         </div>
-                        
+
                     </p:outputPanel>
                 </p:outputPanel>
 
@@ -429,19 +429,29 @@
             </p:dialog>
 
         </h:form>
+        <div class="card">
+            <h:form>
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <div class="menu-container p-mx-auto">
+                            <p:commandButton id="regresarId" styleClass="rounded-button ui-button-danger" value="Regresar al Inicio" action="#{loginController.salir()}"/>
+                        </div>
+                        <div class="menu-container p-mx-auto">
+                            <i class="pi pi-ellipsis-v p-px-2"/>
+                        </div>
 
-        <h:form>
-            <p:panelGrid columns="1">
-                <p:commandButton id="regresarId" styleClass="ui-button-success" value="Regresar al Inicio" action="#{loginController.salir()}" >
-                </p:commandButton>
-                <p:commandButton id="mostrarUsuarios" styleClass="ui-button-success" value="Mostrar Usuarios" update=":form:show-user-information" oncomplete="PF('showUserInformation').show()">
-                </p:commandButton>
-                <p:commandButton id="mostrarCategorias" styleClass="ui-button-success" value="Mostrar Categorias" update=":DetalleCategoria:show-categoria-information" oncomplete="PF('showCategoriaInformation').show()">
-                </p:commandButton>
-                <p:commandButton id="mostrarCaracteristicas" styleClass="ui-button-success" value="Mostrar Caracteristicas" update=":DetalleCaracteristica:show-caracteristica-informacion" oncomplete="PF('showCaracteristicaInformation').show()">
-                </p:commandButton>
-            </p:panelGrid>
-        </h:form>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <div class="menu-container p-mx-auto">
+                            <p:commandButton id="mostrarCaracteristicas" styleClass="rounded-button" value="Mostrar Caracteristicas" update=":DetalleCaracteristica:show-caracteristica-informacion" oncomplete="PF('showCaracteristicaInformation').show()"/>
+                            <p:commandButton id="mostrarCategorias" styleClass="rounded-button" value="Mostrar Categorias" update=":DetalleCategoria:show-categoria-information" oncomplete="PF('showCategoriaInformation').show()"/>
+                            <p:commandButton id="mostrarUsuarios" styleClass="rounded-button" value="Mostrar Usuarios" update=":form:show-user-information" oncomplete="PF('showUserInformation').show()"/>
+                        </div>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </h:form>
+        </div>
+
 
     </h:body>
 
