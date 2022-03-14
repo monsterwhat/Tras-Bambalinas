@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import model.CaracteristicaTO;
 import model.CategoriaTO;
 import servicio.ServicioCaracteristica;
 import servicio.ServicioCategoria;
 
 @ManagedBean(name = "OtherController")
-
+@ViewScoped
 public class OtherController implements Serializable {
 
     private ServicioCategoria servicioCategoria = new ServicioCategoria();
@@ -30,13 +31,32 @@ public class OtherController implements Serializable {
     private int idCategoria;
     private String nombreCategoria;
     private String descripcionCategoria;
+    
     private int idCaracteristica;
     private String nombreCaracteristica;
     private String descripcionCaracteristica;
     private int cantidadCaracteristica;
     private int prioridadCaracteristica;
     private double precioCaracteristica;
+    private int idCategoriaCaracteristica;
 
+    ////////////////////////////////////////////////////////////////////////////
+    
+    public OtherController() {
+    }
+    
+    @PostConstruct
+    public void cargar() {
+        try {
+            this.listaCategorias = servicioCategoria.listaCategoriasBD();
+            this.listaCaracteristicas = servicioCaracteristica.listaCaracteristicasBD();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    
     public ServicioCategoria getServicioCategoria() {
         return servicioCategoria;
     }
@@ -51,18 +71,6 @@ public class OtherController implements Serializable {
 
     public void setServicioCaracteristica(ServicioCaracteristica servicioCaracteristica) {
         this.servicioCaracteristica = servicioCaracteristica;
-    }
-
-    public OtherController() {
-    }
-
-    @PostConstruct
-    public void cargarCategoria() {
-        try {
-            this.listaCategorias = servicioCategoria.listaCategoriasBD();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 
     public CategoriaTO getCategoriaTO() {
@@ -97,6 +105,8 @@ public class OtherController implements Serializable {
         this.listaCaracteristicas = listaCaracteristicas;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    
     public int getIdCategoria() {
         return idCategoria;
     }
@@ -121,6 +131,9 @@ public class OtherController implements Serializable {
         this.descripcionCategoria = descripcionCategoria;
     }
 
+    /////////////////////////////////////////////////////////////////////////////
+    
+    
     public int getIdCaracteristica() {
         return idCaracteristica;
     }
@@ -169,6 +182,17 @@ public class OtherController implements Serializable {
         this.precioCaracteristica = precioCaracteristica;
     }
 
+    public int getIdCategoriaCaracteristica() {
+        return idCategoriaCaracteristica;
+    }
+
+    public void setIdCategoriaCaracteristica(int idCategoriaCaracteristica) {
+        this.idCategoriaCaracteristica = idCategoriaCaracteristica;
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    
+
     public CategoriaTO getNewCategoria() {
         return newCategoria;
     }
@@ -184,6 +208,8 @@ public class OtherController implements Serializable {
     public void setNewCaracteristica(CaracteristicaTO newCaracteristica) {
         this.newCaracteristica = newCaracteristica;
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
 
     public void openNewCategoria() {
         this.newCategoria = new CategoriaTO();
@@ -192,6 +218,8 @@ public class OtherController implements Serializable {
     public void openNewCaracteristica() {
         this.newCaracteristica = new CaracteristicaTO();
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
 
     public void agregarCategoriaTO() {
         try {
@@ -203,7 +231,7 @@ public class OtherController implements Serializable {
             System.out.println(newCategoria.getNombreCategoria());
             System.out.println(newCategoria.getDescripcionCategoria());
             this.servicioCategoria.insertarCategoria(newCategoria);
-            this.cargarCategoria();
+            this.cargar();
         } catch (Exception e) {
             System.out.println("Error agregando la categoria! " + e);
         }
@@ -216,7 +244,7 @@ public class OtherController implements Serializable {
                 return;
             }
             this.servicioCategoria.actualizarCategoria(newCategoria);
-            this.cargarCategoria();
+            this.cargar();
         } catch (Exception e) {
             System.out.println("Error actualizando la categoria! " + e);
         }
@@ -229,21 +257,33 @@ public class OtherController implements Serializable {
                 return;
             }
             this.servicioCategoria.eliminarCategoria(newCategoria);
-            this.cargarCategoria();
+            this.cargar();
         } catch (Exception e) {
             System.out.println("Error eliminando caegoria! " + e);
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    
     public void agregarCaracteristicaTO() {
+        
+        System.out.println("A: "+this.caracteristicaTO.getIdCategoriaCaracteristica());
+        System.out.println("A: "+this.idCategoriaCaracteristica);
         try {
+            
             if(newCaracteristica==null){
+                System.out.println("A: "+this.caracteristicaTO.getIdCategoriaCaracteristica());
+                System.out.println("A: "+this.idCategoriaCaracteristica);
                 System.out.println("La caracterisitica se encuentra nula");
                 return;
             }
+            System.out.println("A: "+this.caracteristicaTO.getIdCategoriaCaracteristica());
+            System.out.println("A: "+this.idCategoriaCaracteristica);
             this.servicioCaracteristica.insertarCaracteristica(newCaracteristica);
-            cargarCaracteristicaTO();
+            cargar();
         } catch (Exception e) {
+            System.out.println("A: "+this.caracteristicaTO.getIdCategoriaCaracteristica());
+            System.out.println("A: "+this.idCategoriaCaracteristica);
             System.out.println("Error agregando caracteristica! " + e);
         }
     }
@@ -255,7 +295,7 @@ public class OtherController implements Serializable {
                 return;
             }
             this.servicioCaracteristica.actualizarCaracteristica(newCaracteristica);
-            cargarCaracteristicaTO();
+            cargar();
         } catch (Exception e) {
             System.out.println("Error actualizando caracteristica! " + e);
         }
@@ -268,7 +308,7 @@ public class OtherController implements Serializable {
                 return;
             }
             this.servicioCaracteristica.eliminarCaracteristica(newCaracteristica);
-            cargarCaracteristicaTO();
+            cargar();
         } catch (Exception e) {
             System.out.println("Error eliminanddo caracteristica! " + e);
         }
@@ -283,4 +323,8 @@ public class OtherController implements Serializable {
 
         }
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    
+    
 }

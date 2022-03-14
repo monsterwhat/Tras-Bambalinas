@@ -11,25 +11,25 @@ public class CaracteristicaTO implements Serializable {
     private int cantidadCaracteristica;
     private int prioridadCaracteristica;
     private double precioCaracteristica;
-    private int idCategoria;
+    private int idCategoriaCaracteristica;
 
-    public CaracteristicaTO(int idCaracteristica, String nombreCaracteristica, String descripcionCaracteristica, int cantidadCaracteristica, int prioridadCaracteristica, double precioCaracteristica, int idCategoria) {
+    public CaracteristicaTO(int idCaracteristica, String nombreCaracteristica, String descripcionCaracteristica, int cantidadCaracteristica, int prioridadCaracteristica, double precioCaracteristica, int idCategoriaCaracteristica) {
         this.idCaracteristica = idCaracteristica;
         this.nombreCaracteristica = nombreCaracteristica;
         this.descripcionCaracteristica = descripcionCaracteristica;
         this.cantidadCaracteristica = cantidadCaracteristica;
         this.prioridadCaracteristica = prioridadCaracteristica;
         this.precioCaracteristica = precioCaracteristica;
-        this.idCategoria=idCategoria;
+        this.idCategoriaCaracteristica=idCategoriaCaracteristica;
     }
 
-    public CaracteristicaTO(String nombreCaracteristica, String descripcionCaracteristica, int cantidadCaracteristica, int prioridadCaracteristica, double precioCaracteristica,int idCategoria) {
+    public CaracteristicaTO(String nombreCaracteristica, String descripcionCaracteristica, int cantidadCaracteristica, int prioridadCaracteristica, double precioCaracteristica,int idCategoriaCaracteristica) {
         this.nombreCaracteristica = nombreCaracteristica;
         this.descripcionCaracteristica = descripcionCaracteristica;
         this.cantidadCaracteristica = cantidadCaracteristica;
         this.prioridadCaracteristica = prioridadCaracteristica;
         this.precioCaracteristica = precioCaracteristica;
-        this.idCategoria=idCategoria;
+        this.idCategoriaCaracteristica=idCategoriaCaracteristica;
     }
 
     public CaracteristicaTO(){
@@ -82,12 +82,12 @@ public class CaracteristicaTO implements Serializable {
     public void setPrecioCaracteristica(double precioCaracteristica) {
         this.precioCaracteristica = precioCaracteristica;
     }
-    public double getidCategoria() {
-        return idCategoria;
+    public int getIdCategoriaCaracteristica() {
+        return idCategoriaCaracteristica;
     }
 
-    public void setidCategoria(int idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setIdCategoriaCaracteristica(int idCategoriaCaracteristica) {
+        this.idCategoriaCaracteristica = idCategoriaCaracteristica;
     }
   
     
