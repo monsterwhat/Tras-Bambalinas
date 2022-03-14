@@ -1,10 +1,9 @@
-
 package model;
 
 import java.io.Serializable;
 
-
 public class CaracteristicaTO implements Serializable {
+
     private int idCaracteristica;
     private String nombreCaracteristica;
     private String descripcionCaracteristica;
@@ -20,19 +19,19 @@ public class CaracteristicaTO implements Serializable {
         this.cantidadCaracteristica = cantidadCaracteristica;
         this.prioridadCaracteristica = prioridadCaracteristica;
         this.precioCaracteristica = precioCaracteristica;
-        this.idCategoria=idCategoria;
+        this.idCategoria = idCategoria;
     }
 
-    public CaracteristicaTO(String nombreCaracteristica, String descripcionCaracteristica, int cantidadCaracteristica, int prioridadCaracteristica, double precioCaracteristica,int idCategoria) {
+    public CaracteristicaTO() {
+    }
+
+    public CaracteristicaTO(String nombreCaracteristica, String descripcionCaracteristica, int cantidadCaracteristica, int prioridadCaracteristica, double precioCaracteristica, int idCategoria) {
         this.nombreCaracteristica = nombreCaracteristica;
         this.descripcionCaracteristica = descripcionCaracteristica;
         this.cantidadCaracteristica = cantidadCaracteristica;
         this.prioridadCaracteristica = prioridadCaracteristica;
         this.precioCaracteristica = precioCaracteristica;
-        this.idCategoria=idCategoria;
-    }
-
-    public CaracteristicaTO(){
+        this.idCategoria = idCategoria;
     }
 
     public int getIdCaracteristica() {
@@ -82,6 +81,7 @@ public class CaracteristicaTO implements Serializable {
     public void setPrecioCaracteristica(double precioCaracteristica) {
         this.precioCaracteristica = precioCaracteristica;
     }
+
     public double getidCategoria() {
         return idCategoria;
     }
@@ -89,6 +89,5 @@ public class CaracteristicaTO implements Serializable {
     public void setidCategoria(int idCategoria) {
         this.idCategoria = idCategoria;
     }
-  
-    
+
 }
