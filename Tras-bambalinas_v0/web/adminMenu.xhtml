@@ -380,10 +380,10 @@
                         </div>
                         <div class="p-field p-col-12 p-md-4">
                              <p:outputLabel for="idCategoriaCaracteristica" value="Categoria"/>
-                             <p:selectOneMenu id="NidCategoriaCaracteristica" value="#{OtherController.newCaracteristica.idCategoriaCaracteristica}">
+                             <p:selectOneMenu id="NidCategoriaCaracteristica" value="#{OtherController.caracteristicaTO}">
                                  <f:selectItem itemLabel="Select One" itemValue="#{null}"/>
-                                 <f:selectItems value="#{OtherController.listaCategorias}" var="laCategoriaCaracteristica" itemLabel="#{laCategoriaCaracteristica.idCategoria}" 
-                                                itemValue="#{laCategoriaCaracteristica.idCategoria}" />
+                                 <f:selectItems value="#{OtherController.listaCategorias}" var="laCategoriaCaracteristica" itemLabel="#{laCategoriaCaracteristica.nombreCategoria}" 
+                                                itemValue="#{laCategoriaCaracteristica}"/>
                              </p:selectOneMenu>
                         </div>
 
@@ -435,7 +435,6 @@
                                                 itemValue="#{laCategoriaCaracteristica.idCategoria}" />
                              </p:selectOneMenu>
                         </div>
-
 
                     </p:outputPanel>
                 </p:outputPanel>
