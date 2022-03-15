@@ -10,40 +10,6 @@ import java.util.ArrayList;
 
 public class ServicioCaracteristica extends Servicio {
 
-//    public CaracteristicaTO mostrarCaracteristicas(int idCategori) {
-//
-//        Statement statement = null;
-//        ResultSet resultSet = null;
-//        CaracteristicaTO caracteristicasTO = null;
-//
-//        try {
-//            conectar();
-//            statement = conexion.createStatement();
-//            String sql = "SELECT * FROM caracteristica Where idCategoria = '" + idCategori + "'";
-//            resultSet = statement.executeQuery(sql);
-//            
-//            while (resultSet.next()) {
-//                int idCaracteristica = resultSet.getInt("idCaracteristica");
-//                String nombreCaracteristica = resultSet.getString("nombreCaracteristica");
-//                String descripcionCaracteristica = resultSet.getString("descripcionCaracteristica");
-//                int cantidadCaracteristica = resultSet.getInt("cantidadCaracteristica");
-//                int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
-//                double precioCaracteristica = resultSet.getDouble("precioCaracteristica");
-//                int idCategoria = resultSet.getInt("idCategoria");
-//                
-//            caracteristicasTO = new CaracteristicaTO(idCaracteristica, nombreCaracteristica, descripcionCaracteristica,
-//                        cantidadCaracteristica, prioridadCaracteristica, precioCaracteristica,idCategoria);
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Error al cargar caracteristicas de la categoria! " + e);
-//        } finally {
-//            cerrarResultSet(resultSet);
-//            cerrarStatement(statement);
-//            desconectar();
-//        }
-//        return caracteristicasTO;
-//    }
-
     public List<CaracteristicaTO> listaCaracteristicasBD() {
         Statement statement = null;
         ResultSet resultSet = null;
@@ -90,7 +56,7 @@ public class ServicioCaracteristica extends Servicio {
             preparedStatement.setInt(3, caracteristicaTO.getCantidadCaracteristica());
             preparedStatement.setInt(4, caracteristicaTO.getPrioridadCaracteristica());
             preparedStatement.setDouble(5, caracteristicaTO.getPrecioCaracteristica());
-            preparedStatement.setDouble(6, caracteristicaTO.getIdCategoriaCaracteristica());
+            preparedStatement.setInt(6, caracteristicaTO.getIdCategoriaCaracteristica());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al insertar caracteristica! " + e);

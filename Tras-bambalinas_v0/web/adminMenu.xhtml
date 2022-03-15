@@ -8,7 +8,7 @@
         <title>Cortinas Ferva</title>
     </h:head>
     <h:body>
-        
+
         <h:form id="formUsuario">
 
             <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
@@ -68,7 +68,6 @@
                 </p:outputPanel>  
             </p:dialog>
 
-
             <p:confirmDialog widgetVar="deleteUserDialog" showEffect="fade" width="300"
                              message="Desea eliminar al usuario?" header="Confirmación" severity="warn">
 
@@ -78,7 +77,6 @@
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                  onclick="PF('deleteUserDialog').hide()"/>
             </p:confirmDialog>
-
 
             <p:dialog header="Crear Usuario" showEffect="fade" modal="true"
                       widgetVar="createUserDialog" responsive="true">
@@ -141,9 +139,7 @@
                 </f:facet>
             </p:dialog>
         </h:form>
-        
-        <!--///////////////////////////////////////////////////////////////////////////-->
-        
+
         <h:form id="formCategoria">
 
             <p:dialog header="Categoria" showEffect="fade" modal="true"
@@ -193,14 +189,13 @@
                                      styleClass="ui-button-success" style="margin-right: .5rem">
                         <p:resetInput target=":formCategoria:create-categoria-content"/>
                     </p:commandButton>
-                    
+
                     <f:facet name="footer">
 
                     </f:facet>
 
                 </p:outputPanel>  
             </p:dialog>
-            
 
             <p:confirmDialog widgetVar="deleteCategoriaDialog" showEffect="fade" width="300"
                              message="Desea eliminar la categoria?" header="Confirmación" severity="warn">
@@ -212,7 +207,6 @@
                                  onclick="PF('deleteCategoriaDialog').hide()"/>
             </p:confirmDialog>
 
-            
             <p:dialog header="Crear Categoria" showEffect="fade" modal="true"
                       widgetVar="createCategoriaDialog" responsive="true">
 
@@ -227,7 +221,7 @@
                             <p:outputLabel for="descripcionCategoria" value="Descripcion de la Categoria"/>
                             <p:inputText id="NdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
                         </div>
-                             
+
                     </p:outputPanel>
                 </p:outputPanel>
 
@@ -269,9 +263,7 @@
             </p:dialog>
 
         </h:form>
-        
-<!--///////////////////////////////////////////////////////////////////////////-->
-        
+
         <h:form id="formCaracteristica">
 
             <p:dialog header="Caracteristica" showEffect="fade" modal="true"
@@ -309,7 +301,7 @@
                         <p:column headerText="Categoria" sortBy="#{laCaracteristica.idCategoriaCaracteristica}">
                             <h:outputText value="#{laCaracteristica.idCategoriaCaracteristica}"/>
                         </p:column>
-                     
+
                         <p:column>
                             <p:commandButton icon="pi pi-pencil" update=":formCaracteristica:update-caracteristica-content"
                                              oncomplete="PF('updateCaracteristicaDialog').show()"
@@ -322,10 +314,9 @@
                         <p:column>
                             <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
                                              oncomplete="PF('deleteCaracteristicaDialog').show()">
-                                <f:setPropertyActionListener value="#{laCaracteristica}" target="#{OtherController.eliminarCaracteristicaTO()}"/>
+                                <f:setPropertyActionListener value="#{laCaracteristica}" target="#{OtherController.newCaracteristica}"/>
                             </p:commandButton>                    
                         </p:column>
-
                     </p:dataTable>
 
                     <p:commandButton value="Nueva Caracteristica" icon="pi pi-plus" actionListener="#{OtherController.openNewCaracteristica}"
@@ -333,20 +324,17 @@
                                      styleClass="ui-button-success" style="margin-right: .5rem">
                         <p:resetInput target=":formCaracteristica:create-caracteristica-content"/>
                     </p:commandButton>
-   
-                    
-                    <f:facet name="footer">
 
+                    <f:facet name="footer">
                     </f:facet>
 
                 </p:outputPanel>  
             </p:dialog>
 
-            
             <p:confirmDialog widgetVar="deleteCaracteristicaDialog" showEffect="fade" width="300"
                              message="Desea eliminar la Caracteristica?" header="Confirmación" severity="warn">
 
-                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{OtherController.eliminarCaracteristicaTO()}"
+                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{OtherController.eliminarCaracteristicaTO}"
                                  process="@this"  update="caracteristicaTable" oncomplete="PF('deleteCaracteristicaDialog').hide()"/>
 
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
@@ -355,7 +343,7 @@
 
             <p:dialog header="Crear Caracteristica" showEffect="fade" modal="true"
                       widgetVar="createCaracteristicaDialog" responsive="true">
-               
+
                 <p:outputPanel id="create-caracteristica-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty OtherController.newCaracteristica}">
 
@@ -380,14 +368,18 @@
                             <p:inputText id="NprecioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}"/>
                         </div>
                         <div class="p-field p-col-12 p-md-4">
-                             <p:outputLabel for="idCategoriaCaracteristica" value="Categoria"/>
-                             <p:selectOneMenu id="NidCategoriaCaracteristica" value="#{OtherController.caracteristicaTO}">
-                                 <f:selectItem itemLabel="Select One" itemValue="#{null}"/>
-                                 <f:selectItems value="#{OtherController.listaCategorias}" var="laCategoriaCaracteristica" itemLabel="#{laCategoriaCaracteristica.nombreCategoria}" 
-                                                itemValue="#{laCategoriaCaracteristica}"/>
-                             </p:selectOneMenu>
+                            <p:outputLabel for="idCategoriaCaracteristica" value=" Lista Categorias: ID - Nombre Categoria"/>
+                            <div class="p-mr-2">
+                                <p:selectOneMenu id="CategoriaCaracteristica">
+                                    <f:selectItem itemLabel="Select One"/>
+                                    <f:selectItems value="#{OtherController.listaCategorias}" var="laCategoriaCaracteristica" itemLabel="#{laCategoriaCaracteristica.idNameCategoria}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <div class="p-mr-2">
+                                <p:outputLabel for="NidCategoriaCaracteristica" value="Id"/>
+                                <p:inputText id="NidCategoriaCaracteristica" value="#{OtherController.newCaracteristica.idCategoriaCaracteristica}"/>
+                            </div>
                         </div>
-
                     </p:outputPanel>
                 </p:outputPanel>
 
@@ -427,21 +419,21 @@
                             <p:outputLabel for="precioCaracteristica" value="Precio"/>
                             <p:inputText id="precioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}"/>
                         </div>
-                       
+
                         <div class="p-field p-col-12 p-md-4">
-                             <p:outputLabel for="idCategoriaCaracteristica" value="Categoria"/>
-                             <p:selectOneMenu id="idCategoriaCaracteristica" value="#{OtherController.newCaracteristica.idCategoriaCaracteristica}">
-                                 <f:selectItem itemLabel="Select One" itemValue="#{null}"/>
-                                 <f:selectItems value="#{OtherController.listaCategorias}" var="laCategoriaCaracteristica" itemLabel="#{laCategoriaCaracteristica.idCategoria}" 
-                                                itemValue="#{laCategoriaCaracteristica.idCategoria}" />
-                             </p:selectOneMenu>
+                            <p:outputLabel for="idCategoriaCaracteristica" value="Categoria"/>
+                            <p:selectOneMenu id="idCategoriaCaracteristica" value="#{OtherController.newCaracteristica.idCategoriaCaracteristica}">
+                                <f:selectItem itemLabel="Select One" itemValue="#{null}"/>
+                                <f:selectItems value="#{OtherController.listaCategorias}" var="laCategoriaCaracteristica" itemLabel="#{laCategoriaCaracteristica.idCategoria}" 
+                                               itemValue="#{laCategoriaCaracteristica.idCategoria}" />
+                            </p:selectOneMenu>
                         </div>
 
                     </p:outputPanel>
                 </p:outputPanel>
 
                 <f:facet name="footer">     
-                    <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{OtherController.actualizarCaracteristicaTO}"
+                    <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{OtherController.actualizarCaracteristicaTO()}"
                                      update=":formCaracteristica:update-caracteristica-content, caracteristicaTable" process="update-caracteristica-content @this" onclick="PF('updateCaracteristicaDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('updateCaracteristicaDialog').hide()"
@@ -452,7 +444,7 @@
         </h:form>
 
         <div class="card">
-            <h:form>
+            <h:form id="formMenu">
                 <p:toolbar>
                     <p:toolbarGroup>
                         <div class="menu-container p-mx-auto">
@@ -473,9 +465,6 @@
                 </p:toolbar>
             </h:form>
         </div>
-
-
     </h:body>
-
 </html>
 
