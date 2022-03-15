@@ -73,21 +73,6 @@ public class OtherController implements Serializable {
         return categoriaTO;
     }
 
-    public ServicioCategoria getServicioCategoria() {
-        return servicioCategoria;
-    }
-
-    public void setServicioCategoria(ServicioCategoria servicioCategoria) {
-        this.servicioCategoria = servicioCategoria;
-    }
-
-    public ServicioCaracteristica getServicioCaracteristica() {
-        return servicioCaracteristica;
-    }
-
-    public void setServicioCaracteristica(ServicioCaracteristica servicioCaracteristica) {
-        this.servicioCaracteristica = servicioCaracteristica;
-    }
 
     public void setCategoriaTO(CategoriaTO categoriaTO) {
         this.categoriaTO = categoriaTO;
