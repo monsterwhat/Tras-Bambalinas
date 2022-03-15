@@ -8,7 +8,11 @@
         <title>Cortinas Ferva</title>
     </h:head>
     <h:body>
-
+        
+        
+        
+        
+        
         <h:form id="formUsuario">
 
             <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
@@ -357,15 +361,15 @@
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="cantidadCaracteristica" value="Cantidad"/>
-                            <p:inputText id="NcantidadCaracteristica" value="#{OtherController.newCaracteristica.cantidadCaracteristica}"/>
+                            <p:inputNumber id="NcantidadCaracteristica" value="#{OtherController.newCaracteristica.cantidadCaracteristica}"/>
                         </div>                 
                         <div class="p-field">
                             <p:outputLabel for="prioridadCaracteristica" value="Peso de Prioridad"/>
-                            <p:inputText id="NprioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}"/>
+                            <p:inputNumber id="NprioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}"/>
                         </div> 
                         <div class="p-field">
                             <p:outputLabel for="precioCaracteristica" value="Precio"/>
-                            <p:inputText id="NprecioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}"/>
+                            <p:inputNumber id="NprecioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}"/>
                         </div>
                         <div class="p-field p-col-12 p-md-4">
                             <p:outputLabel for="idCategoriaCaracteristica" value=" Lista Categorias: ID - Nombre Categoria"/>
@@ -409,15 +413,15 @@
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="cantidadCaracteristica" value="Cantidad"/>
-                            <p:inputText id="cantidadCaracteristica" value="#{OtherController.newCaracteristica.cantidadCaracteristica}"/>
+                            <p:inputNumber id="cantidadCaracteristica" value="#{OtherController.newCaracteristica.cantidadCaracteristica}"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="prioridadCaracteristica" value="Peso de Prioridad"/>
-                            <p:inputText id="prioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}"/>
+                            <p:inputNumber id="prioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}"/>
                         </div> 
                         <div class="p-field">
                             <p:outputLabel for="precioCaracteristica" value="Precio"/>
-                            <p:inputText id="precioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}"/>
+                            <p:inputNumber id="precioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}"/>
                         </div>
 
                         <div class="p-field p-col-12 p-md-4">
@@ -445,7 +449,7 @@
 
         <div class="card">
             <h:form id="formMenu">
-                <p:toolbar>
+                <p:toolbar >
                     <p:toolbarGroup>
                         <div class="menu-container p-mx-auto">
                             <p:commandButton id="regresarId" styleClass="rounded-button ui-button-danger" value="Regresar al Inicio" action="#{loginController.salir()}"/>
