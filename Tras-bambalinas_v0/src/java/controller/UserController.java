@@ -14,15 +14,6 @@ import javax.annotation.PostConstruct;
 public class UserController implements Serializable {
 
     private int idUser;
-
-    public ServicioUsuario getServicioUsuario() {
-        return servicioUsuario;
-    }
-
-    public void setServicioUsuario(ServicioUsuario servicioUsuario) {
-        this.servicioUsuario = servicioUsuario;
-    }
-    //private String nombreUser;
     private String correoElectronico;
     private String passwordUser;
 
@@ -42,6 +33,14 @@ public class UserController implements Serializable {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+    
+    public ServicioUsuario getServicioUsuario() {
+        return servicioUsuario;
+    }
+
+    public void setServicioUsuario(ServicioUsuario servicioUsuario) {
+        this.servicioUsuario = servicioUsuario;
     }
 
     public int getIdUser() {

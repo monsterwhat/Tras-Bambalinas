@@ -1,10 +1,9 @@
-
 package model;
 
 import java.io.Serializable;
 
-
 public class CaracteristicaTO implements Serializable {
+
     private int idCaracteristica;
     private String nombreCaracteristica;
     private String descripcionCaracteristica;
@@ -89,6 +88,5 @@ public class CaracteristicaTO implements Serializable {
     public void setIdCategoriaCaracteristica(int idCategoriaCaracteristica) {
         this.idCategoriaCaracteristica = idCategoriaCaracteristica;
     }
-  
-    
+
 }

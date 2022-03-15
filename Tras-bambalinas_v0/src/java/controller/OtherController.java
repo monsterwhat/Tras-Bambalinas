@@ -1,5 +1,4 @@
 package controller;
-//Controller Categoria /Caracteristicas
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,11 +18,8 @@ public class OtherController implements Serializable {
     private ServicioCategoria servicioCategoria = new ServicioCategoria();
     private ServicioCaracteristica servicioCaracteristica = new ServicioCaracteristica();
 
-    private CategoriaTO categoriaTO = null ;
-    private CaracteristicaTO caracteristicaTO = null;
-
-    private CategoriaTO newCategoria = null;
-    private CaracteristicaTO newCaracteristica = null;
+    private CategoriaTO categoriaTO, newCategoria;
+    private CaracteristicaTO caracteristicaTO, newCaracteristica;
 
     List<CategoriaTO> listaCategorias = new ArrayList<CategoriaTO>();
     List<CaracteristicaTO> listaCaracteristicas = new ArrayList<CaracteristicaTO>();
@@ -75,6 +71,22 @@ public class OtherController implements Serializable {
 
     public CategoriaTO getCategoriaTO() {
         return categoriaTO;
+    }
+
+    public ServicioCategoria getServicioCategoria() {
+        return servicioCategoria;
+    }
+
+    public void setServicioCategoria(ServicioCategoria servicioCategoria) {
+        this.servicioCategoria = servicioCategoria;
+    }
+
+    public ServicioCaracteristica getServicioCaracteristica() {
+        return servicioCaracteristica;
+    }
+
+    public void setServicioCaracteristica(ServicioCaracteristica servicioCaracteristica) {
+        this.servicioCaracteristica = servicioCaracteristica;
     }
 
     public void setCategoriaTO(CategoriaTO categoriaTO) {
@@ -223,42 +235,30 @@ public class OtherController implements Serializable {
 
     public void agregarCategoriaTO() {
         try {
-            if(newCategoria==null){
-                System.out.println("La categoria se encuentra nula");
-                return;
-            }
-            System.out.println(newCategoria.getIdCategoria());
-            System.out.println(newCategoria.getNombreCategoria());
-            System.out.println(newCategoria.getDescripcionCategoria());
             this.servicioCategoria.insertarCategoria(newCategoria);
             this.cargar();
         } catch (Exception e) {
+            System.out.println("Quizas la categoria se encuentra nula?");
             System.out.println("Error agregando la categoria! " + e);
         }
     }
 
     public void actualizarCategoriaTO() {
         try {
-            if(newCategoria==null){
-                System.out.println("La categoria se encuentra nula");
-                return;
-            }
             this.servicioCategoria.actualizarCategoria(newCategoria);
             this.cargar();
         } catch (Exception e) {
+            System.out.println("Quizas la categoria se encuentra nula?");
             System.out.println("Error actualizando la categoria! " + e);
         }
     }
 
     public void eliminarCategoriaTO() {
         try {
-            if(newCategoria==null){
-                System.out.println("La categoria se encuentra nula");
-                return;
-            }
             this.servicioCategoria.eliminarCategoria(newCategoria);
             this.cargar();
         } catch (Exception e) {
+            System.out.println("Quizas la categoria se encuentra nula?");
             System.out.println("Error eliminando caegoria! " + e);
         }
     }
@@ -290,26 +290,20 @@ public class OtherController implements Serializable {
 
     public void actualizarCaracteristicaTO() {
         try {
-             if(newCaracteristica==null){
-                System.out.println("La caracterisitica se encuentra nula");
-                return;
-            }
             this.servicioCaracteristica.actualizarCaracteristica(newCaracteristica);
             cargar();
         } catch (Exception e) {
+            System.out.println("Quizas la categoria se encuentra nula?");
             System.out.println("Error actualizando caracteristica! " + e);
         }
     }
 
     public void eliminarCaracteristicaTO() {
         try {
-             if(newCaracteristica==null){
-                System.out.println("La caracterisitica se encuentra nula");
-                return;
-            }
             this.servicioCaracteristica.eliminarCaracteristica(newCaracteristica);
             cargar();
         } catch (Exception e) {
+            System.out.println("Quizas la categoria se encuentra nula?");
             System.out.println("Error eliminanddo caracteristica! " + e);
         }
     }

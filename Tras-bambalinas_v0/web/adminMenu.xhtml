@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Cortinas Ferva</title>
     </h:head>
     <h:body>
         
@@ -72,7 +72,7 @@
             <p:confirmDialog widgetVar="deleteUserDialog" showEffect="fade" width="300"
                              message="Desea eliminar al usuario?" header="Confirmación" severity="warn">
 
-                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{userController.eliminarUsuarioTO}"
+                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{userController.eliminarUsuarioTO()}"
                                  process="@this"  update="userTable" oncomplete="PF('deleteUserDialog').hide()"/>
 
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
@@ -122,7 +122,7 @@
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="pass" value="Clave"/>
-                            <p:inputText id="pass" value="#{userController.newUser.contrasenaUsuario}"/>
+                            <p:inputText id="pass" value="#{userController.newUser.contrasenaUsuarioDecifrada}"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="tipo" value="Tipo de Usuario"/>
@@ -205,7 +205,7 @@
             <p:confirmDialog widgetVar="deleteCategoriaDialog" showEffect="fade" width="300"
                              message="Desea eliminar la categoria?" header="Confirmación" severity="warn">
 
-                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{OtherController.eliminarCategoriaTO}"
+                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{OtherController.eliminarCategoriaTO()}"
                                  process="@this"  update="categoriaTable" oncomplete="PF('deleteCategoriaDialog').hide()"/>
 
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
@@ -238,7 +238,7 @@
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCategoriaDialog').hide()"
                                      class="ui-button-secondary"/>
                 </f:facet>
-                
+
             </p:dialog>
 
             <p:dialog header="Detalle de la Categoria" showEffect="fade" modal="true"
@@ -322,7 +322,7 @@
                         <p:column>
                             <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
                                              oncomplete="PF('deleteCaracteristicaDialog').show()">
-                                <f:setPropertyActionListener value="#{laCaracteristica}" target="#{OtherController.newCaracteristica}"/>
+                                <f:setPropertyActionListener value="#{laCaracteristica}" target="#{OtherController.eliminarCaracteristicaTO()}"/>
                             </p:commandButton>                    
                         </p:column>
 
@@ -345,7 +345,7 @@
             <p:confirmDialog widgetVar="deleteCaracteristicaDialog" showEffect="fade" width="300"
                              message="Desea eliminar la Caracteristica?" header="Confirmación" severity="warn">
 
-                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{OtherController.eliminarCaracteristicaTO}"
+                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{OtherController.eliminarCaracteristicaTO()}"
                                  process="@this"  update="caracteristicaTable" oncomplete="PF('deleteCaracteristicaDialog').hide()"/>
 
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
@@ -397,7 +397,7 @@
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCaracteristicaDialog').hide()"
                                      class="ui-button-secondary"/>
                 </f:facet>
-                
+
             </p:dialog>
 
             <p:dialog header="Detalle de la Caracteristica" showEffect="fade" modal="true"
@@ -450,21 +450,29 @@
 
         </h:form>
 
-        
-        <h:form>
-            <p:panelGrid columns="1">
-                <p:commandButton id="regresarInicio" styleClass="ui-button-success" value="Regresar al Inicio" action="#{loginController.salir()}" >
-                </p:commandButton>
-                <p:commandButton id="crudUsuarios" styleClass="ui-button-success" value="Mostrar Usuarios" update=":formUsuario:show-user-information" oncomplete="PF('showUserInformation').show()">
-                </p:commandButton>
-                <p:commandButton id="crudCategorias" styleClass="ui-button-success" value="Mostrar Categorias" update=":formCategoria:show-categoria-information" oncomplete="PF('showCategoriaInformation').show()">
-                </p:commandButton>
+        <div class="card">
+            <h:form>
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <div class="menu-container p-mx-auto">
+                            <p:commandButton id="regresarId" styleClass="rounded-button ui-button-danger" value="Regresar al Inicio" action="#{loginController.salir()}"/>
+                        </div>
+                        <div class="menu-container p-mx-auto">
+                            <i class="pi pi-ellipsis-v p-px-2"/>
+                        </div>
 
-                <p:commandButton id="crudCaracteristicas" styleClass="ui-button-success" value="Mostrar Caracteristicas" update=":formCaracteristica:show-caracteristica-information" oncomplete="PF('showCaracteristicaInformation').show()">
-                </p:commandButton>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <div class="menu-container p-mx-auto">
+                            <p:commandButton id="mostrarCaracteristicas" styleClass="rounded-button" value="Mostrar Caracteristicas" update=":formCaracteristica:show-caracteristica-information" oncomplete="PF('showCaracteristicaInformation').show()"/>
+                            <p:commandButton id="mostrarCategorias" styleClass="rounded-button" value="Mostrar Categorias" update=":formCategoria:show-categoria-information" oncomplete="PF('showCategoriaInformation').show()"/>
+                            <p:commandButton id="mostrarUsuarios" styleClass="rounded-button" value="Mostrar Usuarios" update=":formUsuario:show-user-information" oncomplete="PF('showUserInformation').show()"/>
+                        </div>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </h:form>
+        </div>
 
-            </p:panelGrid>
-        </h:form>
 
     </h:body>
 
