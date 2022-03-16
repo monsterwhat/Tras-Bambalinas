@@ -8,11 +8,7 @@
         <title>Cortinas Ferva</title>
     </h:head>
     <h:body>
-        
-        
-        
-        
-        
+
         <h:form id="formUsuario">
 
             <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
@@ -89,15 +85,18 @@
                     <p:outputPanel rendered="#{not empty userController.newUser}">
                         <div class="p-field">
                             <p:outputLabel for="mail" value="Correo"/>
-                            <p:inputText id="Nmail" value="#{userController.newUser.correoUsuario}"/>
+                            <p:inputText id="Nmail" value="#{userController.newUser.correoUsuario}" required="true"/>
+                            <p:message for="Nmail" display="tooltip"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="pass" value="Clave"/>
-                            <p:inputText id="Npass" value="#{userController.newUser.contrasenaUsuario}"/>
+                            <p:inputText id="Npass" value="#{userController.newUser.contrasenaUsuario}" required="true"/>
+                            <p:message for="Npass" display="tooltip"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="tipo" value="Tipo de Usuario"/>
-                            <p:inputText id="Ntipo" value="#{userController.newUser.tipoUsuario}"/>
+                            <p:inputText id="Ntipo" value="#{userController.newUser.tipoUsuario}" required="true"/>
+                            <p:message for="Ntipo" display="tooltip"/>
                         </div>
 
                     </p:outputPanel>
@@ -105,7 +104,9 @@
 
                 <f:facet name="footer">        
                     <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{userController.agregarUsuarioTO}"
-                                     update=":formUsuario:create-user-content, userTable" process="create-user-content @this" onclick="PF('createUserDialog').hide()"/>
+                                     update=":formUsuario:create-user-content, userTable" process="create-user-content @this" />
+                    
+<!--                    onclick="PF('createUserDialog').hide()"-->
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createUserDialog').hide()"
                                      class="ui-button-secondary"/>
@@ -219,11 +220,13 @@
 
                         <div class="p-field">
                             <p:outputLabel for="nombreCategoria" value="Nombre de la Categoria"/>
-                            <p:inputText id="NnombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}"/>
+                            <p:inputText id="NnombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}" required="true"/>
+                            <p:message for="NnombreCategoria" display="tooltip"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="descripcionCategoria" value="Descripcion de la Categoria"/>
-                            <p:inputText id="NdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
+                            <p:inputText id="NdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}" required="true"/>
+                            <p:message for="NdescripcionCategoria" display="tooltip"/>
                         </div>
 
                     </p:outputPanel>
@@ -231,7 +234,9 @@
 
                 <f:facet name="footer">        
                     <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCategoriaTO}"
-                                     update=":formCategoria:create-categoria-content, categoriaTable" process="create-categoria-content @this" onclick="PF('createCategoriaDialog').hide()"/>
+                                     update=":formCategoria:create-categoria-content, categoriaTable" process="create-categoria-content @this" />
+                    
+<!--                    onclick="PF('createCategoriaDialog').hide()"-->
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCategoriaDialog').hide()"
                                      class="ui-button-secondary"/>
@@ -353,23 +358,28 @@
 
                         <div class="p-field">
                             <p:outputLabel for="nombreCaracteristica" value="Nombre de la Caracteristica"/>
-                            <p:inputText id="NnombreCaracteristica" value="#{OtherController.newCaracteristica.nombreCaracteristica}"/>
+                            <p:inputText id="NnombreCaracteristica" value="#{OtherController.newCaracteristica.nombreCaracteristica}" required="true"/>
+                            <p:message for="NnombreCaracteristica" display="tooltip"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="descripcionCaracteristica" value="Descripcion de la Caracteristica"/>
-                            <p:inputText id="NdescripcionCaracteristica" value="#{OtherController.newCaracteristica.descripcionCaracteristica}"/>
+                            <p:inputText id="NdescripcionCaracteristica" value="#{OtherController.newCaracteristica.descripcionCaracteristica}" required="true"/>
+                            <p:message for="NdescripcionCaracteristica" display="tooltip"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="cantidadCaracteristica" value="Cantidad"/>
-                            <p:inputNumber id="NcantidadCaracteristica" value="#{OtherController.newCaracteristica.cantidadCaracteristica}"/>
+                            <p:inputNumber id="NcantidadCaracteristica" value="#{OtherController.newCaracteristica.cantidadCaracteristica}" required="true"/>
+                            <p:message for="NcantidadCaracteristica" display="tooltip"/>
                         </div>                 
                         <div class="p-field">
                             <p:outputLabel for="prioridadCaracteristica" value="Peso de Prioridad"/>
-                            <p:inputNumber id="NprioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}"/>
+                            <p:inputNumber id="NprioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}" required="true"/>
+                            <p:message for="NprioridadCaracteristica" display="tooltip"/>
                         </div> 
                         <div class="p-field">
                             <p:outputLabel for="precioCaracteristica" value="Precio"/>
-                            <p:inputNumber id="NprecioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}"/>
+                            <p:inputNumber id="NprecioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}" required="true"/>
+                            <p:message for="NprecioCaracteristica" display="tooltip"/>
                         </div>
                         <div class="p-field p-col-12 p-md-4">
                             <p:outputLabel for="idCategoriaCaracteristica" value=" Lista Categorias: ID - Nombre Categoria"/>
@@ -381,7 +391,8 @@
                             </div>
                             <div class="p-mr-2">
                                 <p:outputLabel for="NidCategoriaCaracteristica" value="Id"/>
-                                <p:inputText id="NidCategoriaCaracteristica" value="#{OtherController.newCaracteristica.idCategoriaCaracteristica}"/>
+                                <p:inputText id="NidCategoriaCaracteristica" value="#{OtherController.newCaracteristica.idCategoriaCaracteristica}" required="true"/>
+                                <p:message for="NidCategoriaCaracteristica" display="tooltip"/>
                             </div>
                         </div>
                     </p:outputPanel>
@@ -389,7 +400,9 @@
 
                 <f:facet name="footer">        
                     <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCaracteristicaTO()}"
-                                     update=":formCaracteristica:create-caracteristica-content, caracteristicaTable" process="create-caracteristica-content @this" onclick="PF('createCaracteristicaDialog').hide()"/>
+                                     update=":formCaracteristica:create-caracteristica-content, caracteristicaTable" process="create-caracteristica-content @this" />
+                    
+<!--                    onclick="PF('createCaracteristicaDialog').hide()"-->
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCaracteristicaDialog').hide()"
                                      class="ui-button-secondary"/>
@@ -449,6 +462,7 @@
 
         <div class="card">
             <h:form id="formMenu">
+                
                 <p:toolbar >
                     <p:toolbarGroup>
                         <div class="menu-container p-mx-auto">

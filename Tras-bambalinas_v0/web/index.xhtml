@@ -9,77 +9,27 @@
     </h:head>
     <h:body>
         
-<!--        https://www.primefaces.org/showcase/ui/panel/splitter.xhtml?jfwid=b5254-->
-<!--        <p:splitter style="height: 1000px">
-            <p:splitterPanel>
-                <p:splitter  layout="vertical" >
-                    <p:splitterPanel styleClass="p-d-flex p-ai-center p-jc-center"  >
-                        
-                    </p:splitterPanel>
-                    
-                    <p:splitterPanel>
-                        <p:splitter>
-                            <p:splitterPanel styleClass="p-d-flex p-ai-center p-jc-center" size="20">
-                                Panel 3
-                            </p:splitterPanel>
-                            
-                            <p:splitterPanel styleClass="p-d-flex p-ai-center p-jc-center" size="80">
-                                Panel 4
-                            </p:splitterPanel>
-                        </p:splitter>
-                    </p:splitterPanel>
-                    
-                    
-                </p:splitter>      
-            </p:splitterPanel>
-        </p:splitter>-->
-
         <h:form id="formMenu" >
+            <p:toolbar>
+                <p:toolbarGroup style="margin-left: 20rem " >
+                    <p:button  value="Redes Sociales" icon="pi pi-mobile" styleClass="ui-button-secondary ui-button-flat" />
+                    <p:button value="Ubicacion"  styleClass="ui-button-secondary ui-button-flat" />
+                    <p:button  class="p-col-1" value="FERVA" outcome="/faces/index" icon="pi pi-fw pi-home" styleClass="ui-button-secondary ui-button-flat"  />
+                    <p:button value="Catalogo" styleClass="ui-button-secondary ui-button-flat" />
+                    <p:button  value="Cotizar"  styleClass="ui-button-secondary ui-button-flat" />        
+                    <p:button  value="Servicios"  styleClass="ui-button-secondary ui-button-flat" />        
+                </p:toolbarGroup>
 
-            <p:menubar id="menuBarFunciones" >
-
-                <p:menuitem value="Redes Sociales" icon="pi pi-mobile">
-                    <f:param name="i" value="0"/>
-                </p:menuitem>
-
-                <p:menuitem value="Ubicacion" >
-                    <f:param name="i" value="0"/>
-                </p:menuitem>
-
-                <p:menuitem value="FERVA" outcome="/faces/index" icon="pi pi-fw pi-home"  >
-                    <f:param name="i" value="0"/>
-                </p:menuitem>
-
-                <p:menuitem value="Catalogo" >
-                    <f:param name="i" value="0"/>
-                </p:menuitem>
-
-                <p:menuitem value="Cotizar" >
-                    <f:param name="i" value="0"/>
-                </p:menuitem>
-
-                <p:submenu label="Servicio">
-                   <p:menuitem value="Mantenimiento"/>
-                   <p:menuitem value="Reparaciones" />
-                   <p:menuitem value="Asesoria" />
-                </p:submenu>
-
-                <p:divider layout="vertical"/>
-
-                <p:menuitem  icon="pi pi-shopping-cart" >
-                    <f:param name="i" value="0"/>
-                </p:menuitem>
-
-                <p:submenu  icon="pi pi-fw pi-user" >
-                   <p:menuitem value="Ingresar" update=":formIngresarUsuario:ingresar-usuario-content" oncomplete="PF('ingresarUsuarioDialog').show()" icon="pi pi-sign-in"/>
-                   <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content" oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
-                </p:submenu>
-
-            </p:menubar>
-
+                <p:toolbarGroup align="right">
+                    <p:button  icon="pi pi-shopping-cart"  style="margin-right:5px"  />
+                    
+                    <p:menuButton icon="pi pi-user" styleClass="p-mb-2">
+                        <p:menuitem value="Ingresar" update=":formIngresarUsuario:ingresar-usuario-content" oncomplete="PF('ingresarUsuarioDialog').show()" icon="pi pi-sign-in"/>
+                        <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content" oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
+                    </p:menuButton>
+                </p:toolbarGroup>
+            </p:toolbar>
         </h:form>
-
-        
 
         <h:form id="formRegistrarUsuario">
 
@@ -92,12 +42,14 @@
                         
                         <div class="p-field">
                             <p:outputLabel for="correo" value="Correo Electronico"/>
-                            <p:inputText id="correo" value="#{loginController.correo}"/>            
+                            <p:inputText id="correo" value="#{loginController.correo}" required="true"/>
+                            <p:message for="correo" display="tooltip"/>
                         </div>
 
                         <div class="p-field">
                             <p:outputLabel for="pass" value="Contraseña"/>
-                            <p:password id="pass" value="#{loginController.claveNueva}" />
+                            <p:password id="pass" value="#{loginController.claveNueva}" required="true" />
+                            <p:message for="pass" display="tooltip"/>
                         </div>
 
                     </p:outputPanel>
@@ -106,7 +58,9 @@
                 <f:facet name="footer">     
 
                     <p:commandButton value="Registrar" icon="pi pi-check" actionListener="#{loginController.registrarUsuario()}"
-                                     update=":formRegistrarUsuario:registrar-usuario-content" process="registrar-usuario-content @this" onclick="PF('registrarUsuarioDialog').hide()"/>
+                                     update=":formRegistrarUsuario:registrar-usuario-content" process="registrar-usuario-content @this" />
+                    
+<!--                    onclick="PF('registrarUsuarioDialog').hide()"-->
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('registrarUsuarioDialog').hide()"
                                      class="ui-button-secondary"/>
@@ -174,13 +128,15 @@
                             <div class="p-col">
                                 <p:password id="pass1" value="#{loginController.claveNueva}" match="pass2" label="Password 1" required="true"/>
                             </div>
+                        
                         </div>
 
                         <div class="p-field p-grid">
                            <p:outputLabel for="pass2" styleClass="p-col-fixed" style="width:100px" value="Confimar Contraseña"/>
                            <div class="p-col">
-                               <p:password id="pass2" value="#{loginController.verificarClave}" label="Password 2" required="true"/>
+                                <p:password id="pass2" value="#{loginController.verificarClave}" label="Password 2" required="true"/>
                            </div>
+                            
                         </div>
 
 
@@ -189,9 +145,10 @@
 
                 <f:facet name="footer">     
 
-                    <p:commandButton value="Cambiar" icon="pi pi-check" actionListener="#{loginController.cambiarContrasena()}"
-                                     update=":formIngresarUsuario:change-password-content" process="change-password-content @this" onclick="PF('changePasswordDialog').hide()"
-                                     />
+                    <p:commandButton value="Cambiar" icon="pi pi-check" actionListener="#{loginController.cambiarContrasena()}" onclick="PF('changePasswordDialog').hide()"
+                                     update=":formIngresarUsuario:change-password-content" process="change-password-content @this" />
+                    
+<!--                    onclick="PF('changePasswordDialog').hide()"-->
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('changePasswordDialog').hide()"
                                      class="ui-button-secondary" />
@@ -213,3 +170,43 @@
     </h:body>
 </html>
 
+<!--            <p:menubar id="menuBarFunciones" >
+
+                <p:menuitem value="Redes Sociales" icon="pi pi-mobile">
+                    <f:param name="i" value="0"/>
+                </p:menuitem>
+
+                <p:menuitem value="Ubicacion" >
+                    <f:param name="i" value="0"/>
+                </p:menuitem>
+
+                <p:menuitem value="FERVA" outcome="/faces/index" icon="pi pi-fw pi-home"  >
+                    <f:param name="i" value="0"/>
+                </p:menuitem>
+
+                <p:menuitem value="Catalogo" >
+                    <f:param name="i" value="0"/>
+                </p:menuitem>
+
+                <p:menuitem value="Cotizar" >
+                    <f:param name="i" value="0"/>
+                </p:menuitem>
+
+                <p:submenu label="Servicio">
+                   <p:menuitem value="Mantenimiento"/>
+                   <p:menuitem value="Reparaciones" />
+                   <p:menuitem value="Asesoria" />
+                </p:submenu>
+
+                <p:divider layout="vertical"/>
+
+                <p:menuitem  icon="pi pi-shopping-cart" >
+                    <f:param name="i" value="0"/>
+                </p:menuitem>
+
+                <p:submenu  icon="pi pi-fw pi-user" >
+                   <p:menuitem value="Ingresar" update=":formIngresarUsuario:ingresar-usuario-content" oncomplete="PF('ingresarUsuarioDialog').show()" icon="pi pi-sign-in"/>
+                   <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content" oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
+                </p:submenu>
+
+            </p:menubar>-->
