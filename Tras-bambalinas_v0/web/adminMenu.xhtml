@@ -71,7 +71,7 @@
             <p:confirmDialog widgetVar="deleteUserDialog" showEffect="fade" width="300"
                              message="Desea eliminar al usuario?" header="Confirmación" severity="warn">
 
-                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{userController.eliminarUsuarioTO()}"
+                <p:commandButton value="Sí" icon="pi pi-check" actionListener="#{userController.eliminarUsuarioTO()}"
                                  process="@this"  update="userTable" oncomplete="PF('deleteUserDialog').hide()"/>
 
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
@@ -167,7 +167,7 @@
                         <p:column headerText="Nombre Categoria" sortBy="#{laCategoria.nombreCategoria}" filterBy="#{laCategoria.nombreCategoria}" filterMatchMode="exact">
                             <h:outputText value="#{laCategoria.nombreCategoria}"/>
                         </p:column>
-                        <p:column headerText="Descripcion Categoria" sortBy="#{laCategoria.descripcionCategoria}" filterBy="#{laCategoria.descripcionCategoria}" filterMatchMode="contains">
+                        <p:column headerText="Descripción Categoria" sortBy="#{laCategoria.descripcionCategoria}" filterBy="#{laCategoria.descripcionCategoria}" filterMatchMode="contains">
                             <h:outputText value="#{laCategoria.descripcionCategoria}"/>
                         </p:column>
 
@@ -205,7 +205,7 @@
             <p:confirmDialog widgetVar="deleteCategoriaDialog" showEffect="fade" width="300"
                              message="Desea eliminar la categoria?" header="Confirmación" severity="warn">
 
-                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{OtherController.eliminarCategoriaTO()}"
+                <p:commandButton value="Sí" icon="pi pi-check" actionListener="#{OtherController.eliminarCategoriaTO()}"
                                  process="@this"  update="categoriaTable" oncomplete="PF('deleteCategoriaDialog').hide()"/>
 
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
@@ -224,7 +224,7 @@
                             <p:message for="NnombreCategoria" display="tooltip"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="descripcionCategoria" value="Descripcion de la Categoria"/>
+                            <p:outputLabel for="descripcionCategoria" value="Descripción de la Categoria"/>
                             <p:inputText id="NdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}" required="true"/>
                             <p:message for="NdescripcionCategoria" display="tooltip"/>
                         </div>
@@ -255,7 +255,7 @@
                             <p:inputText id="nombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="descripcionCategoria" value="Descripcion de la Categoria"/>
+                            <p:outputLabel for="descripcionCategoria" value="Descripción de la Categoria"/>
                             <p:inputText id="descripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
                         </div>
 
@@ -275,7 +275,7 @@
 
         <h:form id="formCaracteristica">
 
-            <p:dialog header="Caracteristica" showEffect="fade" modal="true"
+            <p:dialog header="Característica" showEffect="fade" modal="true"
                       widgetVar="showCaracteristicaInformation" responsive="true">
                 <p:outputPanel id="show-caracteristica-information" class="ui-fluid">
 
@@ -289,13 +289,13 @@
                             Lista de Caracteristicas
                         </f:facet>
 
-                        <p:column headerText="ID de la Caracteristica" sortBy="#{laCaracteristica.idCaracteristica}" filterBy="#{laCaracteristica.idCaracteristica}" filterMatchMode="exact">
+                        <p:column headerText="ID de la Característica" sortBy="#{laCaracteristica.idCaracteristica}" filterBy="#{laCaracteristica.idCaracteristica}" filterMatchMode="exact">
                             <h:outputText value="#{laCaracteristica.idCaracteristica}"/>
                         </p:column>
-                        <p:column headerText="Nombre de la Caracteristica" sortBy="#{laCaracteristica.nombreCaracteristica}" filterBy="#{laCaracteristica.nombreCaracteristica}" filterMatchMode="exact">
+                        <p:column headerText="Nombre de la Característica" sortBy="#{laCaracteristica.nombreCaracteristica}" filterBy="#{laCaracteristica.nombreCaracteristica}" filterMatchMode="exact">
                             <h:outputText value="#{laCaracteristica.nombreCaracteristica}"/>
                         </p:column>
-                        <p:column headerText="Descripcion de la Caracteristica" sortBy="#{laCaracteristica.descripcionCaracteristica}" filterBy="#{laCaracteristica.descripcionCaracteristica}" filterMatchMode="contains">
+                        <p:column headerText="Descripción de la Característica" sortBy="#{laCaracteristica.descripcionCaracteristica}" filterBy="#{laCaracteristica.descripcionCaracteristica}" filterMatchMode="contains">
                             <h:outputText value="#{laCaracteristica.descripcionCaracteristica}"/>
                         </p:column>
                         <p:column headerText="Cantidad" sortBy="#{laCaracteristica.cantidadCaracteristica}" filterBy="#{laCaracteristica.cantidadCaracteristica}" filterMatchMode="exact">
@@ -328,7 +328,7 @@
                         </p:column>
                     </p:dataTable>
 
-                    <p:commandButton value="Nueva Caracteristica" icon="pi pi-plus" actionListener="#{OtherController.openNewCaracteristica}"
+                    <p:commandButton value="Nueva Característica" icon="pi pi-plus" actionListener="#{OtherController.openNewCaracteristica}"
                                      update=":formCaracteristica:create-caracteristica-content" oncomplete="PF('createCaracteristicaDialog').show()"
                                      styleClass="ui-button-success" style="margin-right: .5rem">
                         <p:resetInput target=":formCaracteristica:create-caracteristica-content"/>
@@ -343,26 +343,26 @@
             <p:confirmDialog widgetVar="deleteCaracteristicaDialog" showEffect="fade" width="300"
                              message="Desea eliminar la Caracteristica?" header="Confirmación" severity="warn">
 
-                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{OtherController.eliminarCaracteristicaTO}"
+                <p:commandButton value="Sí" icon="pi pi-check" actionListener="#{OtherController.eliminarCaracteristicaTO}"
                                  process="@this"  update="caracteristicaTable" oncomplete="PF('deleteCaracteristicaDialog').hide()"/>
 
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                  onclick="PF('deleteCaracteristicaDialog').hide()"/>
             </p:confirmDialog>
 
-            <p:dialog header="Crear Caracteristica" showEffect="fade" modal="true"
+            <p:dialog header="Crear Característica" showEffect="fade" modal="true"
                       widgetVar="createCaracteristicaDialog" responsive="true">
 
                 <p:outputPanel id="create-caracteristica-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty OtherController.newCaracteristica}">
 
                         <div class="p-field">
-                            <p:outputLabel for="nombreCaracteristica" value="Nombre de la Caracteristica"/>
+                            <p:outputLabel for="nombreCaracteristica" value="Nombre de la Característica"/>
                             <p:inputText id="NnombreCaracteristica" value="#{OtherController.newCaracteristica.nombreCaracteristica}" required="true"/>
                             <p:message for="NnombreCaracteristica" display="tooltip"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="descripcionCaracteristica" value="Descripcion de la Caracteristica"/>
+                            <p:outputLabel for="descripcionCaracteristica" value="Descripción de la Característica"/>
                             <p:inputText id="NdescripcionCaracteristica" value="#{OtherController.newCaracteristica.descripcionCaracteristica}" required="true"/>
                             <p:message for="NdescripcionCaracteristica" display="tooltip"/>
                         </div>
@@ -410,18 +410,18 @@
 
             </p:dialog>
 
-            <p:dialog header="Detalle de la Caracteristica" showEffect="fade" modal="true"
+            <p:dialog header="Detalle de la Característica" showEffect="fade" modal="true"
                       widgetVar="updateCaracteristicaDialog" responsive="true">
 
                 <p:outputPanel id="update-caracteristica-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty OtherController.newCaracteristica}">
 
                         <div class="p-field">
-                            <p:outputLabel for="nombreCaracteristica" value="Nombre de la Caracteristica"/>
+                            <p:outputLabel for="nombreCaracteristica" value="Nombre de la Característica"/>
                             <p:inputText id="nombreCaracteristica" value="#{OtherController.newCaracteristica.nombreCaracteristica}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="descripcionCaracteristica" value="Descripcion de la Caracteristica"/>
+                            <p:outputLabel for="descripcionCaracteristica" value="Descripcion de la Característica"/>
                             <p:inputText id="descripcionCaracteristica" value="#{OtherController.newCaracteristica.descripcionCaracteristica}"/>
                         </div>
                         <div class="p-field">
@@ -466,24 +466,32 @@
                 <p:toolbar >
                     
                     <p:toolbarGroup style="margin-left: 20rem " >
-                        <p:button value="Redes Sociales" styleClass="ui-button-secondary ui-button-flat" />
+<!--                        <p:button value="Redes Sociales" styleClass="ui-button-secondary ui-button-flat" />
                         <p:button value="Ubicacion" styleClass="ui-button-secondary ui-button-flat" />
                         <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml"  />
+
+                      
                         <p:button value="Catalogo" styleClass="ui-button-secondary ui-button-flat"/>
                         <p:button value="Cotizar" styleClass="ui-button-secondary ui-button-flat"/>
-                        <p:button  value="Servicios" styleClass="ui-button-secondary ui-button-flat"/>
+                        <p:button  value="Servicios" styleClass="ui-button-secondary ui-button-flat"/>-->
+                   <h3> BIENVENIDO </h3>
                     </p:toolbarGroup>   
                     
                     
-                    <p:toolbarGroup align="right">
-                        <p:button icon="pi pi-shopping-cart"  style="margin-right:5px" />
+                    <p:toolbarGroup>
+<!--                        align="right">
+                        <p:button icon="pi pi-shopping-cart"  style="margin-right:5px" />-->
                         
                         <p:menuButton icon="pi pi-user" styleClass="p-mb-2">
                             <p:menuitem value="Mostrar Usuarios" update=":formUsuario:show-user-information" oncomplete="PF('showUserInformation').show()"/>
                             <p:menuitem value="Mostrar Categorias" update=":formCategoria:show-categoria-information" oncomplete="PF('showCategoriaInformation').show()"/>
-                            <p:menuitem value="Mostrar Caracteristicas" update=":formCaracteristica:show-caracteristica-information" oncomplete="PF('showCaracteristicaInformation').show()"/> 
+                            <p:menuitem value="Mostrar Características" update=":formCaracteristica:show-caracteristica-information" oncomplete="PF('showCaracteristicaInformation').show()"/> 
                         </p:menuButton>
+                         <div class="menu-container p-mx-auto">
+                            <p:commandButton id="regresarId" styleClass="rounded-button ui-button-danger" value="Log Out" action="#{loginController.salir()}"/>
+                        </div>
                     </p:toolbarGroup>
+                    
                     
                     
 <!--                    <p:toolbarGroup>
