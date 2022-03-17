@@ -23,15 +23,20 @@ public class ServicioUsuario extends Servicio {
             String sql = "SELECT * FROM usuarios WHERE correoUsuario = '" + correoUsua + "' AND contrasenaUsuario = '" + ServicioCifrar.encrypt(clave) + "'";
             resultSet = statement.executeQuery(sql);
             if (resultSet.next()) {
-                 int idUsuario = resultSet.getInt("idusuarios");
+                int idUsuario = resultSet.getInt("idusuarios");
                 String correoUsuario = resultSet.getString("correoUsuario");
                 String contrasenaUsuario = resultSet.getString("contrasenaUsuario");
                 String tipoUsuario = resultSet.getString("tipoUsuario");
+                String nombreUsuario = resultSet.getString("nombreUsuario");
+                String direccionUsuario = resultSet.getString("direccionUsuario");
+                int telefonoUsuario = resultSet.getInt("telefonoUsuario");
+                int numeroContratoUsuario = resultSet.getInt("numeroContratoUsuario");
+                String descripcionTrabajoUsuario = resultSet.getString("descripcionTrabajoUsuario");
 
-                usuarioTO = new UsuarioTO(idUsuario, correoUsuario, contrasenaUsuario, tipoUsuario);
+                usuarioTO = new UsuarioTO(idUsuario, correoUsuario, contrasenaUsuario, tipoUsuario, nombreUsuario, direccionUsuario, telefonoUsuario, numeroContratoUsuario, descripcionTrabajoUsuario);
             }
         } catch (SQLException e) {
-             System.out.println("Error tratando de cargar datos de usuario (conectando!)! "+e);
+            System.out.println("Error tratando de cargar datos de usuario (conectando!)! " + e);
         } finally {
             cerrarResultSet(resultSet);
             cerrarStatement(statement);
@@ -57,12 +62,19 @@ public class ServicioUsuario extends Servicio {
                 String correoUsuario = resultSet.getString("correoUsuario");
                 String contrasenaUsuario = resultSet.getString("contrasenaUsuario");
                 String tipoUsuario = resultSet.getString("tipoUsuario");
+                String nombreUsuario = resultSet.getString("nombreUsuario");
+                String direccionUsuario = resultSet.getString("direccionUsuario");
+                int telefonoUsuario = resultSet.getInt("telefonoUsuario");
+                int numeroContratoUsuario = resultSet.getInt("numeroContratoUsuario");
+                String descripcionTrabajoUsuario = resultSet.getString("descripcionTrabajoUsuario");
 
-                UsuarioTO usuarioTO = new UsuarioTO(idUsuario, correoUsuario, contrasenaUsuario, tipoUsuario);
+                UsuarioTO usuarioTO = new UsuarioTO(idUsuario, correoUsuario, contrasenaUsuario, tipoUsuario, nombreUsuario, direccionUsuario, telefonoUsuario, numeroContratoUsuario, descripcionTrabajoUsuario);
+
                 listaRetorno.add(usuarioTO);
+
             }
         } catch (SQLException e) {
-             System.out.println("Error al cargar la lista de usuarios! " + e);
+            System.out.println("Error al cargar la lista de usuarios! " + e);
         } finally {
             cerrarResultSet(resultSet);
             cerrarStatement(statement);
@@ -76,12 +88,15 @@ public class ServicioUsuario extends Servicio {
 
         try {
             conectar();
-            String sql = "INSERT INTO usuarios (correoUsuario,contrasenaUsuario,tipoUsuario) VALUES (?,?,?)";
+            String sql = "INSERT INTO usuarios (correoUsuario,contrasenaUsuario,tipoUsuario,nombreUsuario,direccionUsuario,telefonoUsuario) VALUES (?,?,?,?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
 
             preparedStatement.setString(1, usuarioTO.getCorreoUsuario());
             preparedStatement.setString(2, ServicioCifrar.encrypt(usuarioTO.getContrasenaUsuario()));
             preparedStatement.setString(3, usuarioTO.getTipoUsuario());
+            preparedStatement.setString(4, usuarioTO.getNombreUsuario());
+            preparedStatement.setString(5, usuarioTO.getDireccionUsuario());
+            preparedStatement.setInt(6, usuarioTO.getTelefonoUsuario());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -97,16 +112,19 @@ public class ServicioUsuario extends Servicio {
 
         try {
             conectar();
-            String sql = "UPDATE usuarios SET correoUsuario=?, contrasenaUsuario=?, tipoUsuario=?  WHERE idusuarios='"+usuarioTO.getIdusuarios()+"'";
+            String sql = "UPDATE usuarios SET correoUsuario=?, contrasenaUsuario=?, tipoUsuario=?,nombreUsuario=?,direccionUsuario=?,telefonoUsuario=? WHERE idusuarios='" + usuarioTO.getIdusuarios() + "'";
             preparedStatement = conexion.prepareStatement(sql);
 
             preparedStatement.setString(1, usuarioTO.getCorreoUsuario());
             preparedStatement.setString(2, ServicioCifrar.encrypt(usuarioTO.getContrasenaUsuario()));
             preparedStatement.setString(3, usuarioTO.getTipoUsuario());
+            preparedStatement.setString(4, usuarioTO.getNombreUsuario());
+            preparedStatement.setString(5, usuarioTO.getDireccionUsuario());
+            preparedStatement.setInt(6, usuarioTO.getTelefonoUsuario());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-           System.out.println("Error al actualizar el usuario! " + e);
+            System.out.println("Error al actualizar el usuario! " + e);
         } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
@@ -138,7 +156,7 @@ public class ServicioUsuario extends Servicio {
 
         try {
             conectar();
-            String sql = "DELETE FROM usuarios WHERE idusuarios='"+usuarioTO.getIdusuarios()+"'";
+            String sql = "DELETE FROM usuarios WHERE idusuarios='" + usuarioTO.getIdusuarios() + "'";
             preparedStatement = conexion.prepareStatement(sql);
 
             preparedStatement.executeUpdate();

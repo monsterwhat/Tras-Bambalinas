@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import model.UsuarioTO;
@@ -23,6 +22,9 @@ public class LoginController implements Serializable {
     private String correo;
     private String clave;
     private String claveNueva, verificarClave;
+    private String nombreUsuario;
+    private String direccionUsuario;
+    private int telefonoUsuario;
 
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
     private UsuarioTO usuarioTO = null;
@@ -38,6 +40,30 @@ public class LoginController implements Serializable {
 
     public String getVerificarClave() {
         return verificarClave;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getDireccionUsuario() {
+        return direccionUsuario;
+    }
+
+    public void setDireccionUsuario(String direccionUsuario) {
+        this.direccionUsuario = direccionUsuario;
+    }
+
+    public int getTelefonoUsuario() {
+        return telefonoUsuario;
+    }
+
+    public void setTelefonoUsuario(int telefonoUsuario) {
+        this.telefonoUsuario = telefonoUsuario;
     }
 
     public String getClavecifrada() {
@@ -133,20 +159,23 @@ public class LoginController implements Serializable {
             System.out.println("Error al cambiar contrasena! " + e);
         }
     }
-    
-    public void registrarUsuario(){
+
+    public void registrarUsuario() {
         try {
             System.out.println("El valor digitado por el usuario (Correo) es: " + this.getCorreo());
             System.out.println("El valor digitado por el usuario (password) es: " + this.getClaveNueva());
-            
-            if(this.getCorreo()==null || "".equals(this.getCorreo())){
-            FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos invalidos", "El correo electronico es incorrecto"));
-            } else if (this.claveNueva == null){
-            FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos invalidos", "La contrasena no puede estar vacia"));
+            System.out.println("El valor digitado por el usuario (Nombre) es: " + this.getNombreUsuario());
+            System.out.println("El valor digitado por el usuario (Direccion) es: " + this.getDireccionUsuario());
+            System.out.println("El valor digitado por el usuario (Telefono) es: " + this.getTelefonoUsuario());
+
+            if (this.getCorreo() == null || "".equals(this.getCorreo())) {
+                FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos invalidos", "El correo electronico es incorrecto"));
+            } else if (this.claveNueva == null) {
+                FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos invalidos", "La contrasena no puede estar vacia"));
             }
-            UsuarioTO nuevoUsuario = new UsuarioTO(this.getCorreo(),this.getClaveNueva(),"admin");
+            UsuarioTO nuevoUsuario = new UsuarioTO(this.getCorreo(), this.getClaveNueva(), "admin",this.getNombreUsuario(),this.getDireccionUsuario(),this.getTelefonoUsuario());
             this.servicioUsuario.insertarUser(nuevoUsuario);
-            
+
         } catch (Exception e) {
             System.out.println("Error al registrar Usuario! " + e);
         }
@@ -175,9 +204,8 @@ public class LoginController implements Serializable {
 
     }
 
- 
-   public void testCategoria() {
+    public void testCategoria() {
         this.redireccionar("/faces/adminCategoria.xhtml");
     }
-    
+
 }

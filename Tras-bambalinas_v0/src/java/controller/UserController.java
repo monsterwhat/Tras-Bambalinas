@@ -14,8 +14,11 @@ import javax.annotation.PostConstruct;
 public class UserController implements Serializable {
 
     private int idUser;
-    private String correoElectronico;
+    private String correoUser;
     private String passwordUser;
+    private String nombreUser;
+    private String direccionUser;
+    private int telefonoUser;
 
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
     private UsuarioTO usuarioTO = null;
@@ -34,9 +37,41 @@ public class UserController implements Serializable {
             System.out.println(e);
         }
     }
-    
+
     public ServicioUsuario getServicioUsuario() {
         return servicioUsuario;
+    }
+
+    public String getCorreoUser() {
+        return correoUser;
+    }
+
+    public void setCorreoUser(String correoUser) {
+        this.correoUser = correoUser;
+    }
+
+    public String getNombreUser() {
+        return nombreUser;
+    }
+
+    public void setNombreUser(String nombreUser) {
+        this.nombreUser = nombreUser;
+    }
+
+    public String getDireccionUser() {
+        return direccionUser;
+    }
+
+    public void setDireccionUser(String direccionUser) {
+        this.direccionUser = direccionUser;
+    }
+
+    public int getTelefonoUser() {
+        return telefonoUser;
+    }
+
+    public void setTelefonoUser(int telefonoUser) {
+        this.telefonoUser = telefonoUser;
     }
 
     public void setServicioUsuario(ServicioUsuario servicioUsuario) {
@@ -49,14 +84,6 @@ public class UserController implements Serializable {
 
     public void setIdUser(int idUser) {
         this.idUser = idUser;
-    }
-
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
     }
 
     public String getPasswordUser() {

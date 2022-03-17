@@ -29,13 +29,30 @@
                             <h:outputText value="#{elUsuario.correoUsuario}"/>
                         </p:column>
 
-                        <p:column headerText="Contraseña">
-                            <h:outputText value="#{elUsuario.contrasenaUsuario}"/>
+                        <p:column headerText="Nombre" sortBy="#{elUsuario.nombreUsuario}" filterBy="#{elUsuario.nombreUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{elUsuario.nombreUsuario}"/>
+                        </p:column>
+
+                        <p:column headerText="Direccion" sortBy="#{elUsuario.direccionUsuario}" filterBy="#{elUsuario.direccionUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{elUsuario.direccionUsuario}"/>
+                        </p:column>
+
+                        <p:column headerText="Telefono" sortBy="#{elUsuario.telefonoUsuario}" filterBy="#{elUsuario.telefonoUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{elUsuario.telefonoUsuario}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Numero de Contrato" sortBy="#{elUsuario.numeroContratoUsuario}" filterBy="#{elUsuario.numeroContratoUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{elUsuario.numeroContratoUsuario}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Descripcion del Trabajo realizado" sortBy="#{elUsuario.descripcionTrabajoUsuario}" filterBy="#{elUsuario.descripcionTrabajoUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{elUsuario.descripcionTrabajoUsuario}"/>
                         </p:column>
 
                         <p:column headerText="Tipo de Usuario" sortBy="#{elUsuario.tipoUsuario}" filterBy="#{elUsuario.tipoUsuario}" filterMatchMode="contains">
                             <h:outputText value="#{elUsuario.tipoUsuario}"/>
                         </p:column>
+                        
 
                         <p:column>
                             <p:commandButton icon="pi pi-pencil" update=":formUsuario:update-user-content"
@@ -90,7 +107,7 @@
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="pass" value="Clave"/>
-                            <p:inputText id="Npass" value="#{userController.newUser.contrasenaUsuario}" required="true"/>
+                            <p:password id="Npass" value="#{userController.newUser.contrasenaUsuario}" required="true"/>
                             <p:message for="Npass" display="tooltip"/>
                         </div>
                         <div class="p-field">
@@ -98,15 +115,30 @@
                             <p:inputText id="Ntipo" value="#{userController.newUser.tipoUsuario}" required="true"/>
                             <p:message for="Ntipo" display="tooltip"/>
                         </div>
+                        <div class="p-field">
+                            <p:outputLabel for="nombre" value="Nombre del Usuario"/>
+                            <p:inputText id="Nnombre" value="#{userController.newUser.nombreUsuario}" required="true"/>
+                            <p:message for="Nnombre" display="tooltip"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="direccion" value="Direccion"/>
+                            <p:inputText id="Ndireccion" value="#{userController.newUser.direccionUsuario}" required="true"/>
+                            <p:message for="Ndireccion" display="tooltip"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="telefono" value="Telefono"/>
+                            <p:inputText id="Ntelefono" value="#{userController.newUser.telefonoUsuario}" required="true"/>
+                            <p:message for="Ntelefono" display="tooltip"/>
+                        </div>
+                        
 
                     </p:outputPanel>
                 </p:outputPanel>
 
                 <f:facet name="footer">        
                     <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{userController.agregarUsuarioTO}"
-                                     update=":formUsuario:create-user-content, userTable" process="create-user-content @this" />
-                    
-<!--                    onclick="PF('createUserDialog').hide()"-->
+                                     update=":formUsuario:create-user-content, userTable" process="create-user-content @this"
+                                     oncomplete="PF('createUserDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createUserDialog').hide()"
                                      class="ui-button-secondary"/>
@@ -125,11 +157,31 @@
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="pass" value="Clave"/>
-                            <p:inputText id="pass" value="#{userController.newUser.contrasenaUsuarioDecifrada}"/>
+                            <p:password id="pass" value="#{userController.newUser.contrasenaUsuarioDecifrada}"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="tipo" value="Tipo de Usuario"/>
                             <p:inputText id="tipo" value="#{userController.newUser.tipoUsuario}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="nombre" value="Nombre de Usuario"/>
+                            <p:inputText id="nombre" value="#{userController.newUser.nombreUsuario}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="direccion" value="Direccion del Usuario"/>
+                            <p:inputText id="direccion" value="#{userController.newUser.direccionUsuario}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="telefono" value="Telefono del Usuario"/>
+                            <p:inputText id="telefono" value="#{userController.newUser.telefonoUsuario}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="contrato" value="Numero de Contrato del Usuario"/>
+                            <p:inputText id="contrato" value="#{userController.newUser.numeroContratoUsuario}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="descripcion" value="Descripcion del trabajo realizado"/>
+                            <p:inputText id="descripcion" value="#{userController.newUser.descripcionTrabajoUsuario}"/>
                         </div>
 
                     </p:outputPanel>
@@ -137,7 +189,7 @@
 
                 <f:facet name="footer">     
                     <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{userController.actualizarUsuarioTO}"
-                                     update=":formUsuario:update-user-content, userTable" process="update-user-content @this" onclick="PF('updateUserDialog').hide()"/>
+                                     update=":formUsuario:update-user-content, userTable" process="update-user-content @this" oncomplete="PF('updateUserDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('updateUserDialog').hide()"
                                      class="ui-button-secondary"/>
@@ -235,8 +287,8 @@
                 <f:facet name="footer">        
                     <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCategoriaTO}"
                                      update=":formCategoria:create-categoria-content, categoriaTable" process="create-categoria-content @this" />
-                    
-<!--                    onclick="PF('createCategoriaDialog').hide()"-->
+
+                    <!--                    onclick="PF('createCategoriaDialog').hide()"-->
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCategoriaDialog').hide()"
                                      class="ui-button-secondary"/>
@@ -401,8 +453,8 @@
                 <f:facet name="footer">        
                     <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCaracteristicaTO()}"
                                      update=":formCaracteristica:create-caracteristica-content, caracteristicaTable" process="create-caracteristica-content @this" />
-                    
-<!--                    onclick="PF('createCaracteristicaDialog').hide()"-->
+
+                    <!--                    onclick="PF('createCaracteristicaDialog').hide()"-->
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCaracteristicaDialog').hide()"
                                      class="ui-button-secondary"/>
@@ -462,57 +514,57 @@
 
         <div class="card">
             <h:form id="formMenu">
-                
-                <p:toolbar >
-                    
-                    <p:toolbarGroup style="margin-left: 20rem " >
-<!--                        <p:button value="Redes Sociales" styleClass="ui-button-secondary ui-button-flat" />
-                        <p:button value="Ubicacion" styleClass="ui-button-secondary ui-button-flat" />
-                        <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml"  />
 
-                      
-                        <p:button value="Catalogo" styleClass="ui-button-secondary ui-button-flat"/>
-                        <p:button value="Cotizar" styleClass="ui-button-secondary ui-button-flat"/>
-                        <p:button  value="Servicios" styleClass="ui-button-secondary ui-button-flat"/>-->
-                   <h3> BIENVENIDO </h3>
-                    </p:toolbarGroup>   
-                    
-                    
-                    <p:toolbarGroup>
-<!--                        align="right">
-                        <p:button icon="pi pi-shopping-cart"  style="margin-right:5px" />-->
+                <p:toolbar >
+
+                    <p:toolbarGroup style="margin-left: 20rem " >
+                        <!--                        <p:button value="Redes Sociales" styleClass="ui-button-secondary ui-button-flat" />
+                                                <p:button value="Ubicacion" styleClass="ui-button-secondary ui-button-flat" />
+                                                <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml"  />
                         
+                                              
+                                                <p:button value="Catalogo" styleClass="ui-button-secondary ui-button-flat"/>
+                                                <p:button value="Cotizar" styleClass="ui-button-secondary ui-button-flat"/>
+                                                <p:button  value="Servicios" styleClass="ui-button-secondary ui-button-flat"/>-->
+                        <h3> BIENVENIDO </h3>
+                    </p:toolbarGroup>   
+
+
+                    <p:toolbarGroup>
+                        <!--                        align="right">
+                                                <p:button icon="pi pi-shopping-cart"  style="margin-right:5px" />-->
+
                         <p:menuButton icon="pi pi-user" styleClass="p-mb-2">
                             <p:menuitem value="Mostrar Usuarios" update=":formUsuario:show-user-information" oncomplete="PF('showUserInformation').show()"/>
                             <p:menuitem value="Mostrar Categorias" update=":formCategoria:show-categoria-information" oncomplete="PF('showCategoriaInformation').show()"/>
                             <p:menuitem value="Mostrar Características" update=":formCaracteristica:show-caracteristica-information" oncomplete="PF('showCaracteristicaInformation').show()"/> 
                         </p:menuButton>
-                         <div class="menu-container p-mx-auto">
+                        <div class="menu-container p-mx-auto">
                             <p:commandButton id="regresarId" styleClass="rounded-button ui-button-danger" value="Log Out" action="#{loginController.salir()}"/>
                         </div>
                     </p:toolbarGroup>
-                    
-                    
-                    
-<!--                    <p:toolbarGroup>
-                        <div class="menu-container p-mx-auto">
-                            <p:commandButton id="regresarId" styleClass="rounded-button ui-button-danger" value="Regresar al Inicio" action="#{loginController.salir()}"/>
-                        </div>
-                        <div class="menu-container p-mx-auto">
-                            <i class="pi pi-ellipsis-v p-px-2"/>
-                        </div>
 
-                    </p:toolbarGroup>
-                    <p:toolbarGroup align="right">
-                        <div class="menu-container p-mx-auto">
-                            <p:commandButton id="mostrarCaracteristicas" styleClass="rounded-button" value="Mostrar Caracteristicas" update=":formCaracteristica:show-caracteristica-information" 
-oncomplete="PF('showCaracteristicaInformation').show()"/>
-                            <p:commandButton id="mostrarCategorias" styleClass="rounded-button" value="Mostrar Categorias" update=":formCategoria:show-categoria-information" 
-oncomplete="PF('showCategoriaInformation').show()"/>
-                            <p:commandButton id="mostrarUsuarios" styleClass="rounded-button" value="Mostrar Usuarios" update=":formUsuario:show-user-information" 
-oncomplete="PF('showUserInformation').show()"/>
-                        </div>
-                    </p:toolbarGroup>-->
+
+
+                    <!--                    <p:toolbarGroup>
+                                            <div class="menu-container p-mx-auto">
+                                                <p:commandButton id="regresarId" styleClass="rounded-button ui-button-danger" value="Regresar al Inicio" action="#{loginController.salir()}"/>
+                                            </div>
+                                            <div class="menu-container p-mx-auto">
+                                                <i class="pi pi-ellipsis-v p-px-2"/>
+                                            </div>
+                    
+                                        </p:toolbarGroup>
+                                        <p:toolbarGroup align="right">
+                                            <div class="menu-container p-mx-auto">
+                                                <p:commandButton id="mostrarCaracteristicas" styleClass="rounded-button" value="Mostrar Caracteristicas" update=":formCaracteristica:show-caracteristica-information" 
+                    oncomplete="PF('showCaracteristicaInformation').show()"/>
+                                                <p:commandButton id="mostrarCategorias" styleClass="rounded-button" value="Mostrar Categorias" update=":formCategoria:show-categoria-information" 
+                    oncomplete="PF('showCategoriaInformation').show()"/>
+                                                <p:commandButton id="mostrarUsuarios" styleClass="rounded-button" value="Mostrar Usuarios" update=":formUsuario:show-user-information" 
+                    oncomplete="PF('showUserInformation').show()"/>
+                                            </div>
+                                        </p:toolbarGroup>-->
                 </p:toolbar>
             </h:form>
         </div>

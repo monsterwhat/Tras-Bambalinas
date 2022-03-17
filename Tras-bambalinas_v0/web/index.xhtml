@@ -45,15 +45,33 @@
 
                         
                         <div class="p-field">
+                            <p:outputLabel for="nombre" value="Nombre"/>
+                            <p:inputText id="nombre" value="#{loginController.nombreUsuario}" required="true" />
+                            <p:message for="nombre" display="tooltip"/>
+                        </div>
+
+                        <div class="p-field">
                             <p:outputLabel for="correo" value="Correo Electronico"/>
                             <p:inputText id="correo" value="#{loginController.correo}" required="true"/>
                             <p:message for="correo" display="tooltip"/>
                         </div>
-
+                        
                         <div class="p-field">
                             <p:outputLabel for="pass" value="Contraseña"/>
                             <p:password id="pass" value="#{loginController.claveNueva}" required="true" />
                             <p:message for="pass" display="tooltip"/>
+                        </div>
+                        
+                        <div class="p-field">
+                            <p:outputLabel for="direccion" value="Direccion"/>
+                            <p:inputText id="direccion" value="#{loginController.direccionUsuario}" required="true" />
+                            <p:message for="direccion" display="tooltip"/>
+                        </div>
+                        
+                        <div class="p-field">
+                            <p:outputLabel for="telefono" value="Telefono"/>
+                            <p:inputText id="telefono" value="#{loginController.telefonoUsuario}" required="true" />
+                            <p:message for="telefono" display="tooltip"/>
                         </div>
 
                     </p:outputPanel>
@@ -62,9 +80,8 @@
                 <f:facet name="footer">     
 
                     <p:commandButton value="Registrar" icon="pi pi-check" actionListener="#{loginController.registrarUsuario()}"
-                                     update=":formRegistrarUsuario:registrar-usuario-content" process="registrar-usuario-content @this" />
-                    
-<!--                    onclick="PF('registrarUsuarioDialog').hide()"-->
+                                     update=":formRegistrarUsuario:registrar-usuario-content" process="registrar-usuario-content @this" 
+                                     oncomplete="PF('registrarUsuarioDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('registrarUsuarioDialog').hide()"
                                      class="ui-button-secondary"/>
@@ -98,7 +115,6 @@
                           
                         </div>
                         
-
                     </p:outputPanel>
                 </p:outputPanel>
 
@@ -108,7 +124,7 @@
                                      update=":formIngresarUsuario:ingresar-usuario-content" process="ingresar-usuario-content @this" />
                     
 <!--    Si queremos hacer las validaciones que no deje ningun campo de texto vaciao  
-        hay que quietar es funcion de los botones [onclick="PF('ingresarUsuarioDialog').hide()"]-->
+        hay que quitar es funcion de los botones [onclick="PF('ingresarUsuarioDialog').hide()"]-->
 
                     <p:commandButton value="Cambiar Contraseña" icon="pi pi-check" actionListener="#{loginController.cambiarContrasena()}" oncomplete="PF('changePasswordDialog').show()"
                                      update=":formIngresarUsuario:change-password-content" process="change-password-content @this" onclick="PF('changePasswordDialog').hide()"/>
@@ -150,9 +166,7 @@
                 <f:facet name="footer">     
 
                     <p:commandButton value="Cambiar" icon="pi pi-check" actionListener="#{loginController.cambiarContrasena()}" onclick="PF('changePasswordDialog').hide()"
-                                     update=":formIngresarUsuario:change-password-content" process="change-password-content @this" />
-                    
-<!--                    onclick="PF('changePasswordDialog').hide()"-->
+                                     update=":formIngresarUsuario:change-password-content" process="change-password-content @this"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('changePasswordDialog').hide()"
                                      class="ui-button-secondary" />
