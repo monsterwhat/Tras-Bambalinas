@@ -23,9 +23,6 @@ public class CategoriaTO implements Serializable {
         this.descripcionCategoria = descripcionCategoria;
     }
     
-    public String getIdNameCategoria(){
-        return idCategoria + " - " + nombreCategoria;
-    }
 
     public int getIdCategoria() {
         return idCategoria;

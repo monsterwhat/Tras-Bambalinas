@@ -5,33 +5,39 @@ import java.io.Serializable;
 public class CaracteristicaTO implements Serializable {
 
     private int idCaracteristica;
+    private int idCategoriaCaracteristica;
+    private String imagenCaracteristica = "porDefecto.png";
     private String nombreCaracteristica;
     private String descripcionCaracteristica;
-    private int cantidadCaracteristica;
-    private int prioridadCaracteristica;
+    private String estadoCaracteristica;
     private double precioCaracteristica;
-    private int idCategoriaCaracteristica;
+    private String colorCaracteristica;
+    private int prioridadCaracteristica;
 
-    public CaracteristicaTO(int idCaracteristica, String nombreCaracteristica, String descripcionCaracteristica, int cantidadCaracteristica, int prioridadCaracteristica, double precioCaracteristica, int idCategoriaCaracteristica) {
+    public CaracteristicaTO() {
+    }
+    
+    public CaracteristicaTO(int idCaracteristica, int idCategoriaCaracteristica, String imagenCaracteristica, String nombreCaracteristica, String descripcionCaracteristica, String estadoCaracteristica, double precioCaracteristica, String colorCaracteristica, int prioridadCaracteristica) {
         this.idCaracteristica = idCaracteristica;
+        this.idCategoriaCaracteristica = idCategoriaCaracteristica;
+        this.imagenCaracteristica = imagenCaracteristica;
         this.nombreCaracteristica = nombreCaracteristica;
         this.descripcionCaracteristica = descripcionCaracteristica;
-        this.cantidadCaracteristica = cantidadCaracteristica;
-        this.prioridadCaracteristica = prioridadCaracteristica;
+        this.estadoCaracteristica = estadoCaracteristica;
         this.precioCaracteristica = precioCaracteristica;
-        this.idCategoriaCaracteristica=idCategoriaCaracteristica;
+        this.colorCaracteristica = colorCaracteristica;
+        this.prioridadCaracteristica = prioridadCaracteristica;
     }
 
-    public CaracteristicaTO(String nombreCaracteristica, String descripcionCaracteristica, int cantidadCaracteristica, int prioridadCaracteristica, double precioCaracteristica,int idCategoriaCaracteristica) {
+    public CaracteristicaTO(int idCategoriaCaracteristica, String imagenCaracteristica, String nombreCaracteristica, String descripcionCaracteristica, String estadoCaracteristica, double precioCaracteristica, String colorCaracteristica, int prioridadCaracteristica) {
+        this.idCategoriaCaracteristica = idCategoriaCaracteristica;
+        this.imagenCaracteristica = imagenCaracteristica;
         this.nombreCaracteristica = nombreCaracteristica;
         this.descripcionCaracteristica = descripcionCaracteristica;
-        this.cantidadCaracteristica = cantidadCaracteristica;
-        this.prioridadCaracteristica = prioridadCaracteristica;
+        this.estadoCaracteristica = estadoCaracteristica;
         this.precioCaracteristica = precioCaracteristica;
-        this.idCategoriaCaracteristica=idCategoriaCaracteristica;
-    }
-
-    public CaracteristicaTO(){
+        this.colorCaracteristica = colorCaracteristica;
+        this.prioridadCaracteristica = prioridadCaracteristica;
     }
 
     public int getIdCaracteristica() {
@@ -40,6 +46,22 @@ public class CaracteristicaTO implements Serializable {
 
     public void setIdCaracteristica(int idCaracteristica) {
         this.idCaracteristica = idCaracteristica;
+    }
+
+    public int getIdCategoriaCaracteristica() {
+        return idCategoriaCaracteristica;
+    }
+
+    public void setIdCategoriaCaracteristica(int idCategoriaCaracteristica) {
+        this.idCategoriaCaracteristica = idCategoriaCaracteristica;
+    }
+
+    public String getImagenCaracteristica() {
+        return imagenCaracteristica;
+    }
+
+    public void setImagenCaracteristica(String imagenCaracteristica) {
+        this.imagenCaracteristica = imagenCaracteristica;
     }
 
     public String getNombreCaracteristica() {
@@ -58,20 +80,12 @@ public class CaracteristicaTO implements Serializable {
         this.descripcionCaracteristica = descripcionCaracteristica;
     }
 
-    public int getCantidadCaracteristica() {
-        return cantidadCaracteristica;
+    public String getEstadoCaracteristica() {
+        return estadoCaracteristica;
     }
 
-    public void setCantidadCaracteristica(int cantidadCaracteristica) {
-        this.cantidadCaracteristica = cantidadCaracteristica;
-    }
-
-    public int getPrioridadCaracteristica() {
-        return prioridadCaracteristica;
-    }
-
-    public void setPrioridadCaracteristica(int prioridadCaracteristica) {
-        this.prioridadCaracteristica = prioridadCaracteristica;
+    public void setEstadoCaracteristica(String estadoCaracteristica) {
+        this.estadoCaracteristica = estadoCaracteristica;
     }
 
     public double getPrecioCaracteristica() {
@@ -81,12 +95,24 @@ public class CaracteristicaTO implements Serializable {
     public void setPrecioCaracteristica(double precioCaracteristica) {
         this.precioCaracteristica = precioCaracteristica;
     }
-    public int getIdCategoriaCaracteristica() {
-        return idCategoriaCaracteristica;
+
+    public String getColorCaracteristica() {
+        return colorCaracteristica;
     }
 
-    public void setIdCategoriaCaracteristica(int idCategoriaCaracteristica) {
-        this.idCategoriaCaracteristica = idCategoriaCaracteristica;
+    public void setColorCaracteristica(String colorCaracteristica) {
+        this.colorCaracteristica = colorCaracteristica;
     }
 
+    public int getPrioridadCaracteristica() {
+        return prioridadCaracteristica;
+    }
+
+    public void setPrioridadCaracteristica(int prioridadCaracteristica) {
+        this.prioridadCaracteristica = prioridadCaracteristica;
+    }
+    
+    
+
+    
 }

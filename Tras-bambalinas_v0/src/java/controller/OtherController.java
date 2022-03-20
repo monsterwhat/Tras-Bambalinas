@@ -1,13 +1,26 @@
 package controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import model.CaracteristicaTO;
 import model.CategoriaTO;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.CroppedImage;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.file.UploadedFile;
 import servicio.ServicioCaracteristica;
 import servicio.ServicioCategoria;
 
@@ -28,13 +41,21 @@ public class OtherController implements Serializable {
     private String nombreCategoria;
     private String descripcionCategoria;
 
+    
+    ///////////////////////////////////////////////////////////////////////////
     private int idCaracteristica;
+    private int idCategoriaCaracteristica;
+    private String imagenCaracteristica;
     private String nombreCaracteristica;
     private String descripcionCaracteristica;
-    private int cantidadCaracteristica;
-    private int prioridadCaracteristica;
+    private String estadoCaracteristica;
     private double precioCaracteristica;
-    private int idCategoriaCaracteristica;
+    private String colorCaracteristica;
+    private int prioridadCaracteristica;
+    
+   
+
+    ////////////////////////////////////////////////////////////////////////////
 
     public OtherController() {
     }
@@ -120,6 +141,8 @@ public class OtherController implements Serializable {
     public void setDescripcionCategoria(String descripcionCategoria) {
         this.descripcionCategoria = descripcionCategoria;
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
 
     public int getIdCaracteristica() {
         return idCaracteristica;
@@ -127,6 +150,22 @@ public class OtherController implements Serializable {
 
     public void setIdCaracteristica(int idCaracteristica) {
         this.idCaracteristica = idCaracteristica;
+    }
+
+    public int getIdCategoriaCaracteristica() {
+        return idCategoriaCaracteristica;
+    }
+
+    public void setIdCategoriaCaracteristica(int idCategoriaCaracteristica) {
+        this.idCategoriaCaracteristica = idCategoriaCaracteristica;
+    }
+
+    public String getImagenCaracteristica() {
+        return imagenCaracteristica;
+    }
+
+    public void setImagenCaracteristica(String imagenCaracteristica) {
+        this.imagenCaracteristica = imagenCaracteristica;
     }
 
     public String getNombreCaracteristica() {
@@ -145,20 +184,12 @@ public class OtherController implements Serializable {
         this.descripcionCaracteristica = descripcionCaracteristica;
     }
 
-    public int getCantidadCaracteristica() {
-        return cantidadCaracteristica;
+    public String getEstadoCaracteristica() {
+        return estadoCaracteristica;
     }
 
-    public void setCantidadCaracteristica(int cantidadCaracteristica) {
-        this.cantidadCaracteristica = cantidadCaracteristica;
-    }
-
-    public int getPrioridadCaracteristica() {
-        return prioridadCaracteristica;
-    }
-
-    public void setPrioridadCaracteristica(int prioridadCaracteristica) {
-        this.prioridadCaracteristica = prioridadCaracteristica;
+    public void setEstadoCaracteristica(String estadoCaracteristica) {
+        this.estadoCaracteristica = estadoCaracteristica;
     }
 
     public double getPrecioCaracteristica() {
@@ -169,13 +200,23 @@ public class OtherController implements Serializable {
         this.precioCaracteristica = precioCaracteristica;
     }
 
-    public int getIdCategoriaCaracteristica() {
-        return idCategoriaCaracteristica;
+    public String getColorCaracteristica() {
+        return colorCaracteristica;
     }
 
-    public void setIdCategoriaCaracteristica(int idCategoriaCaracteristica) {
-        this.idCategoriaCaracteristica = idCategoriaCaracteristica;
+    public void setColorCaracteristica(String colorCaracteristica) {
+        this.colorCaracteristica = colorCaracteristica;
     }
+
+    public int getPrioridadCaracteristica() {
+        return prioridadCaracteristica;
+    }
+
+    public void setPrioridadCaracteristica(int prioridadCaracteristica) {
+        this.prioridadCaracteristica = prioridadCaracteristica;
+    }  
+    
+    /////////////////////////////////////////////////////////////////////////////
 
     public CategoriaTO getNewCategoria() {
         return newCategoria;
@@ -230,6 +271,8 @@ public class OtherController implements Serializable {
             System.out.println("Error eliminando caegoria! " + e);
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////////////
 
     public void agregarCaracteristicaTO() {
         try {
@@ -251,9 +294,9 @@ public class OtherController implements Serializable {
         }
     }
 
-    public void eliminarCaracteristicaTO() {
+    public void eliminarCaracteristicaTOPorEstado() {
         try {
-            this.servicioCaracteristica.eliminarCaracteristica(newCaracteristica);
+            this.servicioCaracteristica.eliminarPorEstadoCaracteristica(newCaracteristica);
             cargar();
         } catch (Exception e) {
             System.out.println("Quizas la categoria se encuentra nula?");
@@ -270,5 +313,34 @@ public class OtherController implements Serializable {
 
         }
     }
+    
+    public void seleccionarFileUpload(FileUploadEvent event) {
+        UploadedFile uploadedFile = event.getFile();
+        try {
+            InputStream in = event.getFile().getInputStream();
+            OutputStream out = new FileOutputStream(new File("C:\\Imagenes\\" + uploadedFile.getFileName()));
+            this.newCaracteristica.setImagenCaracteristica(uploadedFile.getFileName());
+            
+            System.out.println(this.newCaracteristica.getImagenCaracteristica());
+            
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            in.close();
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void seleccionarDefaultImagen(){
+        this.newCaracteristica.setImagenCaracteristica("porDefecto.png");
+    }
+    
+    
 
 }
