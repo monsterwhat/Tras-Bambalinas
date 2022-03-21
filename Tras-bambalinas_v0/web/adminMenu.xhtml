@@ -106,7 +106,7 @@
                     <p:outputPanel rendered="#{not empty userController.newUser}">
                         <div class="p-field">
                             <p:outputLabel for="mail" value="Correo"/>
-                            <p:inputText id="Nmail" value="#{userController.newUser.correoUsuario}" required="true"/>
+                            <p:inputText type="email" id="Nmail" value="#{userController.newUser.correoUsuario}" required="true"/>
                             <p:message for="Nmail" display="tooltip"/>
                         </div>
                         <div class="p-field">
@@ -126,12 +126,12 @@
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="direccion" value="Dirección"/>
-                            <p:inputText id="Ndireccion" value="#{userController.newUser.direccionUsuario}" required="true"/>
+                            <p:inputTextarea id="Ndireccion" value="#{userController.newUser.direccionUsuario}" required="true"/>
                             <p:message for="Ndireccion" display="tooltip"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="telefono" value="Teléfono"/>
-                            <p:inputText id="Ntelefono" value="#{userController.newUser.telefonoUsuario}" required="true"/>
+                            <p:inputNumber id="Ntelefono" value="#{userController.newUser.telefonoUsuario}" required="true"/>
                             <p:message for="Ntelefono" display="tooltip"/>
                         </div>
 
@@ -157,7 +157,7 @@
                     <p:outputPanel rendered="#{not empty userController.newUser}">
                         <div class="p-field">
                             <p:outputLabel for="mail" value="Correo"/>
-                            <p:inputText id="mail" value="#{userController.newUser.correoUsuario}"/>
+                            <p:inputText type="email" id="mail" value="#{userController.newUser.correoUsuario}"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="pass" value="Clave"/>
@@ -173,19 +173,19 @@
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="direccion" value="Dirección del Usuario"/>
-                            <p:inputText id="direccion" value="#{userController.newUser.direccionUsuario}"/>
+                            <p:inputTextarea id="direccion" value="#{userController.newUser.direccionUsuario}"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="telefono" value="Teléfono del Usuario"/>
-                            <p:inputText id="telefono" value="#{userController.newUser.telefonoUsuario}"/>
+                            <p:inputNumber id="telefono" value="#{userController.newUser.telefonoUsuario}"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="contrato" value="Número de Contrato del Usuario"/>
-                            <p:inputText id="contrato" value="#{userController.newUser.numeroContratoUsuario}"/>
+                            <p:inputNumber id="contrato" value="#{userController.newUser.numeroContratoUsuario}"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="descripcion" value="Descripción del trabajo realizado"/>
-                            <p:inputText id="descripcion" value="#{userController.newUser.descripcionTrabajoUsuario}"/>
+                            <p:inputTextarea id="descripcion" value="#{userController.newUser.descripcionTrabajoUsuario}"/>
                         </div>
 
                     </p:outputPanel>
