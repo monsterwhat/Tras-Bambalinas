@@ -40,6 +40,8 @@ public class OtherController implements Serializable {
     private int idCategoria;
     private String nombreCategoria;
     private String descripcionCategoria;
+    private String estadoCategoria;
+    private String seleccionCategoria;
 
     
     ///////////////////////////////////////////////////////////////////////////
@@ -141,9 +143,26 @@ public class OtherController implements Serializable {
     public void setDescripcionCategoria(String descripcionCategoria) {
         this.descripcionCategoria = descripcionCategoria;
     }
-    
-    ////////////////////////////////////////////////////////////////////////////
 
+    public String getEstadoCategoria() {
+        return estadoCategoria;
+    }
+
+    public void setEstadoCategoria(String estadoCategoria) {
+        this.estadoCategoria = estadoCategoria;
+    }
+    
+
+    public String getSeleccionCategoria() {
+        return seleccionCategoria;
+    }
+
+    public void setSeleccionCategoria(String seleccionCategoria) {
+        this.seleccionCategoria = seleccionCategoria;
+    }
+    
+   
+    
     public int getIdCaracteristica() {
         return idCaracteristica;
     }
@@ -271,8 +290,18 @@ public class OtherController implements Serializable {
             System.out.println("Error eliminando caegoria! " + e);
         }
     }
-    
-    /////////////////////////////////////////////////////////////////////////////
+
+   
+    public void eliminarCategoriaTOEstado() {
+        try {
+            this.servicioCategoria.eliminarPorEstadoCategoria(newCategoria);
+            this.cargar();
+        } catch (Exception e) {
+            System.out.println("Quizas la categoria se encuentra nula?");
+            System.out.println("Error eliminando caegoria! " + e);
+        }
+    }
+
 
     public void agregarCaracteristicaTO() {
         try {
@@ -280,7 +309,7 @@ public class OtherController implements Serializable {
             cargar();
         } catch (Exception e) {
             System.out.println("Quizas la categoria se encuentra nula?");
-            System.out.println("Error agregando caracteristica! " + e);
+            System.out.println("Error actualizando caracteristica! " + e);
         }
     }
 
@@ -339,6 +368,12 @@ public class OtherController implements Serializable {
     
     public void seleccionarDefaultImagen(){
         this.newCaracteristica.setImagenCaracteristica("porDefecto.png");
+    }
+
+    private static class Updated {
+
+        public Updated() {
+        }
     }
     
     

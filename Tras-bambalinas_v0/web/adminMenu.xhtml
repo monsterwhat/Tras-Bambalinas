@@ -29,7 +29,7 @@
                             Lista de Usuarios 
                         </f:facet>
 
-                        <p:column headerText="Correo Electronico" sortBy="#{elUsuario.correoUsuario}" filterBy="#{elUsuario.correoUsuario}" filterMatchMode="exact">
+                        <p:column headerText="Correo Electrónico" sortBy="#{elUsuario.correoUsuario}" filterBy="#{elUsuario.correoUsuario}" filterMatchMode="exact">
                             <h:outputText value="#{elUsuario.correoUsuario}"/>
                         </p:column>
 
@@ -37,19 +37,19 @@
                             <h:outputText value="#{elUsuario.nombreUsuario}"/>
                         </p:column>
 
-                        <p:column headerText="Direccion" sortBy="#{elUsuario.direccionUsuario}" filterBy="#{elUsuario.direccionUsuario}" filterMatchMode="contains">
+                        <p:column headerText="Dirección" sortBy="#{elUsuario.direccionUsuario}" filterBy="#{elUsuario.direccionUsuario}" filterMatchMode="contains">
                             <h:outputText value="#{elUsuario.direccionUsuario}"/>
                         </p:column>
 
-                        <p:column headerText="Telefono" sortBy="#{elUsuario.telefonoUsuario}" filterBy="#{elUsuario.telefonoUsuario}" filterMatchMode="contains">
+                        <p:column headerText="Teléfono" sortBy="#{elUsuario.telefonoUsuario}" filterBy="#{elUsuario.telefonoUsuario}" filterMatchMode="contains">
                             <h:outputText value="#{elUsuario.telefonoUsuario}"/>
                         </p:column>
 
-                        <p:column headerText="Numero de Contrato" sortBy="#{elUsuario.numeroContratoUsuario}" filterBy="#{elUsuario.numeroContratoUsuario}" filterMatchMode="contains">
+                        <p:column headerText="Número de Contrato" sortBy="#{elUsuario.numeroContratoUsuario}" filterBy="#{elUsuario.numeroContratoUsuario}" filterMatchMode="contains">
                             <h:outputText value="#{elUsuario.numeroContratoUsuario}"/>
                         </p:column>
 
-                        <p:column headerText="Descripcion del Trabajo realizado" sortBy="#{elUsuario.descripcionTrabajoUsuario}" filterBy="#{elUsuario.descripcionTrabajoUsuario}" filterMatchMode="contains">
+                        <p:column headerText="Descripción del Trabajo realizado" sortBy="#{elUsuario.descripcionTrabajoUsuario}" filterBy="#{elUsuario.descripcionTrabajoUsuario}" filterMatchMode="contains">
                             <h:outputText value="#{elUsuario.descripcionTrabajoUsuario}"/>
                         </p:column>
 
@@ -125,12 +125,12 @@
                             <p:message for="Nnombre" display="tooltip"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="direccion" value="Direccion"/>
+                            <p:outputLabel for="direccion" value="Dirección"/>
                             <p:inputText id="Ndireccion" value="#{userController.newUser.direccionUsuario}" required="true"/>
                             <p:message for="Ndireccion" display="tooltip"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="telefono" value="Telefono"/>
+                            <p:outputLabel for="telefono" value="Teléfono"/>
                             <p:inputText id="Ntelefono" value="#{userController.newUser.telefonoUsuario}" required="true"/>
                             <p:message for="Ntelefono" display="tooltip"/>
                         </div>
@@ -172,19 +172,19 @@
                             <p:inputText id="nombre" value="#{userController.newUser.nombreUsuario}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="direccion" value="Direccion del Usuario"/>
+                            <p:outputLabel for="direccion" value="Dirección del Usuario"/>
                             <p:inputText id="direccion" value="#{userController.newUser.direccionUsuario}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="telefono" value="Telefono del Usuario"/>
+                            <p:outputLabel for="telefono" value="Teléfono del Usuario"/>
                             <p:inputText id="telefono" value="#{userController.newUser.telefonoUsuario}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="contrato" value="Numero de Contrato del Usuario"/>
+                            <p:outputLabel for="contrato" value="Número de Contrato del Usuario"/>
                             <p:inputText id="contrato" value="#{userController.newUser.numeroContratoUsuario}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="descripcion" value="Descripcion del trabajo realizado"/>
+                            <p:outputLabel for="descripcion" value="Descripción del trabajo realizado"/>
                             <p:inputText id="descripcion" value="#{userController.newUser.descripcionTrabajoUsuario}"/>
                         </div>
 
@@ -226,6 +226,12 @@
                         <p:column headerText="Descripción Categoria" sortBy="#{laCategoria.descripcionCategoria}" filterBy="#{laCategoria.descripcionCategoria}" filterMatchMode="contains">
                             <h:outputText value="#{laCategoria.descripcionCategoria}"/>
                         </p:column>
+                        <p:column headerText="Estado Categoria" sortBy="#{laCategoria.estadoCategoria}" filterBy="#{laCategoria.estadoCategoria}" filterMatchMode="contains">
+                            <h:outputText value="#{laCategoria.estadoCategoria}"/>
+                        </p:column>
+                        <p:column headerText="Selección Categoria" sortBy="#{laCategoria.seleccionCategoria}" filterBy="#{laCategoria.seleccionCategoria}" filterMatchMode="contains">
+                            <h:outputText value="#{laCategoria.seleccionCategoria}"/>
+                        </p:column>
 
                         <p:column>
                             <p:commandButton icon="pi pi-pencil" update=":formCategoria:update-categoria-content"
@@ -261,7 +267,7 @@
             <p:confirmDialog widgetVar="deleteCategoriaDialog" showEffect="fade" width="300"
                              message="Desea eliminar la categoria?" header="Confirmación" severity="warn">
 
-                <p:commandButton value="Sí" icon="pi pi-check" actionListener="#{OtherController.eliminarCategoriaTO()}"
+                <p:commandButton value="Sí" icon="pi pi-check" actionListener="#{OtherController.eliminarCategoriaTOEstado()}"
                                  process="@this"  update="categoriaTable" oncomplete="PF('deleteCategoriaDialog').hide()"/>
 
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
@@ -284,6 +290,20 @@
                             <p:inputText id="NdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}" required="true"/>
                             <p:message for="NdescripcionCategoria" display="tooltip"/>
                         </div>
+                         <div class="p-field">
+                                <p:outputLabel for="estadoCategoria" value="Estado de la Categoria *"/>
+                                <p:selectOneButton id="estadoCategoria" value="#{OtherController.newCategoria.estadoCategoria}">
+                                    <f:selectItem itemLabel="Disponible" itemValue="Disponible"/>
+                                    <f:selectItem itemLabel="No Disponible" itemValue="No Disponible"/>
+                                </p:selectOneButton>
+                            </div>
+                        <div class="p-field">
+                                <p:outputLabel for="seleccionCategoria" value="Seleccion de la Categoria *"/>
+                                <p:selectOneButton id="seleccionCategoria" value="#{OtherController.newCategoria.seleccionCategoria}">
+                                    <f:selectItem itemLabel="Múltiple" itemValue="Múltiple"/>
+                                    <f:selectItem itemLabel="Única" itemValue="Única"/>
+                                </p:selectOneButton>
+                            </div>
 
                     </p:outputPanel>
                 </p:outputPanel>
@@ -307,20 +327,35 @@
                     <p:outputPanel rendered="#{not empty OtherController.newCategoria}">
 
                         <div class="p-field">
-                            <p:outputLabel for="nombreCategoria" value="Nombre de la Categoria"/>
-                            <p:inputText id="nombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}"/>
+                            <p:outputLabel for="UnombreCategoria" value="Nombre de la Categoria"/>
+                            <p:inputText id="UnombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="descripcionCategoria" value="Descripción de la Categoria"/>
-                            <p:inputText id="descripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
+                            <p:outputLabel for="UdescripcionCategoria" value="Descripción de la Categoria"/>
+                            <p:inputText id="UdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}"/>
                         </div>
-
+                     
+                        <div class="p-field">
+                            <p:outputLabel for="UestadoCategoria" value="Estado de la Categoria *"/>
+                            <p:selectOneButton id="UestadoCategoria" value="#{OtherController.categoriaTO.estadoCategoria}">
+                                <f:selectItem itemLabel="Disponible" itemValue="Disponible"/>
+                                <f:selectItem itemLabel="No Disponible" itemValue="No Disponible"/>
+                            </p:selectOneButton>
+                        </div>
+                         <div class="p-field">
+                            <p:outputLabel for="UseleccionCategoria" value="Selección de la Categoria *"/>
+                            <p:selectOneButton id="UseleccionCategoria" value="#{OtherController.categoriaTO.seleccionCategoria}">
+                                <f:selectItem itemLabel="Múltiple" itemValue="Múltiple"/>
+                                <f:selectItem itemLabel="Única" itemValue="Única"/>
+                            </p:selectOneButton>
+                        </div>
                     </p:outputPanel>
                 </p:outputPanel>
 
                 <f:facet name="footer">     
-                    <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{OtherController.actualizarCategoriaTO}"
+                    <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{OtherController.actualizarCategoriaTO()}"
                                      update=":formCategoria:update-categoria-content, categoriaTable" process="update-categoria-content @this" onclick="PF('updateCategoriaDialog').hide()"/>
+                    
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('updateCategoriaDialog').hide()"
                                      class="ui-button-secondary"/>
@@ -328,6 +363,8 @@
             </p:dialog>
 
         </h:form>
+        
+        
 
         <h:form id="formCaracteristica">
 
@@ -377,7 +414,7 @@
                             <h:outputText value="#{laCaracteristica.colorCaracteristica}"/>
                         </p:column>
 
-                        <p:column headerText="Orden de Visualizacion" sortBy="#{laCaracteristica.prioridadCaracteristica}" filterBy="#{laCaracteristica.prioridadCaracteristica}" filterMatchMode="exact">
+                        <p:column headerText="Orden de Visualización" sortBy="#{laCaracteristica.prioridadCaracteristica}" filterBy="#{laCaracteristica.prioridadCaracteristica}" filterMatchMode="exact">
                             <h:outputText value="#{laCaracteristica.prioridadCaracteristica}"/>
                         </p:column>
 
@@ -606,7 +643,7 @@
                         </div> 
 
                         <div class="p-field">
-                            <p:outputLabel for="UprioridadCaracteristica" value="Orden de Visualizacion"/>
+                            <p:outputLabel for="UprioridadCaracteristica" value="Orden de Visualización"/>
                             <p:inputNumber id="UprioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}" required="true"/>
                             <p:message for="UprioridadCaracteristica" display="tooltip"/>
                         </div> 

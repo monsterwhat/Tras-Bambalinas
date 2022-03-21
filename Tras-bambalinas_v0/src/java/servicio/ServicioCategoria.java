@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
+import model.CaracteristicaTO;
 import model.CategoriaTO;
 
 public class ServicioCategoria extends Servicio {
@@ -24,7 +25,9 @@ public class ServicioCategoria extends Servicio {
                 int idCategoria = resultSet.getInt("idCategoria");
                 String nombreCategoria = resultSet.getString("nombreCategoria");
                 String descripcionCategoria = resultSet.getString("descripcionCategoria");
-                categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria);
+                String estadoCategoria = resultSet.getString("estadoCategoria");
+                String seleccionCategoria = resultSet.getString("seleccionCategoria");
+                categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria);
             }
         } catch (SQLException e) {
             System.out.println("Error al mostrar las categorias! " + e);
@@ -51,7 +54,9 @@ public class ServicioCategoria extends Servicio {
                 int idCategoria = resultSet.getInt("idCategoria");
                 String nombreCategoria = resultSet.getString("nombreCategoria");
                 String descripcionCategoria = resultSet.getString("descripcionCategoria");
-                CategoriaTO categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria);
+                String estadoCategoria = resultSet.getString("estadoCategoria");
+                String seleccionCategoria = resultSet.getString("seleccionCategoria");
+                CategoriaTO categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria);
                 listaRetorno.add(categoriaTO);
             }
         } catch (SQLException e) {
@@ -70,10 +75,12 @@ public class ServicioCategoria extends Servicio {
 
         try {
             conectar();
-            String sql = "INSERT INTO categoria ( nombreCategoria, descripcionCategoria) VALUES (?,?)";
+            String sql = "INSERT INTO categoria ( nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria ) VALUES (?,?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
             preparedStatement.setString(1, CategoriaTO.getNombreCategoria());
             preparedStatement.setString(2, CategoriaTO.getDescripcionCategoria());
+            preparedStatement.setString(3, CategoriaTO.getEstadoCategoria());
+            preparedStatement.setString(4, CategoriaTO.getSeleccionCategoria());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al insertar categoria! " + e);
@@ -89,10 +96,12 @@ public class ServicioCategoria extends Servicio {
 
         try {
             conectar();
-            String sql = "UPDATE categoria SET nombreCategoria = ?, descripcionCategoria =?  WHERE idCategoria='" + categoriaTO.getIdCategoria() + "'";
+            String sql = "UPDATE categoria SET nombreCategoria=?, descripcionCategoria=?, estadoCategoria=?, seleccionCategoria=?  WHERE idCategoria='" + categoriaTO.getIdCategoria() + "'";
             preparedStatement = conexion.prepareStatement(sql);
             preparedStatement.setString(1, categoriaTO.getNombreCategoria());
             preparedStatement.setString(2, categoriaTO.getDescripcionCategoria());
+            preparedStatement.setString(3, categoriaTO.getEstadoCategoria());
+            preparedStatement.setString(4, categoriaTO.getSeleccionCategoria());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al actualizar la categoria! " + e);
@@ -102,6 +111,9 @@ public class ServicioCategoria extends Servicio {
         }
 
     }
+    
+
+   
 
     public void eliminarCategoria(CategoriaTO categoriaTO) {
         ResultSet resultSet = null;
@@ -121,5 +133,24 @@ public class ServicioCategoria extends Servicio {
             desconectar();
         }
     }
+  public void eliminarPorEstadoCategoria(CategoriaTO categoriaTO){
+         PreparedStatement preparedStatement = null;
+
+        try {
+            conectar();
+            String sql = "UPDATE categoria SET estadoCategoria='No Disponible' WHERE idCategoria='" + categoriaTO.getIdCategoria() + "' AND estadoCategoria='Disponible' ";
+            preparedStatement = conexion.prepareStatement(sql);
+     //       preparedStatement.setString(5, caracteristicaTO.getEstadoCaracteristica());
+  
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar la categoria ! " + e);
+        } finally {
+            cerrarPreparedStatement(preparedStatement);
+            desconectar();
+        }
+    
+    }
+ 
 
 }
