@@ -281,12 +281,12 @@
                     <p:outputPanel rendered="#{not empty OtherController.newCategoria}">
 
                         <div class="p-field">
-                            <p:outputLabel for="nombreCategoria" value="Nombre de la Categoria"/>
+                            <p:outputLabel for="NnombreCategoria" value="Nombre de la Categoria"/>
                             <p:inputText id="NnombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}" required="true"/>
                             <p:message for="NnombreCategoria" display="tooltip"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="descripcionCategoria" value="Descripción de la Categoria"/>
+                            <p:outputLabel for="NdescripcionCategoria" value="Descripción de la Categoria"/>
                             <p:inputText id="NdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}" required="true"/>
                             <p:message for="NdescripcionCategoria" display="tooltip"/>
                         </div>
@@ -337,14 +337,14 @@
                      
                         <div class="p-field">
                             <p:outputLabel for="UestadoCategoria" value="Estado de la Categoria *"/>
-                            <p:selectOneButton id="UestadoCategoria" value="#{OtherController.categoriaTO.estadoCategoria}">
+                            <p:selectOneButton id="UestadoCategoria" value="#{OtherController.newCategoria.estadoCategoria}">
                                 <f:selectItem itemLabel="Disponible" itemValue="Disponible"/>
                                 <f:selectItem itemLabel="No Disponible" itemValue="No Disponible"/>
                             </p:selectOneButton>
                         </div>
                          <div class="p-field">
                             <p:outputLabel for="UseleccionCategoria" value="Selección de la Categoria *"/>
-                            <p:selectOneButton id="UseleccionCategoria" value="#{OtherController.categoriaTO.seleccionCategoria}">
+                            <p:selectOneButton id="UseleccionCategoria" value="#{OtherController.newCategoria.seleccionCategoria}">
                                 <f:selectItem itemLabel="Múltiple" itemValue="Múltiple"/>
                                 <f:selectItem itemLabel="Única" itemValue="Única"/>
                             </p:selectOneButton>

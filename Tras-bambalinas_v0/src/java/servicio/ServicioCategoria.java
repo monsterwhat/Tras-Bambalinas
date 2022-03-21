@@ -68,6 +68,39 @@ public class ServicioCategoria extends Servicio {
         }
         return listaRetorno;
     }
+     public List<CategoriaTO> listaCategoriaPorEstadoBD() {
+        Statement statement = null;
+        ResultSet resultSet = null;
+        List<CategoriaTO> listaRetorno = new ArrayList<>();
+
+        try {
+
+            conectar();
+            statement = conexion.createStatement();
+            String sql = "SELECT * FROM categoria WHERE estadoCaracteristica = 'Disponible'";
+            resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+               int idCategoria = resultSet.getInt("idCategoria");
+               String nombreCategoria = resultSet.getString("nombreCategoria");
+               String descripcionCategoria = resultSet.getString("descripcionCategoria");
+               String estadoCategoria = resultSet.getString("estadoCategoria");
+               String seleccionCategoria = resultSet.getString("seleccionCategoria");
+               CategoriaTO categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria);
+                 
+
+                
+                listaRetorno.add(categoriaTO);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al seleccionar todo de Caracteristicas! " + e);
+        } finally {
+            cerrarResultSet(resultSet);
+            cerrarStatement(statement);
+            desconectar();
+        }
+        return listaRetorno;
+    }
 
     public void insertarCategoria(CategoriaTO CategoriaTO) {
         

@@ -274,10 +274,10 @@ public class OtherController implements Serializable {
     public void actualizarCategoriaTO() {
         try {
             this.servicioCategoria.actualizarCategoria(newCategoria);
-            this.cargar();
+            cargar();
         } catch (Exception e) {
             System.out.println("Quizas la categoria se encuentra nula?");
-            System.out.println("Error actualizando la categoria! " + e);
+            System.out.println("Error actualizando caracteristica! " + e);
         }
     }
 
