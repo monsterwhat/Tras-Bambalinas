@@ -135,7 +135,7 @@ public class ServicioUsuario extends Servicio {
 
         try {
             conectar();
-            String sql = "INSERT INTO usuarios (correoUsuario,contrasenaUsuario,tipoUsuario,nombreUsuario,direccionUsuario,telefonoUsuario) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO usuarios (correoUsuario,contrasenaUsuario,tipoUsuario,nombreUsuario,direccionUsuario,telefonoUsuario,numeroContratoUsuario,descripcionTrabajoUsuario) VALUES (?,?,?,?,?,?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
 
             preparedStatement.setString(1, usuarioTO.getCorreoUsuario());
@@ -144,6 +144,8 @@ public class ServicioUsuario extends Servicio {
             preparedStatement.setString(4, usuarioTO.getNombreUsuario());
             preparedStatement.setString(5, usuarioTO.getDireccionUsuario());
             preparedStatement.setInt(6, usuarioTO.getTelefonoUsuario());
+            preparedStatement.setInt(7,usuarioTO.getNumeroContratoUsuario());
+            preparedStatement.setString(8,usuarioTO.getDescripcionTrabajoUsuario());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -159,7 +161,7 @@ public class ServicioUsuario extends Servicio {
 
         try {
             conectar();
-            String sql = "UPDATE usuarios SET correoUsuario=?, contrasenaUsuario=?, tipoUsuario=?,nombreUsuario=?,direccionUsuario=?,telefonoUsuario=? WHERE idusuarios='" + usuarioTO.getIdusuarios() + "'";
+            String sql = "UPDATE usuarios SET correoUsuario=?, contrasenaUsuario=?, tipoUsuario=?,nombreUsuario=?,direccionUsuario=?,telefonoUsuario=?,numeroContratoUsuario=?,descripcionTrabajoUsuario=? WHERE idusuarios='" + usuarioTO.getIdusuarios() + "'";
             preparedStatement = conexion.prepareStatement(sql);
 
             preparedStatement.setString(1, usuarioTO.getCorreoUsuario());
@@ -168,6 +170,8 @@ public class ServicioUsuario extends Servicio {
             preparedStatement.setString(4, usuarioTO.getNombreUsuario());
             preparedStatement.setString(5, usuarioTO.getDireccionUsuario());
             preparedStatement.setInt(6, usuarioTO.getTelefonoUsuario());
+            preparedStatement.setInt(7,usuarioTO.getNumeroContratoUsuario());
+            preparedStatement.setString(8,usuarioTO.getDescripcionTrabajoUsuario());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {

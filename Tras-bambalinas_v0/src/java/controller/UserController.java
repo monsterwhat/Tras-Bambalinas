@@ -19,6 +19,8 @@ public class UserController implements Serializable {
     private String nombreUser;
     private String direccionUser;
     private int telefonoUser;
+    private int numeroContratoUser;
+    private String descripcionTrabajoUser;
 
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
     private UsuarioTO usuarioTO = null;
@@ -36,6 +38,22 @@ public class UserController implements Serializable {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public int getNumeroContratoUser() {
+        return numeroContratoUser;
+    }
+
+    public void setNumeroContratoUser(int numeroContratoUser) {
+        this.numeroContratoUser = numeroContratoUser;
+    }
+
+    public String getDescripcionTrabajoUser() {
+        return descripcionTrabajoUser;
+    }
+
+    public void setDescripcionTrabajoUser(String descripcionTrabajoUser) {
+        this.descripcionTrabajoUser = descripcionTrabajoUser;
     }
 
     public ServicioUsuario getServicioUsuario() {

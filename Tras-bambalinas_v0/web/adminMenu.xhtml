@@ -56,6 +56,10 @@
                         <p:column headerText="Tipo de Usuario" sortBy="#{elUsuario.tipoUsuario}" filterBy="#{elUsuario.tipoUsuario}" filterMatchMode="contains">
                             <h:outputText value="#{elUsuario.tipoUsuario}"/>
                         </p:column>
+                        
+                        <p:column headerText="Contrasena del Usuario" visible="false">
+                            <h:outputText value="#{elUsuario.contrasenaUsuario}"/>
+                        </p:column>
 
 
                         <p:column>

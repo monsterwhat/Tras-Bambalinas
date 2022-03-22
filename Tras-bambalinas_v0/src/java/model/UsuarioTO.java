@@ -32,12 +32,6 @@ public class UsuarioTO implements Serializable{
     
     }
 
-    public UsuarioTO(String correoUsuario, String contrasenaUsuario, String tipoUsuario) {
-        this.correoUsuario = correoUsuario;
-        this.contrasenaUsuario = contrasenaUsuario;
-        this.tipoUsuario = tipoUsuario;
-    }
-
     public UsuarioTO(String correoUsuario, String contrasenaUsuario, String tipoUsuario, String nombreUsuario, String direccionUsuario, int telefonoUsuario) {
         this.correoUsuario = correoUsuario;
         this.contrasenaUsuario = contrasenaUsuario;
@@ -47,6 +41,7 @@ public class UsuarioTO implements Serializable{
         this.telefonoUsuario = telefonoUsuario;
     }
     
+ 
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -92,7 +87,7 @@ public class UsuarioTO implements Serializable{
     }
 
     public void setContrasenaUsuarioDecifrada(String contrasenaUsuarioDecifrada) {
-        this.contrasenaUsuarioDecifrada = contrasenaUsuarioDecifrada;
+        this.contrasenaUsuarioDecifrada = servicio.ServicioCifrar.decrypt(contrasenaUsuario);
     }
 
     public void setIdusuarios(int idusuarios) {
