@@ -343,7 +343,7 @@ public class OtherController implements Serializable {
         }
     }
     
-    public void seleccionarFileUpload(FileUploadEvent event) {
+    public void seleccionarImagenASubir(FileUploadEvent event) {
         UploadedFile uploadedFile = event.getFile();
         try {
             InputStream in = event.getFile().getInputStream();
@@ -366,7 +366,7 @@ public class OtherController implements Serializable {
         }
     }
     
-    public void seleccionarDefaultImagen(){
+    public void seleccionarImagenPorDefecto(){
         this.newCaracteristica.setImagenCaracteristica("porDefecto.png");
     }
 
