@@ -21,6 +21,7 @@ public class UserController implements Serializable {
     private int telefonoUser;
     private int numeroContratoUser;
     private String descripcionTrabajoUser;
+    private String passwordUserDecifrado;
 
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
     private UsuarioTO usuarioTO = null;
@@ -42,6 +43,14 @@ public class UserController implements Serializable {
 
     public int getNumeroContratoUser() {
         return numeroContratoUser;
+    }
+
+    public String getPasswordUserDecifrado() {
+        return passwordUserDecifrado;
+    }
+
+    public void setPasswordUserDecifrado(String passwordUserDecifrado) {
+        this.passwordUserDecifrado = passwordUserDecifrado;
     }
 
     public void setNumeroContratoUser(int numeroContratoUser) {
