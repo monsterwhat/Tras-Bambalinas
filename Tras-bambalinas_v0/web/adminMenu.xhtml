@@ -276,38 +276,52 @@
             </p:confirmDialog>
 
             <p:dialog header="Crear Categoria" showEffect="fade" modal="true"
-                      widgetVar="createCategoriaDialog" responsive="true">
+                      widgetVar="createCategoriaDialog" responsive="true" minHeight="350" width="550" >
 
                 <p:outputPanel id="create-categoria-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty OtherController.newCategoria}">
 
-                        <div class="p-field" >
+                     
+                        <div class="p-grid p-flex-column">
+                              <div class="p-col">
                             <p:outputLabel for="NnombreCategoria" value="Nombre de la Categoria"/>
                             <p:inputText id="NnombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}" required="true" style="width:25rem" />
                             <p:message for="NnombreCategoria" display="icon" />
+                            </div>
                         </div>
-                        <div class="p-field" >
+                      
+                         <div class="p-grid p-flex-column">
+                              <div class="p-col">
                             <p:outputLabel for="NdescripcionCategoria" value="Descripción de la Categoria"/>
                             <p:inputText id="NdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}" required="true" style="width:25rem"  />
                             <p:message for="NdescripcionCategoria" display="icon" />
+                            </div>
                         </div>
-                        <div class="p-field" >
+                     
+                          <div class="p-grid p-flex-column">
+                              <div class="p-col">                      
                             <p:outputLabel for="estadoCategoria" value="Estado de la Categoria *"/>
                             <p:selectOneButton id="estadoCategoria" value="#{OtherController.newCategoria.estadoCategoria}" required="true" style="width:25rem"> 
                                 <f:selectItem itemLabel="Disponible" itemValue="Disponible"/>
                                 <f:selectItem itemLabel="No Disponible" itemValue="No Disponible"/>
                                  </p:selectOneButton>
                                   <p:message for="estadoCategoria" display="icon"/> 
+                                  </div>
                         </div>
-                        <div class="p-field" >
+                     
+                        
+                     
+                         <div class="p-grid p-flex-column">
+                              <div class="p-col">
                             <p:outputLabel for="seleccionCategoria" value="Seleccion de la Categoria *"/>
                             <p:selectOneButton id="seleccionCategoria" value="#{OtherController.newCategoria.seleccionCategoria}" required="true" style="width:25rem"> 
                                 <f:selectItem itemLabel="Múltiple" itemValue="Múltiple"/>
                                 <f:selectItem itemLabel="Única" itemValue="Única"/>
                             </p:selectOneButton>
                              <p:message for="seleccionCategoria" display="icon"/>  
+                              </div>
                         </div>
-
+                          
                     </p:outputPanel>
                 </p:outputPanel>
 
@@ -324,41 +338,51 @@
             </p:dialog>
 
             <p:dialog header="Detalle de la Categoria" showEffect="fade" modal="true"
-                      widgetVar="updateCategoriaDialog" responsive="true">
+                      widgetVar="updateCategoriaDialog" responsive="true" minHeight="350" width="550">
 
                 <p:outputPanel id="update-categoria-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty OtherController.newCategoria}">
 
-                        <div class="p-field" >
-                            <p:outputLabel for="UnombreCategoria" value="Nombre de la Categoria" />
+                       
+                         <div class="p-grid p-flex-column">
+                             <div class="p-col">
+                             <p:outputLabel for="UnombreCategoria" value="Nombre de la Categoria" />
                             <p:inputText id="UnombreCategoria" value="#{OtherController.newCategoria.nombreCategoria}" required="true" style="width:30rem"/> 
                             <p:message for="UnombreCategoria" display="icon" /> 
-                            
+                            </div>
                         </div>
-                        
-                        <div class="p-field" >
+                       
+                         <div class="p-grid p-flex-column">
+                             <div class="p-col">
                             <p:outputLabel for="UdescripcionCategoria" value="Descripción de la Categoria"  />
                             <p:inputText id="UdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}" required="true" style="width:30rem" />
                              <p:message for="UdescripcionCategoria" display="icon" /> 
                         </div>
-
-                        <div class="p-field" >
+                         </div>     
+                        
+                         <div class="p-grid p-flex-column">
+                             <div class="p-col">
+                       
                             <p:outputLabel for="UestadoCategoria" value="Estado de la Categoria *"/>
                             <p:selectOneButton id="UestadoCategoria" value="#{OtherController.newCategoria.estadoCategoria}" required="true" style="width:30rem"> 
                                 <f:selectItem itemLabel="Disponible" itemValue="Disponible"/>
                                 <f:selectItem itemLabel="No Disponible" itemValue="No Disponible"/>
                             </p:selectOneButton>
                             <p:message for="UestadoCategoria" display="icon"/>
-                            
+                             </div>
                         </div>
-                        <div class="p-field" >
+                        
+                       <div class="p-grid p-flex-column">
+                             <div class="p-col">
                             <p:outputLabel for="UseleccionCategoria" value="Selección de la Categoria *"/>
                             <p:selectOneButton id="UseleccionCategoria" value="#{OtherController.newCategoria.seleccionCategoria}" required="true" style="width:30rem">
                                 <f:selectItem itemLabel="Múltiple" itemValue="Múltiple"/>
                                 <f:selectItem itemLabel="Única" itemValue="Única"/>
                             </p:selectOneButton>
                             <p:message for="UseleccionCategoria" display="icon"/> 
+                             </div>
                         </div>
+                         
                     </p:outputPanel>
                 </p:outputPanel>
 
