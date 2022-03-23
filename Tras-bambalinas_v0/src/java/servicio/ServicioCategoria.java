@@ -77,7 +77,8 @@ public class ServicioCategoria extends Servicio {
 
             conectar();
             statement = conexion.createStatement();
-            String sql = "SELECT * FROM categoria WHERE estadoCaracteristica = 'Disponible'";
+            String sql = "SELECT * FROM categoria WHERE estadoCategoria = 'Disponible'";
+           
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
