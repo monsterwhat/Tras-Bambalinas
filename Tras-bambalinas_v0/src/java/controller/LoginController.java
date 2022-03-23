@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import model.UsuarioTO;
 import servicio.ServicioUsuario;
 import javax.servlet.http.HttpServletRequest;
+import org.primefaces.PrimeFaces;
 import servicio.ServicioCifrar;
 
 @ManagedBean(name = "loginController")
@@ -147,10 +148,12 @@ public class LoginController implements Serializable {
                                 addMessage(FacesMessage.SEVERITY_ERROR, "Autenticacion", "Las credenciales son invalidas");
                                 break;
                         }
+                    } else {
+                        addMessage(FacesMessage.SEVERITY_ERROR, "Error de informacion de usuario!", "Uno de los valores digitados es incorrecto!");
                     }
-                    addMessage(FacesMessage.SEVERITY_ERROR, "Error de informacion de usuario!", "Uno de los valores digitados es incorrecto!");
+                } else {
+                    addMessage(FacesMessage.SEVERITY_WARN, "Correo Incorrecto!", "El correo digitado no se encuentra registrado!");
                 }
-                addMessage(FacesMessage.SEVERITY_WARN, "Correo Incorrecto!", "El correo digitado no se encuentra registrado!");
             }
         } catch (Exception e) {
             System.out.println("Error al ingresar el usuario! " + e);
@@ -159,13 +162,11 @@ public class LoginController implements Serializable {
 
     public void cambiarContrasena() {
         try {
-            System.out.println("El valor digitado por el usuario (Correo) es: " + this.getCorreo());
-            System.out.println("El valor digitado por el usuario (password) es: " + this.getClave());
-            System.out.println("El valor digitado por el usuario (passwordNuevo) es: " + this.getClaveNueva());
-
+            if (this.getClave() == null || this.getClaveNueva() ==null){
+                addMessage(FacesMessage.SEVERITY_ERROR, "Error de cambio de contrasena", "Una de las contrasenas no puede estar vacia");
+            }
             if (this.getCorreo() == null || "".equals(this.getCorreo())) {
                 addMessage(FacesMessage.SEVERITY_ERROR, "Campos invalidos", "El correo electronico es incorrecto");
-
             } else if (this.claveNueva == null ? this.verificarClave == null : this.claveNueva.equals(this.verificarClave)) {
                 this.servicioUsuario.actualizarContrasena(this.getCorreo(), this.getClave(), this.getClaveNueva());
                 addMessage(FacesMessage.SEVERITY_INFO, "Exito", "La Contraseña se guardo con exito");
@@ -196,10 +197,13 @@ public class LoginController implements Serializable {
                     System.out.println("El valor digitado por el usuario (Telefono) es: " + this.getTelefonoUsuario());
                     UsuarioTO nuevoUsuario = new UsuarioTO(this.getCorreo(), this.getClaveNueva(), "admin", this.getNombreUsuario(), this.getDireccionUsuario(), this.getTelefonoUsuario());
                     this.servicioUsuario.insertarUser(nuevoUsuario);
+                    addMessage(FacesMessage.SEVERITY_INFO, "Registro exitoso!", "Se registro de manera exitosa al usuario!");
+                } else {
+                    addMessage(FacesMessage.SEVERITY_ERROR, "Error!", "El correo ya se encuentra registrado");
                 }
-                addMessage(FacesMessage.SEVERITY_ERROR, "Error!", "El correo ya se encuentra registrado");
+            } else {
+                addMessage(FacesMessage.SEVERITY_ERROR, "Error!", "El correo es invalido!");
             }
-            addMessage(FacesMessage.SEVERITY_ERROR, "Error!", "El correo es invalido!");
         } catch (Exception e) {
             System.out.println("Error al registrar Usuario! " + e);
         }

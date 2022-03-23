@@ -5,13 +5,13 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Main Menu</title>
 
     </h:head>
     <h:body>
         <body style="background-color:#93b5c6;">
         </body>
-        
+
         <h:form id="formMenu">
             <p:toolbar>
                 <p:toolbarGroup style="margin-left: 20rem " >
@@ -36,7 +36,7 @@
         </h:form>
 
         <p:growl id="growl" showDetail="true" />
-        
+
         <h:form id="formRegistrarUsuario">
 
             <p:dialog header="Crear Cuenta" showEffect="fade" modal="true"
@@ -67,7 +67,7 @@
 
                         <div class="p-field">
                             <p:outputLabel for="telefono" value="Telefono"/>
-                            <p:inputNumber id="telefono" value="#{loginController.telefonoUsuario}" required="true" />
+                            <p:inputMask id="telefono" value="#{loginController.telefonoUsuario}" mask="99999999" validateMask="true" required="true"/>
                         </div>
 
                     </p:outputPanel>
@@ -96,12 +96,12 @@
 
                         <div class="p-field">
                             <p:outputLabel for="Ncorreoelectronico" value="Correo Electronico"/>
-                            <p:inputText type="email" id="Ncorreoelectronico" value="#{loginController.correo}" placeholder="Correo electrónico" required="true"/>
+                            <p:inputText type="email" id="Ncorreoelectronico" value="#{loginController.correo}" placeholder="Correo electrónico" required="true" requiredMessage="Por favor digite un correo electronico!"/>
                         </div>
 
                         <div class="p-field">
                             <p:outputLabel for="Ncontrasena" value="Contraseña"/>
-                            <p:password id="Ncontrasena" value="#{loginController.clave}" toggleMask="true" required="true"/>
+                            <p:password id="Ncontrasena" value="#{loginController.clave}" toggleMask="true" required="true" requiredMessage="Por favor digite una clave"/>
                         </div>
 
                     </p:outputPanel>
@@ -109,10 +109,10 @@
 
                 <f:facet name="footer">     
                     <p:commandButton value="Ingresar" icon="pi pi-check" actionListener="#{loginController.ingresar()}" 
-                                     update=":formIngresarUsuario:ingresar-usuario-content growl" process="ingresar-usuario-content @this" onclick="PF('formloading').show()" oncomplete="PF('formloading').hide()"/>
+                                     update=":formIngresarUsuario:ingresar-usuario-content growl" process="ingresar-usuario-content @this" onclick="PF('formloading').show()"/>
 
                     <p:commandButton value="Cambiar Contraseña" icon="pi pi-check" 
-                                     update=":formCambiarContrasena:change-password-content growl" onclick="PF('changePasswordDialog').show()"/>
+                                     update=":formCambiarContrasena:change-password-content growl" onsuccess="PF('changePasswordDialog').show()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ingresarUsuarioDialog').hide()"
                                      class="ui-button-secondary"/>
@@ -125,19 +125,19 @@
                       widgetVar="changePasswordDialog" responsive="true">
 
                 <p:outputPanel id="change-password-content" class="ui-fluid">
-                    <p:outputPanel >
+                    <p:outputPanel>
 
                         <div class="p-field p-grid">
                             <p:outputLabel for="pass1" styleClass="p-col-fixed" style="width:100px" value="Contraseña Nueva"/>
                             <div class="p-col">
-                                <p:password id="pass1" value="#{loginController.claveNueva}" match="pass2" label="Password 1" required="true"/>
+                                <p:password id="pass1" value="#{loginController.claveNueva}" match="pass2" label="Password 1"/>
                             </div>
                         </div>
 
                         <div class="p-field p-grid">
                             <p:outputLabel for="pass2" styleClass="p-col-fixed" style="width:100px" value="Confimar Contraseña"/>
                             <div class="p-col">
-                                <p:password id="pass2" value="#{loginController.verificarClave}" label="Password 2" required="true"/>
+                                <p:password id="pass2" value="#{loginController.verificarClave}" label="Password 2"/>
                             </div>
                         </div>
 
@@ -146,8 +146,8 @@
 
                 <f:facet name="footer">     
 
-                    <p:commandButton value="Cambiar" icon="pi pi-check" actionListener="#{loginController.cambiarContrasena()}" onclick="PF('changePasswordDialog').hide()"
-                                     update=":formCambiarContrasena:change-password-content growl" process="change-password-content @this"/>
+                    <p:commandButton value="Cambiar" icon="pi pi-check" actionListener="#{loginController.cambiarContrasena()}"
+                                     update=":formCambiarContrasena:change-password-content growl" process="change-password-content @this" onstart="PF('formloading').show()" onerror="PF('formloading').hide()" onsuccess="PF('changePasswordDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('changePasswordDialog').hide()"
                                      class="ui-button-secondary" />

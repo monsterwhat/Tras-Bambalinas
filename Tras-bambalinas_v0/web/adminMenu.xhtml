@@ -57,7 +57,7 @@
                         <p:column headerText="Tipo de Usuario" sortBy="#{elUsuario.tipoUsuario}" filterBy="#{elUsuario.tipoUsuario}" filterMatchMode="contains">
                             <h:outputText value="#{elUsuario.tipoUsuario}"/>
                         </p:column>
-                        
+
                         <p:column headerText="Contrasena del Usuario" visible="false">
                             <h:outputText value="#{elUsuario.contrasenaUsuario}"/>
                         </p:column>
@@ -136,7 +136,7 @@
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="telefono" value="Teléfono"/>
-                            <p:inputNumber id="Ntelefono" value="#{userController.newUser.telefonoUsuario}" required="true"/>
+                            <p:inputMask id="Ntelefono" value="#{userController.newUser.telefonoUsuario}" mask="99999999" validateMask="true" required="true"/>
                             <p:message for="Ntelefono" display="tooltip"/>
                         </div>
 
@@ -182,7 +182,7 @@
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="telefono" value="Teléfono del Usuario"/>
-                            <p:inputNumber id="telefono" value="#{userController.newUser.telefonoUsuario}"/>
+                            <p:inputMask id="telefono" value="#{userController.newUser.telefonoUsuario}" mask="99999999" validateMask="true"/>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="contrato" value="Número de Contrato del Usuario"/>
@@ -295,20 +295,20 @@
                             <p:inputText id="NdescripcionCategoria" value="#{OtherController.newCategoria.descripcionCategoria}" required="true"/>
                             <p:message for="NdescripcionCategoria" display="tooltip"/>
                         </div>
-                         <div class="p-field">
-                                <p:outputLabel for="estadoCategoria" value="Estado de la Categoria *"/>
-                                <p:selectOneButton id="estadoCategoria" value="#{OtherController.newCategoria.estadoCategoria}">
-                                    <f:selectItem itemLabel="Disponible" itemValue="Disponible"/>
-                                    <f:selectItem itemLabel="No Disponible" itemValue="No Disponible"/>
-                                </p:selectOneButton>
-                            </div>
                         <div class="p-field">
-                                <p:outputLabel for="seleccionCategoria" value="Seleccion de la Categoria *"/>
-                                <p:selectOneButton id="seleccionCategoria" value="#{OtherController.newCategoria.seleccionCategoria}">
-                                    <f:selectItem itemLabel="Múltiple" itemValue="Múltiple"/>
-                                    <f:selectItem itemLabel="Única" itemValue="Única"/>
-                                </p:selectOneButton>
-                            </div>
+                            <p:outputLabel for="estadoCategoria" value="Estado de la Categoria *"/>
+                            <p:selectOneButton id="estadoCategoria" value="#{OtherController.newCategoria.estadoCategoria}">
+                                <f:selectItem itemLabel="Disponible" itemValue="Disponible"/>
+                                <f:selectItem itemLabel="No Disponible" itemValue="No Disponible"/>
+                            </p:selectOneButton>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="seleccionCategoria" value="Seleccion de la Categoria *"/>
+                            <p:selectOneButton id="seleccionCategoria" value="#{OtherController.newCategoria.seleccionCategoria}">
+                                <f:selectItem itemLabel="Múltiple" itemValue="Múltiple"/>
+                                <f:selectItem itemLabel="Única" itemValue="Única"/>
+                            </p:selectOneButton>
+                        </div>
 
                     </p:outputPanel>
                 </p:outputPanel>
@@ -494,7 +494,7 @@
                                             <h:outputText value="#{laCategoria.nombreCategoria}" />
                                         </p:column>
                                     </p:selectOneMenu>
-                                    
+
                                 </div>
                             </div>
 
@@ -552,7 +552,7 @@
                                                      update="new-imagen-caracteristica" />
                                 </div>
                             </div>
-                            
+
                         </p:outputPanel>
                     </p:outputPanel>
 
@@ -579,7 +579,7 @@
 
             <p:dialog header="Detalle de la Característica" showEffect="fade" modal="true"
                       widgetVar="updateCaracteristicaDialog" responsive="true"  minHeight="350" width="550">
-                
+
                 <p:scrollPanel mode="native" style="width:500px;height:500px;">
                     <p:outputPanel id="update-caracteristica-content" class="ui-fluid">
                         <p:outputPanel rendered="#{not empty OtherController.newCaracteristica}">
@@ -629,7 +629,7 @@
                                 <p:outputLabel for="UprecioCaracteristica" value="Precio"/>
                                 <p:inputNumber id="UprecioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}"
                                                symbol="₡" minValue="0" required="true" inputStyle="width:25rem"/>
-                                
+
                             </div>
 
                             <div class="p-field">
@@ -657,7 +657,7 @@
                                                      actionListener="#{OtherController.seleccionarImagenPorDefecto()}" />
                                 </div>
                             </div>
-                            
+
                         </p:outputPanel>
                     </p:outputPanel>
                 </p:scrollPanel>
