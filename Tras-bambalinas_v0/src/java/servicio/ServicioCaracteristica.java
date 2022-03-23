@@ -57,7 +57,7 @@ public class ServicioCaracteristica extends Servicio {
 
             conectar();
             statement = conexion.createStatement();
-            String sql = "SELECT * FROM caracteristica WHERE idCategoriaCaracteristica='"+categoriaTO.getIdCategoria()+"'";
+            String sql = "SELECT * FROM caracteristica WHERE idCategoriaCaracteristica='"+categoriaTO.getIdCategoria()+"' AND estadoCaracteristica = 'Disponible";
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
@@ -201,7 +201,6 @@ public class ServicioCaracteristica extends Servicio {
             conectar();
             String sql = "UPDATE caracteristica SET estadoCaracteristica='No Disponible' WHERE idCaracteristica='" + caracteristicaTO.getIdCaracteristica() + "' AND estadoCaracteristica='Disponible' ";
             preparedStatement = conexion.prepareStatement(sql);
-     //       preparedStatement.setString(5, caracteristicaTO.getEstadoCaracteristica());
   
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

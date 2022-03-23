@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head >
         <a href="https://icons8.com/icon/VwyfEmBsUqyQ/sign-out"/>
         <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
@@ -471,18 +472,19 @@
             </p:dialog>
 
             <p:dialog header="Crear Característica" showEffect="fade" modal="true"
-                      widgetVar="createCaracteristicaDialog" responsive="true" minHeight="350" width="450" >
+                      widgetVar="createCaracteristicaDialog" responsive="true" minHeight="350" width="550" >
 
-                <p:scrollPanel mode="native" style="width:400px;height:500px;">
+                <p:scrollPanel mode="native" style="width:500px;height:500px;">
                     <p:outputPanel id="create-caracteristica-content" class="ui-fluid" >
                         <p:outputPanel rendered="#{not empty OtherController.newCaracteristica}"  >
 
-                            <div class="p-field">
+                            <div class="p-field" >
                                 <div>
                                     <p:outputLabel for="idCategoriaCaracteristica"  value="Categoria *"/>
                                 </div>
                                 <div>
-                                    <p:selectOneMenu id="idCategoriaCaracteristica" value="#{OtherController.newCaracteristica.idCategoriaCaracteristica}" var="cat" panelStyle="width:200px; height:500px">
+                                    <p:selectOneMenu id="idCategoriaCaracteristica" value="#{OtherController.newCaracteristica.idCategoriaCaracteristica}" 
+                                                     var="cat" panelStyle="width:200px; height:500px" style="width:25rem">                                        
                                         <f:selectItems value="#{OtherController.listaCategorias}" var="laCategoria"  itemLabel="#{laCategoria.nombreCategoria}" 
                                                        itemValue="#{laCategoria.idCategoria}"/>      h
                                         <p:column >
@@ -491,52 +493,53 @@
                                             </f:facet>
                                             <h:outputText value="#{laCategoria.nombreCategoria}" />
                                         </p:column>
-
                                     </p:selectOneMenu>
+                                    
                                 </div>
                             </div>
 
-
-                            <div class="p-field">
+                            <div class="p-field" >
                                 <p:outputLabel for="nombreCaracteristica" value="Nombre de la Característica"/>
-                                <p:inputText id="nombreCaracteristica" value="#{OtherController.newCaracteristica.nombreCaracteristica}"/>
-                                <p:message for="nombreCaracteristica" display="tooltip"/>
+                                <p:inputText id="nombreCaracteristica" value="#{OtherController.newCaracteristica.nombreCaracteristica}" required="true" style="width:25rem"/>
+                                <p:message for="nombreCaracteristica" display="icon" />
                             </div>
 
-                            <div class="p-field">
+                            <div class="p-field" >
                                 <p:outputLabel for="descripcionCaracteristica" value="Descripción de la Característica"/>
-                                <p:inputText id="descripcionCaracteristica" value="#{OtherController.newCaracteristica.descripcionCaracteristica}" />
-                                <p:message for="descripcionCaracteristica" display="tooltip"/>
+                                <p:inputTextarea id="descripcionCaracteristica" value="#{OtherController.newCaracteristica.descripcionCaracteristica}" required="true" style="width:25rem" />
+                                <p:message for="descripcionCaracteristica" display="icon"/>
                             </div>
 
-                            <div class="p-field">
-                                <p:outputLabel for="estadoCaracteristica" value="Estado de la Característica *"/>
-                                <p:selectOneButton id="estadoCaracteristica" value="#{OtherController.newCaracteristica.estadoCaracteristica}">
+                            <div class="p-field" >
+                                <p:outputLabel for="estadoCaracteristica" value="Estado de la Característica"/>
+                                <p:selectOneButton id="estadoCaracteristica" value="#{OtherController.newCaracteristica.estadoCaracteristica}" required="true" style="width:25rem">
                                     <f:selectItem itemLabel="Disponible" itemValue="Disponible"/>
                                     <f:selectItem itemLabel="No Disponible" itemValue="No Disponible"/>
                                 </p:selectOneButton>
+                                <p:message for="estadoCaracteristica" display="icon"/>
                             </div>
 
-                            <div class="p-field">
+                            <div class="p-field" >
                                 <p:outputLabel for="precioCaracteristica" value="Precio"/>
-                                <p:inputNumber id="precioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}" required="true"/>
-                                <p:message for="precioCaracteristica" display="tooltip"/>
+                                <p:inputNumber id="precioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}" symbol="₡" minValue="0" 
+                                               inputStyle="width:25rem" required="true"/>
                             </div>
 
-                            <div class="p-field">
-                                <p:outputLabel for="colorCaracteristica" value="Colores de la Característica *"/>
-                                <p:inputText id="colorCaracteristica" value="#{OtherController.newCaracteristica.colorCaracteristica}"/>
+                            <div class="p-field" >
+                                <p:outputLabel for="colorCaracteristica" value="Colores de la Característica" />
+                                <p:inputText id="colorCaracteristica" value="#{OtherController.newCaracteristica.colorCaracteristica}" style="width:25rem" />                               
                             </div> 
 
-                            <div class="p-field">
+                            <div class="p-field" >
                                 <p:outputLabel for="prioridadCaracteristica" value="Orden de Visualizacion"/>
-                                <p:inputNumber id="prioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}" required="true"/>
-                                <p:message for="prioridadCaracteristica" display="tooltip"/>
+                                <p:inputNumber id="prioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}" 
+                                               minValue="0" inputStyle="width:25rem" required="true" />
+
                             </div> 
 
                             <div class="p-field mb-3">
                                 <div class="p-field">
-                                    <p:outputLabel for="new-imagen-caracteristica" value="Imagen *"/>
+                                    <p:outputLabel for="new-imagen-caracteristica" value="Imagen"/>
                                 </div>
                                 <div class="flex mb-2 justify-content-center">              
                                     <p:avatar size="xlarge" style="background-color: transparent;">
@@ -561,11 +564,11 @@
                     <!--                    onclick="PF('createCaracteristicaDialog').hide()"-->
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCaracteristicaDialog').hide()"
-                                     class="ui-button-secondary" />
+                                     class="ui-button-secondary" actionListener="#{OtherController.seleccionarImagenPorDefecto}" />
                 </f:facet>
             </p:dialog>
 
-            <p:dialog modal="True" header="Seleccionear de Imagenes" widgetVar="imagenUpdateUpload">
+            <p:dialog modal="True" header="Seleccionador de Imagen" widgetVar="imagenUpdateUpload">
                 <p:outputPanel id="selected-update-image-upload" class="ui-fluid" >
                     <p:outputPanel>
                         <p:fileUpload listener="#{OtherController.seleccionarImagenASubir}" oncomplete="PF('imagenUpdateUpload').hide()" update="update-imagen-caracteristica"
@@ -575,8 +578,9 @@
             </p:dialog>
 
             <p:dialog header="Detalle de la Característica" showEffect="fade" modal="true"
-                      widgetVar="updateCaracteristicaDialog" responsive="true"   minHeight="350" width="450">
-                <p:scrollPanel mode="native" style="width:400px;height:500px;">
+                      widgetVar="updateCaracteristicaDialog" responsive="true"  minHeight="350" width="550">
+                
+                <p:scrollPanel mode="native" style="width:500px;height:500px;">
                     <p:outputPanel id="update-caracteristica-content" class="ui-fluid">
                         <p:outputPanel rendered="#{not empty OtherController.newCaracteristica}">
 
@@ -585,7 +589,8 @@
                                     <p:outputLabel for="UidCategoriaCaracteristica"  value="Categoria *"/>
                                 </div>
                                 <div>
-                                    <p:selectOneMenu id="UidCategoriaCaracteristica" value="#{OtherController.newCaracteristica.idCategoriaCaracteristica}" var="cat" panelStyle="width:200px">
+                                    <p:selectOneMenu id="UidCategoriaCaracteristica" value="#{OtherController.newCaracteristica.idCategoriaCaracteristica}"
+                                                     var="cat" panelStyle="width:200px" style="width:25rem">
                                         <f:selectItems value="#{OtherController.listaCategorias}" var="laCategoria"  itemLabel="#{laCategoria.nombreCategoria}" 
                                                        itemValue="#{laCategoria.idCategoria}"/>      
                                         <p:column >
@@ -601,39 +606,40 @@
 
                             <div class="p-field">
                                 <p:outputLabel for="UnombreCaracteristica" value="Nombre de la Característica"/>
-                                <p:inputText id="UnombreCaracteristica" value="#{OtherController.newCaracteristica.nombreCaracteristica}" required="true"/>
-                                <p:message for="UnombreCaracteristica" display="tooltip"/>
+                                <p:inputText id="UnombreCaracteristica" value="#{OtherController.newCaracteristica.nombreCaracteristica}" required="true" style="width:25rem"/>
+                                <p:message for="UnombreCaracteristica" display="icon" showDetail="true"/>
                             </div>
 
                             <div class="p-field">
                                 <p:outputLabel for="UdescripcionCaracteristica" value="Descripción de la Característica"/>
-                                <p:inputText id="UdescripcionCaracteristica" value="#{OtherController.newCaracteristica.descripcionCaracteristica}" required="true"/>
-                                <p:message for="UdescripcionCaracteristica" display="tooltip"/>
+                                <p:inputText id="UdescripcionCaracteristica" value="#{OtherController.newCaracteristica.descripcionCaracteristica}" required="true" style="width:25rem"/>
+                                <p:message for="UdescripcionCaracteristica" display="icon" showDetail="true"/>
                             </div>
 
                             <div class="p-field">
                                 <p:outputLabel for="UestadoCaracteristica" value="Estado de la Característica *"/>
-                                <p:selectOneButton id="UestadoCaracteristica" value="#{OtherController.newCaracteristica.estadoCaracteristica}">
+                                <p:selectOneButton id="UestadoCaracteristica" value="#{OtherController.newCaracteristica.estadoCaracteristica}" required="true" style="width:25rem">
                                     <f:selectItem itemLabel="Disponible" itemValue="Disponible"/>
                                     <f:selectItem itemLabel="No Disponible" itemValue="No Disponible"/>
                                 </p:selectOneButton>
+                                <p:message for="UestadoCaracteristica" display="icon" showDetail="true"/>
                             </div>
 
                             <div class="p-field">
                                 <p:outputLabel for="UprecioCaracteristica" value="Precio"/>
-                                <p:inputNumber id="UprecioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}" required="true"/>
-                                <p:message for="UprecioCaracteristica" display="tooltip"/>
+                                <p:inputNumber id="UprecioCaracteristica" value="#{OtherController.newCaracteristica.precioCaracteristica}"
+                                               symbol="₡" minValue="0" required="true" inputStyle="width:25rem"/>
+                                
                             </div>
 
                             <div class="p-field">
                                 <p:outputLabel for="UcolorCaracteristica" value="Colores de la Característica *"/>
-                                <p:inputText id="UcolorCaracteristica" value="#{OtherController.newCaracteristica.colorCaracteristica}"/>
+                                <p:inputText id="UcolorCaracteristica" value="#{OtherController.newCaracteristica.colorCaracteristica}" required="true" style="width:25rem"/>
                             </div> 
 
                             <div class="p-field">
                                 <p:outputLabel for="UprioridadCaracteristica" value="Orden de Visualizacion"/>
-                                <p:inputNumber id="UprioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}" required="true"/>
-                                <p:message for="UprioridadCaracteristica" display="tooltip"/>
+                                <p:inputNumber id="UprioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}" required="true" inputStyle="width:25rem"/>                                
                             </div> 
 
                             <div class="p-field mb-3">
