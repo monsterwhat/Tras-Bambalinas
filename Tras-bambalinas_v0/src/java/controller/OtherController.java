@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -33,10 +34,11 @@ public class OtherController implements Serializable {
 
     private CategoriaTO categoriaTO, newCategoria;
     private CaracteristicaTO caracteristicaTO, newCaracteristica;
-
+    
+    HashMap<Integer,String> mapaCaracterisita, mapaCategoria = new HashMap<Integer, String>();
     List<CategoriaTO> listaCategorias = new ArrayList<CategoriaTO>();
     List<CaracteristicaTO> listaCaracteristicas = new ArrayList<CaracteristicaTO>();
-
+    
     private int idCategoria;
     private String nombreCategoria;
     private String descripcionCategoria;
@@ -67,11 +69,22 @@ public class OtherController implements Serializable {
         try {
             this.listaCategorias = servicioCategoria.listaCategoriasBD();
             this.listaCaracteristicas = servicioCaracteristica.listaCaracteristicasBD();
+            this.mapaCaracterisita = servicioCaracteristica.cargarCaracterisitca();
+            this.mapaCategoria = servicioCategoria.cargarCategoria();
+            
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
+     public HashMap<Integer, String> getMapaCaracterisita() {
+        return mapaCaracterisita;
+    }
+
+    public void setMapaCaracterisita(HashMap<Integer, String> mapaCaracterisita) {
+        this.mapaCaracterisita = mapaCaracterisita;
+    }
+    
     public ServicioCategoria getServicioCategoria() {
         return servicioCategoria;
     }
