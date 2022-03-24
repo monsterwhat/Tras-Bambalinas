@@ -110,32 +110,32 @@
                 <p:outputPanel id="create-user-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty userController.newUser}">
                         <div class="p-field">
-                            <p:outputLabel for="mail" value="Correo"/>
+                            <p:outputLabel for="Nmail" value="Correo"/>
                             <p:inputText type="email" id="Nmail" value="#{userController.newUser.correoUsuario}" required="true"/>
                             <p:message for="Nmail" display="tooltip"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="pass" value="Clave"/>
+                            <p:outputLabel for="Npass" value="Clave"/>
                             <p:password id="Npass" value="#{userController.newUser.contrasenaUsuario}" required="true"/>
                             <p:message for="Npass" display="tooltip"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="tipo" value="Tipo de Usuario"/>
+                            <p:outputLabel for="Ntipo" value="Tipo de Usuario"/>
                             <p:inputText id="Ntipo" value="#{userController.newUser.tipoUsuario}" required="true"/>
                             <p:message for="Ntipo" display="tooltip"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="nombre" value="Nombre del Usuario"/>
+                            <p:outputLabel for="Nnombre" value="Nombre del Usuario"/>
                             <p:inputText id="Nnombre" value="#{userController.newUser.nombreUsuario}" required="true"/>
                             <p:message for="Nnombre" display="tooltip"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="direccion" value="Dirección"/>
+                            <p:outputLabel for="Ndireccion" value="Dirección"/>
                             <p:inputTextarea id="Ndireccion" value="#{userController.newUser.direccionUsuario}" required="true"/>
                             <p:message for="Ndireccion" display="tooltip"/>
                         </div>
                         <div class="p-field">
-                            <p:outputLabel for="telefono" value="Teléfono"/>
+                            <p:outputLabel for="Ntelefono" value="Teléfono"/>
                             <p:inputMask id="Ntelefono" value="#{userController.newUser.telefonoUsuario}" mask="99999999" validateMask="true" required="true"/>
                             <p:message for="Ntelefono" display="tooltip"/>
                         </div>

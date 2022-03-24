@@ -135,16 +135,18 @@ public class ServicioUsuario extends Servicio {
 
         try {
             conectar();
-            String sql = "INSERT INTO usuarios (correoUsuario,tipoUsuario,nombreUsuario,direccionUsuario,telefonoUsuario,numeroContratoUsuario,descripcionTrabajoUsuario) VALUES (?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO usuarios (correoUsuario,tipoUsuario,nombreUsuario,contrasenaUsuario,direccionUsuario,telefonoUsuario,numeroContratoUsuario,descripcionTrabajoUsuario) VALUES (?,?,?,?,?,?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
 
+            
             preparedStatement.setString(1, usuarioTO.getCorreoUsuario());
             preparedStatement.setString(2, usuarioTO.getTipoUsuario());
             preparedStatement.setString(3, usuarioTO.getNombreUsuario());
-            preparedStatement.setString(4, usuarioTO.getDireccionUsuario());
-            preparedStatement.setInt(5, usuarioTO.getTelefonoUsuario());
-            preparedStatement.setInt(6,usuarioTO.getNumeroContratoUsuario());
-            preparedStatement.setString(7,usuarioTO.getDescripcionTrabajoUsuario());
+            preparedStatement.setString(4, usuarioTO.getContrasenaUsuario());
+            preparedStatement.setString(5, usuarioTO.getDireccionUsuario());
+            preparedStatement.setInt(6, usuarioTO.getTelefonoUsuario());
+            preparedStatement.setInt(7,usuarioTO.getNumeroContratoUsuario());
+            preparedStatement.setString(8,usuarioTO.getDescripcionTrabajoUsuario());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -160,17 +162,16 @@ public class ServicioUsuario extends Servicio {
 
         try {
             conectar();
-            String sql = "UPDATE usuarios SET correoUsuario=?, contrasenaUsuario=?, tipoUsuario=?,nombreUsuario=?,direccionUsuario=?,telefonoUsuario=?,numeroContratoUsuario=?,descripcionTrabajoUsuario=? WHERE idusuarios='" + usuarioTO.getIdusuarios() + "'";
+            String sql = "UPDATE usuarios SET correoUsuario=?, tipoUsuario=?,nombreUsuario=?,direccionUsuario=?,telefonoUsuario=?,numeroContratoUsuario=?,descripcionTrabajoUsuario=? WHERE idusuarios='" + usuarioTO.getIdusuarios() + "'";
             preparedStatement = conexion.prepareStatement(sql);
 
             preparedStatement.setString(1, usuarioTO.getCorreoUsuario());
-            preparedStatement.setString(2, ServicioCifrar.encrypt(usuarioTO.getContrasenaUsuario()));
-            preparedStatement.setString(3, usuarioTO.getTipoUsuario());
-            preparedStatement.setString(4, usuarioTO.getNombreUsuario());
-            preparedStatement.setString(5, usuarioTO.getDireccionUsuario());
-            preparedStatement.setInt(6, usuarioTO.getTelefonoUsuario());
-            preparedStatement.setInt(7,usuarioTO.getNumeroContratoUsuario());
-            preparedStatement.setString(8,usuarioTO.getDescripcionTrabajoUsuario());
+            preparedStatement.setString(2, usuarioTO.getTipoUsuario());
+            preparedStatement.setString(3, usuarioTO.getNombreUsuario());
+            preparedStatement.setString(4, usuarioTO.getDireccionUsuario());
+            preparedStatement.setInt(5, usuarioTO.getTelefonoUsuario());
+            preparedStatement.setInt(6,usuarioTO.getNumeroContratoUsuario());
+            preparedStatement.setString(7,usuarioTO.getDescripcionTrabajoUsuario());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
