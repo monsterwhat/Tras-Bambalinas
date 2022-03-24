@@ -12,7 +12,7 @@ import model.CategoriaTO;
 
 public class ServicioCaracteristica extends Servicio {
 
-    public HashMap<Integer,String> cargarCaracterisitca(){
+    public HashMap<Integer,String> cargarCaracteristica(String ID){
         
         HashMap<Integer,String> mapa = new HashMap<Integer,String>();
         Statement statement = null;
@@ -21,7 +21,7 @@ public class ServicioCaracteristica extends Servicio {
         try {
             conectar();
             statement = conexion.createStatement();
-            String sql = "SELECT * FROM caracteristica WHERE estadoCaracteristica = Activo";
+            String sql = "SELECT * FROM caracteristica WHERE estadoCaracteristica = Activo AND idCategoriaCaracteristica='" + ID + "'";
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
