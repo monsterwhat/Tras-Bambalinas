@@ -8,6 +8,7 @@ import servicio.ServicioUsuario;
 import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
 import javax.annotation.PostConstruct;
+import servicio.ServicioCifrar;
 
 @ManagedBean(name = "userController")
 @ViewScoped
@@ -151,6 +152,8 @@ public class UserController implements Serializable {
 
     public void agregarUsuarioTO() {
         try {
+            String contrasena = ServicioCifrar.encrypt(this.newUser.getContrasenaUsuario());
+            this.newUser.setContrasenaUsuario(contrasena);
             this.servicioUsuario.insertarUser(newUser);
             this.cargar();
         } catch (Exception e) {

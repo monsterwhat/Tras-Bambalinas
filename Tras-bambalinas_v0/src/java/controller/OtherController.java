@@ -34,19 +34,16 @@ public class OtherController implements Serializable {
 
     private CategoriaTO categoriaTO, newCategoria;
     private CaracteristicaTO caracteristicaTO, newCaracteristica;
-    
-    HashMap<Integer,String> mapaCaracteristica, mapaCategoria = new HashMap<Integer, String>();
+
+    HashMap<Integer, String> mapaCaracteristica, mapaCategoria = new HashMap<Integer, String>();
     List<CategoriaTO> listaCategorias = new ArrayList<CategoriaTO>();
     List<CaracteristicaTO> listaCaracteristicas = new ArrayList<CaracteristicaTO>();
-    
+
     private int idCategoria;
     private String nombreCategoria;
     private String descripcionCategoria;
     private String estadoCategoria;
     private String seleccionCategoria;
-
-    
-    ///////////////////////////////////////////////////////////////////////////
     private int idCaracteristica;
     private int idCategoriaCaracteristica;
     private String imagenCaracteristica;
@@ -56,10 +53,6 @@ public class OtherController implements Serializable {
     private double precioCaracteristica;
     private String colorCaracteristica;
     private int prioridadCaracteristica;
-    
-   
-
-    ////////////////////////////////////////////////////////////////////////////
 
     public OtherController() {
     }
@@ -70,8 +63,7 @@ public class OtherController implements Serializable {
             this.listaCategorias = servicioCategoria.listaCategoriasBD();
             this.listaCaracteristicas = servicioCaracteristica.listaCaracteristicasBD();
             this.mapaCategoria = servicioCategoria.cargarCategoria();
-            
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -92,7 +84,7 @@ public class OtherController implements Serializable {
     public void setMapaCategoria(HashMap<Integer, String> mapaCategoria) {
         this.mapaCategoria = mapaCategoria;
     }
-    
+
     public ServicioCategoria getServicioCategoria() {
         return servicioCategoria;
     }
@@ -172,7 +164,6 @@ public class OtherController implements Serializable {
     public void setEstadoCategoria(String estadoCategoria) {
         this.estadoCategoria = estadoCategoria;
     }
-    
 
     public String getSeleccionCategoria() {
         return seleccionCategoria;
@@ -181,7 +172,7 @@ public class OtherController implements Serializable {
     public void setSeleccionCategoria(String seleccionCategoria) {
         this.seleccionCategoria = seleccionCategoria;
     }
-   
+
     public int getIdCaracteristica() {
         return idCaracteristica;
     }
@@ -252,8 +243,8 @@ public class OtherController implements Serializable {
 
     public void setPrioridadCaracteristica(int prioridadCaracteristica) {
         this.prioridadCaracteristica = prioridadCaracteristica;
-    }  
-    
+    }
+
     public CategoriaTO getNewCategoria() {
         return newCategoria;
     }
@@ -275,7 +266,7 @@ public class OtherController implements Serializable {
     }
 
     public void openNewCaracteristica() {
-            this.newCaracteristica = new CaracteristicaTO();
+        this.newCaracteristica = new CaracteristicaTO();
     }
 
     public void agregarCategoriaTO() {
@@ -308,7 +299,6 @@ public class OtherController implements Serializable {
         }
     }
 
-   
     public void eliminarCategoriaTOEstado() {
         try {
             this.servicioCategoria.eliminarPorEstadoCategoria(newCategoria);
@@ -318,7 +308,6 @@ public class OtherController implements Serializable {
             System.out.println("Error eliminando caegoria! " + e);
         }
     }
-
 
     public void agregarCaracteristicaTO() {
         try {
@@ -359,16 +348,16 @@ public class OtherController implements Serializable {
 
         }
     }
-    
+
     public void seleccionarImagenASubir(FileUploadEvent event) {
         UploadedFile uploadedFile = event.getFile();
         try {
             InputStream in = event.getFile().getInputStream();
             OutputStream out = new FileOutputStream(new File("C:\\Imagenes\\" + uploadedFile.getFileName()));
             this.newCaracteristica.setImagenCaracteristica(uploadedFile.getFileName());
-            
+
             System.out.println(this.newCaracteristica.getImagenCaracteristica());
-            
+
             int read = 0;
             byte[] bytes = new byte[1024];
 
@@ -382,8 +371,8 @@ public class OtherController implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-    
-    public void seleccionarImagenPorDefecto(){
+
+    public void seleccionarImagenPorDefecto() {
         this.newCaracteristica.setImagenCaracteristica("porDefecto.png");
     }
 
@@ -392,7 +381,5 @@ public class OtherController implements Serializable {
         public Updated() {
         }
     }
-    
-    
 
 }

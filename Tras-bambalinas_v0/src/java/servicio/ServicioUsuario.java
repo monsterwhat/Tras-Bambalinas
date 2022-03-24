@@ -137,7 +137,7 @@ public class ServicioUsuario extends Servicio {
             conectar();
             String sql = "INSERT INTO usuarios (correoUsuario,tipoUsuario,nombreUsuario,contrasenaUsuario,direccionUsuario,telefonoUsuario,numeroContratoUsuario,descripcionTrabajoUsuario) VALUES (?,?,?,?,?,?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
-
+            
             
             preparedStatement.setString(1, usuarioTO.getCorreoUsuario());
             preparedStatement.setString(2, usuarioTO.getTipoUsuario());

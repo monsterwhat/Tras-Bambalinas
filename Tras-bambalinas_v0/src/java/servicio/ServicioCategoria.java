@@ -68,7 +68,8 @@ public class ServicioCategoria extends Servicio {
         }
         return listaRetorno;
     }
-     public List<CategoriaTO> listaCategoriaPorEstadoBD() {
+
+    public List<CategoriaTO> listaCategoriaPorEstadoBD() {
         Statement statement = null;
         ResultSet resultSet = null;
         List<CategoriaTO> listaRetorno = new ArrayList<>();
@@ -78,19 +79,17 @@ public class ServicioCategoria extends Servicio {
             conectar();
             statement = conexion.createStatement();
             String sql = "SELECT * FROM categoria WHERE estadoCategoria = 'Disponible'";
-           
+
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-               int idCategoria = resultSet.getInt("idCategoria");
-               String nombreCategoria = resultSet.getString("nombreCategoria");
-               String descripcionCategoria = resultSet.getString("descripcionCategoria");
-               String estadoCategoria = resultSet.getString("estadoCategoria");
-               String seleccionCategoria = resultSet.getString("seleccionCategoria");
-               CategoriaTO categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria);
-                 
+                int idCategoria = resultSet.getInt("idCategoria");
+                String nombreCategoria = resultSet.getString("nombreCategoria");
+                String descripcionCategoria = resultSet.getString("descripcionCategoria");
+                String estadoCategoria = resultSet.getString("estadoCategoria");
+                String seleccionCategoria = resultSet.getString("seleccionCategoria");
+                CategoriaTO categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria);
 
-                
                 listaRetorno.add(categoriaTO);
             }
         } catch (SQLException e) {
@@ -104,7 +103,7 @@ public class ServicioCategoria extends Servicio {
     }
 
     public void insertarCategoria(CategoriaTO CategoriaTO) {
-        
+
         PreparedStatement preparedStatement = null;
 
         try {
@@ -123,7 +122,6 @@ public class ServicioCategoria extends Servicio {
             desconectar();
         }
     }
-    
 
     public void actualizarCategoria(CategoriaTO categoriaTO) {
         PreparedStatement preparedStatement = null;
@@ -145,9 +143,6 @@ public class ServicioCategoria extends Servicio {
         }
 
     }
-    
-
-   
 
     public void eliminarCategoria(CategoriaTO categoriaTO) {
         ResultSet resultSet = null;
@@ -167,15 +162,16 @@ public class ServicioCategoria extends Servicio {
             desconectar();
         }
     }
-  public void eliminarPorEstadoCategoria(CategoriaTO categoriaTO){
-         PreparedStatement preparedStatement = null;
+
+    public void eliminarPorEstadoCategoria(CategoriaTO categoriaTO) {
+        PreparedStatement preparedStatement = null;
 
         try {
             conectar();
             String sql = "UPDATE categoria SET estadoCategoria='No Disponible' WHERE idCategoria='" + categoriaTO.getIdCategoria() + "' AND estadoCategoria='Disponible' ";
             preparedStatement = conexion.prepareStatement(sql);
-     //       preparedStatement.setString(5, caracteristicaTO.getEstadoCaracteristica());
-  
+            //       preparedStatement.setString(5, caracteristicaTO.getEstadoCaracteristica());
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al actualizar la categoria ! " + e);
@@ -183,23 +179,23 @@ public class ServicioCategoria extends Servicio {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
         }
-    
+
     }
 
     public HashMap<Integer, String> cargarCategoria() {
-        
-        HashMap<Integer,String> mapa = new HashMap<Integer,String>();
+
+        HashMap<Integer, String> mapa = new HashMap<Integer, String>();
         Statement statement = null;
         ResultSet resultSet = null;
 
         try {
             conectar();
             statement = conexion.createStatement();
-            String sql = "SELECT * FROM categorias WHERE estadoCaracteristica = Activo";
+            String sql = "SELECT * FROM categoria WHERE estadoCategoria = 'Disponible'";
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                mapa.put(resultSet.getInt("idCategoria"),resultSet.getString("nombreCategoria"));
+                mapa.put(resultSet.getInt("idCategoria"), resultSet.getString("nombreCategoria"));
             }
         } catch (SQLException e) {
             System.out.println("Error al cargar las categorias disponibles! " + e);
@@ -208,9 +204,8 @@ public class ServicioCategoria extends Servicio {
             cerrarStatement(statement);
             desconectar();
         }
-        
+
         return mapa;
     }
- 
 
 }
