@@ -1,0 +1,28 @@
+body{
+    background-color: #93b5c6;
+    
+}
+
+body .ui-panelgrid .ui-panelgrid-cell{
+    background-color: #93b5c6 ;
+}
+body .ui-panel .ui-panel-content{
+    border: 0px;
+    background-color: #C9DAE3;
+    
+}
+
+.caracteristicas-grid .caracteristicas-grid-item-content{
+   
+    border: 1px solid;
+    border-radius: 3px;
+    margin: .3rem;
+    text-align: center;
+    
+}
+
+.caracteristicas-grid .caracteristica-imagen {
+    width: 128px;
+    height: 128px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+}

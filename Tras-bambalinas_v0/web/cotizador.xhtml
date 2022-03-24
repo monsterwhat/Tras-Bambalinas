@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:outputStylesheet library="css" name="styleCotizador.css"/>
+        <h:form id="formMenu">
+            <p:toolbar>
+                <p:toolbarGroup style="margin-left: 30rem ">
+                    <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml" />
+                    <p:button value="Cotizador" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml" />
+                </p:toolbarGroup>
+                <p:toolbarGroup>
+                    <p:menuButton value="Ingresar/Registrarse" icon="pi pi-user" styleClass="p-mb-2" >
+                        <p:menuitem value="Ingresar"/>
+                        <p:menuitem value="Crear Cuenta"/>
+                    </p:menuButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+        </h:form>
+
+        <h:form id="formCotizador">
+            <p:panelGrid  columns="1" layout="flex" columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+                          contentStyleClass="p-align-baseline ui-fluid" >
+                <p:panel style="background-color:#A43D42" visible="true" >
+                    <p:accordionPanel value="#{OtherController.listaCategorias}" var="laCategoria">
+                        <p:tab title="#{laCategoria.nombreCategoria}" >
+                            <div class="product-list-item">
+                                <p:dataView var="laCaracteristica" value="#{OtherController.listaCaracteristicas}" rows="3" paginator="true" 
+                                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                            gridIcon="pi pi-th-large" listIcon="pi pi-bars" layout="grid" gridRowStyleClass="p-lg-6 p-xl-4" flex="true">
+
+                                    <p:dataViewGridItem>
+                                        <div class="caracteristicas-grid">
+                                            <div class="caracteristicas-grid-item-content">
+                                                <div class="p-mb-3">
+                                                    <p:graphicImage value="/imagenes/#{laCaracteristica.imagenCaracteristica}" styleClass="caracteristica-imagen"/>
+                                                </div>
+                                                <h4 class="p-mb-1" >#{laCaracteristica.nombreCaracteristica}</h4>
+                                                
+                                                <h5 class="p-mb-1" >#{laCaracteristica.descripcionCaracteristica}</h5>
+                                                
+                                                <h6 class="p-mt-0 p-mb-3">
+                                                    <h:outputText value="#{laCaracteristica.precioCaracteristica}" styleClass="product-price">
+                                                        <f:convertNumber currencySymbol="₡" type="currency"/>
+                                                    </h:outputText>
+                                                </h6>
+                                                
+                                                <div class="p-mt-5">
+                                                    <p:selectOneRadio id="test" styleClass="p-mr-2">
+                                                        <f:selectItem itemLabel="Seleccionar" itemValue="seleccionar" />
+                                                    </p:selectOneRadio>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </p:dataViewGridItem>
+                                </p:dataView>
+                            </div>
+                        </p:tab>
+                    </p:accordionPanel>
+                    <p:button value="Cotizar"/>
+                </p:panel>
+            </p:panelGrid>
+        </h:form>
+    </h:body>
+</html>
+
