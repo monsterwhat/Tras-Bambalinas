@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -33,10 +34,11 @@ public class OtherController implements Serializable {
 
     private CategoriaTO categoriaTO, newCategoria;
     private CaracteristicaTO caracteristicaTO, newCaracteristica;
-
+    
+    HashMap<Integer,String> mapaCaracteristica, mapaCategoria = new HashMap<Integer, String>();
     List<CategoriaTO> listaCategorias = new ArrayList<CategoriaTO>();
     List<CaracteristicaTO> listaCaracteristicas = new ArrayList<CaracteristicaTO>();
-
+    
     private int idCategoria;
     private String nombreCategoria;
     private String descripcionCategoria;
@@ -67,11 +69,30 @@ public class OtherController implements Serializable {
         try {
             this.listaCategorias = servicioCategoria.listaCategoriasBD();
             this.listaCaracteristicas = servicioCaracteristica.listaCaracteristicasBD();
+            this.mapaCategoria = servicioCategoria.cargarCategoria();
+            
+            
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
+    public HashMap<Integer, String> getMapaCaracteristica() {
+        return mapaCaracteristica;
+    }
+
+    public void setMapaCaracteristica(HashMap<Integer, String> mapaCaracteristica) {
+        this.mapaCaracteristica = mapaCaracteristica;
+    }
+
+    public HashMap<Integer, String> getMapaCategoria() {
+        return mapaCategoria;
+    }
+
+    public void setMapaCategoria(HashMap<Integer, String> mapaCategoria) {
+        this.mapaCategoria = mapaCategoria;
+    }
+    
     public ServicioCategoria getServicioCategoria() {
         return servicioCategoria;
     }
@@ -160,9 +181,7 @@ public class OtherController implements Serializable {
     public void setSeleccionCategoria(String seleccionCategoria) {
         this.seleccionCategoria = seleccionCategoria;
     }
-    
    
-    
     public int getIdCaracteristica() {
         return idCaracteristica;
     }
@@ -235,8 +254,6 @@ public class OtherController implements Serializable {
         this.prioridadCaracteristica = prioridadCaracteristica;
     }  
     
-    /////////////////////////////////////////////////////////////////////////////
-
     public CategoriaTO getNewCategoria() {
         return newCategoria;
     }

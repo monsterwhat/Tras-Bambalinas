@@ -7,10 +7,37 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import model.CategoriaTO;
 
 public class ServicioCaracteristica extends Servicio {
 
+    public HashMap<Integer,String> cargarCaracteristica(String ID){
+        
+        HashMap<Integer,String> mapa = new HashMap<Integer,String>();
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conectar();
+            statement = conexion.createStatement();
+            String sql = "SELECT * FROM caracteristica WHERE estadoCaracteristica = Activo AND idCategoriaCaracteristica='" + ID + "'";
+            resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                mapa.put(resultSet.getInt("idCaracteristica"),resultSet.getString("nombreCaracteristica"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cargar las caracteristicas disponibles! " + e);
+        } finally {
+            cerrarResultSet(resultSet);
+            cerrarStatement(statement);
+            desconectar();
+        }
+        
+        return mapa;
+    }
+    
     public List<CaracteristicaTO> listaCaracteristicasBD() {
         Statement statement = null;
         ResultSet resultSet = null;
