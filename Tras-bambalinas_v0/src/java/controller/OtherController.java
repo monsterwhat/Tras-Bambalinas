@@ -35,7 +35,7 @@ public class OtherController implements Serializable {
     private CategoriaTO categoriaTO, newCategoria;
     private CaracteristicaTO caracteristicaTO, newCaracteristica;
 
-    HashMap<Integer, String> mapaCaracteristica, mapaCategoria = new HashMap<Integer, String>();
+  
     List<CategoriaTO> listaCategorias = new ArrayList<CategoriaTO>();
     List<CaracteristicaTO> listaCaracteristicas = new ArrayList<CaracteristicaTO>();
 
@@ -62,28 +62,14 @@ public class OtherController implements Serializable {
         try {
             this.listaCategorias = servicioCategoria.listaCategoriasBD();
             this.listaCaracteristicas = servicioCaracteristica.listaCaracteristicasBD();
-            this.mapaCategoria = servicioCategoria.cargarCategoria();
+            
 
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public HashMap<Integer, String> getMapaCaracteristica() {
-        return mapaCaracteristica;
-    }
 
-    public void setMapaCaracteristica(HashMap<Integer, String> mapaCaracteristica) {
-        this.mapaCaracteristica = mapaCaracteristica;
-    }
-
-    public HashMap<Integer, String> getMapaCategoria() {
-        return mapaCategoria;
-    }
-
-    public void setMapaCategoria(HashMap<Integer, String> mapaCategoria) {
-        this.mapaCategoria = mapaCategoria;
-    }
 
     public ServicioCategoria getServicioCategoria() {
         return servicioCategoria;

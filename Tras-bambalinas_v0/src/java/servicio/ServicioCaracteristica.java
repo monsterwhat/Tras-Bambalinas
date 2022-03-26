@@ -12,30 +12,76 @@ import model.CategoriaTO;
 
 public class ServicioCaracteristica extends Servicio {
 
-    public HashMap<Integer,String> cargarCaracteristica(String ID){
-        
-        HashMap<Integer,String> mapa = new HashMap<Integer,String>();
+
+//    No pude usar crear un hashMap de caracteristicas, por que habia que contar mas cosas que solo el id y el nombre
+//    public HashMap<Integer,String> cargarCaracteristica(HashMap<Integer,String> hashMapCategoriaTO){
+//        
+//        HashMap<Integer,String> mapa = new HashMap<Integer,String>();
+//        Statement statement = null;
+//        ResultSet resultSet = null;
+//
+//        try {
+//            conectar();
+//            statement = conexion.createStatement();
+//            String sql = "SELECT * FROM caracteristica WHERE estadoCaracteristica = 'Disponible' AND idCategoriaCaracteristica='" + hashMapCategoriaTO.keySet() + "'"
+//                    + "ORDER BY prioridadCaracteristica ASC";
+//            resultSet = statement.executeQuery(sql);
+//
+//            while (resultSet.next()) {
+//                mapa.put(resultSet.getInt("idCaracteristica"),resultSet.getString("nombreCaracteristica"));
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Error al cargar las caracteristicas disponibles! " + e);
+//        } finally {
+//            cerrarResultSet(resultSet);
+//            cerrarStatement(statement);
+//            desconectar();
+//        }
+//        HashMap<Integer, String> hashMapCategoria
+//        CategoriaTO categoriaTO
+//        List<CategoriaTO> listaCategoria
+//        return mapa;
+//    }
+    
+    public List<CaracteristicaTO> listaCaracteristicasPorIdCategoriaYEstadoBD(HashMap<Integer, String> hashMapCategoria) {
         Statement statement = null;
         ResultSet resultSet = null;
-
+        List<CaracteristicaTO> listaRetorno = new ArrayList<>();
+        
+  
         try {
+
             conectar();
             statement = conexion.createStatement();
-            String sql = "SELECT * FROM caracteristica WHERE estadoCaracteristica = Activo AND idCategoriaCaracteristica='" + ID + "'";
+            System.out.println("A: "+hashMapCategoria.keySet());
+            String sql = "SELECT idCaracteristica, idCategoriaCaracteristica,imagenCaracteristica, nombreCaracteristica, descripcionCaracteristica,estadoCaracteristica, "
+                            + "precioCaracteristica, colorCaracteristica,prioridadCaracteristica FROM caracteristica, categoria  WHERE idCategoriaCaracteristica = '"+hashMapCategoria.keySet() +
+                            "' AND estadoCaracteristica = 'Disponible' AND idCategoriaCaracteristica = categoria.idCategoria ORDER BY prioridadCaracteristica ASC;";
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                mapa.put(resultSet.getInt("idCaracteristica"),resultSet.getString("nombreCaracteristica"));
+                int idCaracteristica = resultSet.getInt("idCaracteristica");
+                int idCategoriaCaracteristica = resultSet.getInt("idCategoriaCaracteristica");
+                String imagenCaracteristica = resultSet.getString("imagenCaracteristica");
+                String nombreCaracteristica = resultSet.getString("nombreCaracteristica");
+                String descripcionCaracteristica = resultSet.getString("descripcionCaracteristica");
+                String estadoCaracteristica = resultSet.getString("estadoCaracteristica");
+                double precioCaracteristica = resultSet.getDouble("precioCaracteristica");
+                String colorCaracteristica = resultSet.getString("colorCaracteristica");
+                int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
+
+                CaracteristicaTO caracteristicasTO = new CaracteristicaTO(idCaracteristica,idCategoriaCaracteristica,imagenCaracteristica,nombreCaracteristica,descripcionCaracteristica,
+                                                       estadoCaracteristica,precioCaracteristica,colorCaracteristica,prioridadCaracteristica);
+                listaRetorno.add(caracteristicasTO);
             }
         } catch (SQLException e) {
-            System.out.println("Error al cargar las caracteristicas disponibles! " + e);
+            System.out.println("Error al seleccionar todo de Caracteristicas! " + e);
         } finally {
             cerrarResultSet(resultSet);
             cerrarStatement(statement);
             desconectar();
         }
-        
-        return mapa;
+        return listaRetorno;
     }
     
     public List<CaracteristicaTO> listaCaracteristicasBD() {
@@ -74,84 +120,7 @@ public class ServicioCaracteristica extends Servicio {
         }
         return listaRetorno;
     }
-    
-    public List<CaracteristicaTO> listaCaracteristicasPorIdCategoriaBD(CategoriaTO categoriaTO) {
-        Statement statement = null;
-        ResultSet resultSet = null;
-        List<CaracteristicaTO> listaRetorno = new ArrayList<>();
-
-        try {
-
-            conectar();
-            statement = conexion.createStatement();
-            String sql = "SELECT * FROM caracteristica WHERE idCategoriaCaracteristica='"+categoriaTO.getIdCategoria()+"' AND estadoCaracteristica = 'Disponible";
-            resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()) {
-                int idCaracteristica = resultSet.getInt("idCaracteristica");
-                int idCategoriaCaracteristica = resultSet.getInt("idCategoriaCaracteristica");
-                String imagenCaracteristica = resultSet.getString("imagenCaracteristica");
-                String nombreCaracteristica = resultSet.getString("nombreCaracteristica");
-                String descripcionCaracteristica = resultSet.getString("descripcionCaracteristica");
-                String estadoCaracteristica = resultSet.getString("estadoCaracteristica");
-                double precioCaracteristica = resultSet.getDouble("precioCaracteristica");
-                String colorCaracteristica = resultSet.getString("colorCaracteristica");
-                int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
-
-                CaracteristicaTO caracteristicasTO = new CaracteristicaTO(idCaracteristica,idCategoriaCaracteristica,imagenCaracteristica,nombreCaracteristica,descripcionCaracteristica,
-                                                       estadoCaracteristica,precioCaracteristica,colorCaracteristica,prioridadCaracteristica);
-                listaRetorno.add(caracteristicasTO);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al seleccionar todo de Caracteristicas! " + e);
-        } finally {
-            cerrarResultSet(resultSet);
-            cerrarStatement(statement);
-            desconectar();
-        }
-        return listaRetorno;
-    }
-
-    public List<CaracteristicaTO> listaCaracteristicasPorIdCategoriaYEstadoBD(CategoriaTO categoriaTO) {
-        Statement statement = null;
-        ResultSet resultSet = null;
-        List<CaracteristicaTO> listaRetorno = new ArrayList<>();
-
-        try {
-
-            conectar();
-            statement = conexion.createStatement();
-            String sql = "SELECT * FROM caracteristica WHERE idCategoriaCaracteristica='"+categoriaTO.getIdCategoria()+"' AND estadoCaracteristica = 'Disponible'";
-            resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()) {
-                int idCaracteristica = resultSet.getInt("idCaracteristica");
-                int idCategoriaCaracteristica = resultSet.getInt("idCategoriaCaracteristica");
-                String imagenCaracteristica = resultSet.getString("imagenCaracteristica");
-                String nombreCaracteristica = resultSet.getString("nombreCaracteristica");
-                String descripcionCaracteristica = resultSet.getString("descripcionCaracteristica");
-                String estadoCaracteristica = resultSet.getString("estadoCaracteristica");
-                double precioCaracteristica = resultSet.getDouble("precioCaracteristica");
-                String colorCaracteristica = resultSet.getString("colorCaracteristica");
-                int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
-
-                CaracteristicaTO caracteristicasTO = new CaracteristicaTO(idCaracteristica,idCategoriaCaracteristica,imagenCaracteristica,nombreCaracteristica,descripcionCaracteristica,
-                                                       estadoCaracteristica,precioCaracteristica,colorCaracteristica,prioridadCaracteristica);
-                listaRetorno.add(caracteristicasTO);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al seleccionar todo de Caracteristicas! " + e);
-        } finally {
-            cerrarResultSet(resultSet);
-            cerrarStatement(statement);
-            desconectar();
-        }
-        return listaRetorno;
-    }
-    
-    
-    
-    
+     
     public void insertarCaracteristica(CaracteristicaTO caracteristicaTO) {
         PreparedStatement preparedStatement = null;
 
