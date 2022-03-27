@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import model.CaracteristicaTO;
 import model.CategoriaTO;
 
 public class ServicioCategoria extends Servicio {
@@ -68,7 +69,107 @@ public class ServicioCategoria extends Servicio {
         }
         return listaRetorno;
     }
+    
+//    public HashMap<CategoriaTO, CaracteristicaTO> cargarCatalogo() {
+//
+//        HashMap<CategoriaTO, CaracteristicaTO> mapa = new HashMap<CategoriaTO, CaracteristicaTO>();
+//        Statement statement = null;
+//        ResultSet resultSet = null;
+//
+//        try {
+//            conectar();
+//            statement = conexion.createStatement();
+//            String sql = "SELECT * FROM caracteristica INNER JOIN categoria ON idCategoriaCaracteristica=idCategoria "
+//                    + "WHERE estadoCaracteristica ='Disponible' AND idCategoria=idCategoriaCaracteristica  ORDER BY prioridadCaracteristica ASC;"; 
+//            resultSet = statement.executeQuery(sql);
+//
+//            while (resultSet.next()) {
+//                int idCategoria = resultSet.getInt("idCategoria");
+//                String nombreCategoria = resultSet.getString("nombreCategoria");
+//                String descripcionCategoria = resultSet.getString("descripcionCategoria");
+//                String estadoCategoria = resultSet.getString("estadoCategoria");
+//                String seleccionCategoria = resultSet.getString("seleccionCategoria");
+//                
+//                int idCaracteristica = resultSet.getInt("idCaracteristica");
+//                int idCategoriaCaracteristica = resultSet.getInt("idCategoriaCaracteristica");
+//                String imagenCaracteristica = resultSet.getString("imagenCaracteristica");
+//                String nombreCaracteristica = resultSet.getString("nombreCaracteristica");
+//                String descripcionCaracteristica = resultSet.getString("descripcionCaracteristica");
+//                String estadoCaracteristica = resultSet.getString("estadoCaracteristica");
+//                double precioCaracteristica = resultSet.getDouble("precioCaracteristica");
+//                String colorCaracteristica = resultSet.getString("colorCaracteristica");
+//                int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
+//                
+//                CaracteristicaTO caracteristicaTO = new CaracteristicaTO(idCaracteristica,idCategoriaCaracteristica,imagenCaracteristica,nombreCaracteristica,descripcionCaracteristica,
+//                                                       estadoCaracteristica,precioCaracteristica,colorCaracteristica,prioridadCaracteristica);
+//                
+//                CategoriaTO categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria);
+//                
+//                mapa.put(categoriaTO, caracteristicaTO);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Error al cargar las categorias disponibles! " + e);
+//        } finally {
+//            cerrarResultSet(resultSet);
+//            cerrarStatement(statement);
+//            desconectar();
+//        }
+//
+//        return mapa;
+//    }
 
+//    public List<CaracteristicaTO> listaCategoriaYCaracteristicaTest() {
+//        Statement statement = null;
+//        ResultSet resultSet = null;
+//        List<CaracteristicaTO> listaRetorno = new ArrayList<>();
+//        
+//  
+//        try {
+//
+//            conectar();
+//            statement = conexion.createStatement();
+//           // System.out.println("A: "+hashMapCategoria.keySet());
+//            String sql = "SELECT * FROM caracteristica INNER JOIN categoria ON idCategoriaCaracteristica=idCategoria "
+//                    + "WHERE estadoCaracteristica ='Disponible' AND idCategoria=idCategoriaCaracteristica  ORDER BY prioridadCaracteristica ASC;";  
+//            resultSet = statement.executeQuery(sql);
+//
+//            while (resultSet.next()) {
+//                
+//                int idCategoria = resultSet.getInt("idCategoria");
+//                String nombreCategoria = resultSet.getString("nombreCategoria");
+//                String descripcionCategoria = resultSet.getString("descripcionCategoria");
+//                String estadoCategoria = resultSet.getString("estadoCategoria");
+//                String seleccionCategoria = resultSet.getString("seleccionCategoria");
+//                
+//                int idCaracteristica = resultSet.getInt("idCaracteristica");
+//                int idCategoriaCaracteristica = resultSet.getInt("idCategoriaCaracteristica");
+//                String imagenCaracteristica = resultSet.getString("imagenCaracteristica");
+//                String nombreCaracteristica = resultSet.getString("nombreCaracteristica");
+//                String descripcionCaracteristica = resultSet.getString("descripcionCaracteristica");
+//                String estadoCaracteristica = resultSet.getString("estadoCaracteristica");
+//                double precioCaracteristica = resultSet.getDouble("precioCaracteristica");
+//                String colorCaracteristica = resultSet.getString("colorCaracteristica");
+//                int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
+//
+//                CaracteristicaTO caracteristicaTO = new CaracteristicaTO(idCaracteristica,idCategoriaCaracteristica,imagenCaracteristica,nombreCaracteristica,descripcionCaracteristica,
+//                                                       estadoCaracteristica,precioCaracteristica,colorCaracteristica,prioridadCaracteristica);
+//                
+//                CategoriaTO categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria);
+//                listaRetorno.add(caracteristicaTO);
+//                
+//                
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Error al seleccionar todo de Caracteristicas! " + e);
+//        } finally {
+//            cerrarResultSet(resultSet);
+//            cerrarStatement(statement);
+//            desconectar();
+//        }
+//        return listaRetorno;
+//    }
+    
+    
     public List<CategoriaTO> listaCategoriaPorEstadoBD() {
         Statement statement = null;
         ResultSet resultSet = null;
@@ -182,30 +283,30 @@ public class ServicioCategoria extends Servicio {
 
     }
 
-    public HashMap<Integer, String> cargarCategoria() {
-
-        HashMap<Integer, String> mapa = new HashMap<Integer, String>();
-        Statement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            conectar();
-            statement = conexion.createStatement();
-            String sql = "SELECT * FROM categoria WHERE estadoCategoria = 'Disponible'";
-            resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()) {
-                mapa.put(resultSet.getInt("idCategoria"), resultSet.getString("nombreCategoria"));
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al cargar las categorias disponibles! " + e);
-        } finally {
-            cerrarResultSet(resultSet);
-            cerrarStatement(statement);
-            desconectar();
-        }
-
-        return mapa;
-    }
+//    public HashMap<Integer, String> cargarCategoria() {
+//
+//        HashMap<Integer, String> mapa = new HashMap<Integer, String>();
+//        Statement statement = null;
+//        ResultSet resultSet = null;
+//
+//        try {
+//            conectar();
+//            statement = conexion.createStatement();
+//            String sql = "SELECT * FROM categoria WHERE estadoCategoria = 'Disponible'";
+//            resultSet = statement.executeQuery(sql);
+//
+//            while (resultSet.next()) {
+//                mapa.put(resultSet.getInt("idCategoria"), resultSet.getString("nombreCategoria"));
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Error al cargar las categorias disponibles! " + e);
+//        } finally {
+//            cerrarResultSet(resultSet);
+//            cerrarStatement(statement);
+//            desconectar();
+//        }
+//
+//        return mapa;
+//    }
 
 }

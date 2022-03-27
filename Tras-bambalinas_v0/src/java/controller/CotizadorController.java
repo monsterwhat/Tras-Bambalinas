@@ -22,11 +22,16 @@ public class CotizadorController implements Serializable {
     private CategoriaTO categoriaTO;
     private CaracteristicaTO caracteristicaTO;
 
-    HashMap<Integer, String> mapaCategoria = new HashMap<Integer, String>();
-    List<Integer> listaNombreCategorias = new ArrayList<>();
+//    HashMap<Integer, String> mapaCategoria = new HashMap<Integer, String>();
+    
+//    HashMap<CategoriaTO, CaracteristicaTO> mapaCatalogo = new HashMap<CategoriaTO, CaracteristicaTO>();
+
+//    List<Integer> listaNombreCategorias = new ArrayList<>();
 
     List<CaracteristicaTO> listaCaracteristicasParaCotizador = new ArrayList<CaracteristicaTO>();
     List<CategoriaTO> listaCategoriaParaCotizar = new ArrayList<CategoriaTO>();
+
+//    List<CaracteristicaTO> listaTest = new ArrayList<CaracteristicaTO>();
 
     private int idCategoria;
     private String nombreCategoria;
@@ -35,7 +40,7 @@ public class CotizadorController implements Serializable {
     private String seleccionCategoria;
 
     private int idCaracteristica;
-    private int idCategoriaCaracteristica;
+    private CategoriaTO idCategoriaCaracteristica;
     private String imagenCaracteristica;
     private String nombreCaracteristica;
     private String descripcionCaracteristica;
@@ -47,12 +52,17 @@ public class CotizadorController implements Serializable {
     @PostConstruct
     public void cargar() {
         try {
-
-            this.mapaCategoria = servicioCategoria.cargarCategoria();
-//            this.listaCategoriaParaCotizar = servicioCategoria.listaCategoriaPorEstadoBD();
+            
+//            this.mapaCatalogo = servicioCategoria.cargarCatalogo();
+//            System.out.println("A:"+this.mapaCatalogo.values().getClass().getConstructor());
 //            cargarListaCategoria();
-            this.listaCaracteristicasParaCotizador = servicioCaracteristica.listaCaracteristicasPorIdCategoriaYEstadoBD(mapaCategoria);
-          
+            
+//            this.listaTest = servicioCategoria.listaCategoriaYCaracteristicaTest();
+//            this.mapaCategoria = servicioCategoria.cargarCategoria();
+//            cargarListaCategoria();
+//            cargarListaCaracteristicas(this.listaCategoriaParaCotizar.get(idCategoria).getIdCategoria());
+  
+            this.listaCategoriaParaCotizar = servicioCategoria.listaCategoriaPorEstadoBD();
 
         } catch (Exception e) {
             System.out.println(e);
@@ -60,6 +70,17 @@ public class CotizadorController implements Serializable {
 
     }
 
+//     public void cargarListaCategoria(){
+//        for(CategoriaTO categoriaTO : mapaCatalogo.keySet()){
+//            System.out.println("key: " + this.mapaCatalogo.keySet() + " value: " + mapaCatalogo.get(categoriaTO));
+//            //this.listaCategoriaParaCotizar = mapaCatalogo.keySet().getClass().getName();
+//            
+//            System.out.println(listaCategoriaParaCotizar.get(idCategoria).getIdCategoria());   
+//                    
+//        }
+//    
+//    }
+    
 //    public void cargarListaCaracteristicas() {
 //        try {
 //
@@ -69,7 +90,6 @@ public class CotizadorController implements Serializable {
 //        }
 //
 //    }
-
     ////////////////////////////////////////////////////////////////////////////
     public ServicioCategoria getServicioCategoria() {
         return servicioCategoria;
@@ -119,23 +139,40 @@ public class CotizadorController implements Serializable {
     public void setListaCategoriaParaCotizar(List<CategoriaTO> listaCategoriaParaCotizar) {
         this.listaCategoriaParaCotizar = listaCategoriaParaCotizar;
     }
+//
+//    public List<CaracteristicaTO> getListaTest() {
+//        return listaTest;
+//    }
+//
+//    public void setListaTest(List<CaracteristicaTO> listaTest) {
+//        this.listaTest = listaTest;
+//    }
+//
+//    ////////////////////////////////////////////////////////////////////////////
+//    public HashMap<Integer, String> getMapaCategoria() {
+//        return mapaCategoria;
+//    }
+//
+//    public void setMapaCategoria(HashMap<Integer, String> mapaCategoria) {
+//        this.mapaCategoria = mapaCategoria;
+//    }
+//
+//    public List<Integer> getListaNombreCategorias() {
+//        return listaNombreCategorias;
+//    }
+//
+//    public void setListaNombreCategorias(List<Integer> listaNombreCategorias) {
+//        this.listaNombreCategorias = listaNombreCategorias;
+//    }
 
-    ////////////////////////////////////////////////////////////////////////////
-    public HashMap<Integer, String> getMapaCategoria() {
-        return mapaCategoria;
-    }
-
-    public void setMapaCategoria(HashMap<Integer, String> mapaCategoria) {
-        this.mapaCategoria = mapaCategoria;
-    }
-
-    public List<Integer> getListaNombreCategorias() {
-        return listaNombreCategorias;
-    }
-
-    public void setListaNombreCategorias(List<Integer> listaNombreCategorias) {
-        this.listaNombreCategorias = listaNombreCategorias;
-    }
+//    public HashMap<CategoriaTO, CaracteristicaTO> getMapaCatalogo() {
+//        return mapaCatalogo;
+//    }
+//
+//    public void setMapaCatalogo(HashMap<CategoriaTO, CaracteristicaTO> mapaCatalogo) {
+//        this.mapaCatalogo = mapaCatalogo;
+//    }
+//    
 
     ////////////////////////////////////////////////////////////////////////////
     public int getIdCategoria() {
@@ -188,14 +225,14 @@ public class CotizadorController implements Serializable {
         this.idCaracteristica = idCaracteristica;
     }
 
-    public int getIdCategoriaCaracteristica() {
+    public CategoriaTO getIdCategoriaCaracteristica() {
         return idCategoriaCaracteristica;
     }
 
-    public void setIdCategoriaCaracteristica(int idCategoriaCaracteristica) {
+    public void setIdCategoriaCaracteristica(CategoriaTO idCategoriaCaracteristica) {
         this.idCategoriaCaracteristica = idCategoriaCaracteristica;
     }
-
+    
     public String getImagenCaracteristica() {
         return imagenCaracteristica;
     }
@@ -260,12 +297,9 @@ public class CotizadorController implements Serializable {
 //    
 //    }
 //    
-//    public void cargarListaCaracteristicas(){
-//         
-//        for(int i : mapaCategoria.keySet()){
-//            System.out.println("key: " + mapaCategoria.keySet());
-//            this.listaCaracteristicasParaCotizador =servicioCaracteristica.listaCaracteristicasPorIdCategoriaYEstadoBD(mapaCategoria.keySet());
-//        }
-//    
+//    public void cargarListaCaracteristicas(int idCat) {
+//
+//        this.listaCaracteristicasParaCotizador = servicioCaracteristica.listaCaracteristicasPorIdCategoriaYEstadoBD(idCat);
+//
 //    }
 }

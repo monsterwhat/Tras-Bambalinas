@@ -26,47 +26,78 @@
         </h:form>
 
         <h:form id="formCotizador">
-            <p:panelGrid  columns="1" layout="flex" columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
-                          contentStyleClass="p-align-baseline ui-fluid" >
+            <p:panelGrid  columns="1" layout="flex" 
+                          >
                 <p:panel style="background-color:#A43D42" visible="true" >
-                    <p:accordionPanel value="#{cotizadorController.mapaCategoria}" var="laCategoria">
-                        <p:tab title="#{laCategoria}" >
-                            <div class="product-list-item">
-                                
-                                <p:dataView var="laCaracteristica" value="#{cotizadorController.listaCaracteristicasParaCotizador}" rows="3" paginator="true" 
-                                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                            gridIcon="pi pi-th-large" listIcon="pi pi-bars" layout="grid" gridRowStyleClass="p-lg-6 p-xl-4" flex="true">
 
-                                    <p:dataViewGridItem>
-                                        <div class="caracteristicas-grid">
-                                            <div class="caracteristicas-grid-item-content">
-                                                <div class="p-mb-3">
-                                                    <p:graphicImage value="/imagenes/#{laCaracteristica.imagenCaracteristica}" styleClass="caracteristica-imagen"/>
-                                                </div>
-                                                <h4 class="p-mb-1" >#{laCaracteristica.idCategoriaCaracteristica}</h4>
-                                                <h4 class="p-mb-1" >#{laCaracteristica.nombreCaracteristica}</h4>
-                                                
-                                                <h5 class="p-mb-1" >#{laCaracteristica.descripcionCaracteristica}</h5>
-                                                
-                                                <h6 class="p-mt-0 p-mb-3">
-                                                    <h:outputText value="#{laCaracteristica.precioCaracteristica}" styleClass="product-price">
-                                                        <f:convertNumber currencySymbol="₡" type="currency"/>
-                                                    </h:outputText>
-                                                </h6>
-                                                
-                                                <div class="p-mt-5">
-                                                    <p:selectOneRadio id="test" styleClass="p-mr-2">
-                                                        <f:selectItem itemLabel="Seleccionar" itemValue="seleccionar" />
-                                                    </p:selectOneRadio>
-                                                </div>
+                    <div class="product card">
+                        <p:accordionPanel value="#{cotizadorController.listaCategoriaParaCotizar}" var="elCotizadorCategoria" multiple="true">
+                            <p:tab title="#{elCotizadorCategoria.nombreCategoria}" >
 
-                                            </div>
-                                        </div>
-                                    </p:dataViewGridItem>
-                                </p:dataView>
-                            </div>
-                        </p:tab>
-                    </p:accordionPanel>
+                                <p:panel>
+                                    <div class="elCotizadorCaracteristica card">
+                                        <h:form>
+
+                                            <p:dataView  var="elCotizadorCaracteristica" value="#{cotizadorController.servicioCaracteristica.listaCaracteristicasTest(elCotizadorCategoria.idCategoria)}" rows="4" paginator="true"  
+                                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                         gridIcon="pi pi-th-large" listIcon="pi pi-bars" layout="grid" gridRowStyleClass="p-lg-6 p-xl-4">
+
+                                                <p:dataViewGridItem>
+                                                    <p:card style="width: 20em; margin-bottom: 2em; padding: 2em; margin-left: 4em; " >
+                                                        <f:facet name="header">
+                                                            <p:graphicImage style="padding: 1em" value="/imagenes/#{elCotizadorCaracteristica.imagenCaracteristica}" width="128" />
+           
+                                                        </f:facet>
+                                                        <f:facet name="tittle">
+                                                                <div class="elCotizadorCaracteristica-name">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
+                                                            
+                                                        </f:facet>
+                                                        <f:facet name="subtitle">
+                                                                <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>
+                                                                <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
+                                                                    <f:convertNumber currencySymbol="₡" type="currency"/>
+                                                                </h:outputText>
+                                                            
+                                                        </f:facet>
+                                                        <f:facet name="footer">
+                                                            
+                                                            <p:selectOneRadio id="test" styleClass="p-mr-2">
+                                                                <f:selectItem itemLabel="Seleccionar" itemValue="seleccionar" />
+                                                            </p:selectOneRadio>
+                                                        </f:facet>
+ 
+                                                    </p:card>
+                                                </p:dataViewGridItem>
+
+                                                <p:dataViewListItem>
+                                                    <div class="elCotizadorCaracteristica-list-item">
+                                                        <p:graphicImage value="/imagenes/#{elCotizadorCaracteristica.imagenCaracteristica}"  width="128" height="128"/>
+                                                        <div class="elCotizadorCaracteristica-list-detail">
+                                                            <div class="elCotizadorCaracteristica-name2">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
+                                                            <div class="elCotizadorCaracteristica-description2">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>
+
+                                                        </div>
+                                                        <div class="elCotizadorCaracteristica-list-action">
+                                                            <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price2">
+                                                                <f:convertNumber currencySymbol="₡" type="currency"/>
+                                                            </h:outputText>
+                                                            <p:selectOneRadio id="test2" styleClass="p-mr-2">
+                                                                <f:selectItem itemLabel="Seleccionar" itemValue="seleccionar" />
+                                                            </p:selectOneRadio>
+
+                                                        </div>
+                                                    </div>
+                                                </p:dataViewListItem>
+
+                                            </p:dataView>
+
+                                        </h:form>
+                                    </div>
+                                </p:panel>
+
+                            </p:tab>
+                        </p:accordionPanel>
+                    </div>
                     <p:button value="Cotizar"/>
                 </p:panel>
             </p:panelGrid>
