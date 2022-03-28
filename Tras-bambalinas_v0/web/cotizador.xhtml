@@ -37,8 +37,7 @@
                                 <p:panel>
                                     <div class="elCotizadorCaracteristica card">
                                         <h:form>
-
-                                            <p:dataView  var="elCotizadorCaracteristica" value="#{cotizadorController.servicioCaracteristica.listaCaracteristicasTest(elCotizadorCategoria.idCategoria)}" rows="4" paginator="true"  
+                                            <p:dataView  var="elCotizadorCaracteristica" value="#{cotizadorController.cargarListaCaracteristicas(elCotizadorCategoria.idCategoria)}" rows="4" paginator="true"  
                                                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                                          gridIcon="pi pi-th-large" listIcon="pi pi-bars" layout="grid" gridRowStyleClass="p-lg-6 p-xl-4">
 

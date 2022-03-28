@@ -89,7 +89,7 @@ public class ServicioCaracteristica extends Servicio {
 //        return listaRetorno;
 //    }
     
-    public List<CaracteristicaTO> listaCaracteristicasTest(int id) {
+    public List<CaracteristicaTO> listaCaracteristicasPorIdCategoriaYEstado(int id) {
         Statement statement = null;
         ResultSet resultSet = null;
         List<CaracteristicaTO> listaRetorno = new ArrayList<>();
