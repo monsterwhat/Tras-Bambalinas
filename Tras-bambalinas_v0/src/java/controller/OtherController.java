@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,19 +7,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import model.CaracteristicaTO;
 import model.CategoriaTO;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.CroppedImage;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
 import servicio.ServicioCaracteristica;
 import servicio.ServicioCategoria;
@@ -62,14 +55,11 @@ public class OtherController implements Serializable {
         try {
             this.listaCategorias = servicioCategoria.listaCategoriasBD();
             this.listaCaracteristicas = servicioCaracteristica.listaCaracteristicasBD();
-            
 
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-
-
 
     public ServicioCategoria getServicioCategoria() {
         return servicioCategoria;

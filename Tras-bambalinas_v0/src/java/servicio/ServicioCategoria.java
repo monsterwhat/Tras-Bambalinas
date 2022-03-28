@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
-import model.CaracteristicaTO;
 import model.CategoriaTO;
 
 public class ServicioCategoria extends Servicio {

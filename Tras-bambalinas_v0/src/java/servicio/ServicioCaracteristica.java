@@ -1,6 +1,5 @@
 package servicio;
 
-import java.sql.Array;
 import java.sql.PreparedStatement;
 import model.CaracteristicaTO;
 import java.sql.ResultSet;
@@ -8,98 +7,56 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
-import static javafx.scene.input.KeyCode.T;
-import model.CategoriaTO;
 
 public class ServicioCaracteristica extends Servicio {
 
+    public CaracteristicaTO cargarCaracteristicaTO(String id) {
+        Statement statement = null;
+        ResultSet resultSet = null;
+        CaracteristicaTO caracteristicaTO = new CaracteristicaTO();
 
-//    No pude usar crear un hashMap de caracteristicas, por que habia que contar mas cosas que solo el id y el nombre
-//    public HashMap<Integer,String> cargarCaracteristica(HashMap<Integer,String> hashMapCategoriaTO){
-//        
-//        HashMap<Integer,String> mapa = new HashMap<Integer,String>();
-//        Statement statement = null;
-//        ResultSet resultSet = null;
-//
-//        try {
-//            conectar();
-//            statement = conexion.createStatement();
-//            String sql = "SELECT * FROM caracteristica WHERE estadoCaracteristica = 'Disponible' AND idCategoriaCaracteristica='" + hashMapCategoriaTO.keySet() + "'"
-//                    + "ORDER BY prioridadCaracteristica ASC";
-//            resultSet = statement.executeQuery(sql);
-//
-//            while (resultSet.next()) {
-//                mapa.put(resultSet.getInt("idCaracteristica"),resultSet.getString("nombreCaracteristica"));
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Error al cargar las caracteristicas disponibles! " + e);
-//        } finally {
-//            cerrarResultSet(resultSet);
-//            cerrarStatement(statement);
-//            desconectar();
-//        }
-//        HashMap<Integer, String> hashMapCategoria
-//        CategoriaTO categoriaTO
-//        List<CategoriaTO> listaCategoria
-//        return mapa;
-//    }
-    
-//    public List<CaracteristicaTO> listaCaracteristicasPorIdCategoriaYEstadoBD() {
-//        Statement statement = null;
-//        ResultSet resultSet = null;
-//        List<CaracteristicaTO> listaRetorno = new ArrayList<>();
-//        
-//        try {
-//
-//            conectar();
-//            statement = conexion.createStatement();
-//            
-//            String sql = "SELECT * FROM caracteristica INNER JOIN categoria ON idCategoriaCaracteristica=idCategoria "
-//                    + "WHERE estadoCaracteristica ='Disponible' AND idCategoria=idCategoriaCaracteristica  ORDER BY prioridadCaracteristica ASC; ";
-//            resultSet = statement.executeQuery(sql);
-//
-//            while (resultSet.next()) {
-//                int idCaracteristica = resultSet.getInt("idCaracteristica");
-//                
-//                Object obj = resultSet.getObject(1,CategoriaTO.class);                
-//                System.out.println("A:"+obj);
-//                CategoriaTO idCategoriaCaracteristica = resultSet.getObject("idCategoriaCaracteristica", CategoriaTO.class);
-//                
-//                String imagenCaracteristica = resultSet.getString("imagenCaracteristica");
-//                String nombreCaracteristica = resultSet.getString("nombreCaracteristica");
-//                String descripcionCaracteristica = resultSet.getString("descripcionCaracteristica");
-//                String estadoCaracteristica = resultSet.getString("estadoCaracteristica");
-//                double precioCaracteristica = resultSet.getDouble("precioCaracteristica");
-//                String colorCaracteristica = resultSet.getString("colorCaracteristica");
-//                int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
-//
-//                CaracteristicaTO caracteristicasTO = new CaracteristicaTO(idCaracteristica,idCategoriaCaracteristica,imagenCaracteristica,nombreCaracteristica,descripcionCaracteristica,
-//                                                       estadoCaracteristica,precioCaracteristica,colorCaracteristica,prioridadCaracteristica);
-//                listaRetorno.add(caracteristicasTO);
-//            }
-//        } catch (SQLException e) {
-//
-//            System.out.println("Error al seleccionar todo de Caracteristicas! " + e);
-//        } finally {
-//            cerrarResultSet(resultSet);
-//            cerrarStatement(statement);
-//            desconectar();
-//        }
-//        return listaRetorno;
-//    }
-    
+        try {
+            conectar();
+            statement = conexion.createStatement();
+
+            String sql = "SELECT * FROM caracteristica WHERE idCaracterisitica='" + id + "'";
+            resultSet = statement.executeQuery(sql);
+            if (resultSet.next()) {
+                int idCaracteristica = resultSet.getInt("idCaracteristica");
+                int idCategoriaCaracteristicas = resultSet.getInt("idCategoriaCaracteristica");
+                String imagenCaracteristica = resultSet.getString("imagenCaracteristica");
+                String nombreCaracteristica = resultSet.getString("nombreCaracteristica");
+                String descripcionCaracteristica = resultSet.getString("descripcionCaracteristica");
+                String estadoCaracteristica = resultSet.getString("estadoCaracteristica");
+                double precioCaracteristica = resultSet.getDouble("precioCaracteristica");
+                String colorCaracteristica = resultSet.getString("colorCaracteristica");
+                int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
+                caracteristicaTO = new CaracteristicaTO(idCaracteristica, idCategoriaCaracteristicas, imagenCaracteristica, nombreCaracteristica, descripcionCaracteristica,
+                        estadoCaracteristica, precioCaracteristica, colorCaracteristica, prioridadCaracteristica);
+            }
+
+        } catch (SQLException e) {
+
+        } finally {
+            cerrarResultSet(resultSet);
+            cerrarStatement(statement);
+            desconectar();
+        }
+
+        return caracteristicaTO;
+    }
+
     public List<CaracteristicaTO> listaCaracteristicasPorIdCategoriaYEstado(int id) {
         Statement statement = null;
         ResultSet resultSet = null;
         List<CaracteristicaTO> listaRetorno = new ArrayList<>();
-        
+
         try {
 
             conectar();
             statement = conexion.createStatement();
-            
-            String sql = "SELECT * FROM caracteristica WHERE estadoCaracteristica ='Disponible' AND idCategoriaCaracteristica='"+id+"'  ORDER BY prioridadCaracteristica ASC;";
+
+            String sql = "SELECT * FROM caracteristica WHERE estadoCaracteristica ='Disponible' AND idCategoriaCaracteristica='" + id + "'  ORDER BY prioridadCaracteristica ASC;";
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
@@ -113,8 +70,8 @@ public class ServicioCaracteristica extends Servicio {
                 String colorCaracteristica = resultSet.getString("colorCaracteristica");
                 int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
 
-                CaracteristicaTO caracteristicasTO = new CaracteristicaTO(idCaracteristica,idCategoriaCaracteristicas,imagenCaracteristica,nombreCaracteristica,descripcionCaracteristica,
-                                                       estadoCaracteristica,precioCaracteristica,colorCaracteristica,prioridadCaracteristica);
+                CaracteristicaTO caracteristicasTO = new CaracteristicaTO(idCaracteristica, idCategoriaCaracteristicas, imagenCaracteristica, nombreCaracteristica, descripcionCaracteristica,
+                        estadoCaracteristica, precioCaracteristica, colorCaracteristica, prioridadCaracteristica);
                 listaRetorno.add(caracteristicasTO);
             }
         } catch (SQLException e) {
@@ -127,7 +84,7 @@ public class ServicioCaracteristica extends Servicio {
         }
         return listaRetorno;
     }
-    
+
     public List<CaracteristicaTO> listaCaracteristicasBD() {
         Statement statement = null;
         ResultSet resultSet = null;
@@ -151,8 +108,8 @@ public class ServicioCaracteristica extends Servicio {
                 String colorCaracteristica = resultSet.getString("colorCaracteristica");
                 int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
 
-                CaracteristicaTO caracteristicasTO = new CaracteristicaTO(idCaracteristica,idCategoriaCaracteristica,imagenCaracteristica,nombreCaracteristica,descripcionCaracteristica,
-                                                       estadoCaracteristica,precioCaracteristica,colorCaracteristica,prioridadCaracteristica);
+                CaracteristicaTO caracteristicasTO = new CaracteristicaTO(idCaracteristica, idCategoriaCaracteristica, imagenCaracteristica, nombreCaracteristica, descripcionCaracteristica,
+                        estadoCaracteristica, precioCaracteristica, colorCaracteristica, prioridadCaracteristica);
                 listaRetorno.add(caracteristicasTO);
             }
         } catch (SQLException e) {
@@ -164,7 +121,7 @@ public class ServicioCaracteristica extends Servicio {
         }
         return listaRetorno;
     }
-     
+
     public void insertarCaracteristica(CaracteristicaTO caracteristicaTO) {
         PreparedStatement preparedStatement = null;
 
@@ -205,7 +162,7 @@ public class ServicioCaracteristica extends Servicio {
             preparedStatement.setDouble(6, caracteristicaTO.getPrecioCaracteristica());
             preparedStatement.setString(7, caracteristicaTO.getColorCaracteristica());
             preparedStatement.setInt(8, caracteristicaTO.getPrioridadCaracteristica());
-            
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al actualizar caracteristica! " + e);
@@ -232,16 +189,15 @@ public class ServicioCaracteristica extends Servicio {
             desconectar();
         }
     }
-    
-    
-    public void eliminarPorEstadoCaracteristica(CaracteristicaTO caracteristicaTO){
-         PreparedStatement preparedStatement = null;
+
+    public void eliminarPorEstadoCaracteristica(CaracteristicaTO caracteristicaTO) {
+        PreparedStatement preparedStatement = null;
 
         try {
             conectar();
             String sql = "UPDATE caracteristica SET estadoCaracteristica='No Disponible' WHERE idCaracteristica='" + caracteristicaTO.getIdCaracteristica() + "' AND estadoCaracteristica='Disponible' ";
             preparedStatement = conexion.prepareStatement(sql);
-  
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al actualizar caracteristica! " + e);
@@ -249,7 +205,7 @@ public class ServicioCaracteristica extends Servicio {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
         }
-    
+
     }
 
 }

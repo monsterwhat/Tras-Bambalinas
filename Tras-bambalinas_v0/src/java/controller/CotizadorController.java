@@ -2,15 +2,16 @@ package controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import model.CaracteristicaTO;
 import model.CategoriaTO;
+import model.CotizacionTO;
 import servicio.ServicioCaracteristica;
 import servicio.ServicioCategoria;
+import servicio.ServicioCotizacion;
 
 @ManagedBean(name = "cotizadorController")
 @ViewScoped
@@ -18,14 +19,15 @@ public class CotizadorController implements Serializable {
 
     private ServicioCategoria servicioCategoria = new ServicioCategoria();
     private ServicioCaracteristica servicioCaracteristica = new ServicioCaracteristica();
+    private ServicioCotizacion servicioCotizacion = new ServicioCotizacion();
 
     private CategoriaTO categoriaTO;
     private CaracteristicaTO caracteristicaTO;
-
+    private CotizacionTO cotizacionTO;
 
     List<CaracteristicaTO> listaCaracteristicasParaCotizador = new ArrayList<>();
-    List<CategoriaTO> listaCategoriaParaCotizar = new ArrayList<CategoriaTO>();
-
+    List<CategoriaTO> listaCategoriaParaCotizar = new ArrayList<>();
+    List<CotizacionTO> listaCotizacion = new ArrayList<>();
 
     private int idCategoria;
     private String nombreCategoria;
@@ -42,31 +44,89 @@ public class CotizadorController implements Serializable {
     private double precioCaracteristica;
     private String colorCaracteristica;
     private int prioridadCaracteristica;
+    
+    private int numeroCotizacion;
+    private String listaIDCaracteristicas;
+    private String fechaCotizacion;
+    private String clienteCotizacion;
 
     @PostConstruct
     public void cargar() {
         try {
-            
             this.listaCategoriaParaCotizar = servicioCategoria.listaCategoriaPorEstadoBD();
-
+            this.listaCotizacion = servicioCotizacion.listaCotizaciones();
         } catch (Exception e) {
             System.out.println(e);
         }
-
     }
 
-    
     public List<CaracteristicaTO> cargarListaCaracteristicas(int id) {
         try {
             this.listaCaracteristicasParaCotizador = this.servicioCaracteristica.listaCaracteristicasPorIdCategoriaYEstado(id);
-
         } catch (Exception e) {
             System.out.println(e);
         }
         return listaCaracteristicasParaCotizador;
     }
+
+    public CotizacionTO getCotizacionTO() {
+        return cotizacionTO;
+    }
+
+    public void setCotizacionTO(CotizacionTO cotizacionTO) {
+        this.cotizacionTO = cotizacionTO;
+    }
+
+    public String getListaIDCaracteristicas() {
+        return listaIDCaracteristicas;
+    }
+
+    public void setListaIDCaracteristicas(String listaIDCaracteristicas) {
+        this.listaIDCaracteristicas = listaIDCaracteristicas;
+    }
     
-    ////////////////////////////////////////////////////////////////////////////
+    public ServicioCotizacion getServicioCotizacion() {
+        return servicioCotizacion;
+    }
+
+    public void setServicioCotizacion(ServicioCotizacion servicioCotizacion) {
+        this.servicioCotizacion = servicioCotizacion;
+    }
+
+    public List<CotizacionTO> getListaCotizacion() {
+        return listaCotizacion;
+    }
+
+    public void setListaCotizacion(List<CotizacionTO> listaCotizacion) {
+        this.listaCotizacion = listaCotizacion;
+    }
+
+    public int getNumeroCotizacion() {
+        return numeroCotizacion;
+    }
+
+    public void setNumeroCotizacion(int numeroCotizacion) {
+        this.numeroCotizacion = numeroCotizacion;
+    }
+
+    public String getFechaCotizacion() {
+        return fechaCotizacion;
+    }
+
+    public void setFechaCotizacion(String fechaCotizacion) {
+        this.fechaCotizacion = fechaCotizacion;
+    }
+
+    public String getClienteCotizacion() {
+        return clienteCotizacion;
+    }
+
+    public void setClienteCotizacion(String clienteCotizacion) {
+        this.clienteCotizacion = clienteCotizacion;
+    }
+
+   
+    
     public ServicioCategoria getServicioCategoria() {
         return servicioCategoria;
     }
@@ -99,7 +159,6 @@ public class CotizadorController implements Serializable {
         this.caracteristicaTO = caracteristicaTO;
     }
 
-    ////////////////////////////////////////////////////////////////////////////
     public List<CaracteristicaTO> getListaCaracteristicasParaCotizador() {
         return listaCaracteristicasParaCotizador;
     }
@@ -115,9 +174,7 @@ public class CotizadorController implements Serializable {
     public void setListaCategoriaParaCotizar(List<CategoriaTO> listaCategoriaParaCotizar) {
         this.listaCategoriaParaCotizar = listaCategoriaParaCotizar;
     }
- 
 
-    ////////////////////////////////////////////////////////////////////////////
     public int getIdCategoria() {
         return idCategoria;
     }
@@ -154,12 +211,10 @@ public class CotizadorController implements Serializable {
         return seleccionCategoria;
     }
 
-    ////////////////////////////////////////////////////////////////////////////
     public void setSeleccionCategoria(String seleccionCategoria) {
         this.seleccionCategoria = seleccionCategoria;
     }
 
-    ////////////////////////////////////////////////////////////////////////////
     public int getIdCaracteristica() {
         return idCaracteristica;
     }
@@ -175,7 +230,7 @@ public class CotizadorController implements Serializable {
     public void setIdCategoriaCaracteristica(CategoriaTO idCategoriaCaracteristica) {
         this.idCategoriaCaracteristica = idCategoriaCaracteristica;
     }
-    
+
     public String getImagenCaracteristica() {
         return imagenCaracteristica;
     }
@@ -231,6 +286,5 @@ public class CotizadorController implements Serializable {
     public void setPrioridadCaracteristica(int prioridadCaracteristica) {
         this.prioridadCaracteristica = prioridadCaracteristica;
     }
-
 
 }

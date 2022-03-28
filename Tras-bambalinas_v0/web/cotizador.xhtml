@@ -45,26 +45,25 @@
                                                     <p:card style="width: 20em; margin-bottom: 2em; padding: 2em; margin-left: 4em; " >
                                                         <f:facet name="header">
                                                             <p:graphicImage style="padding: 1em" value="/imagenes/#{elCotizadorCaracteristica.imagenCaracteristica}" width="128" />
-           
+
                                                         </f:facet>
                                                         <f:facet name="tittle">
-                                                                <div class="elCotizadorCaracteristica-name">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
-                                                            
+                                                            <div class="elCotizadorCaracteristica-name">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
+
                                                         </f:facet>
                                                         <f:facet name="subtitle">
-                                                                <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>
-                                                                <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
-                                                                    <f:convertNumber currencySymbol="₡" type="currency"/>
-                                                                </h:outputText>
-                                                            
+                                                            <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>
+                                                            <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
+                                                                <f:convertNumber currencySymbol="₡" type="currency"/>
+                                                            </h:outputText>
+
                                                         </f:facet>
                                                         <f:facet name="footer">
-                                                            
                                                             <p:selectOneRadio id="test" styleClass="p-mr-2">
                                                                 <f:selectItem itemLabel="Seleccionar" itemValue="seleccionar" />
                                                             </p:selectOneRadio>
                                                         </f:facet>
- 
+
                                                     </p:card>
                                                 </p:dataViewGridItem>
 
@@ -100,6 +99,91 @@
                     <p:button value="Cotizar"/>
                 </p:panel>
             </p:panelGrid>
+        </h:form>
+
+        <h:form id="formCotizacion">
+            <p:dialog header="listaCotizaciones" showEffect="fade" modal="true"
+                      widgetVar="showListaCotizacion" responsive="true">
+                <p:outputPanel id="show-cotizaciones-information" class="ui-fluid">
+
+                    <p:dataTable value ="#{cotizadorController.listaCotizacion}" var="laCotizacion" rows="5" paginator="true" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="3,5,10,20,30,40,50,100"
+                                 emptyMessage="No existen cotizaciones registradas"
+                                 reflow="true" id="cotizacionTable" scrollable="true" scrollHeight="250">
+                        <f:facet name ="header">
+                            Lista de Cotizaciones
+                        </f:facet>
+                        <p:column headerText="Numero de Cotizacion" sortBy="#{cotizadorController.numeroCotizacion}" filterBy="#{cotizadorController.numeroCotizacion}" filterMatchMode="exact">
+                            <h:outputText value="#{cotizadorController.numeroCotizacion}"/>
+                        </p:column>
+                        <p:column headerText="Lista de ID's de Caracteristicas" sortBy="#{cotizadorController.listaIDCaracteristicas}" filterBy="#{cotizadorController.listaIDCaracteristicas}" filterMatchMode="exact">
+                            <h:outputText value="#{cotizadorController.listaIDCaracteristicas}"/>
+                        </p:column>
+                        <p:column headerText="Fecha de Cotizacion" sortBy="#{cotizadorController.fechaCotizacion}" filterBy="#{cotizadorController.fechaCotizacion}" filterMatchMode="contains">
+                            <h:outputText value="#{cotizadorController.fechaCotizacion}"/>
+                        </p:column>
+                        <p:column headerText="Cliente" sortBy="#{cotizadorController.clienteCotizacion}">
+                            <h:outputText value="#{cotizadorController.clienteCotizacion}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton icon="pi pi-eye" oncomplete="PF('showCotizacionDialog').show()"
+                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                <f:setPropertyActionListener value="#{laCotizacion}" target="#{cotizadorController.cotizacionTO}"/>
+                                <p:resetInput target=":formCategoria:show-cotizacion-content"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </p:outputPanel>  
+            </p:dialog>
+
+            <p:dialog header="Detalles de la Cotizacion" showEffect="fade" modal="true"
+                      widgetVar="showCotizacionDialog" responsive="true" minHeight="350" width="550">
+
+                <p:outputPanel id="show-cotizacion-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty cotizadorController.cotizacionTO}">
+
+                        <div class="p-grid p-flex-column">
+                            <div class="p-col">
+                                <p:outputLabel for="numeroCotizacion" value="Numero de Cotizacion"/>
+                                <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.cotizacionTO.numeroCotizacion}" style="width:30rem"/> 
+                                <p:message for="numeroCotizacion" display="icon"/> 
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-flex-column">
+                            <div class="p-col">
+                                <p:outputLabel for="listaCaracteristicas" value="Lista de productos"/>
+                                <p:outputLabel id="listaCaracteristicas" value="#{cotizadorController.cotizacionTO.listaCaracteristicas}" style="width:30rem"/>
+                                <p:message for="listaCaracteristicas" display="icon"/> 
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-flex-column">
+                            <div class="p-col">
+                                <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotizacion"/>
+                                <p:outputLabel id ="fechaCotizacion" value="#{cotizadorController.cotizacionTO.fechaCotizacion}" style="width:30rem"/>
+                                <p:message for="fechaCotizacion" display="icon"/>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-flex-column">
+                            <div class="p-col">
+                                <p:outputLabel for="clienteCotizacion" value="Cliente que cotizo"/>
+                                <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.cotizacionTO.clienteCotizacion}" style="width:30rem"/>
+                                <p:message for="clienteCotizacion" display="icon"/>
+                            </div>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">     
+
+                    <p:commandButton value="Salir" icon="pi pi-times" onclick="PF('showCotizacionDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+            </p:dialog>
         </h:form>
     </h:body>
 </html>
