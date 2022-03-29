@@ -3,20 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/src/java/servicio/ServicioCaracteristica.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/src/java/controller/OtherController.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/src/java/model/CategoriaTO.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/src/java/controller/LoginController.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/web/cotizador.xhtml</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/src/java/model/CaracteristicaTO.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/src/java/servicio/ServicioCategoria.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/web/adminMenu.xhtml</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/web/clienteMenu.xhtml</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/src/java/servicio/ServicioCotizacion.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/src/java/model/CotizacionTO.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/src/java/servicio/ServicioUsuario.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/src/java/controller/UserController.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/Tras-Bambalinas/Tras-bambalinas_v0/src/java/model/UsuarioTO.java</file>
+            <file>file:/C:/Users/sebas/Documents/GitHub/Tras-bambalinas_v0/src/java/servicio/ServicioCotizacion.java</file>
+            <file>file:/C:/Users/sebas/Documents/GitHub/Tras-bambalinas_v0/src/java/servicio/ServicioCaracteristica.java</file>
+            <file>file:/C:/Users/sebas/Documents/GitHub/Tras-bambalinas_v0/src/java/controller/CotizadorController.java</file>
+            <file>file:/C:/Users/sebas/Documents/GitHub/Tras-bambalinas_v0/web/cotizador.xhtml</file>
         </group>
     </open-files>
 </project-private>

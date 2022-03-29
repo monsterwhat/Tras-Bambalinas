@@ -45,6 +45,43 @@ public class ServicioCaracteristica extends Servicio {
 
         return caracteristicaTO;
     }
+    
+    public CaracteristicaTO cargarCaracteristicaSeleccionada(int id) {
+        Statement statement = null;
+        ResultSet resultSet = null;
+        CaracteristicaTO caracteristicaTO = new CaracteristicaTO();
+
+        try {
+            conectar();
+            statement = conexion.createStatement();
+
+            String sql = "SELECT * FROM caracteristica WHERE idCaracteristica='"+id+"';";
+            resultSet = statement.executeQuery(sql);
+            if (resultSet.next()) {
+                int idCaracteristica = resultSet.getInt("idCaracteristica");
+                int idCategoriaCaracteristicas = resultSet.getInt("idCategoriaCaracteristica");
+                String imagenCaracteristica = resultSet.getString("imagenCaracteristica");
+                String nombreCaracteristica = resultSet.getString("nombreCaracteristica");
+                String descripcionCaracteristica = resultSet.getString("descripcionCaracteristica");
+                String estadoCaracteristica = resultSet.getString("estadoCaracteristica");
+                double precioCaracteristica = resultSet.getDouble("precioCaracteristica");
+                String colorCaracteristica = resultSet.getString("colorCaracteristica");
+                int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
+                caracteristicaTO = new CaracteristicaTO(idCaracteristica, idCategoriaCaracteristicas, imagenCaracteristica, nombreCaracteristica, descripcionCaracteristica,
+                        estadoCaracteristica, precioCaracteristica, colorCaracteristica, prioridadCaracteristica);
+            }
+
+        } catch (SQLException e) {
+
+        } finally {
+            cerrarResultSet(resultSet);
+            cerrarStatement(statement);
+            desconectar();
+        }
+
+        return caracteristicaTO;
+    }
+    
 
     public List<CaracteristicaTO> listaCaracteristicasPorIdCategoriaYEstado(int id) {
         Statement statement = null;

@@ -25,6 +25,11 @@ public class CotizacionTO {
         this.clienteCotizacion = clienteCotizacion;
         this.listaCaracteristicas = listaCaracteristica;
     }
+
+    public CotizacionTO() {
+    }
+    
+    
     
     public List<CaracteristicaTO> getListaCaracteristicas() {
         return listaCaracteristicas;

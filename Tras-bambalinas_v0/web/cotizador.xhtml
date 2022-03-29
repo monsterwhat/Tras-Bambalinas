@@ -31,8 +31,8 @@
                 <p:panel style="background-color:#A43D42" visible="true" >
 
                     <div class="product card">
-                        <p:accordionPanel value="#{cotizadorController.listaCategoriaParaCotizar}" var="elCotizadorCategoria" multiple="true">
-                            <p:tab title="#{elCotizadorCategoria.nombreCategoria}" >
+                        <p:accordionPanel value="#{cotizadorController.listaCategoriaParaCotizar}" var="elCotizadorCategoria" multiple="true" >
+                            <p:tab title="#{elCotizadorCategoria.nombreCategoria} - #{elCotizadorCategoria.descripcionCategoria}"  >
 
                                 <p:panel>
                                     <div class="elCotizadorCaracteristica card">
@@ -45,32 +45,39 @@
                                                     <p:card  style="width: 20em; margin-bottom: 2em; padding: 2em; margin-left: 4em; text-align:center " >
                                                         <f:facet name="header">
                                                             <center>
-                                                            <p:graphicImage style="padding: 1em" value="/imagenes/#{elCotizadorCaracteristica.imagenCaracteristica}" width="128" />
+                                                                <p:graphicImage style="padding: 1em" value="/imagenes/#{elCotizadorCaracteristica.imagenCaracteristica}" width="128" />
                                                             </center>
                                                         </f:facet>
                                                         <f:facet name="tittle">
-                                                          
+
                                                         </f:facet>
                                                         <f:facet name="subtitle">
-                                                            
+
+                                                            <div class="elCotizadorCaracteristica-ID">#{elCotizadorCaracteristica.idCaracteristica}</div>
                                                             <div class="elCotizadorCaracteristica-name">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
-                                                            
-                                                                <p:scrollPanel style="width:215px;height:100px; margin: 5px" mode="native" >
-                                                                    <p class="p-m-0 p-p-3">
-                                                                      <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>   
-                                                                    </p>
-                                                                      </p:scrollPanel>
+
+                                                            <p:scrollPanel style="width:215px;height:100px; margin: 5px" mode="native" >
+                                                                <p class="p-m-0 p-p-3">
+                                                                    <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>   
+                                                                </p>
+                                                            </p:scrollPanel>
 <!--                                                            <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>-->
-                                                    
+
                                                             <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
                                                                 <f:convertNumber currencySymbol="₡" type="currency"/>
                                                             </h:outputText>
 
                                                         </f:facet>
                                                         <f:facet name="footer">
-                                                            <p:selectOneRadio id="test" styleClass="p-mr-2" unselectable="true">
-                                                                <f:selectItem itemLabel="Seleccionar" itemValue="seleccionar" />
-                                                            </p:selectOneRadio>
+                                                            <div>
+                                                                <p:commandButton id="agregarCaractersitica" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" actionListener="#{cotizadorController.cargarCaracteristicasSelecionadas(elCotizadorCaracteristica.idCaracteristica)}" 
+                                                                                 type="button" icon="pi pi-plus" styleClass="rounded-button ui-button-outlined"/>
+                                                            </div>
+     
+                                                            <div>
+                                                                <p:selectBooleanCheckbox  itemLabel="Seleccionar"    rendered="#{cotizadorController.esMultiple(elCotizadorCategoria)}"  />
+                                                            </div>
+
                                                         </f:facet>
 
                                                     </p:card>

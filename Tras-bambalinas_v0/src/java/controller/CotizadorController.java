@@ -23,9 +23,13 @@ public class CotizadorController implements Serializable {
 
     private CategoriaTO categoriaTO;
     private CaracteristicaTO caracteristicaTO;
-    private CotizacionTO cotizacionTO;
+    private CotizacionTO cotizacionTO,newCotizacionTO; 
+  
 
     List<CaracteristicaTO> listaCaracteristicasParaCotizador = new ArrayList<>();
+    
+    List<CaracteristicaTO> listaCaracteristicasSeleccionada = new ArrayList<>();
+    
     List<CategoriaTO> listaCategoriaParaCotizar = new ArrayList<>();
     List<CotizacionTO> listaCotizacion = new ArrayList<>();
 
@@ -36,7 +40,7 @@ public class CotizadorController implements Serializable {
     private String seleccionCategoria;
 
     private int idCaracteristica;
-    private CategoriaTO idCategoriaCaracteristica;
+    private int idCategoriaCaracteristica;
     private String imagenCaracteristica;
     private String nombreCaracteristica;
     private String descripcionCaracteristica;
@@ -45,11 +49,11 @@ public class CotizadorController implements Serializable {
     private String colorCaracteristica;
     private int prioridadCaracteristica;
     
-    private int numeroCotizacion;
-    private String listaIDCaracteristicas;
-    private String fechaCotizacion;
-    private String clienteCotizacion;
-
+    int numeroCotizacion;
+    String listaDeCaracteristicas;
+    String fechaCotizacion;
+    String clienteCotizacion;
+    
     @PostConstruct
     public void cargar() {
         try {
@@ -68,6 +72,18 @@ public class CotizadorController implements Serializable {
         }
         return listaCaracteristicasParaCotizador;
     }
+    
+    public void openNewCotizacion(){
+        this.newCotizacionTO = new CotizacionTO();
+    }
+
+    public CotizacionTO getNewCotizacionTO() {
+        return newCotizacionTO;
+    }
+
+    public void setNewCotizacionTO(CotizacionTO newCotizacionTO) {
+        this.newCotizacionTO = newCotizacionTO;
+    }
 
     public CotizacionTO getCotizacionTO() {
         return cotizacionTO;
@@ -77,13 +93,14 @@ public class CotizadorController implements Serializable {
         this.cotizacionTO = cotizacionTO;
     }
 
-    public String getListaIDCaracteristicas() {
-        return listaIDCaracteristicas;
+    public String getListaDeCaracteristicas() {
+        return listaDeCaracteristicas;
     }
 
-    public void setListaIDCaracteristicas(String listaIDCaracteristicas) {
-        this.listaIDCaracteristicas = listaIDCaracteristicas;
+    public void setListaDeCaracteristicas(String listaDeCaracteristicas) {
+        this.listaDeCaracteristicas = listaDeCaracteristicas;
     }
+    
     
     public ServicioCotizacion getServicioCotizacion() {
         return servicioCotizacion;
@@ -125,8 +142,6 @@ public class CotizadorController implements Serializable {
         this.clienteCotizacion = clienteCotizacion;
     }
 
-   
-    
     public ServicioCategoria getServicioCategoria() {
         return servicioCategoria;
     }
@@ -223,11 +238,11 @@ public class CotizadorController implements Serializable {
         this.idCaracteristica = idCaracteristica;
     }
 
-    public CategoriaTO getIdCategoriaCaracteristica() {
+    public int getIdCategoriaCaracteristica() {
         return idCategoriaCaracteristica;
     }
 
-    public void setIdCategoriaCaracteristica(CategoriaTO idCategoriaCaracteristica) {
+    public void setIdCategoriaCaracteristica(int idCategoriaCaracteristica) {
         this.idCategoriaCaracteristica = idCategoriaCaracteristica;
     }
 
@@ -285,6 +300,33 @@ public class CotizadorController implements Serializable {
 
     public void setPrioridadCaracteristica(int prioridadCaracteristica) {
         this.prioridadCaracteristica = prioridadCaracteristica;
+    }
+
+    public List<CaracteristicaTO> getListaCaracteristicasSeleccionada() {
+        return listaCaracteristicasSeleccionada;
+    }
+
+    public void setListaCaracteristicasSeleccionada(List<CaracteristicaTO> listaCaracteristicasSeleccionada) {
+        this.listaCaracteristicasSeleccionada = listaCaracteristicasSeleccionada;
+    }
+    
+    
+    
+    public boolean esMultiple(CategoriaTO categoriaTO) {
+        if (categoriaTO.getSeleccionCategoria().equals("Múltiple")) {
+            return true;
+        }
+        return false;
+    }
+    
+    public void cargarCaracteristicasSelecionadas(int idC){      
+            System.out.println("A: " + listaCaracteristicasSeleccionada.get(idC).getIdCaracteristica());  
+        try {
+          
+            this.listaCaracteristicasSeleccionada.add(this.servicioCaracteristica.cargarCaracteristicaSeleccionada(idC));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 }
