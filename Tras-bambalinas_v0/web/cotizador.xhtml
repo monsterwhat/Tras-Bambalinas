@@ -54,16 +54,21 @@
                                                         <f:facet name="subtitle">
                                                             
                                                             <div class="elCotizadorCaracteristica-name">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
-                                                            <p style="text-align:center">
-                                                            <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>
-                                                            </p>
+                                                            
+                                                                <p:scrollPanel style="width:215px;height:100px; margin: 5px" mode="native" >
+                                                                    <p class="p-m-0 p-p-3">
+                                                                      <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>   
+                                                                    </p>
+                                                                      </p:scrollPanel>
+<!--                                                            <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>-->
+                                                    
                                                             <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
                                                                 <f:convertNumber currencySymbol="₡" type="currency"/>
                                                             </h:outputText>
 
                                                         </f:facet>
                                                         <f:facet name="footer">
-                                                            <p:selectOneRadio id="test" styleClass="p-mr-2">
+                                                            <p:selectOneRadio id="test" styleClass="p-mr-2" unselectable="true">
                                                                 <f:selectItem itemLabel="Seleccionar" itemValue="seleccionar" />
                                                             </p:selectOneRadio>
                                                         </f:facet>
