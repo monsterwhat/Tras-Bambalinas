@@ -42,17 +42,21 @@
                                                          gridIcon="pi pi-th-large" listIcon="pi pi-bars" layout="grid" gridRowStyleClass="p-lg-6 p-xl-4">
 
                                                 <p:dataViewGridItem>
-                                                    <p:card style="width: 20em; margin-bottom: 2em; padding: 2em; margin-left: 4em; " >
+                                                    <p:card  style="width: 20em; margin-bottom: 2em; padding: 2em; margin-left: 4em; text-align:center " >
                                                         <f:facet name="header">
+                                                            <center>
                                                             <p:graphicImage style="padding: 1em" value="/imagenes/#{elCotizadorCaracteristica.imagenCaracteristica}" width="128" />
-
+                                                            </center>
                                                         </f:facet>
                                                         <f:facet name="tittle">
-                                                            <div class="elCotizadorCaracteristica-name">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
-
+                                                          
                                                         </f:facet>
                                                         <f:facet name="subtitle">
+                                                            
+                                                            <div class="elCotizadorCaracteristica-name">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
+                                                            <p style="text-align:center">
                                                             <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>
+                                                            </p>
                                                             <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
                                                                 <f:convertNumber currencySymbol="₡" type="currency"/>
                                                             </h:outputText>
