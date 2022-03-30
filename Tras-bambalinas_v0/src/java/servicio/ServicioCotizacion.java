@@ -5,11 +5,15 @@
  */
 package servicio;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import model.CotizacionTO;
 import model.CaracteristicaTO;
 
@@ -82,5 +86,36 @@ public class ServicioCotizacion extends Servicio {
             desconectar();
         }
         return listaRetorno;
+    }
+
+    public void Cotizar(List<CaracteristicaTO> listaCotizar, int idUsuario) {
+        PreparedStatement preparedStatement = null;
+
+        try {
+            conectar();
+            String sql = "INSERT INTO cotizacion listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion = ?,?,?";
+            preparedStatement = conexion.prepareStatement(sql);
+            List<Integer> ListaIDCaracteristicas = null;
+            for (CaracteristicaTO caracteristicaTO : listaCotizar) {
+                ListaIDCaracteristicas.add(caracteristicaTO.getIdCaracteristica());
+            }
+            String lista = ListaIDCaracteristicas.stream()
+                    .map(i -> i.toString())
+                    .collect(Collectors.joining(", "));
+
+            preparedStatement.setString(1, lista);
+            preparedStatement.setDate(2, Date.valueOf(LocalDate.MAX));
+            if(idUsuario!=0){
+                preparedStatement.setInt(3,idUsuario);
+            }
+            preparedStatement.setInt(3, 0);
+            
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al cotizar! " + e.getMessage());
+        } finally {
+            cerrarPreparedStatement(preparedStatement);
+            desconectar();
+        }
     }
 }

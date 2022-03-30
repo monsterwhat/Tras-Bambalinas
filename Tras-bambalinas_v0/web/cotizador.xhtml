@@ -63,7 +63,7 @@
                                                     <div>
                                                         <p:selectOneRadio id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio" unselectable="true" required="true" >
                                                             <f:selectItem itemLabel="seleccionar" itemValue="seleccionar" />
-                                                            <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristica)}"/>
+                                                            <p:ajax process="@this" listener="#{cotizadorController.Seleccionador(elCotizadorCaracteristica)}" onsuccess="PF('accordionPanel').unselect(index)"/>
                                                         </p:selectOneRadio>
                                                     
                                                         <h:selectManyCheckbox id="seleccionMB" rendered="#{cotizadorController.esMultiple(elCotizadorCategoria)}">
@@ -80,47 +80,14 @@
                             </p:tab>
                         </p:accordionPanel>
                     </div>
-                    <p:commandButton value="Cotizar" />
+                    <p:commandButton value="Cotizar" actionListener="#{cotizadorController.Cotizar(userController.idUser)}" update=":formCotizacion:show-cotizacion-content" onsuccess="PF('showCotizacionDialog').show()">
+                    </p:commandButton>
                 </p:panel>
             </p:panelGrid>
         </h:form>
 
         <h:form id="formCotizacion">
-            <p:dialog header="listaCotizaciones" showEffect="fade" modal="true"
-                      widgetVar="showListaCotizacion" responsive="true">
-                <p:outputPanel id="show-cotizaciones-information" class="ui-fluid">
-
-                    <p:dataTable value ="#{cotizadorController.listaCotizacion}" var="laCotizacion" rows="5" paginator="true" paginatorPosition="bottom"
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="3,5,10,20,30,40,50,100"
-                                 emptyMessage="No existen cotizaciones registradas"
-                                 reflow="true" id="cotizacionTable" scrollable="true" scrollHeight="250">
-                        <f:facet name ="header">
-                            Lista de Cotizaciones
-                        </f:facet>
-                        <p:column headerText="Numero de Cotizacion" sortBy="#{cotizadorController.numeroCotizacion}" filterBy="#{cotizadorController.numeroCotizacion}" filterMatchMode="exact">
-                            <h:outputText value="#{cotizadorController.numeroCotizacion}"/>
-                        </p:column>
-                        <p:column headerText="Lista de ID's de Caracteristicas" sortBy="#{cotizadorController.listaIDCaracteristicas}" filterBy="#{cotizadorController.listaIDCaracteristicas}" filterMatchMode="exact">
-                            <h:outputText value="#{cotizadorController.listaIDCaracteristicas}"/>
-                        </p:column>
-                        <p:column headerText="Fecha de Cotizacion" sortBy="#{cotizadorController.fechaCotizacion}" filterBy="#{cotizadorController.fechaCotizacion}" filterMatchMode="contains">
-                            <h:outputText value="#{cotizadorController.fechaCotizacion}"/>
-                        </p:column>
-                        <p:column headerText="Cliente" sortBy="#{cotizadorController.clienteCotizacion}">
-                            <h:outputText value="#{cotizadorController.clienteCotizacion}"/>
-                        </p:column>
-                        <p:column>
-                            <p:commandButton icon="pi pi-eye" oncomplete="PF('showCotizacionDialog').show()"
-                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
-                                <f:setPropertyActionListener value="#{laCotizacion}" target="#{cotizadorController.cotizacionTO}"/>
-                                <p:resetInput target=":formCategoria:show-cotizacion-content"/>
-                            </p:commandButton>
-                        </p:column>
-                    </p:dataTable>
-                </p:outputPanel>  
-            </p:dialog>
-
+            
             <p:dialog header="Detalles de la Cotizacion" showEffect="fade" modal="true"
                       widgetVar="showCotizacionDialog" responsive="true" minHeight="350" width="550">
 

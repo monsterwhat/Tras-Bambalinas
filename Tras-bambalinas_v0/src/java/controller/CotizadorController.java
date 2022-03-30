@@ -3,9 +3,12 @@ package controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import model.CaracteristicaTO;
 import model.CategoriaTO;
 import model.CotizacionTO;
@@ -25,6 +28,7 @@ public class CotizadorController implements Serializable {
     private CaracteristicaTO caracteristicaTO;
     private CotizacionTO cotizacionTO, newCotizacionTO;
 
+    List<Integer> listaIdCaracteristicas = new ArrayList<>();
     List<CaracteristicaTO> listaCaracteristicasParaCotizador = new ArrayList<>();
     List<CaracteristicaTO> listaCanastaCotizador = new ArrayList<>();
     List<CaracteristicaTO> listaCaracteristicasSeleccionada = new ArrayList<>();
@@ -61,6 +65,31 @@ public class CotizadorController implements Serializable {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+
+    public boolean Cotizar(int idUser) {
+        try {
+            if (this.listaCanastaCotizador.isEmpty()) {
+                addMessage(FacesMessage.SEVERITY_ERROR, "Error de cotizacion!", "No hay items seleccionados!");
+                return false;
+            }
+            servicioCotizacion.Cotizar(this.listaCanastaCotizador, idUser);
+            this.listaCanastaCotizador.forEach((caracTO) -> {
+                listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
+            });
+            listaDeCaracteristicas = listaIdCaracteristicas.stream()
+                    .map(i -> i.toString())
+                    .collect(Collectors.joining(", "));
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error al tratar de cotizar! " + e.getMessage());
+        }
+        return false;
     }
 
     public List<CaracteristicaTO> cargarListaCaracteristicas(int id) {
