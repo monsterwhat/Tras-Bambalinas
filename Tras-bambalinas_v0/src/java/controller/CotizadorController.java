@@ -77,22 +77,52 @@ public class CotizadorController implements Serializable {
     }
 
     public void setListaCanastaCotizador(CaracteristicaTO caracteristica) {
-        Seleccionador(caracteristica);
+        SeleccionadorUnica(caracteristica);
     }
 
-    public void Seleccionador(CaracteristicaTO caracteristicaSeleccionada) {
+    public void SeleccionadorUnica(CaracteristicaTO caracteristicaSeleccionada) {
         try {
-            
-            if (this.listaCanastaCotizador.contains(caracteristicaSeleccionada)) {
-                System.out.println("Existia : " + caracteristicaSeleccionada.getIdCaracteristica() + "... Eliminando");
-                this.listaCanastaCotizador.remove(caracteristicaSeleccionada);
+            if (this.listaCanastaCotizador.isEmpty()) {
+                this.listaCanastaCotizador.add(caracteristicaSeleccionada);
+                System.out.println("Agregando : " + caracteristicaSeleccionada);
+            } else {
+                for (CaracteristicaTO i : this.listaCanastaCotizador) {
+                    if (i.getIdCategoriaCaracteristica() == caracteristicaSeleccionada.getIdCategoriaCaracteristica()){
+                        System.out.println("Existia Caracteristica: " + i + "... Actualizando a: " + caracteristicaSeleccionada);
+                        this.listaCanastaCotizador.remove(i);
+                        this.listaCanastaCotizador.add(caracteristicaSeleccionada);   
+                    } 
+                    System.out.println("La Lista Antes Tenia: " + i);
+                }
             }
-            System.out.println("Agregando : " + caracteristicaSeleccionada);
-            this.listaCanastaCotizador.add(caracteristicaSeleccionada);
+          
         } catch (Exception e) {
             System.out.println("Error seleccionando productos! " + e.getMessage());
         }
-
+    }
+    
+     public void SeleccionadorMultiple(CaracteristicaTO caracteristicaSeleccionada) {
+        try {
+            if (this.listaCanastaCotizador.isEmpty()) {
+                this.listaCanastaCotizador.add(caracteristicaSeleccionada);
+                System.out.println("Agregando : " + caracteristicaSeleccionada);
+            } else {
+                for (CaracteristicaTO i : this.listaCanastaCotizador) {
+                    if (i.getIdCategoriaCaracteristica() == caracteristicaSeleccionada.getIdCategoriaCaracteristica()){
+                        
+                        System.out.println("Existia Caracteristica: " + i + "... Actualizando a: " + caracteristicaSeleccionada);
+                        this.listaCanastaCotizador.remove(i);
+                        
+                        this.listaCanastaCotizador.add(caracteristicaSeleccionada);
+                        System.out.println("Lista Actualizada a: " + i);
+                        
+                        System.out.println("Lista: " + i);
+                    } 
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error seleccionando productos! " + e.getMessage());
+        }
     }
 
     public void openNewCotizacion() {

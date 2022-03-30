@@ -63,12 +63,12 @@
                                                     <div>
                                                         <p:selectOneRadio id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio" unselectable="true" required="true" >
                                                             <f:selectItem itemLabel="seleccionar" itemValue="seleccionar" />
-                                                            <p:ajax process="@this" listener="#{cotizadorController.Seleccionador(elCotizadorCaracteristica)}"/>
+                                                            <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristica)}"/>
                                                         </p:selectOneRadio>
                                                     
                                                         <h:selectManyCheckbox id="seleccionMB" rendered="#{cotizadorController.esMultiple(elCotizadorCategoria)}">
                                                             <f:selectItem itemLabel="Option 1" itemValue="Option 1" />
-                                                            <p:ajax process="@this" listener="#{cotizadorController.Seleccionador(elCotizadorCaracteristica)}"/>
+                                                            <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorMultiple(elCotizadorCaracteristica)}"/>
                                                         </h:selectManyCheckbox>
                                                     </div>
                                                     </center>
