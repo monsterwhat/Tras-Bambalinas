@@ -26,93 +26,61 @@
         </h:form>
 
         <h:form id="formCotizador">
-            <p:panelGrid  columns="1" layout="flex" 
-                          >
-                <p:panel style="background-color:#A43D42" visible="true" >
+            <p:panelGrid  columns="1">
+                <p:panel style="background-color:#A43D42" visible="true">
 
                     <div class="product card">
-                        <p:accordionPanel value="#{cotizadorController.listaCategoriaParaCotizar}" var="elCotizadorCategoria" multiple="true" >
-                            <p:tab title="#{elCotizadorCategoria.nombreCategoria} - #{elCotizadorCategoria.descripcionCategoria}"  >
+                        <p:accordionPanel value="#{cotizadorController.listaCategoriaParaCotizar}" widgetVar="accordionPanel" var="elCotizadorCategoria" multiple="false" style="width: fit-content;">
+                            <p:tab title="#{elCotizadorCategoria.nombreCategoria} - #{elCotizadorCategoria.descripcionCategoria}">
+                                <p:dataView  var="elCotizadorCaracteristica" value="#{cotizadorController.cargarListaCaracteristicas(elCotizadorCategoria.idCategoria)}" rows="4" paginator="true"  
+                                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" paginatorPosition="bottom"
+                                             layout="grid" gridRowStyleClass="p-lg-6 p-xl-4 p-md-2 p-sm-1" >
 
-                                <p:panel>
-                                    <div class="elCotizadorCaracteristica card">
-                                        <h:form>
-                                            <p:dataView  var="elCotizadorCaracteristica" value="#{cotizadorController.cargarListaCaracteristicas(elCotizadorCategoria.idCategoria)}" rows="4" paginator="true"  
-                                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                                         gridIcon="pi pi-th-large" listIcon="pi pi-bars" layout="grid" gridRowStyleClass="p-lg-6 p-xl-4">
+                                    <p:dataViewGridItem>
+                                        <p:card  style="width: 20em; margin-bottom: 2em; padding: 2em; text-align:center;">
+                                            <div class="product-grid-item card border-1">
+                                                
+                                                <div class="product-grid-item-content">
+                                                    <center>
+                                                        <p:graphicImage style="padding: 1em" value="/imagenes/#{elCotizadorCaracteristica.imagenCaracteristica}" height="192px" width="192px" />
 
-                                                <p:dataViewGridItem>
-                                                    <p:card  style="width: 20em; margin-bottom: 2em; padding: 2em; margin-left: 4em; text-align:center " >
-                                                        <f:facet name="header">
-                                                            <center>
-                                                                <p:graphicImage style="padding: 1em" value="/imagenes/#{elCotizadorCaracteristica.imagenCaracteristica}" width="128" />
-                                                            </center>
-                                                        </f:facet>
-                                                        <f:facet name="tittle">
+                                                    <div class="product-name">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
+                                                    
+                                                    <div class="product-description">#{elCotizadorCaracteristica.idCaracteristica}</div>
+                                                    <p:scrollPanel style="width:12em;height:8em; margin: 0.5em" mode="native" >
+                                                        <p class="p-m-0 p-p-3">
+                                                            <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>   
+                                                        </p>
+                                                    </p:scrollPanel>
+                                                    </center>
+                                                </div>
+                                                <div class="product-grid-item-bottom">
+                                                    <center>
+                                                    <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
+                                                        <f:convertNumber currencySymbol="₡" type="currency"/>
+                                                    </h:outputText>
 
-                                                        </f:facet>
-                                                        <f:facet name="subtitle">
-
-                                                            <div class="elCotizadorCaracteristica-ID">#{elCotizadorCaracteristica.idCaracteristica}</div>
-                                                            <div class="elCotizadorCaracteristica-name">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
-
-                                                            <p:scrollPanel style="width:215px;height:100px; margin: 5px" mode="native" >
-                                                                <p class="p-m-0 p-p-3">
-                                                                    <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>   
-                                                                </p>
-                                                            </p:scrollPanel>
-<!--                                                            <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>-->
-
-                                                            <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
-                                                                <f:convertNumber currencySymbol="₡" type="currency"/>
-                                                            </h:outputText>
-
-                                                        </f:facet>
-                                                        <f:facet name="footer">
-                                                            <div>
-                                                                <p:commandButton id="agregarCaractersitica" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" actionListener="#{cotizadorController.cargarCaracteristicasSelecionadas(elCotizadorCaracteristica.idCaracteristica)}" 
-                                                                                 type="button" icon="pi pi-plus" styleClass="rounded-button ui-button-outlined"/>
-                                                            </div>
-     
-                                                            <div>
-                                                                <p:selectBooleanCheckbox  itemLabel="Seleccionar"    rendered="#{cotizadorController.esMultiple(elCotizadorCategoria)}"  />
-                                                            </div>
-
-                                                        </f:facet>
-
-                                                    </p:card>
-                                                </p:dataViewGridItem>
-
-                                                <p:dataViewListItem>
-                                                    <div class="elCotizadorCaracteristica-list-item">
-                                                        <p:graphicImage value="/imagenes/#{elCotizadorCaracteristica.imagenCaracteristica}"  width="128" height="128"/>
-                                                        <div class="elCotizadorCaracteristica-list-detail">
-                                                            <div class="elCotizadorCaracteristica-name2">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
-                                                            <div class="elCotizadorCaracteristica-description2">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>
-
-                                                        </div>
-                                                        <div class="elCotizadorCaracteristica-list-action">
-                                                            <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price2">
-                                                                <f:convertNumber currencySymbol="₡" type="currency"/>
-                                                            </h:outputText>
-                                                            <p:selectOneRadio id="test2" styleClass="p-mr-2">
-                                                                <f:selectItem itemLabel="Seleccionar" itemValue="seleccionar" />
-                                                            </p:selectOneRadio>
-
-                                                        </div>
+                                                    <div>
+                                                        <p:selectOneRadio id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio" unselectable="true" required="true" >
+                                                            <f:selectItem itemLabel="seleccionar" itemValue="seleccionar" />
+                                                            <p:ajax process="@this" listener="#{cotizadorController.Seleccionador(elCotizadorCaracteristica)}"/>
+                                                        </p:selectOneRadio>
+                                                    
+                                                        <h:selectManyCheckbox id="seleccionMB" rendered="#{cotizadorController.esMultiple(elCotizadorCategoria)}">
+                                                            <f:selectItem itemLabel="Option 1" itemValue="Option 1" />
+                                                            <p:ajax process="@this" listener="#{cotizadorController.Seleccionador(elCotizadorCaracteristica)}"/>
+                                                        </h:selectManyCheckbox>
                                                     </div>
-                                                </p:dataViewListItem>
-
-                                            </p:dataView>
-
-                                        </h:form>
-                                    </div>
-                                </p:panel>
-
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </p:card>
+                                    </p:dataViewGridItem>
+                                </p:dataView>
                             </p:tab>
                         </p:accordionPanel>
                     </div>
-                    <p:button value="Cotizar"/>
+                    <p:commandButton value="Cotizar" />
                 </p:panel>
             </p:panelGrid>
         </h:form>

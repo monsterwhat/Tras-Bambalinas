@@ -23,13 +23,12 @@ public class CotizadorController implements Serializable {
 
     private CategoriaTO categoriaTO;
     private CaracteristicaTO caracteristicaTO;
-    private CotizacionTO cotizacionTO,newCotizacionTO; 
-  
+    private CotizacionTO cotizacionTO, newCotizacionTO;
 
     List<CaracteristicaTO> listaCaracteristicasParaCotizador = new ArrayList<>();
-    
+    List<CaracteristicaTO> listaCanastaCotizador = new ArrayList<>();
     List<CaracteristicaTO> listaCaracteristicasSeleccionada = new ArrayList<>();
-    
+
     List<CategoriaTO> listaCategoriaParaCotizar = new ArrayList<>();
     List<CotizacionTO> listaCotizacion = new ArrayList<>();
 
@@ -48,12 +47,12 @@ public class CotizadorController implements Serializable {
     private double precioCaracteristica;
     private String colorCaracteristica;
     private int prioridadCaracteristica;
-    
+
     int numeroCotizacion;
     String listaDeCaracteristicas;
     String fechaCotizacion;
     String clienteCotizacion;
-    
+
     @PostConstruct
     public void cargar() {
         try {
@@ -72,8 +71,31 @@ public class CotizadorController implements Serializable {
         }
         return listaCaracteristicasParaCotizador;
     }
-    
-    public void openNewCotizacion(){
+
+    public List<CaracteristicaTO> getListaCanastaCotizador() {
+        return listaCanastaCotizador;
+    }
+
+    public void setListaCanastaCotizador(CaracteristicaTO caracteristica) {
+        Seleccionador(caracteristica);
+    }
+
+    public void Seleccionador(CaracteristicaTO caracteristicaSeleccionada) {
+        try {
+            
+            if (this.listaCanastaCotizador.contains(caracteristicaSeleccionada)) {
+                System.out.println("Existia : " + caracteristicaSeleccionada.getIdCaracteristica() + "... Eliminando");
+                this.listaCanastaCotizador.remove(caracteristicaSeleccionada);
+            }
+            System.out.println("Agregando : " + caracteristicaSeleccionada);
+            this.listaCanastaCotizador.add(caracteristicaSeleccionada);
+        } catch (Exception e) {
+            System.out.println("Error seleccionando productos! " + e.getMessage());
+        }
+
+    }
+
+    public void openNewCotizacion() {
         this.newCotizacionTO = new CotizacionTO();
     }
 
@@ -100,8 +122,7 @@ public class CotizadorController implements Serializable {
     public void setListaDeCaracteristicas(String listaDeCaracteristicas) {
         this.listaDeCaracteristicas = listaDeCaracteristicas;
     }
-    
-    
+
     public ServicioCotizacion getServicioCotizacion() {
         return servicioCotizacion;
     }
@@ -309,21 +330,21 @@ public class CotizadorController implements Serializable {
     public void setListaCaracteristicasSeleccionada(List<CaracteristicaTO> listaCaracteristicasSeleccionada) {
         this.listaCaracteristicasSeleccionada = listaCaracteristicasSeleccionada;
     }
-    
-    
-    
+
     public boolean esMultiple(CategoriaTO categoriaTO) {
         if (categoriaTO.getSeleccionCategoria().equals("Múltiple")) {
             return true;
         }
         return false;
     }
-    
-    public void cargarCaracteristicasSelecionadas(int idC){      
-            System.out.println("A: " + listaCaracteristicasSeleccionada.get(idC).getIdCaracteristica());  
+
+    public void cargarCaracteristicasSelecionadas(int idCaracteristica) {
         try {
-          
-            this.listaCaracteristicasSeleccionada.add(this.servicioCaracteristica.cargarCaracteristicaSeleccionada(idC));
+            if (this.listaCaracteristicasSeleccionada.contains(idCaracteristica)) {
+                this.listaCaracteristicasSeleccionada.remove(idCaracteristica);
+            } else {
+                this.listaCaracteristicasSeleccionada.add(this.servicioCaracteristica.cargarCaracteristicaSeleccionada(idCaracteristica));
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
