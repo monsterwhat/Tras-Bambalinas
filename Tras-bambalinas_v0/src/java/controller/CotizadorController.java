@@ -141,12 +141,11 @@ public class CotizadorController implements Serializable {
                         
                         System.out.println("Existia Caracteristica: " + i + "... Actualizando a: " + caracteristicaSeleccionada);
                         this.listaCanastaCotizador.remove(i);
-                        
-                        this.listaCanastaCotizador.add(caracteristicaSeleccionada);
-                        System.out.println("Lista Actualizada a: " + i);
+
                         
                         System.out.println("Lista: " + i);
-                    } 
+                    }
+                    this.listaCanastaCotizador.add(caracteristicaSeleccionada);
                 }
             }
         } catch (Exception e) {

@@ -104,7 +104,7 @@ public class ServicioCotizacion extends Servicio {
                     .collect(Collectors.joining(", "));
 
             preparedStatement.setString(1, lista);
-            preparedStatement.setDate(2, Date.valueOf(LocalDate.MAX));
+            preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
             if(idUsuario!=0){
                 preparedStatement.setInt(3,idUsuario);
             }

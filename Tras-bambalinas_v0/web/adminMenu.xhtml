@@ -732,6 +732,55 @@
                     </p:dataTable>
                 </p:outputPanel>  
             </p:dialog>
+            
+            <p:dialog header="Detalles de la Cotizacion" showEffect="fade" modal="true"
+                      widgetVar="showCotizacionDialog" responsive="true" minHeight="350" width="550">
+
+                <p:outputPanel id="show-cotizacion-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty cotizadorController.cotizacionTO}">
+
+                        <div class="p-grid p-flex-column">
+                            <div class="p-col">
+                                <p:outputLabel for="numeroCotizacion" value="Numero de Cotizacion"/>
+                                <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.cotizacionTO.numeroCotizacion}" style="width:30rem"/> 
+                                <p:message for="numeroCotizacion" display="icon"/> 
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-flex-column">
+                            <div class="p-col">
+                                <p:outputLabel for="listaCaracteristicas" value="Lista de productos"/>
+                                <p:outputLabel id="listaCaracteristicas" value="#{cotizadorController.cotizacionTO.listaCaracteristicas}" style="width:30rem"/>
+                                <p:message for="listaCaracteristicas" display="icon"/> 
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-flex-column">
+                            <div class="p-col">
+                                <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotizacion"/>
+                                <p:outputLabel id ="fechaCotizacion" value="#{cotizadorController.cotizacionTO.fechaCotizacion}" style="width:30rem"/>
+                                <p:message for="fechaCotizacion" display="icon"/>
+                            </div>
+                        </div>
+
+                        <div class="p-grid p-flex-column">
+                            <div class="p-col">
+                                <p:outputLabel for="clienteCotizacion" value="Cliente que cotizo"/>
+                                <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.cotizacionTO.clienteCotizacion}" style="width:30rem"/>
+                                <p:message for="clienteCotizacion" display="icon"/>
+                            </div>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">     
+
+                    <p:commandButton value="Salir" icon="pi pi-times" onclick="PF('showCotizacionDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+            </p:dialog>
+            
         </h:form>
 
 
