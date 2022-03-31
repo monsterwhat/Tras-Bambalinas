@@ -93,7 +93,7 @@ public class ServicioCotizacion extends Servicio {
 
         try {
             conectar();
-            String sql = "INSERT INTO cotizacion listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion = ?,?,?";
+            String sql = "INSERT INTO cotizacion listaIDCaracteristicaCotizacion,fechaCotizacion,cliente = ?,?,?";
             preparedStatement = conexion.prepareStatement(sql);
             List<Integer> ListaIDCaracteristicas = null;
             for (CaracteristicaTO caracteristicaTO : listaCotizar) {

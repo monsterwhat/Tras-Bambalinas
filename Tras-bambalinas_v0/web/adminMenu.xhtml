@@ -714,39 +714,44 @@
                         <f:facet name ="header">
                             Lista de Cotizaciones
                         </f:facet>
-                        <p:column headerText="Numero de Cotizacion" sortBy="#{cotizadorController.numeroCotizacion}" filterBy="#{cotizadorController.numeroCotizacion}" filterMatchMode="exact">
-                            <h:outputText value="#{cotizadorController.numeroCotizacion}"/>
+                         
+                        <p:column headerText="Numero de Cotizacion" sortBy="#{laCotizacion.numeroCotizacion}" filterBy="#{laCotizacion.numeroCotizacion}" filterMatchMode="exact">
+                            <h:outputText value="#{laCotizacion.numeroCotizacion}"/>
                         </p:column>
-                        <p:column headerText="Lista de ID's de Caracteristicas" sortBy="#{cotizadorController.listaDeCaracteristicas}" filterBy="#{cotizadorController.listaDeCaracteristicas}" filterMatchMode="exact">
-                            <h:outputText value="#{cotizadorController.listaDeCaracteristicas}"/>
+                        <p:column headerText="Lista de ID's de Características" sortBy="#{laCotizacion.listaDeCaracteristicas}" filterBy="#{laCotizacion.listaDeCaracteristicas}" filterMatchMode="exact">
+                            <h:outputText value="#{laCotizacion.listaDeCaracteristicas}"/>
                         </p:column>
-                        <p:column headerText="Fecha de Cotizacion" sortBy="#{cotizadorController.fechaCotizacion}" filterBy="#{cotizadorController.fechaCotizacion}" filterMatchMode="contains">
-                            <h:outputText value="#{cotizadorController.fechaCotizacion}"/>
+                        <p:column headerText="Fecha de Cotización" sortBy="#{laCotizacion.fechaCotizacion}" filterBy="#{laCotizacion.fechaCotizacion}" filterMatchMode="contains">
+                            <h:outputText value="#{laCotizacion.fechaCotizacion}"/>
                         </p:column>
-                        <p:column headerText="Cliente" sortBy="#{cotizadorController.clienteCotizacion}">
-                            <h:outputText value="#{cotizadorController.clienteCotizacion}"/>
+                        <p:column headerText="Cliente" sortBy="#{laCotizacion.clienteCotizacion}">
+                            <h:outputText value="#{laCotizacion.clienteCotizacion}"/>
                         </p:column>
                         <p:column>
                             <p:commandButton icon="pi pi-eye" oncomplete="PF('showCotizacionDialog').show()"
                                              styleClass="edit-button rounded-button ui-button-success" process="@this">
-                                <f:setPropertyActionListener value="#{laCotizacion}" target="#{cotizadorController.cotizacionTO}"/>
+                                <f:setPropertyActionListener value="#{laCotizacion}" target="#{cotizadorController.newCotizacionTO}"/>
                                 <p:resetInput target=":formCategoria:show-cotizacion-content"/>
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
                 </p:outputPanel>  
             </p:dialog>
+             
             
+
+           
             <p:dialog header="Detalles de la Cotizacion" showEffect="fade" modal="true"
                       widgetVar="showCotizacionDialog" responsive="true" minHeight="350" width="550">
 
                 <p:outputPanel id="show-cotizacion-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty cotizadorController.cotizacionTO}">
-
+                              
                         <div class="p-grid p-flex-column">
                             <div class="p-col">
                                 <p:outputLabel for="numeroCotizacion" value="Numero de Cotizacion"/>
-                                <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.cotizacionTO.numeroCotizacion}" style="width:30rem"/> 
+                                
+                                <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.newCotizacionTO.numeroCotizacion}"  style="width:30rem"/> 
                                 <p:message for="numeroCotizacion" display="icon"/> 
                             </div>
                         </div>
@@ -754,7 +759,7 @@
                         <div class="p-grid p-flex-column">
                             <div class="p-col">
                                 <p:outputLabel for="listaCaracteristicas" value="Lista de productos"/>
-                                <p:outputLabel id="listaCaracteristicas" value="#{cotizadorController.cotizacionTO.listaCaracteristicas}" style="width:30rem"/>
+                                <p:outputLabel id="listaCaracteristicas" value="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" style="width:30rem"/>
                                 <p:message for="listaCaracteristicas" display="icon"/> 
                             </div>
                         </div>
@@ -762,7 +767,7 @@
                         <div class="p-grid p-flex-column">
                             <div class="p-col">
                                 <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotizacion"/>
-                                <p:outputLabel id ="fechaCotizacion" value="#{cotizadorController.cotizacionTO.fechaCotizacion}" style="width:30rem"/>
+                                <p:outputLabel id ="fechaCotizacion" value="#{cotizadorController.newCotizacionTO.fechaCotizacion}" style="width:30rem"/>
                                 <p:message for="fechaCotizacion" display="icon"/>
                             </div>
                         </div>
@@ -770,7 +775,7 @@
                         <div class="p-grid p-flex-column">
                             <div class="p-col">
                                 <p:outputLabel for="clienteCotizacion" value="Cliente que cotizo"/>
-                                <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.cotizacionTO.clienteCotizacion}" style="width:30rem"/>
+                                <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.newCotizacionTO.clienteCotizacion}" style="width:30rem"/>
                                 <p:message for="clienteCotizacion" display="icon"/>
                             </div>
                         </div>
