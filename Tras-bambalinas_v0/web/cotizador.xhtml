@@ -5,8 +5,11 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <h:head>
-        <title>Facelet Title</title>
+    <h:head >
+        <a href="https://icons8.com/icon/VwyfEmBsUqyQ/sign-out"/>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+        <title>Cortinas Ferva Cotizador</title>
     </h:head>
     <h:body>
         <h:outputStylesheet library="css" name="styleCotizador.css"/>
@@ -80,7 +83,7 @@
                             </p:tab>
                         </p:accordionPanel>
                     </div>
-                    <p:commandButton value="Cotizar" actionListener="#{cotizadorController.Cotizar(userController.idUser)}" onclick="#{cotizadorController.newCotizacionTO()}" update=":formCotizacion:show-cotizacion-content" onsuccess="PF('showCotizacionDialog').show()">
+                    <p:commandButton value="Cotizar" actionListener="#{cotizadorController.Cotizar(userController.idUser)}" onclick="#{cotizadorController.openNewCotizacion()}" update=":formCotizacion:show-cotizacion-content" onsuccess="PF('showCotizacionDialog').show()">
                     </p:commandButton>
                 </p:panel>
             </p:panelGrid>

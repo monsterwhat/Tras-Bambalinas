@@ -71,7 +71,7 @@ public class ServicioCotizacion extends Servicio {
 
             while (resultSet.next()) {
                 int numeroCotizacion = resultSet.getInt("numeroCotizacion");
-                String listaDeCaracteristicas = resultSet.getString("listaIDCaracterista");
+                String listaDeCaracteristicas = resultSet.getString("listaIDCaracteristicaCotizacion");
                 Date fechaCotizacion = resultSet.getDate("fechaCotizacion");
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion);
@@ -102,7 +102,7 @@ public class ServicioCotizacion extends Servicio {
             
             while(resultSet.next()){
                 int numeroCotizacion = resultSet.getInt("numeroCotizacion");
-                String listaDeCaracteristicas = resultSet.getString("listaIDDCaracteristica");
+                String listaDeCaracteristicas = resultSet.getString("listaIDCaracteristicaCotizacion");
                 Date fechaCotizacion = resultSet.getDate("fechaCotizacion");
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 cotizacion = new CotizacionTO(numeroCotizacion,listaDeCaracteristicas,fechaCotizacion,clienteCotizacion);
@@ -122,7 +122,7 @@ public class ServicioCotizacion extends Servicio {
 
         try {
             conectar();
-            String sql = "INSERT INTO cotizacion listaIDCaracteristicaCotizacion,fechaCotizacion,cliente = ?,?,?";
+            String sql = "INSERT INTO cotizacion listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion = ?,?,?";
             preparedStatement = conexion.prepareStatement(sql);
             List<Integer> ListaIDCaracteristicas = null;
             for (CaracteristicaTO caracteristicaTO : listaCotizar) {

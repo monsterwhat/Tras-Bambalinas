@@ -1,6 +1,5 @@
 package controller;
 
-import com.mysql.cj.xdevapi.Type;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -74,13 +73,20 @@ public class CotizadorController implements Serializable {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
     }
+    
+    public void cargarImagenCaracteristica(int id){
+       
+                
+    }
 
     public boolean Cotizar(int idUser) {
         try {
             if (this.listaCanastaCotizador.isEmpty()) {
+                System.out.println("Error esta vacia");
                 addMessage(FacesMessage.SEVERITY_ERROR, "Error de cotizacion!", "No hay items seleccionados!");
                 return false;
             }
+            System.out.println("Se mando a cotizar");
             servicioCotizacion.Cotizar(this.listaCanastaCotizador, idUser);
             this.listaCanastaCotizador.forEach((caracTO) -> {
                 listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
@@ -92,7 +98,7 @@ public class CotizadorController implements Serializable {
             this.fechaCotizacion = Date.valueOf(LocalDate.now());
             
             newCotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, idUser);
-            
+            System.out.println("Se cotizo y se creo la nueva cotizacion.");
             return true;
         } catch (Exception e) {
             System.out.println("Error al tratar de cotizar! " + e.getMessage());
@@ -171,7 +177,7 @@ public class CotizadorController implements Serializable {
     }
 
     public void openNewCotizacion() {
-        this.newCotizacionTO = new CotizacionTO();
+        this.newCotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion);
     }
 
     public CotizacionTO getNewCotizacionTO() {

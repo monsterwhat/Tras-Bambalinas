@@ -14,7 +14,7 @@ import servicio.ServicioCifrar;
 @ViewScoped
 public class UserController implements Serializable {
 
-    private int idUser;
+    private int idUser =0;
     private String correoUser;
     private String passwordUser;
     private String nombreUser;

@@ -28,11 +28,8 @@ public class CotizacionTO {
 
     }
 
-
     public CotizacionTO() {
     }
-    
-    
     
     public List<CaracteristicaTO> getListaCaracteristicas() {
         return listaCaracteristicas;

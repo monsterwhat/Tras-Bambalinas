@@ -696,25 +696,25 @@
             </p:dialog>
 
         </h:form>
-        
+
         <h:form id="formCotizacion">
             <p:dialog header="Cotizaciones" showEffect="fade" modal="true"
                       widgetVar="showListaCotizacion" responsive="true">
                 <p:outputPanel id="show-cotizaciones-information" class="ui-fluid">
-                    
+
                     <f:facet name ="header">
-                            Lista de Cotizaciones
-                        </f:facet>
+                        Lista de Cotizaciones
+                    </f:facet>
 
                     <p:dataTable value ="#{cotizadorController.listaCotizacion}" var="laCotizacion" rows="5" paginator="true" paginatorPosition="bottom"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="3,5,10,20,30,40,50,100"
+                                 rowsPerPageTemplate="3,5,10,20,30,40,50,100" widgetVar="dataTableCotizaciones"
                                  emptyMessage="No existen cotizaciones registradas"
                                  reflow="true" id="cotizacionTable" scrollable="true" scrollHeight="250">
                         <f:facet name ="header">
                             Lista de Cotizaciones
                         </f:facet>
-                         
+
                         <p:column headerText="Numero de Cotizacion" sortBy="#{laCotizacion.numeroCotizacion}" filterBy="#{laCotizacion.numeroCotizacion}" filterMatchMode="exact">
                             <h:outputText value="#{laCotizacion.numeroCotizacion}"/>
                         </p:column>
@@ -728,55 +728,58 @@
                             <h:outputText value="#{laCotizacion.clienteCotizacion}"/>
                         </p:column>
                         <p:column>
-                            <p:commandButton icon="pi pi-eye" oncomplete="PF('showCotizacionDialog').show()"
+                            <p:commandButton icon="pi pi-eye" update=":formCotizacion:show-cotizacion-content"
+                                             oncomplete="PF('showCotizacionDialog').show()"
                                              styleClass="edit-button rounded-button ui-button-success" process="@this">
                                 <f:setPropertyActionListener value="#{laCotizacion}" target="#{cotizadorController.newCotizacionTO}"/>
-                                <p:resetInput target=":formCategoria:show-cotizacion-content"/>
+                                <p:resetInput target=":formCotizacion:show-cotizacion-content"/>
                             </p:commandButton>
+
                         </p:column>
                     </p:dataTable>
                 </p:outputPanel>  
             </p:dialog>
-             
-            
 
-           
+
             <p:dialog header="Detalles de la Cotizacion" showEffect="fade" modal="true"
                       widgetVar="showCotizacionDialog" responsive="true" minHeight="350" width="550">
 
-                <p:outputPanel id="show-cotizacion-content" class="ui-fluid">
-                    <p:outputPanel rendered="#{not empty cotizadorController.cotizacionTO}">
-                              
-                        <div class="p-grid p-flex-column">
-                            <div class="p-col">
-                                <p:outputLabel for="numeroCotizacion" value="Numero de Cotizacion"/>
-                                
-                                <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.newCotizacionTO.numeroCotizacion}"  style="width:30rem"/> 
-                                <p:message for="numeroCotizacion" display="icon"/> 
-                            </div>
-                        </div>
+                <p:outputPanel id="show-cotizacion-content" class="card">
+                    <p:outputPanel rendered="#{not empty laCotizacion}">
 
-                        <div class="p-grid p-flex-column">
-                            <div class="p-col">
-                                <p:outputLabel for="listaCaracteristicas" value="Lista de productos"/>
-                                <p:outputLabel id="listaCaracteristicas" value="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" style="width:30rem"/>
-                                <p:message for="listaCaracteristicas" display="icon"/> 
-                            </div>
-                        </div>
+                        <div class="p-grid card">
+                            <div class="card">
 
-                        <div class="p-grid p-flex-column">
-                            <div class="p-col">
-                                <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotizacion"/>
-                                <p:outputLabel id ="fechaCotizacion" value="#{cotizadorController.newCotizacionTO.fechaCotizacion}" style="width:30rem"/>
-                                <p:message for="fechaCotizacion" display="icon"/>
-                            </div>
-                        </div>
+                                <div style="padding-bottom: 1em">
+                                    <p:outputLabel for="numeroCotizacion" value="Numero de Cotizacion: "/>
+                                    <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.newCotizacionTO.numeroCotizacion}"  style="width:30rem"/> 
+                                    <p:message for="numeroCotizacion" display="icon"/> 
+                                </div>
 
-                        <div class="p-grid p-flex-column">
-                            <div class="p-col">
-                                <p:outputLabel for="clienteCotizacion" value="Cliente que cotizo"/>
-                                <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.newCotizacionTO.clienteCotizacion}" style="width:30rem"/>
-                                <p:message for="clienteCotizacion" display="icon"/>
+                                <div class="card product" style="padding-bottom: 1em">
+                                    <p:dataView var="caracteristica" value="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" rows="12" paginator="false" gridIcon="pi pi-th-large"
+                                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                        <p:dataViewGridItem>
+
+
+                                            <p:graphicImage id="imagen-caracteristica-detallada" width="128" height="128" value="/imagenes/#{caracteristica.imagenCaracteristica}"/>
+
+
+                                        </p:dataViewGridItem>
+                                    </p:dataView>
+                                </div>
+
+                                <div style="padding-bottom: 1em">
+                                    <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotizacion"/>
+                                    <p:outputLabel id ="fechaCotizacion" value="#{cotizadorController.newCotizacionTO.fechaCotizacion}" style="width:30rem"/>
+                                    <p:message for="fechaCotizacion" display="icon"/>
+                                </div>
+
+                                <div style="padding-bottom: 1em">
+                                    <p:outputLabel for="clienteCotizacion" value="Cliente que cotizo"/>
+                                    <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.newCotizacionTO.clienteCotizacion}" style="width:30rem"/>
+                                    <p:message for="clienteCotizacion" display="icon"/>
+                                </div>
                             </div>
                         </div>
 
@@ -789,7 +792,7 @@
                                      class="ui-button-secondary"/>
                 </f:facet>
             </p:dialog>
-            
+
         </h:form>
 
 
@@ -804,7 +807,7 @@
                                     <p:menuitem value="Categorias" update=":formCategoria:show-categoria-information" oncomplete="PF('showCategoriaInformation').show()"/>
                                     <p:menuitem value="Características"  update=":formCaracteristica:show-caracteristica-information" oncomplete="PF('showCaracteristicaInformation').show()" />
                                     <p:menuitem value="Cotización"  update=":formCotizacion:show-cotizaciones-information" oncomplete="PF('showListaCotizacion').show()" />
-                                    
+
                                 </p:submenu>
                             </p:menu>
                         </div>
