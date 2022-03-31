@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,8 +55,8 @@ public class CotizadorController implements Serializable {
 
     int numeroCotizacion;
     String listaDeCaracteristicas;
-    String fechaCotizacion;
-    String clienteCotizacion;
+    Date fechaCotizacion;
+    int clienteCotizacion;
 
     @PostConstruct
     public void cargar() {
@@ -205,19 +206,19 @@ public class CotizadorController implements Serializable {
         this.numeroCotizacion = numeroCotizacion;
     }
 
-    public String getFechaCotizacion() {
+    public Date getFechaCotizacion() {
         return fechaCotizacion;
     }
 
-    public void setFechaCotizacion(String fechaCotizacion) {
+    public void setFechaCotizacion(Date fechaCotizacion) {
         this.fechaCotizacion = fechaCotizacion;
     }
 
-    public String getClienteCotizacion() {
+    public int getClienteCotizacion() {
         return clienteCotizacion;
     }
 
-    public void setClienteCotizacion(String clienteCotizacion) {
+    public void setClienteCotizacion(int clienteCotizacion) {
         this.clienteCotizacion = clienteCotizacion;
     }
 

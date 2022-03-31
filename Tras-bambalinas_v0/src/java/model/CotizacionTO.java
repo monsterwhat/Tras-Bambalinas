@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.Date;
 import java.util.List;
 
 
@@ -7,18 +8,18 @@ public class CotizacionTO {
 
     int numeroCotizacion;
     String listaDeCaracteristicas;
-    String fechaCotizacion;
-    String clienteCotizacion;
+    Date fechaCotizacion;
+    int clienteCotizacion;
     List<CaracteristicaTO> listaCaracteristicas = null;
 
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, String clienteCotizacion) {
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion) {
         this.numeroCotizacion = numeroCotizacion;
         this.listaDeCaracteristicas = listaDeCaracteristicas;
         this.fechaCotizacion = fechaCotizacion;
         this.clienteCotizacion = clienteCotizacion;
     }
 
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, String clienteCotizacion, List<CaracteristicaTO> listaCaracteristica){
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion, List<CaracteristicaTO> listaCaracteristica){
         this.numeroCotizacion = numeroCotizacion;
         this.listaDeCaracteristicas = listaDeCaracteristicas;
         this.fechaCotizacion = fechaCotizacion;
@@ -55,19 +56,19 @@ public class CotizacionTO {
         this.listaDeCaracteristicas = listaDeCaracteristicas;
     }
 
-    public String getFechaCotizacion() {
+    public Date getFechaCotizacion() {
         return fechaCotizacion;
     }
 
-    public void setFechaCotizacion(String fechaCotizacion) {
+    public void setFechaCotizacion(Date fechaCotizacion) {
         this.fechaCotizacion = fechaCotizacion;
     }
 
-    public String getClienteCotizacion() {
+    public int getClienteCotizacion() {
         return clienteCotizacion;
     }
 
-    public void setClienteCotizacion(String clienteCotizacion) {
+    public void setClienteCotizacion(int clienteCotizacion) {
         this.clienteCotizacion = clienteCotizacion;
     }
     

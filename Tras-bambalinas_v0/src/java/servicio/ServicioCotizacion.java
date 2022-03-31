@@ -34,8 +34,8 @@ public class ServicioCotizacion extends Servicio {
         for (CotizacionTO cotizacionTO : lista) {
             int numeroCotizacion = cotizacionTO.getNumeroCotizacion();
             String listaCotizacion = cotizacionTO.getListaDeCaracteristicas();
-            String fechaCotizacion = cotizacionTO.getFechaCotizacion();
-            String clienteCotizacion = cotizacionTO.getClienteCotizacion();
+            Date fechaCotizacion = cotizacionTO.getFechaCotizacion();
+            int clienteCotizacion = cotizacionTO.getClienteCotizacion();
             List<CaracteristicaTO> listaCotizacionLarga = listaCotizacion(listaCotizacion);
             CotizacionTO cotizacionTO1 = new CotizacionTO(numeroCotizacion, listaCotizacion, fechaCotizacion, clienteCotizacion, listaCotizacionLarga);
             listaLarga.add(cotizacionTO1);
@@ -70,10 +70,10 @@ public class ServicioCotizacion extends Servicio {
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                int numeroCotizacion = resultSet.getInt("NumeroCotizacion");
-                String listaDeCaracteristicas = resultSet.getString("ListaIDCaracterista");
-                String fechaCotizacion = resultSet.getString("FechaCotizacion");
-                String clienteCotizacion = resultSet.getString("Cliente");
+                int numeroCotizacion = resultSet.getInt("numeroCotizacion");
+                String listaDeCaracteristicas = resultSet.getString("listaIDCaracteristica");
+                Date fechaCotizacion = resultSet.getDate("fechaCotizacion");
+                int clienteCotizacion = resultSet.getInt("cliente");
                 CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion);
 
                 listaRetorno.add(cotizacionTO);

@@ -698,9 +698,13 @@
         </h:form>
         
         <h:form id="formCotizacion">
-            <p:dialog header="listaCotizaciones" showEffect="fade" modal="true"
+            <p:dialog header="Cotizaciones" showEffect="fade" modal="true"
                       widgetVar="showListaCotizacion" responsive="true">
                 <p:outputPanel id="show-cotizaciones-information" class="ui-fluid">
+                    
+                    <f:facet name ="header">
+                            Lista de Cotizaciones
+                        </f:facet>
 
                     <p:dataTable value ="#{cotizadorController.listaCotizacion}" var="laCotizacion" rows="5" paginator="true" paginatorPosition="bottom"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -794,6 +798,8 @@
                                     <p:menuitem value="Usuarios" update=":formUsuario:show-user-information" oncomplete="PF('showUserInformation').show()"/>
                                     <p:menuitem value="Categorias" update=":formCategoria:show-categoria-information" oncomplete="PF('showCategoriaInformation').show()"/>
                                     <p:menuitem value="Características"  update=":formCaracteristica:show-caracteristica-information" oncomplete="PF('showCaracteristicaInformation').show()" />
+                                    <p:menuitem value="Cotización"  update=":formCotizacion:show-cotizaciones-information" oncomplete="PF('showListaCotizacion').show()" />
+                                    
                                 </p:submenu>
                             </p:menu>
                         </div>
