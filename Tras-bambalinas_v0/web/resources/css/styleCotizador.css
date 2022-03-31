@@ -4,20 +4,23 @@ body{
 }
 
 body .ui-panelgrid .ui-panelgrid-cell{
+    border: #93b5c6 ;
     background-color: #93b5c6 ;
+}
+.ui-panelgrid .ui-panelgrid-cell{
+    border-style:none;
 }
 body .ui-panel .ui-panel-content{
     border: 0px;
     background-color: #C9DAE3;  
 }
 
-
-.layout-content .card {
-    padding: 1rem;
-    box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
-    border-radius: 4px;
-    margin-bottom: 2rem;
+body .ui-scrollpanel{
+    border:none
+    
 }
+
+
 
 
 

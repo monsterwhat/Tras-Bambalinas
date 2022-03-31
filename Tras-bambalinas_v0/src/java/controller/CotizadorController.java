@@ -114,40 +114,49 @@ public class CotizadorController implements Serializable {
         try {
             if (this.listaCanastaCotizador.isEmpty()) {
                 this.listaCanastaCotizador.add(caracteristicaSeleccionada);
-                System.out.println("Agregando : " + caracteristicaSeleccionada);
+                System.out.println("Agregando : " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
             } else {
+                System.out.println("Otro: " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
+                this.listaCanastaCotizador.add(caracteristicaSeleccionada);
+                CaracteristicaTO auxiliar = caracteristicaSeleccionada;
+
                 for (CaracteristicaTO i : this.listaCanastaCotizador) {
-                    if (i.getIdCategoriaCaracteristica() == caracteristicaSeleccionada.getIdCategoriaCaracteristica()){
-                        System.out.println("Existia Caracteristica: " + i + "... Actualizando a: " + caracteristicaSeleccionada);
-                        this.listaCanastaCotizador.remove(i);
-                        this.listaCanastaCotizador.add(caracteristicaSeleccionada);   
-                    } 
-                    System.out.println("La Lista Antes Tenia: " + i);
+                    System.out.println("Lista->" + i + "/" + i.getIdCategoriaCaracteristica() + "/" + i.getIdCaracteristica());
+
+                    if (i.getIdCategoriaCaracteristica() == auxiliar.getIdCategoriaCaracteristica() && i.getIdCaracteristica() != auxiliar.getIdCaracteristica()) {
+                        CaracteristicaTO a = i;
+
+                        System.out.println("Remover->" + a + "/" + a.getIdCategoriaCaracteristica() + "/" + a.getIdCaracteristica());
+                        this.listaCanastaCotizador.remove(a);
+
+                        System.out.println("Cambiar->" + auxiliar + "/" + auxiliar.getIdCategoriaCaracteristica() + "/" + auxiliar.getIdCaracteristica());
+                    }
                 }
             }
-          
         } catch (Exception e) {
             System.out.println("Error seleccionando productos! " + e.getMessage());
         }
     }
-    
-     public void SeleccionadorMultiple(CaracteristicaTO caracteristicaSeleccionada) {
+
+    public void SeleccionadorMultiple(CaracteristicaTO caracteristicaSeleccionada) {
         try {
             if (this.listaCanastaCotizador.isEmpty()) {
                 this.listaCanastaCotizador.add(caracteristicaSeleccionada);
-                System.out.println("Agregando : " + caracteristicaSeleccionada);
+                System.out.println("Agregando : " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
             } else {
+                System.out.println("Otro: " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
+                CaracteristicaTO auxiliar = caracteristicaSeleccionada;
                 for (CaracteristicaTO i : this.listaCanastaCotizador) {
-                    if (i.getIdCategoriaCaracteristica() == caracteristicaSeleccionada.getIdCategoriaCaracteristica()){
+                    System.out.println("Lista->" + i + "/" + i.getIdCategoriaCaracteristica() + "/" + i.getIdCaracteristica());
+                    if (i.getIdCaracteristica() == auxiliar.getIdCaracteristica()) {
+                        CaracteristicaTO a = i;
                         
-                        System.out.println("Existia Caracteristica: " + i + "... Actualizando a: " + caracteristicaSeleccionada);
-                        this.listaCanastaCotizador.remove(i);
+                        System.out.println("Remover->" + a + "/" + a.getIdCategoriaCaracteristica() + "/" + a.getIdCaracteristica());
+                        this.listaCanastaCotizador.remove(a);
 
-                        
-                        System.out.println("Lista: " + i);
                     }
-                    this.listaCanastaCotizador.add(caracteristicaSeleccionada);
                 }
+                this.listaCanastaCotizador.add(caracteristicaSeleccionada);
             }
         } catch (Exception e) {
             System.out.println("Error seleccionando productos! " + e.getMessage());
