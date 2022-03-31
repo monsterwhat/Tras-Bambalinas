@@ -1,7 +1,9 @@
 package controller;
 
+import com.mysql.cj.xdevapi.Type;
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -86,6 +88,11 @@ public class CotizadorController implements Serializable {
             listaDeCaracteristicas = listaIdCaracteristicas.stream()
                     .map(i -> i.toString())
                     .collect(Collectors.joining(", "));
+
+            this.fechaCotizacion = Date.valueOf(LocalDate.now());
+            
+            newCotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, idUser);
+            
             return true;
         } catch (Exception e) {
             System.out.println("Error al tratar de cotizar! " + e.getMessage());
@@ -213,6 +220,14 @@ public class CotizadorController implements Serializable {
 
     public void setNumeroCotizacion(int numeroCotizacion) {
         this.numeroCotizacion = numeroCotizacion;
+    }
+
+    public List<Integer> getListaIdCaracteristicas() {
+        return listaIdCaracteristicas;
+    }
+
+    public void setListaIdCaracteristicas(List<Integer> listaIdCaracteristicas) {
+        this.listaIdCaracteristicas = listaIdCaracteristicas;
     }
 
     public Date getFechaCotizacion() {

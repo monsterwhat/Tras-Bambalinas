@@ -25,7 +25,9 @@ public class CotizacionTO {
         this.fechaCotizacion = fechaCotizacion;
         this.clienteCotizacion = clienteCotizacion;
         this.listaCaracteristicas = listaCaracteristica;
+
     }
+
 
     public CotizacionTO() {
     }
@@ -71,6 +73,7 @@ public class CotizacionTO {
     public void setClienteCotizacion(int clienteCotizacion) {
         this.clienteCotizacion = clienteCotizacion;
     }
-    
+
+
     
 }

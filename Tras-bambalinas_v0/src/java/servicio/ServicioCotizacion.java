@@ -71,9 +71,9 @@ public class ServicioCotizacion extends Servicio {
 
             while (resultSet.next()) {
                 int numeroCotizacion = resultSet.getInt("numeroCotizacion");
-                String listaDeCaracteristicas = resultSet.getString("listaIDCaracteristica");
+                String listaDeCaracteristicas = resultSet.getString("listaIDCaracterista");
                 Date fechaCotizacion = resultSet.getDate("fechaCotizacion");
-                int clienteCotizacion = resultSet.getInt("cliente");
+                int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion);
 
                 listaRetorno.add(cotizacionTO);
@@ -86,6 +86,35 @@ public class ServicioCotizacion extends Servicio {
             desconectar();
         }
         return listaRetorno;
+    }
+    
+    public CotizacionTO CargarCotizacion(int idCotizacion){
+        Statement statement = null;
+        ResultSet resultSet = null;
+        CotizacionTO cotizacion = new CotizacionTO();
+        
+        try {
+            conectar();
+            statement=conexion.createStatement();
+            String sql = "Select * FROM cotizacion where numeroCotizacion='" + idCotizacion + "'";
+            
+            resultSet = statement.executeQuery(sql);
+            
+            while(resultSet.next()){
+                int numeroCotizacion = resultSet.getInt("numeroCotizacion");
+                String listaDeCaracteristicas = resultSet.getString("listaIDDCaracteristica");
+                Date fechaCotizacion = resultSet.getDate("fechaCotizacion");
+                int clienteCotizacion = resultSet.getInt("clienteCotizacion");
+                cotizacion = new CotizacionTO(numeroCotizacion,listaDeCaracteristicas,fechaCotizacion,clienteCotizacion);
+                
+                return cotizacion;
+            }
+            return cotizacion;
+            
+        } catch (Exception e) {
+            System.out.println("Error cargando Cotizacion! "+ e.getMessage());
+        }
+        return cotizacion;
     }
 
     public void Cotizar(List<CaracteristicaTO> listaCotizar, int idUsuario) {
