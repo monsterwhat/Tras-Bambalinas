@@ -66,7 +66,7 @@
                                                     <div>
                                                         <p:selectOneRadio id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio"  >
                                                             <f:selectItem itemLabel="seleccionar" itemValue="seleccionar" />
-                                                            <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristica)}" />
+                                                            <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristica)}" onsuccess="PF('accordionPanel').unselect(index)" />
                                                         </p:selectOneRadio>
                                                     
                                                         <h:selectManyCheckbox id="seleccionMB"  rendered="#{cotizadorController.esMultiple(elCotizadorCategoria)}">
