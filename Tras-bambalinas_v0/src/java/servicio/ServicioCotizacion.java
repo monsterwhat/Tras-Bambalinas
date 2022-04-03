@@ -122,7 +122,7 @@ public class ServicioCotizacion extends Servicio {
 
         try {
             conectar();
-            String sql = "INSERT INTO cotizacion listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion = ?,?,?";
+            String sql = "INSERT INTO cotizacion (listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion) VALUES (?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
             List<Integer> ListaIDCaracteristicas = null;
             for (CaracteristicaTO caracteristicaTO : listaCotizar) {
@@ -147,4 +147,28 @@ public class ServicioCotizacion extends Servicio {
             desconectar();
         }
     }
+      
+    public void insertarCotizacion(CotizacionTO cotizacionTO) {
+        PreparedStatement preparedStatement = null;
+
+        try {
+            conectar();
+            String sql = "INSERT INTO cotizacion (listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion) VALUES (?,?,?)";
+            preparedStatement = conexion.prepareStatement(sql);
+            preparedStatement.setString(1, cotizacionTO.getListaDeCaracteristicas());
+            preparedStatement.setDate(2, cotizacionTO.getFechaCotizacion());
+            preparedStatement.setInt(3, cotizacionTO.getClienteCotizacion());
+            
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al cotizar! " + e.getMessage());
+        } finally {
+            cerrarPreparedStatement(preparedStatement);
+            desconectar();
+        }
+    }
+    
+    
+    
+    
 }

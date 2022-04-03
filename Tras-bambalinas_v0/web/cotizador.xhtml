@@ -64,9 +64,9 @@
                                                     </h:outputText>
 
                                                     <div>
-                                                        <p:selectOneRadio id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio" unselectable="true" required="true" >
+                                                        <p:selectOneRadio id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio"  >
                                                             <f:selectItem itemLabel="seleccionar" itemValue="seleccionar" />
-                                                            <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristica)}" onsuccess="PF('accordionPanel').unselect(index)"/>
+                                                            <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristica)}" />
                                                         </p:selectOneRadio>
                                                     
                                                         <h:selectManyCheckbox id="seleccionMB"  rendered="#{cotizadorController.esMultiple(elCotizadorCategoria)}">
@@ -82,9 +82,9 @@
                                 </p:dataView>
                             </p:tab>
                         </p:accordionPanel>
-                    </div>
-                    <p:commandButton value="Cotizar" actionListener="#{cotizadorController.Cotizar(userController.idUser)}" onclick="#{cotizadorController.openNewCotizacion()}" update=":formCotizacion:show-cotizacion-content" onsuccess="PF('showCotizacionDialog').show()">
-                    </p:commandButton>
+                    </div>          
+                    <p:commandButton value="Cotizar" actionListener="#{cotizadorController.abrirEIngresarNewCotizacion}" update=":formCotizacion:show-cotizacion-content" onsuccess="PF('showCotizacionDialog').show()"/>
+                    
                 </p:panel>
             </p:panelGrid>
         </h:form>

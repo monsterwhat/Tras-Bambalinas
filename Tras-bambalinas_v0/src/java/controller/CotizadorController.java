@@ -31,8 +31,10 @@ public class CotizadorController implements Serializable {
     private CotizacionTO cotizacionTO, newCotizacionTO;
 
     List<Integer> listaIdCaracteristicas = new ArrayList<>();
+
     List<CaracteristicaTO> listaCaracteristicasParaCotizador = new ArrayList<>();
     List<CaracteristicaTO> listaCanastaCotizador = new ArrayList<>();
+
     List<CaracteristicaTO> listaCaracteristicasSeleccionada = new ArrayList<>();
 
     List<CategoriaTO> listaCategoriaParaCotizar = new ArrayList<>();
@@ -73,13 +75,44 @@ public class CotizadorController implements Serializable {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
     }
-    
-    public void cargarImagenCaracteristica(int id){
-       
-                
+
+    public void cargarImagenCaracteristica(int id) {
+
+    }
+
+    public void abrirEIngresarNewCotizacion() {
+        this.newCotizacionTO = new CotizacionTO();
+        try {
+
+            if (this.listaCanastaCotizador.isEmpty()) {
+                System.out.println("Error esta vacia");
+                addMessage(FacesMessage.SEVERITY_ERROR, "Error de cotizacion!", "No hay items seleccionados!");
+            }
+            System.out.println("Se mando a cotizar");
+
+            this.listaCanastaCotizador.forEach((caracTO) -> {
+                listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
+            });
+            newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
+            newCotizacionTO.setFechaCotizacion(Date.valueOf(LocalDate.now()));
+
+            if (newCotizacionTO.getClienteCotizacion() != 0) {
+                newCotizacionTO.setClienteCotizacion(14);
+            }
+            newCotizacionTO.setClienteCotizacion(0);
+
+            this.servicioCotizacion.insertarCotizacion(newCotizacionTO);
+            System.out.println("Se cotizo y se creo la nueva cotizacion.");
+
+        } catch (Exception e) {
+            System.out.println("Quizas la cotizacion se encuentra nula?");
+            System.out.println("Error agregando cotizacion! " + e);
+        }
+
     }
 
     public boolean Cotizar(int idUser) {
+//        xhtml(87)=<!--actionListener="#{cotizadorController.Cotizar(userController.idUser)}" onclick="#{cotizadorController.openNewCotizacion()}"--> required="true"
         try {
             if (this.listaCanastaCotizador.isEmpty()) {
                 System.out.println("Error esta vacia");
@@ -96,7 +129,7 @@ public class CotizadorController implements Serializable {
                     .collect(Collectors.joining(", "));
 
             this.fechaCotizacion = Date.valueOf(LocalDate.now());
-            
+
             newCotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, idUser);
             System.out.println("Se cotizo y se creo la nueva cotizacion.");
             return true;
@@ -125,45 +158,48 @@ public class CotizadorController implements Serializable {
 
     public void SeleccionadorUnica(CaracteristicaTO caracteristicaSeleccionada) {
         try {
+            int test = 0;
+            CaracteristicaTO auxiliar;
+            List<CaracteristicaTO> listaAuxiliar = new ArrayList<>();
             if (this.listaCanastaCotizador.isEmpty()) {
                 this.listaCanastaCotizador.add(caracteristicaSeleccionada);
-                System.out.println("Agregando : " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
+                System.out.println("Agregando-> " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
             } else {
-                System.out.println("Otro: " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
-                this.listaCanastaCotizador.add(caracteristicaSeleccionada);
-                CaracteristicaTO auxiliar = caracteristicaSeleccionada;
+                auxiliar = caracteristicaSeleccionada;
+                System.out.println("Nuevo->" + auxiliar + "/" + auxiliar.getIdCategoriaCaracteristica() + "/" + auxiliar.getIdCaracteristica());
+                this.listaCanastaCotizador.add(auxiliar);
 
-                for (CaracteristicaTO i : this.listaCanastaCotizador) {
-                    System.out.println("Lista->" + i + "/" + i.getIdCategoriaCaracteristica() + "/" + i.getIdCaracteristica());
+                do {
+                    if (this.listaCanastaCotizador.get(test).getIdCategoriaCaracteristica() == auxiliar.getIdCategoriaCaracteristica()
+                            && this.listaCanastaCotizador.get(test).getIdCaracteristica() != auxiliar.getIdCaracteristica()) {
 
-                    if (i.getIdCategoriaCaracteristica() == auxiliar.getIdCategoriaCaracteristica() && i.getIdCaracteristica() != auxiliar.getIdCaracteristica()) {
-                        CaracteristicaTO a = i;
-
-                        System.out.println("Remover->" + a + "/" + a.getIdCategoriaCaracteristica() + "/" + a.getIdCaracteristica());
-                        this.listaCanastaCotizador.remove(a);
-
-                        System.out.println("Cambiar->" + auxiliar + "/" + auxiliar.getIdCategoriaCaracteristica() + "/" + auxiliar.getIdCaracteristica());
+                        System.out.println("Remover->" + this.listaCanastaCotizador.get(test) + "/" + this.listaCanastaCotizador.get(test).getIdCategoriaCaracteristica() + "/" + this.listaCanastaCotizador.get(test).getIdCaracteristica());
+                        this.listaCanastaCotizador.remove(this.listaCanastaCotizador.get(test));
                     }
-                }
+                    test = test + 1;
+                } while (test > this.listaCanastaCotizador.size());
+
+
+
             }
         } catch (Exception e) {
             System.out.println("Error seleccionando productos! " + e.getMessage());
         }
     }
+//onsuccess="PF('accordionPanel').unselect(index)"
 
     public void SeleccionadorMultiple(CaracteristicaTO caracteristicaSeleccionada) {
         try {
             if (this.listaCanastaCotizador.isEmpty()) {
                 this.listaCanastaCotizador.add(caracteristicaSeleccionada);
-                System.out.println("Agregando : " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
+                System.out.println("Agregando-> " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
             } else {
-                System.out.println("Otro: " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
+                System.out.println("Nuevo-> " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
                 CaracteristicaTO auxiliar = caracteristicaSeleccionada;
                 for (CaracteristicaTO i : this.listaCanastaCotizador) {
                     System.out.println("Lista->" + i + "/" + i.getIdCategoriaCaracteristica() + "/" + i.getIdCaracteristica());
                     if (i.getIdCaracteristica() == auxiliar.getIdCaracteristica()) {
                         CaracteristicaTO a = i;
-                        
                         System.out.println("Remover->" + a + "/" + a.getIdCategoriaCaracteristica() + "/" + a.getIdCaracteristica());
                         this.listaCanastaCotizador.remove(a);
 
@@ -172,7 +208,7 @@ public class CotizadorController implements Serializable {
                 this.listaCanastaCotizador.add(caracteristicaSeleccionada);
             }
         } catch (Exception e) {
-            System.out.println("Error seleccionando productos! " + e.getMessage());
+            System.out.println("Error seleccionando productos! " + e.getLocalizedMessage() + " / " + e.getMessage());
         }
     }
 
@@ -412,14 +448,13 @@ public class CotizadorController implements Serializable {
         this.prioridadCaracteristica = prioridadCaracteristica;
     }
 
-    public List<CaracteristicaTO> getListaCaracteristicasSeleccionada() {
-        return listaCaracteristicasSeleccionada;
-    }
-
-    public void setListaCaracteristicasSeleccionada(List<CaracteristicaTO> listaCaracteristicasSeleccionada) {
-        this.listaCaracteristicasSeleccionada = listaCaracteristicasSeleccionada;
-    }
-
+//    public List<CaracteristicaTO> getListaCaracteristicasSeleccionada() {
+//        return listaCaracteristicasSeleccionada;
+//    }
+//
+//    public void setListaCaracteristicasSeleccionada(List<CaracteristicaTO> listaCaracteristicasSeleccionada) {
+//        this.listaCaracteristicasSeleccionada = listaCaracteristicasSeleccionada;
+//    }
     public boolean esMultiple(CategoriaTO categoriaTO) {
         if (categoriaTO.getSeleccionCategoria().equals("Múltiple")) {
             return true;
@@ -427,16 +462,15 @@ public class CotizadorController implements Serializable {
         return false;
     }
 
-    public void cargarCaracteristicasSelecionadas(int idCaracteristica) {
-        try {
-            if (this.listaCaracteristicasSeleccionada.contains(idCaracteristica)) {
-                this.listaCaracteristicasSeleccionada.remove(idCaracteristica);
-            } else {
-                this.listaCaracteristicasSeleccionada.add(this.servicioCaracteristica.cargarCaracteristicaSeleccionada(idCaracteristica));
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
+//    public void cargarCaracteristicasSelecionadas(int idCaracteristica) {
+//        try {
+//            if (this.listaCaracteristicasSeleccionada.contains(idCaracteristica)) {
+//                this.listaCaracteristicasSeleccionada.remove(idCaracteristica);
+//            } else {
+//                this.listaCaracteristicasSeleccionada.add(this.servicioCaracteristica.cargarCaracteristicaSeleccionada(idCaracteristica));
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//    }
 }
