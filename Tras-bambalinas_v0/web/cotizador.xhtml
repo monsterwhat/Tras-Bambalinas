@@ -42,13 +42,10 @@
                                     <p:dataViewGridItem>
                                         <p:card  style="width: 20em; margin-bottom: 2em; padding: 2em; text-align:center;">
                                             <div class="product-grid-item card border-1">
-
                                                 <div class="product-grid-item-content">
                                                     <center>
                                                         <p:graphicImage style="padding: 1em" value="/imagenes/#{elCotizadorCaracteristica.imagenCaracteristica}" height="192px" width="192px" />
-
                                                         <div class="product-name">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
-
                                                         <div class="product-description">#{elCotizadorCaracteristica.idCaracteristica}</div>
                                                         <p:scrollPanel style="width:12em;height:8em; margin: 0.5em" mode="native" >
                                                             <p class="p-m-0 p-p-3">
@@ -84,6 +81,7 @@
                         </p:accordionPanel>
                     </div> 
 
+                    <center>
                     <div style="margin-top: 1rem ;margin-bottom: 1rem" >
                         <p:outputLabel for="NanchoCotizacion" value="Ancho: "/>
                         <p:inputText id="NanchoCotizacion" value="#{cotizadorController.anchoCotizacion}" placeholder="cm" required="true"/>
@@ -98,6 +96,7 @@
                     <div>
                         <p:commandButton value="Cotizar" actionListener="#{cotizadorController.abrirEIngresarNewCotizacion(loginController.idUser)}" update=":formCotizacion:show-cotizacion-content" onsuccess="PF('showCotizacionDialog').show()"/>
                     </div>
+                    </center>
 
                 </p:panel>
             </p:panelGrid>
@@ -111,15 +110,15 @@
                 <p:outputPanel id="show-cotizacion-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty cotizadorController.newCotizacionTO}">
 
-                        <div class="p-grid p-flex-column">
+                        <p:card>
+                        <div class="p-grid">
                             <div class="p-col">
                                 <p:outputLabel for="numeroCotizacion" value="Numero de Cotización: "/>
                                 <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.newCotizacionTO.numeroCotizacion}" style="width:30rem"/> 
-
                             </div>
                         </div>
 
-                        <div class="p-grid p-flex-column">
+                        <div class="p-grid">
                             <div class="p-col">
                                 <p:outputLabel for="listaDeCaracteristicas" value="Lista de productos: "/>
                                 <p:outputLabel id="listaDeCaracteristicas" value="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" style="width:30rem"/>
@@ -127,7 +126,7 @@
                             </div>
                         </div>
 
-                        <div class="p-grid p-flex-column">
+                        <div class="p-grid">
                             <div class="p-col">
                                 <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotización: "/>
                                 <p:outputLabel id ="fechaCotizacion" value="#{cotizadorController.newCotizacionTO.fechaCotizacion}" style="width:30rem"/>
@@ -135,27 +134,28 @@
                             </div>
                         </div>
 
-                        <div class="p-grid p-flex-column">
+                        <div class="p-grid">
                             <div class="p-col">
                                 <p:outputLabel for="clienteCotizacion" value="Cliente que cotizó: "/>
                                 <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.newCotizacionTO.clienteCotizacion}" style="width:30rem"/>
 
                             </div>
                         </div>
-                        <div class="p-grid p-flex-column">
+                        <div class="p-grid">
                             <div class="p-col">
                                 <p:outputLabel for="anchoCotizacion" value="Ancho que cotizó: "/>
                                 <p:outputLabel id="anchoCotizacion" value="#{cotizadorController.newCotizacionTO.anchoCotizacion}" style="width:30rem"/>
 
                             </div>
                         </div>
-                        <div class="p-grid p-flex-column">
+                        <div class="p-grid">
                             <div class="p-col">
                                 <p:outputLabel for="largoCotizacion" value="Largo que cotizó: "/>
                                 <p:outputLabel id="largoCotizacion" value="#{cotizadorController.newCotizacionTO.largoCotizacion}" style="width:30rem"/>
 
                             </div>
                         </div>
+                            </p:card>
 
                     </p:outputPanel>
                 </p:outputPanel>

@@ -40,7 +40,8 @@ public class ServicioCotizacion extends Servicio {
             List<CaracteristicaTO> listaCotizacionLarga = listaCotizacion(listaCotizacion);
             String anchoCotizacion = cotizacionTO.getAnchoCotizacion();
             String largoCotizacion = cotizacionTO.getLargoCotizacion();
-            CotizacionTO cotizacionTO1 = new CotizacionTO(numeroCotizacion, listaCotizacion, fechaCotizacion, clienteCotizacion, listaCotizacionLarga,anchoCotizacion,largoCotizacion);
+            Double totalCotizacion = cotizacionTO.getTotalCotizacion();
+            CotizacionTO cotizacionTO1 = new CotizacionTO(numeroCotizacion, listaCotizacion, fechaCotizacion, clienteCotizacion, listaCotizacionLarga, anchoCotizacion, largoCotizacion, totalCotizacion);
             listaLarga.add(cotizacionTO1);
         }
         return listaLarga;
@@ -79,7 +80,8 @@ public class ServicioCotizacion extends Servicio {
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 String anchoCotizacion = resultSet.getString("anchoCotizacion");
                 String largoCotizacion = resultSet.getString("largoCotizacion");
-                CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion,anchoCotizacion,largoCotizacion);
+                Double totalCotizacion = resultSet.getDouble("totalCotizacion");
+                CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, anchoCotizacion, largoCotizacion, totalCotizacion);
 
                 listaRetorno.add(cotizacionTO);
             }
@@ -92,48 +94,52 @@ public class ServicioCotizacion extends Servicio {
         }
         return listaRetorno;
     }
-    
-    public CotizacionTO CargarCotizacion(int idCotizacion){
+
+    public CotizacionTO CargarCotizacion(int idCotizacion) {
         Statement statement = null;
         ResultSet resultSet = null;
         CotizacionTO cotizacion = new CotizacionTO();
-        
+
         try {
             conectar();
-            statement=conexion.createStatement();
+            statement = conexion.createStatement();
             String sql = "Select * FROM cotizacion where numeroCotizacion='" + idCotizacion + "'";
-            
+
             resultSet = statement.executeQuery(sql);
-            
-            while(resultSet.next()){
+
+            while (resultSet.next()) {
                 int numeroCotizacion = resultSet.getInt("numeroCotizacion");
                 String listaDeCaracteristicas = resultSet.getString("listaIDCaracteristicaCotizacion");
                 Date fechaCotizacion = resultSet.getDate("fechaCotizacion");
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 String anchoCotizacion = resultSet.getString("anchoCotizacion");
                 String largoCotizacion = resultSet.getString("largoCotizacion");
-                cotizacion = new CotizacionTO(numeroCotizacion,listaDeCaracteristicas,fechaCotizacion,clienteCotizacion,anchoCotizacion,largoCotizacion);
-                
+                double totalCotizacion = resultSet.getDouble("totalCotizacion");
+                cotizacion = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, anchoCotizacion, largoCotizacion, totalCotizacion);
+
                 return cotizacion;
             }
             return cotizacion;
-            
+
         } catch (SQLException e) {
-            System.out.println("Error cargando Cotizacion! "+ e.getMessage());
+            System.out.println("Error cargando Cotizacion! " + e.getMessage());
         }
         return cotizacion;
     }
 
-    public void Cotizar(List<CaracteristicaTO> listaCotizar, int idUsuario) {
+    public void Cotizar(List<CaracteristicaTO> listaCotizar, int idUsuario, String ancho, String largo) {
         PreparedStatement preparedStatement = null;
 
         try {
             conectar();
-            String sql = "INSERT INTO cotizacion (listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion,anchoCotizacion,largoCotizacion) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO cotizacion (listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion,anchoCotizacion,largoCotizacion,totalCotizacion) VALUES (?,?,?,?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
             List<Integer> ListaIDCaracteristicas = null;
+            double totalCotizador = 0;
+
             for (CaracteristicaTO caracteristicaTO : listaCotizar) {
                 ListaIDCaracteristicas.add(caracteristicaTO.getIdCaracteristica());
+                totalCotizador = totalCotizador + caracteristicaTO.getPrecioCaracteristica();
             }
             String lista = ListaIDCaracteristicas.stream()
                     .map(i -> i.toString())
@@ -144,14 +150,18 @@ public class ServicioCotizacion extends Servicio {
             System.out.println(idUsuario);
             System.out.println(Date.valueOf(LocalDate.now()));
             System.out.println("Fin de la informacion.");
-            
+
             preparedStatement.setString(1, lista);
             preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
-            if(idUsuario!=0){
-                preparedStatement.setInt(3,idUsuario);
+            if (idUsuario != 0) {
+                preparedStatement.setInt(3, idUsuario);
+            } else {
+                preparedStatement.setInt(3, 0);
             }
-            preparedStatement.setInt(3, 0);
-            
+            preparedStatement.setString(4, ancho);
+            preparedStatement.setString(5, largo);
+            preparedStatement.setDouble(6, totalCotizador);
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al cotizar! " + e.getMessage());
@@ -160,7 +170,7 @@ public class ServicioCotizacion extends Servicio {
             desconectar();
         }
     }
-      
+
     public void insertarCotizacion(CotizacionTO cotizacionTO) {
         PreparedStatement preparedStatement = null;
 
@@ -173,7 +183,7 @@ public class ServicioCotizacion extends Servicio {
             preparedStatement.setInt(3, cotizacionTO.getClienteCotizacion());
             preparedStatement.setString(4, cotizacionTO.getAnchoCotizacion());
             preparedStatement.setString(5, cotizacionTO.getLargoCotizacion());
-            
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al cotizar! " + e.getMessage());
@@ -182,6 +192,7 @@ public class ServicioCotizacion extends Servicio {
             desconectar();
         }
     }
+
     public void eliminarCotizacion(CotizacionTO cotizacionTO) {
         PreparedStatement preparedStatement = null;
 
@@ -199,8 +210,5 @@ public class ServicioCotizacion extends Servicio {
             desconectar();
         }
     }
-    
-    
-    
-    
+
 }

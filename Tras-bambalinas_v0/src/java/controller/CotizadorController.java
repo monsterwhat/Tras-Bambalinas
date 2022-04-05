@@ -58,8 +58,9 @@ public class CotizadorController implements Serializable {
     String listaDeCaracteristicas;
     Date fechaCotizacion;
     int clienteCotizacion;
-    private String anchoCotizacion;
-    private String largoCotizacion;
+    String anchoCotizacion;
+    String largoCotizacion;
+    double totalCotizacion;
 
     @PostConstruct
     public void cargar() {
@@ -83,6 +84,7 @@ public class CotizadorController implements Serializable {
     public void abrirEIngresarNewCotizacion(int id) {
         // this.newCotizacionTO = new CotizacionTO();
         openNewCotizacion();
+        this.totalCotizacion=0;
         try {
 
             if (this.listaCanastaCotizador.isEmpty()) {
@@ -92,6 +94,7 @@ public class CotizadorController implements Serializable {
 
             this.listaCanastaCotizador.forEach((caracTO) -> {
                 listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
+                this.totalCotizacion = this.totalCotizacion + caracTO.getPrecioCaracteristica();
             });
             this.newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
             this.newCotizacionTO.setFechaCotizacion(Date.valueOf(LocalDate.now()));
@@ -106,7 +109,9 @@ public class CotizadorController implements Serializable {
             }
             this.newCotizacionTO.setAnchoCotizacion(this.anchoCotizacion);
             this.newCotizacionTO.setLargoCotizacion(this.largoCotizacion);
-
+            this.newCotizacionTO.setTotalCotizacion(this.totalCotizacion);
+            
+            
             this.servicioCotizacion.insertarCotizacion(this.newCotizacionTO);
             System.out.println("Se cotizo y se creo la nueva cotizacion.");
             System.out.println("E: " + this.newCotizacionTO.getNumeroCotizacion());
@@ -469,7 +474,7 @@ public class CotizadorController implements Serializable {
                 return false;
             }
             System.out.println("Se mando a cotizar");
-            servicioCotizacion.Cotizar(this.listaCanastaCotizador, idUser);
+            servicioCotizacion.Cotizar(this.listaCanastaCotizador, idUser, this.anchoCotizacion, this.largoCotizacion);
             this.listaCanastaCotizador.forEach((caracTO) -> {
                 listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
             });
