@@ -6,11 +6,27 @@
     <h:head>
         <title>Facelet Title</title>
     </h:head>
-    <h:body>
-        Pantalla del Cliente
-                    <p:commandButton id="regresarId" styleClass="ui-button-success" value="Regresar al Inicio" action="#{loginController.salir()}" >
-                </p:commandButton>
+    <h:body style="background-color:#93b5c6;">
+        <h:form id="formMenu">
+            <p:toolbar>
+                <p:toolbarGroup style="margin-left: 20rem " >
+                                        
+                    <p:button value="FERVA" outcome="/faces/index" icon="pi pi-fw pi-home" styleClass="ui-button-secondary ui-button-flat"  />
+                    <p:button  value="Cotizador"  styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>        
+                           
+                </p:toolbarGroup>
+
+                <p:toolbarGroup>
+                                        
+                                        
+                    <p:menuButton icon="pi pi-user" styleClass="p-mb-2">
+                        <p:menuitem id="regresarId" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" /> 
+                    </p:menuButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+        </h:form>
+        <h3>Pantalla del Cliente</h3>  
     </h:body>
-    
+
 </html>
 

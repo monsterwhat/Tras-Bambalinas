@@ -22,6 +22,7 @@ import servicio.ServicioCifrar;
 
 public class LoginController implements Serializable {
 
+    private int idUser;
     private String correo;
     private String clave;
     private String claveNueva, verificarClave;
@@ -30,7 +31,7 @@ public class LoginController implements Serializable {
     private int telefonoUsuario;
 
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
-    private UsuarioTO usuarioTO = null;
+    private UsuarioTO usuarioTO;
     List<UsuarioTO> listaUsuarios = new ArrayList<UsuarioTO>();
 
     public LoginController() {
@@ -44,6 +45,14 @@ public class LoginController implements Serializable {
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getVerificarClave() {
@@ -134,15 +143,17 @@ public class LoginController implements Serializable {
                 if (!servicioUsuario.verificarCorreo(this.getCorreo())) {
 
                     if (servicioUsuario.existeUsuarioB(this.getCorreo(), this.getClave())) {
-                        usuarioTO = servicioUsuario.existeUsuario(this.getCorreo(), this.getClave());
+                        this.usuarioTO = servicioUsuario.existeUsuario(this.getCorreo(), this.getClave());
+                        this.idUser = usuarioTO.getIdusuarios();
 
-                        switch (usuarioTO.getTipoUsuario()) {
+                        switch (this.usuarioTO.getTipoUsuario()) {
                             case "admin":
                                 this.listaUsuarios = servicioUsuario.listaUsuariosBD();
                                 this.redireccionar("/faces/adminMenu.xhtml");
                                 break;
                             case "cliente":
                                 this.redireccionar("/faces/clienteMenu.xhtml");
+                                
                                 break;
                             default:
                                 addMessage(FacesMessage.SEVERITY_ERROR, "Autenticacion", "Las credenciales son invalidas");
@@ -162,7 +173,7 @@ public class LoginController implements Serializable {
 
     public void cambiarContrasena() {
         try {
-            if (this.getClave() == null || this.getClaveNueva() ==null){
+            if (this.getClave() == null || this.getClaveNueva() == null) {
                 addMessage(FacesMessage.SEVERITY_ERROR, "Error de cambio de contrasena", "Una de las contrasenas no puede estar vacia");
             }
             if (this.getCorreo() == null || "".equals(this.getCorreo())) {

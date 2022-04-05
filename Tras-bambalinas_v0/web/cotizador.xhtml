@@ -83,7 +83,7 @@
                             </p:tab>
                         </p:accordionPanel>
                     </div>          
-                    <p:commandButton value="Cotizar" actionListener="#{cotizadorController.abrirEIngresarNewCotizacion}" update=":formCotizacion:show-cotizacion-content" onsuccess="PF('showCotizacionDialog').show()"/>
+                    <p:commandButton value="Cotizar" actionListener="#{cotizadorController.abrirEIngresarNewCotizacion(loginController.idUser)}" update=":formCotizacion:show-cotizacion-content" onsuccess="PF('showCotizacionDialog').show()"/>
                     
                 </p:panel>
             </p:panelGrid>

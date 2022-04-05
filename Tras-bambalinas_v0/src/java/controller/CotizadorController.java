@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import model.CaracteristicaTO;
 import model.CategoriaTO;
 import model.CotizacionTO;
+import model.UsuarioTO;
 import servicio.ServicioCaracteristica;
 import servicio.ServicioCategoria;
 import servicio.ServicioCotizacion;
@@ -80,7 +81,7 @@ public class CotizadorController implements Serializable {
 
     }
 
-    public void abrirEIngresarNewCotizacion() {
+    public void abrirEIngresarNewCotizacion(int id) {
         this.newCotizacionTO = new CotizacionTO();
         try {
 
@@ -96,10 +97,13 @@ public class CotizadorController implements Serializable {
             newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
             newCotizacionTO.setFechaCotizacion(Date.valueOf(LocalDate.now()));
 
-            if (newCotizacionTO.getClienteCotizacion() != 0) {
-                newCotizacionTO.setClienteCotizacion(14);
+            System.out.println("A: " + id);
+
+            if (id != 0) {
+                newCotizacionTO.setClienteCotizacion(id);
+            } else {
+                newCotizacionTO.setClienteCotizacion(0);
             }
-            newCotizacionTO.setClienteCotizacion(0);
 
             this.servicioCotizacion.insertarCotizacion(newCotizacionTO);
             System.out.println("Se cotizo y se creo la nueva cotizacion.");
@@ -165,7 +169,7 @@ public class CotizadorController implements Serializable {
                 this.listaCanastaCotizador.add(caracteristicaSeleccionada);
                 System.out.println("Agregando-> " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
             } else {
-                test=0;
+                test = 0;
                 auxiliar = caracteristicaSeleccionada;
                 System.out.println("Nuevo->" + auxiliar + "/" + auxiliar.getIdCategoriaCaracteristica() + "/" + auxiliar.getIdCaracteristica());
                 this.listaCanastaCotizador.add(auxiliar);
