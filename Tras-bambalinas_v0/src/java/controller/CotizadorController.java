@@ -96,6 +96,7 @@ public class CotizadorController implements Serializable {
             this.newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
             this.newCotizacionTO.setFechaCotizacion(Date.valueOf(LocalDate.now()));
 
+            System.out.println(this.newCotizacionTO.getListaDeCaracteristicas());
             System.out.println("A: " + id);
 
             if (id != 0) {
@@ -105,12 +106,10 @@ public class CotizadorController implements Serializable {
             }
             this.newCotizacionTO.setAnchoCotizacion(this.anchoCotizacion);
             this.newCotizacionTO.setLargoCotizacion(this.largoCotizacion);
-            
-            
+
             this.servicioCotizacion.insertarCotizacion(this.newCotizacionTO);
             System.out.println("Se cotizo y se creo la nueva cotizacion.");
             System.out.println("E: " + this.newCotizacionTO.getNumeroCotizacion());
-            
 
         } catch (Exception e) {
             System.out.println("Quizas la cotizacion se encuentra nula?");
@@ -138,24 +137,35 @@ public class CotizadorController implements Serializable {
 
     public void SeleccionadorUnica(CaracteristicaTO caracteristicaSeleccionada) {
         try {
+            int test;
+            CaracteristicaTO auxiliar;
+
             if (this.listaCanastaCotizador.isEmpty()) {
                 this.listaCanastaCotizador.add(caracteristicaSeleccionada);
+                System.out.println("Agregando-> " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
             } else {
-                int test = 0;
-                CaracteristicaTO auxiliar = caracteristicaSeleccionada;
+                test = 0;
+                auxiliar = caracteristicaSeleccionada;
+                System.out.println("Nuevo->" + auxiliar + "/" + auxiliar.getIdCategoriaCaracteristica() + "/" + auxiliar.getIdCaracteristica());
+                this.listaCanastaCotizador.add(auxiliar);
                 do {
-                    if (this.listaCanastaCotizador.get(test).getIdCategoriaCaracteristica() == auxiliar.getIdCategoriaCaracteristica()) {
-                        this.listaCanastaCotizador.remove(test);
-                        this.listaCanastaCotizador.add(caracteristicaSeleccionada);
+                    if (this.listaCanastaCotizador.get(test).getIdCategoriaCaracteristica() == auxiliar.getIdCategoriaCaracteristica()
+                            && this.listaCanastaCotizador.get(test).getIdCaracteristica() != auxiliar.getIdCaracteristica()) {
+
+                        System.out.println("Remover Anterior->" + this.listaCanastaCotizador.get(test) + "/" + this.listaCanastaCotizador.get(test).getIdCategoriaCaracteristica() + "/" + this.listaCanastaCotizador.get(test).getIdCaracteristica());
+                        this.listaCanastaCotizador.remove(this.listaCanastaCotizador.get(test));
                     }
                     test++;
                 } while (test < this.listaCanastaCotizador.size());
+                for (CaracteristicaTO i : this.listaCanastaCotizador) {
+                    System.out.println("Lista->" + i + "/" + i.getIdCategoriaCaracteristica() + "/" + i.getIdCaracteristica());
+                }
+
             }
         } catch (Exception e) {
             System.out.println("Error seleccionando productos! " + e.getMessage());
         }
     }
-
 
     public void SeleccionadorMultiple(CaracteristicaTO caracteristicaSeleccionada) {
         List<CaracteristicaTO> lista = new ArrayList<CaracteristicaTO>();
@@ -201,8 +211,6 @@ public class CotizadorController implements Serializable {
     public void setLargoCotizacion(String largoCotizacion) {
         this.largoCotizacion = largoCotizacion;
     }
-    
-    
 
     public CotizacionTO getNewCotizacionTO() {
         return newCotizacionTO;
@@ -452,7 +460,6 @@ public class CotizadorController implements Serializable {
         }
     }
 
-    
     public boolean Cotizar(int idUser) {
 //        xhtml(87)=<!--actionListener="#{cotizadorController.Cotizar(userController.idUser)}" onclick="#{cotizadorController.openNewCotizacion()}"--> required="true"
         try {
