@@ -57,20 +57,20 @@
                                                         </p:scrollPanel>
                                                     </center>
                                                 </div>
-                                                <div class="product-grid-item-bottom">
+                                                <div id="seleccionadorProductos"  class="product-grid-item-bottom">
                                                     <center>
                                                         <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
                                                             <f:convertNumber currencySymbol="₡" type="currency"/>
                                                         </h:outputText>
-
                                                         <div>
-                                                            <p:selectOneRadio id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio" unselectable="true">
-                                                                <f:selectItem itemLabel="seleccionar" itemValue="seleccionar" />
+                                                            <p:selectOneRadio  id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio" unselectable="true">
+                                                                <f:selectItem itemLabel="Seleccionar" itemValue="null" />
                                                                 <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristica)}" onsuccess="PF('accordionPanel').select(+1)"/>
                                                             </p:selectOneRadio>
-
-                                                            <h:selectManyCheckbox id="seleccionMB"  rendered="#{cotizadorController.esMultiple(elCotizadorCategoria)}">
-                                                                <f:selectItem itemLabel="Option 1" itemValue="Option 1" />
+                                                        </div>
+                                                        <div>
+                                                            <h:selectManyCheckbox id="seleccionMB" rendered="#{cotizadorController.esMultiple(elCotizadorCategoria)}">
+                                                                <f:selectItem id="multiple" itemLabel="Seleccionar" itemValue="null" />
                                                                 <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorMultiple(elCotizadorCaracteristica)}" />
                                                             </h:selectManyCheckbox>
                                                         </div>

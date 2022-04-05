@@ -14,7 +14,6 @@ import javax.faces.context.FacesContext;
 import model.CaracteristicaTO;
 import model.CategoriaTO;
 import model.CotizacionTO;
-import model.UsuarioTO;
 import servicio.ServicioCaracteristica;
 import servicio.ServicioCategoria;
 import servicio.ServicioCotizacion;
@@ -162,19 +161,21 @@ public class CotizadorController implements Serializable {
         List<CaracteristicaTO> lista = new ArrayList<CaracteristicaTO>();
         try {
             if (this.listaCanastaCotizador.isEmpty()) {
-                if (lista.isEmpty()) {
-                    lista.add(caracteristicaSeleccionada);
-                }
+                this.listaCanastaCotizador.add(caracteristicaSeleccionada);
+                System.out.println("Agregando-> " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
             } else {
-                if (lista.contains(caracteristicaSeleccionada)) {
-                    lista.remove(caracteristicaSeleccionada);
-                } else {
-                    lista.add(caracteristicaSeleccionada);
+                System.out.println("Nuevo-> " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
+                CaracteristicaTO auxiliar = caracteristicaSeleccionada;
+                for (CaracteristicaTO i : this.listaCanastaCotizador) {
+                    System.out.println("Lista->" + i + "/" + i.getIdCategoriaCaracteristica() + "/" + i.getIdCaracteristica());
+                    if (i.getIdCaracteristica() == auxiliar.getIdCaracteristica()) {
+                        CaracteristicaTO a = i;
+                        System.out.println("Remover->" + a + "/" + a.getIdCategoriaCaracteristica() + "/" + a.getIdCaracteristica());
+                        this.listaCanastaCotizador.remove(a);
+                    }
                 }
-                
-                this.listaCanastaCotizador = lista;
-
             }
+            this.listaCanastaCotizador.add(caracteristicaSeleccionada);
 
         } catch (Exception e) {
             System.out.println("Error seleccionando productos! " + e.getLocalizedMessage() + " / " + e.getMessage());
