@@ -739,13 +739,15 @@
                     </p:dataTable>
                 </p:outputPanel>  
             </p:dialog>
+            
+       
 
 
             <p:dialog header="Detalles de la Cotización" showEffect="fade" modal="true"
                       widgetVar="showCotizacionDialog" responsive="true" minHeight="350" width="550">
 
                 <p:outputPanel id="show-cotizacion-content" class="card">
-                    <p:outputPanel rendered="#{not empty laCotizacion}">
+                    <p:outputPanel rendered="#{not empty cotizadorController.newCotizacionTO}">
 
                         <div class="p-grid card">
                             <div class="card">
@@ -762,7 +764,7 @@
                                         <p:dataViewGridItem>
 
 
-                                            <p:graphicImage id="imagen-caracteristica-detallada" width="128" height="128" value="/imagenes/#{caracteristica.imagenCaracteristica}"/>
+                                            <p:graphicImage id="imagen-caracteristica-detallada" width="128" height="128" value="/imagenes/#{OtherController.newCaracteristica.imagenCaracteristica}"/>
 
 
                                         </p:dataViewGridItem>
@@ -770,13 +772,13 @@
                                 </div>
 
                                 <div style="padding-bottom: 1em">
-                                    <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotización"/>
+                                    <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotización: "/>
                                     <p:outputLabel id ="fechaCotizacion" value="#{cotizadorController.newCotizacionTO.fechaCotizacion}" style="width:30rem"/>
                                     <p:message for="fechaCotizacion" display="icon"/>
                                 </div>
 
                                 <div style="padding-bottom: 1em">
-                                    <p:outputLabel for="clienteCotizacion" value="Cliente que cotizó"/>
+                                    <p:outputLabel for="clienteCotizacion" value="Cliente que cotizó: "/>
                                     <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.newCotizacionTO.clienteCotizacion}" style="width:30rem"/>
                                     <p:message for="clienteCotizacion" display="icon"/>
                                 </div>
