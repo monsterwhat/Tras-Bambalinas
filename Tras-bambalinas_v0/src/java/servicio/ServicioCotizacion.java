@@ -38,7 +38,9 @@ public class ServicioCotizacion extends Servicio {
             Date fechaCotizacion = cotizacionTO.getFechaCotizacion();
             int clienteCotizacion = cotizacionTO.getClienteCotizacion();
             List<CaracteristicaTO> listaCotizacionLarga = listaCotizacion(listaCotizacion);
-            CotizacionTO cotizacionTO1 = new CotizacionTO(numeroCotizacion, listaCotizacion, fechaCotizacion, clienteCotizacion, listaCotizacionLarga);
+            String anchoCotizacion = cotizacionTO.getAnchoCotizacion();
+            String largoCotizacion = cotizacionTO.getLargoCotizacion();
+            CotizacionTO cotizacionTO1 = new CotizacionTO(numeroCotizacion, listaCotizacion, fechaCotizacion, clienteCotizacion, listaCotizacionLarga,anchoCotizacion,largoCotizacion);
             listaLarga.add(cotizacionTO1);
         }
         return listaLarga;
@@ -75,7 +77,9 @@ public class ServicioCotizacion extends Servicio {
                 String listaDeCaracteristicas = resultSet.getString("listaIDCaracteristicaCotizacion");
                 Date fechaCotizacion = resultSet.getDate("fechaCotizacion");
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
-                CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion);
+                String anchoCotizacion = resultSet.getString("anchoCotizacion");
+                String largoCotizacion = resultSet.getString("largoCotizacion");
+                CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion,anchoCotizacion,largoCotizacion);
 
                 listaRetorno.add(cotizacionTO);
             }
@@ -106,7 +110,9 @@ public class ServicioCotizacion extends Servicio {
                 String listaDeCaracteristicas = resultSet.getString("listaIDCaracteristicaCotizacion");
                 Date fechaCotizacion = resultSet.getDate("fechaCotizacion");
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
-                cotizacion = new CotizacionTO(numeroCotizacion,listaDeCaracteristicas,fechaCotizacion,clienteCotizacion);
+                String anchoCotizacion = resultSet.getString("anchoCotizacion");
+                String largoCotizacion = resultSet.getString("largoCotizacion");
+                cotizacion = new CotizacionTO(numeroCotizacion,listaDeCaracteristicas,fechaCotizacion,clienteCotizacion,anchoCotizacion,largoCotizacion);
                 
                 return cotizacion;
             }
@@ -123,7 +129,7 @@ public class ServicioCotizacion extends Servicio {
 
         try {
             conectar();
-            String sql = "INSERT INTO cotizacion (listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion) VALUES (?,?,?)";
+            String sql = "INSERT INTO cotizacion (listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion,anchoCotizacion,largoCotizacion) VALUES (?,?,?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
             List<Integer> ListaIDCaracteristicas = null;
             for (CaracteristicaTO caracteristicaTO : listaCotizar) {
@@ -154,11 +160,13 @@ public class ServicioCotizacion extends Servicio {
 
         try {
             conectar();
-            String sql = "INSERT INTO cotizacion (listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion) VALUES (?,?,?)";
+            String sql = "INSERT INTO cotizacion (listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion,anchoCotizacion,largoCotizacion) VALUES (?,?,?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
             preparedStatement.setString(1, cotizacionTO.getListaDeCaracteristicas());
             preparedStatement.setDate(2, cotizacionTO.getFechaCotizacion());
             preparedStatement.setInt(3, cotizacionTO.getClienteCotizacion());
+            preparedStatement.setString(4, cotizacionTO.getAnchoCotizacion());
+            preparedStatement.setString(5, cotizacionTO.getLargoCotizacion());
             
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

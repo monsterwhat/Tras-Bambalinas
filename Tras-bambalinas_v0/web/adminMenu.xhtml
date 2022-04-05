@@ -727,6 +727,12 @@
                         <p:column headerText="Cliente" sortBy="#{laCotizacion.clienteCotizacion}">
                             <h:outputText value="#{laCotizacion.clienteCotizacion}"/>
                         </p:column>
+                        <p:column headerText="Ancho" sortBy="#{laCotizacion.anchoCotizacion}">
+                            <h:outputText value="#{laCotizacion.anchoCotizacion}"/>
+                        </p:column>
+                        <p:column headerText="Largo" sortBy="#{laCotizacion.largoCotizacion}">
+                            <h:outputText value="#{laCotizacion.largoCotizacion}"/>
+                        </p:column>
                         <p:column>
                             <p:commandButton icon="pi pi-eye" update=":formCotizacion:show-cotizacion-content"
                                              oncomplete="PF('showCotizacionDialog').show()"
@@ -798,6 +804,18 @@
                                     <p:message for="clienteCotizacion" display="icon"/>
                                 </div>
                                 
+                                 <div style="padding-bottom: 1em">
+                                    <p:outputLabel for="anchoCotizacion" value="Ancho de la cotización: "/>
+                                    <p:outputLabel id="anchoCotizacion" value="#{cotizadorController.newCotizacionTO.anchoCotizacion}" style="width:30rem"/>
+                                    <p:message for="anchoCotizacion" display="icon"/>
+                                </div>
+                                
+                                 <div style="padding-bottom: 1em">
+                                    <p:outputLabel for="largoCotizacion" value="Largo de la cotización: "/>
+                                    <p:outputLabel id="largoCotizacion" value="#{cotizadorController.newCotizacionTO.largoCotizacion}" style="width:30rem"/>
+                                    <p:message for="largoCotizacion" display="icon"/>
+                                </div>
+                                
                               
                             </div>
                         </div>
@@ -846,7 +864,6 @@
                 </p:toolbarGroup>
                 <p:toolbarGroup style="margin-left: 2rem " >
                     <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml" />
-
                     <p:button value="Cotizar" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>
                     <!--                        <p:button value="Redes Sociales" styleClass="ui-button-secondary ui-button-flat" />
                                             <p:button value="Ubicacion" styleClass="ui-button-secondary ui-button-flat" />                       

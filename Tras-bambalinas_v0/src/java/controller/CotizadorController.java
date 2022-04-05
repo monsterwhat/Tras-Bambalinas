@@ -36,8 +36,6 @@ public class CotizadorController implements Serializable {
     List<CaracteristicaTO> listaCaracteristicasParaCotizador = new ArrayList<>();
     List<CaracteristicaTO> listaCanastaCotizador = new ArrayList<>();
 
-    List<CaracteristicaTO> listaCaracteristicasSeleccionada = new ArrayList<>();
-
     List<CategoriaTO> listaCategoriaParaCotizar = new ArrayList<>();
     List<CotizacionTO> listaCotizacion = new ArrayList<>();
 
@@ -61,6 +59,8 @@ public class CotizadorController implements Serializable {
     String listaDeCaracteristicas;
     Date fechaCotizacion;
     int clienteCotizacion;
+    private String anchoCotizacion;
+    private String largoCotizacion;
 
     @PostConstruct
     public void cargar() {
@@ -82,7 +82,8 @@ public class CotizadorController implements Serializable {
     }
 
     public void abrirEIngresarNewCotizacion(int id) {
-        this.newCotizacionTO = new CotizacionTO();
+        // this.newCotizacionTO = new CotizacionTO();
+        openNewCotizacion();
         try {
 
             if (this.listaCanastaCotizador.isEmpty()) {
@@ -94,53 +95,30 @@ public class CotizadorController implements Serializable {
             this.listaCanastaCotizador.forEach((caracTO) -> {
                 listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
             });
-            newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
-            newCotizacionTO.setFechaCotizacion(Date.valueOf(LocalDate.now()));
+            this.newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
+            this.newCotizacionTO.setFechaCotizacion(Date.valueOf(LocalDate.now()));
 
             System.out.println("A: " + id);
 
             if (id != 0) {
-                newCotizacionTO.setClienteCotizacion(id);
+                this.newCotizacionTO.setClienteCotizacion(id);
             } else {
-                newCotizacionTO.setClienteCotizacion(0);
+                this.newCotizacionTO.setClienteCotizacion(0);
             }
-
-            this.servicioCotizacion.insertarCotizacion(newCotizacionTO);
+            this.newCotizacionTO.setAnchoCotizacion(this.anchoCotizacion);
+            this.newCotizacionTO.setLargoCotizacion(this.largoCotizacion);
+            
+            
+            this.servicioCotizacion.insertarCotizacion(this.newCotizacionTO);
             System.out.println("Se cotizo y se creo la nueva cotizacion.");
+            System.out.println("E: " + this.newCotizacionTO.getNumeroCotizacion());
+            
 
         } catch (Exception e) {
             System.out.println("Quizas la cotizacion se encuentra nula?");
             System.out.println("Error agregando cotizacion! " + e);
         }
 
-    }
-
-    public boolean Cotizar(int idUser) {
-//        xhtml(87)=<!--actionListener="#{cotizadorController.Cotizar(userController.idUser)}" onclick="#{cotizadorController.openNewCotizacion()}"--> required="true"
-        try {
-            if (this.listaCanastaCotizador.isEmpty()) {
-                System.out.println("Error esta vacia");
-                addMessage(FacesMessage.SEVERITY_ERROR, "Error de cotizacion!", "No hay items seleccionados!");
-                return false;
-            }
-            System.out.println("Se mando a cotizar");
-            servicioCotizacion.Cotizar(this.listaCanastaCotizador, idUser);
-            this.listaCanastaCotizador.forEach((caracTO) -> {
-                listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
-            });
-            listaDeCaracteristicas = listaIdCaracteristicas.stream()
-                    .map(i -> i.toString())
-                    .collect(Collectors.joining(", "));
-
-            this.fechaCotizacion = Date.valueOf(LocalDate.now());
-
-            newCotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, idUser);
-            System.out.println("Se cotizo y se creo la nueva cotizacion.");
-            return true;
-        } catch (Exception e) {
-            System.out.println("Error al tratar de cotizar! " + e.getMessage());
-        }
-        return false;
     }
 
     public List<CaracteristicaTO> cargarListaCaracteristicas(int id) {
@@ -191,7 +169,7 @@ public class CotizadorController implements Serializable {
             System.out.println("Error seleccionando productos! " + e.getMessage());
         }
     }
-//
+
 
     public void SeleccionadorMultiple(CaracteristicaTO caracteristicaSeleccionada) {
         try {
@@ -218,8 +196,26 @@ public class CotizadorController implements Serializable {
     }
 
     public void openNewCotizacion() {
-        this.newCotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion);
+        this.newCotizacionTO = new CotizacionTO();
     }
+
+    public String getAnchoCotizacion() {
+        return anchoCotizacion;
+    }
+
+    public void setAnchoCotizacion(String anchoCotizacion) {
+        this.anchoCotizacion = anchoCotizacion;
+    }
+
+    public String getLargoCotizacion() {
+        return largoCotizacion;
+    }
+
+    public void setLargoCotizacion(String largoCotizacion) {
+        this.largoCotizacion = largoCotizacion;
+    }
+    
+    
 
     public CotizacionTO getNewCotizacionTO() {
         return newCotizacionTO;
@@ -453,19 +449,13 @@ public class CotizadorController implements Serializable {
         this.prioridadCaracteristica = prioridadCaracteristica;
     }
 
-//    public List<CaracteristicaTO> getListaCaracteristicasSeleccionada() {
-//        return listaCaracteristicasSeleccionada;
-//    }
-//
-//    public void setListaCaracteristicasSeleccionada(List<CaracteristicaTO> listaCaracteristicasSeleccionada) {
-//        this.listaCaracteristicasSeleccionada = listaCaracteristicasSeleccionada;
-//    }
     public boolean esMultiple(CategoriaTO categoriaTO) {
         if (categoriaTO.getSeleccionCategoria().equals("Múltiple")) {
             return true;
         }
         return false;
     }
+
     public void eliminarCotizacionTO() {
         try {
             this.servicioCotizacion.eliminarCotizacion(newCotizacionTO);
@@ -475,15 +465,33 @@ public class CotizadorController implements Serializable {
         }
     }
 
-//    public void cargarCaracteristicasSelecionadas(int idCaracteristica) {
-//        try {
-//            if (this.listaCaracteristicasSeleccionada.contains(idCaracteristica)) {
-//                this.listaCaracteristicasSeleccionada.remove(idCaracteristica);
-//            } else {
-//                this.listaCaracteristicasSeleccionada.add(this.servicioCaracteristica.cargarCaracteristicaSeleccionada(idCaracteristica));
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//    }
+    
+    public boolean Cotizar(int idUser) {
+//        xhtml(87)=<!--actionListener="#{cotizadorController.Cotizar(userController.idUser)}" onclick="#{cotizadorController.openNewCotizacion()}"--> required="true"
+        try {
+            if (this.listaCanastaCotizador.isEmpty()) {
+                System.out.println("Error esta vacia");
+                addMessage(FacesMessage.SEVERITY_ERROR, "Error de cotizacion!", "No hay items seleccionados!");
+                return false;
+            }
+            System.out.println("Se mando a cotizar");
+            servicioCotizacion.Cotizar(this.listaCanastaCotizador, idUser);
+            this.listaCanastaCotizador.forEach((caracTO) -> {
+                listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
+            });
+            listaDeCaracteristicas = listaIdCaracteristicas.stream()
+                    .map(i -> i.toString())
+                    .collect(Collectors.joining(", "));
+
+            this.fechaCotizacion = Date.valueOf(LocalDate.now());
+
+            //newCotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, idUser);
+            System.out.println("Se cotizo y se creo la nueva cotizacion.");
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error al tratar de cotizar! " + e.getMessage());
+        }
+        return false;
+    }
+
 }
