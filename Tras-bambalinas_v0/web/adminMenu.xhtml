@@ -736,10 +736,25 @@
                             </p:commandButton>
 
                         </p:column>
+                          <p:column>
+                             <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                             oncomplete="PF('deleteCotizacionDialog').show()">
+                                  <f:setPropertyActionListener value="#{laCotizacion}" target="#{cotizadorController.newCotizacionTO}"/>
+                              </p:commandButton>                    
+                              </p:column>
                     </p:dataTable>
                 </p:outputPanel>  
             </p:dialog>
             
+            <p:confirmDialog widgetVar="deleteCotizacionDialog" showEffect="fade" width="300"
+                             message="Desea eliminar la cotización?" header="Confirmación" severity="warn">
+
+                     <p:commandButton value="Sí" icon="pi pi-check" actionListener="#{cotizadorController.eliminarCotizacionTO()}"
+                                 process="@this"  update="cotizacionTable" oncomplete="PF('deleteCotizacionDialog').hide()"/>
+
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteCotizacionDialog').hide()"/>
+            </p:confirmDialog>
        
 
 
@@ -782,11 +797,14 @@
                                     <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.newCotizacionTO.clienteCotizacion}" style="width:30rem"/>
                                     <p:message for="clienteCotizacion" display="icon"/>
                                 </div>
+                                
+                              
                             </div>
                         </div>
 
                     </p:outputPanel>
                 </p:outputPanel>
+                 
 
                 <f:facet name="footer">     
 
@@ -794,6 +812,15 @@
                                      class="ui-button-secondary"/>
                 </f:facet>
             </p:dialog>
+<!--            <p:confirmDialog widgetVar="deleteCotizacionDialog" showEffect="fade" width="300"
+                             message="Desea eliminar la cotización?" header="Confirmación" severity="warn">
+
+                     <p:commandButton value="Sí" icon="pi pi-check" actionListener="#{cotizadorController.eliminarCotizacionTO()}"
+                                 process="@this"  update="userTable" oncomplete="PF('deleteCotizacionDialog').hide()"/>
+
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteCotizacionDialog').hide()"/>
+            </p:confirmDialog>-->
 
         </h:form>
 

@@ -466,6 +466,14 @@ public class CotizadorController implements Serializable {
         }
         return false;
     }
+    public void eliminarCotizacionTO() {
+        try {
+            this.servicioCotizacion.eliminarCotizacion(newCotizacionTO);
+            this.cargar();
+        } catch (Exception e) {
+            System.out.println("Error elimando usuario! " + e);
+        }
+    }
 
 //    public void cargarCaracteristicasSelecionadas(int idCaracteristica) {
 //        try {

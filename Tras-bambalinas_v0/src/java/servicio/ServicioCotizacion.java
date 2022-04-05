@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import model.CotizacionTO;
 import model.CaracteristicaTO;
+import model.UsuarioTO;
 
 public class ServicioCotizacion extends Servicio {
 
@@ -162,6 +163,23 @@ public class ServicioCotizacion extends Servicio {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al cotizar! " + e.getMessage());
+        } finally {
+            cerrarPreparedStatement(preparedStatement);
+            desconectar();
+        }
+    }
+    public void eliminarCotizacion(CotizacionTO cotizacionTO) {
+        PreparedStatement preparedStatement = null;
+
+        try {
+            conectar();
+            String sql = "DELETE FROM cotizacion WHERE numeroCotizacion='" + cotizacionTO.getNumeroCotizacion() + "'";
+            preparedStatement = conexion.prepareStatement(sql);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar la cotizacion! " + e.getMessage());
         } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
