@@ -64,9 +64,9 @@
                                                         </h:outputText>
 
                                                         <div>
-                                                            <p:selectOneRadio id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio"  >
+                                                            <p:selectOneRadio id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio" unselectable="true">
                                                                 <f:selectItem itemLabel="seleccionar" itemValue="seleccionar" />
-                                                                <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristica)}" onsuccess="PF('accordionPanel').unselect(index)" />
+                                                                <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristica)}" onsuccess="PF('accordionPanel').select(+1)"/>
                                                             </p:selectOneRadio>
 
                                                             <h:selectManyCheckbox id="seleccionMB"  rendered="#{cotizadorController.esMultiple(elCotizadorCategoria)}">
@@ -121,9 +121,9 @@
 
                         <div class="p-grid p-flex-column">
                             <div class="p-col">
-                                <p:outputLabel for="listaCaracteristicas" value="Lista de productos: "/>
-                                <p:outputLabel id="listaCaracteristicas" value="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" style="width:30rem"/>
-
+                                <p:outputLabel for="listaDeCaracteristicas" value="Lista de productos: "/>
+                                <p:outputLabel id="listaDeCaracteristicas" value="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" style="width:30rem"/>
+                                <p:message for="listaDeCaracteristicas" display="icon"/> 
                             </div>
                         </div>
 

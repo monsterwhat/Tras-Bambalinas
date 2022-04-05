@@ -118,7 +118,7 @@ public class ServicioCotizacion extends Servicio {
             }
             return cotizacion;
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error cargando Cotizacion! "+ e.getMessage());
         }
         return cotizacion;
@@ -139,6 +139,12 @@ public class ServicioCotizacion extends Servicio {
                     .map(i -> i.toString())
                     .collect(Collectors.joining(", "));
 
+            System.out.println("Informacion a insertar en la BD");
+            System.out.println(lista);
+            System.out.println(idUsuario);
+            System.out.println(Date.valueOf(LocalDate.now()));
+            System.out.println("Fin de la informacion.");
+            
             preparedStatement.setString(1, lista);
             preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
             if(idUsuario!=0){
