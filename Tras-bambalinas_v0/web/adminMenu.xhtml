@@ -522,7 +522,7 @@
                                 </div>
                                 <div>
                                     <p:selectOneMenu id="idCategoriaCaracteristica" value="#{OtherController.newCaracteristica.idCategoriaCaracteristica}" 
-                                                     var="cat" panelStyle="width:200px; height:500px" style="width:25rem">                                        
+                                                     var="cat" panelStyle="width:200px;" style="width:25rem">                                        
                                         <f:selectItems value="#{OtherController.listaCategorias}" var="laCategoria"  itemLabel="#{laCategoria.nombreCategoria}" 
                                                        itemValue="#{laCategoria.idCategoria}"/>      h
                                         <p:column >
@@ -906,22 +906,20 @@
                 </p:toolbarGroup>
                 <p:toolbarGroup style="margin-left: 2rem " >
                     <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml" />
-                    <p:button value="Cotizar" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>
+                    <p:button value="Cotizador" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>
                     <!--                        <p:button value="Redes Sociales" styleClass="ui-button-secondary ui-button-flat" />
                                             <p:button value="Ubicacion" styleClass="ui-button-secondary ui-button-flat" />                       
                                             <p:button value="Catalogo" styleClass="ui-button-secondary ui-button-flat"/>
                                             <p:button  value="Servicios" styleClass="ui-button-secondary ui-button-flat"/>-->
                 </p:toolbarGroup>   
                 <p:toolbarGroup align="right">
-                    <!--                        align="right">
-                                            <p:button icon="pi pi-shopping-cart"  style="margin-right:5px" />-->
                     <p:menuButton icon="pi pi-user" styleClass="p-mb-2">
                         <p:menuitem id="regresarId" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
                     </p:menuButton>
                 </p:toolbarGroup>
 
             </p:toolbar>
-            <h3> BIENVENIDO </h3>
+            <h3> BIENVENIDO ADMINISTRADOR </h3>
         </h:form>
 
     </h:body>
