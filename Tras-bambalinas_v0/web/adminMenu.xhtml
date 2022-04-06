@@ -105,7 +105,7 @@
             </p:confirmDialog>
 
             <p:dialog header="Crear Usuario" showEffect="fade" modal="true"
-                      widgetVar="createUserDialog" responsive="true">
+                      widgetVar="createUserDialog" responsive="true" minHeight="350" width="550"> 
 
                 <p:outputPanel id="create-user-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty userController.newUser}">
@@ -119,11 +119,18 @@
                             <p:password id="Npass" value="#{userController.newUser.contrasenaUsuario}" required="true"/>
                             <p:message for="Npass" display="tooltip"/>
                         </div>
-                        <div class="p-field">
-                            <p:outputLabel for="Ntipo" value="Tipo de Usuario"/>
-                            <p:inputText id="Ntipo" value="#{userController.newUser.tipoUsuario}" required="true"/>
-                            <p:message for="Ntipo" display="tooltip"/>
+
+                        <div class="p-grid  p-flex-column" >
+                            <div class="p-col">
+                                <p:outputLabel for="Ntipo" value="Tipo de Usuario"/>
+                                <p:selectOneButton id="Ntipo" value="#{userController.newUser.tipoUsuario}" required="true" style="width:28rem">
+                                    <f:selectItem itemLabel="Administrador" itemValue="admin"/>
+                                    <f:selectItem itemLabel="Cliente" itemValue="cliente"/>
+                                </p:selectOneButton>
+                                <p:message for="Ntipo" display="icon"/>
+                            </div>
                         </div>
+
                         <div class="p-field">
                             <p:outputLabel for="Nnombre" value="Nombre del Usuario"/>
                             <p:inputText id="Nnombre" value="#{userController.newUser.nombreUsuario}" required="true"/>
@@ -156,7 +163,7 @@
             </p:dialog>
 
             <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
-                      widgetVar="updateUserDialog" responsive="true">
+                      widgetVar="updateUserDialog" responsive="true" minHeight="350" width="550">
 
                 <p:outputPanel id="update-user-content" class="ui-fluid">
                     <p:outputPanel rendered="#{not empty userController.newUser}">
@@ -164,9 +171,15 @@
                             <p:outputLabel for="mail" value="Correo"/>
                             <p:inputText type="email" id="mail" value="#{userController.newUser.correoUsuario}"/>
                         </div>
-                        <div class="p-field">
-                            <p:outputLabel for="tipo" value="Tipo de Usuario"/>
-                            <p:inputText id="tipo" value="#{userController.newUser.tipoUsuario}"/>
+                        <div class="p-grid  p-flex-column" >
+                            <div class="p-col">
+                                <p:outputLabel for="tipo" value="Tipo de Usuario"/>
+                                <p:selectOneButton id="tipo" value="#{userController.newUser.tipoUsuario}" required="true" style="width:28rem">
+                                    <f:selectItem itemLabel="Administrador" itemValue="admin"/>
+                                    <f:selectItem itemLabel="Cliente" itemValue="cliente"/>
+                                </p:selectOneButton>
+                                <p:message for="tipo" display="icon"/>
+                            </div>
                         </div>
                         <div class="p-field">
                             <p:outputLabel for="nombre" value="Nombre de Usuario"/>
@@ -733,6 +746,9 @@
                         <p:column headerText="Largo" sortBy="#{laCotizacion.largoCotizacion}">
                             <h:outputText value="#{laCotizacion.largoCotizacion}"/>
                         </p:column>
+                        <p:column headerText="Monto Total" sortBy="#{laCotizacion.totalCotizacion}">
+                            <h:outputText value="#{laCotizacion.totalCotizacion}"/>
+                        </p:column>
                         <p:column>
                             <p:commandButton icon="pi pi-eye" update=":formCotizacion:show-cotizacion-content"
                                              oncomplete="PF('showCotizacionDialog').show()"
@@ -742,26 +758,26 @@
                             </p:commandButton>
 
                         </p:column>
-                          <p:column>
-                             <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                        <p:column>
+                            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
                                              oncomplete="PF('deleteCotizacionDialog').show()">
-                                  <f:setPropertyActionListener value="#{laCotizacion}" target="#{cotizadorController.newCotizacionTO}"/>
-                              </p:commandButton>                    
-                              </p:column>
+                                <f:setPropertyActionListener value="#{laCotizacion}" target="#{cotizadorController.newCotizacionTO}"/>
+                            </p:commandButton>                    
+                        </p:column>
                     </p:dataTable>
                 </p:outputPanel>  
             </p:dialog>
-            
+
             <p:confirmDialog widgetVar="deleteCotizacionDialog" showEffect="fade" width="300"
                              message="Desea eliminar la cotización?" header="Confirmación" severity="warn">
 
-                     <p:commandButton value="Sí" icon="pi pi-check" actionListener="#{cotizadorController.eliminarCotizacionTO()}"
+                <p:commandButton value="Sí" icon="pi pi-check" actionListener="#{cotizadorController.eliminarCotizacionTO()}"
                                  process="@this"  update="cotizacionTable" oncomplete="PF('deleteCotizacionDialog').hide()"/>
 
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                  onclick="PF('deleteCotizacionDialog').hide()"/>
             </p:confirmDialog>
-       
+
 
 
             <p:dialog header="Detalles de la Cotización" showEffect="fade" modal="true"
@@ -780,37 +796,37 @@
                                 </div>
 
                                 <div class="card product" style="padding-bottom: 1em">
-                                    
-                                        
-                                        <p:dataViewGridItem>
-                                        
-                       
-                                            <p:outputLabel for="imagenC" value="Lista de productos:  "/>
-                                            <p:panel id="imagenC" header="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" style="text-align:center">
+
+
+                                    <p:dataViewGridItem>
+
+
+                                        <p:outputLabel for="imagenC" value="Lista de productos:  "/>
+                                        <p:panel id="imagenC" header="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" style="text-align:center">
                                             <h:panelGrid columns="4" style="width:100%">
-                                              
+
                                                 <div class="product-name">#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}</div>
 
                                                 <div class="product-description">#{cotizadorController.newCotizacionTO.numeroCotizacion}</div>
                                                 <p:graphicImage id="imagen-caracteristica-detallada" width="128" height="128" value="/imagenes/#{cotizadorController.cargarImagenCaracteristica(id)}"/>
-                                               
-                                               
-                                              
+
+
+
                                             </h:panelGrid>
-                                            </p:panel>
+                                        </p:panel>
 
-                                
-                            
 
-                                        </p:dataViewGridItem>
-                                   
-                            
+
+
+                                    </p:dataViewGridItem>
+
+
                                 </div>
-                                
-                                
-                                
-                                
-                                
+
+
+
+
+
 
                                 <div style="padding-bottom: 1em">
                                     <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotización: "/>
@@ -823,26 +839,32 @@
                                     <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.newCotizacionTO.clienteCotizacion}" style="width:30rem"/>
                                     <p:message for="clienteCotizacion" display="icon"/>
                                 </div>
-                                
-                                 <div style="padding-bottom: 1em">
+
+                                <div style="padding-bottom: 1em">
                                     <p:outputLabel for="anchoCotizacion" value="Ancho de la cotización: "/>
                                     <p:outputLabel id="anchoCotizacion" value="#{cotizadorController.newCotizacionTO.anchoCotizacion}" style="width:30rem"/>
                                     <p:message for="anchoCotizacion" display="icon"/>
                                 </div>
-                                
-                                 <div style="padding-bottom: 1em">
+
+                                <div style="padding-bottom: 1em">
                                     <p:outputLabel for="largoCotizacion" value="Largo de la cotización: "/>
                                     <p:outputLabel id="largoCotizacion" value="#{cotizadorController.newCotizacionTO.largoCotizacion}" style="width:30rem"/>
                                     <p:message for="largoCotizacion" display="icon"/>
                                 </div>
-                                
-                              
+
+                                <div style="padding-bottom: 1em">
+                                    <p:outputLabel for="totalCotizacion" value="Monto Total de la cotización: "/>
+                                    <p:outputLabel id="totalCotizacion" value="#{cotizadorController.newCotizacionTO.totalCotizacion}" style="width:30rem"/>
+                                    <p:message for="totalCotizacion" display="icon"/>
+                                </div>
+
+
                             </div>
                         </div>
 
                     </p:outputPanel>
                 </p:outputPanel>
-                 
+
 
                 <f:facet name="footer">     
 
@@ -850,15 +872,15 @@
                                      class="ui-button-secondary"/>
                 </f:facet>
             </p:dialog>
-<!--            <p:confirmDialog widgetVar="deleteCotizacionDialog" showEffect="fade" width="300"
-                             message="Desea eliminar la cotización?" header="Confirmación" severity="warn">
-
-                     <p:commandButton value="Sí" icon="pi pi-check" actionListener="#{cotizadorController.eliminarCotizacionTO()}"
-                                 process="@this"  update="userTable" oncomplete="PF('deleteCotizacionDialog').hide()"/>
-
-                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                                 onclick="PF('deleteCotizacionDialog').hide()"/>
-            </p:confirmDialog>-->
+            <!--            <p:confirmDialog widgetVar="deleteCotizacionDialog" showEffect="fade" width="300"
+                                         message="Desea eliminar la cotización?" header="Confirmación" severity="warn">
+            
+                                 <p:commandButton value="Sí" icon="pi pi-check" actionListener="#{cotizadorController.eliminarCotizacionTO()}"
+                                             process="@this"  update="userTable" oncomplete="PF('deleteCotizacionDialog').hide()"/>
+            
+                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                             onclick="PF('deleteCotizacionDialog').hide()"/>
+                        </p:confirmDialog>-->
 
         </h:form>
 
