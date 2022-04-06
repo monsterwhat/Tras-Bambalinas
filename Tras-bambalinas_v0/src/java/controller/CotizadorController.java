@@ -84,9 +84,13 @@ public class CotizadorController implements Serializable {
     }
 
     public void abrirEIngresarNewCotizacion(int id) {
-        // this.newCotizacionTO = new CotizacionTO();
+
+        double suma = 0;
+        double multiplicacionMedidas = 0;
+        double ancho = 0;
+        double largo = 0;
         openNewCotizacion();
-        this.newCotizacionTO.setTotalCotizacion(0);
+        //this.newCotizacionTO.setTotalCotizacion(0);
         try {
             if (this.listaCanastaCotizador.isEmpty()) {
                 System.out.println("Error esta vacia");
@@ -98,22 +102,37 @@ public class CotizadorController implements Serializable {
                 listaDeCaracteristica.add(caracTO.getNombreCaracteristica());
             });
             for (CaracteristicaTO caracTO : listaCanastaCotizador) {
-                this.listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
-                this.totalCotizacion = this.totalCotizacion + caracTO.getPrecioCaracteristica();
+                //this.listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
+                suma = suma + caracTO.getPrecioCaracteristica();
             }
             this.newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
+            System.out.println("Caracteristicas->" + this.newCotizacionTO.getListaDeCaracteristicas());
             this.newCotizacionTO.setFechaCotizacion(Date.valueOf(LocalDate.now()));
+            System.out.println("Fecha->" + this.newCotizacionTO.getFechaCotizacion());
 
             if (id != 0) {
                 this.newCotizacionTO.setClienteCotizacion(id);
+                System.out.println("Cliente->" + this.newCotizacionTO.getClienteCotizacion());
             } else {
                 this.newCotizacionTO.setClienteCotizacion(0);
+                System.out.println("Cliente->" + this.newCotizacionTO.getClienteCotizacion());
             }
 
             this.newCotizacionTO.setListaCaracteristicas(this.listaCanastaCotizador);
             this.newCotizacionTO.setAnchoCotizacion(this.anchoCotizacion);
+            System.out.println("Ancho->" + this.newCotizacionTO.getAnchoCotizacion());
+
             this.newCotizacionTO.setLargoCotizacion(this.largoCotizacion);
+            System.out.println("Largo->" + this.newCotizacionTO.getLargoCotizacion());
+
+            ancho = Integer.parseInt(this.newCotizacionTO.getAnchoCotizacion());
+            largo = Integer.parseInt(this.newCotizacionTO.getLargoCotizacion());
+            multiplicacionMedidas = largo * ancho;
+
+            this.totalCotizacion = suma * multiplicacionMedidas;
+
             this.newCotizacionTO.setTotalCotizacion(this.totalCotizacion);
+            System.out.println("Monto->" + this.newCotizacionTO.getTotalCotizacion());
 
             this.servicioCotizacion.insertarCotizacion(this.newCotizacionTO);
             System.out.println("Se cotizo y se creo la nueva cotizacion.");

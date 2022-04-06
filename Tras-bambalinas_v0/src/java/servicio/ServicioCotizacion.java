@@ -177,15 +177,6 @@ public class ServicioCotizacion extends Servicio {
             preparedStatement.setInt(3, cotizacionTO.getClienteCotizacion());
             preparedStatement.setString(4, cotizacionTO.getAnchoCotizacion());
             preparedStatement.setString(5, cotizacionTO.getLargoCotizacion());
-            
-            List<Integer> ListaIDCaracteristicas = null;
-            double totalCotizacion = 0;
-
-            for (CaracteristicaTO caracteristicaTO : cotizacionTO.getListaCaracteristicas()) {
-                ListaIDCaracteristicas.add(caracteristicaTO.getIdCaracteristica());
-                totalCotizacion = totalCotizacion + caracteristicaTO.getPrecioCaracteristica();
-            }
-            cotizacionTO.setTotalCotizacion(totalCotizacion);
             preparedStatement.setDouble(6, cotizacionTO.getTotalCotizacion());
 
             preparedStatement.executeUpdate();

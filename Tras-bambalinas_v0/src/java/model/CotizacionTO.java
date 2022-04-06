@@ -16,15 +16,16 @@ public class CotizacionTO {
     private double totalCotizacion;
     
     List<CaracteristicaTO> listaCaracteristicas = null;
+    
 
-//    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion) {
-//        this.numeroCotizacion = numeroCotizacion;
-//        this.listaDeCaracteristicas = listaDeCaracteristicas;
-//        this.fechaCotizacion = fechaCotizacion;
-//        this.clienteCotizacion = clienteCotizacion;
-//    }
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion) {
+        this.numeroCotizacion = numeroCotizacion;
+        this.listaDeCaracteristicas = listaDeCaracteristicas;
+        this.fechaCotizacion = fechaCotizacion;
+        this.clienteCotizacion = clienteCotizacion;
+    }
 
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion, String anchoCotizacion, String largoCotizacion,Double totalCotizacion) {
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion, String anchoCotizacion, String largoCotizacion, Double totalCotizacion) {
         this.numeroCotizacion = numeroCotizacion;
         this.listaDeCaracteristicas = listaDeCaracteristicas;
         this.fechaCotizacion = fechaCotizacion;
@@ -36,7 +37,7 @@ public class CotizacionTO {
     
     
 
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion, List<CaracteristicaTO> listaCaracteristicas,String anchoCotizacion, String largoCotizacion, Double totalCotizacion){
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion, List<CaracteristicaTO> listaCaracteristicas, String anchoCotizacion, String largoCotizacion, Double totalCotizacion){
         this.numeroCotizacion = numeroCotizacion;
         this.listaDeCaracteristicas = listaDeCaracteristicas;
         this.fechaCotizacion = fechaCotizacion;
@@ -115,6 +116,6 @@ public class CotizacionTO {
         this.largoCotizacion = largoCotizacion;
     }
 
-
+    
     
 }
