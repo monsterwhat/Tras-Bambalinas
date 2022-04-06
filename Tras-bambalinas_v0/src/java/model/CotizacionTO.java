@@ -35,12 +35,12 @@ public class CotizacionTO {
     
     
 
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion, List<CaracteristicaTO> listaCaracteristica,String anchoCotizacion, String largoCotizacion, Double totalCotizacion){
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion, List<CaracteristicaTO> listaCaracteristicas,String anchoCotizacion, String largoCotizacion, Double totalCotizacion){
         this.numeroCotizacion = numeroCotizacion;
         this.listaDeCaracteristicas = listaDeCaracteristicas;
         this.fechaCotizacion = fechaCotizacion;
         this.clienteCotizacion = clienteCotizacion;
-        this.listaCaracteristicas = listaCaracteristica;
+        this.listaCaracteristicas = listaCaracteristicas;
         this.anchoCotizacion = anchoCotizacion;
         this.largoCotizacion = largoCotizacion;
         this.totalCotizacion = totalCotizacion;

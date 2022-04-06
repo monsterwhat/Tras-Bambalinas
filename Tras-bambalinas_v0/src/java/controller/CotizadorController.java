@@ -84,15 +84,14 @@ public class CotizadorController implements Serializable {
     public void abrirEIngresarNewCotizacion(int id) {
         // this.newCotizacionTO = new CotizacionTO();
         openNewCotizacion();
-        this.totalCotizacion = 0;
+        this.newCotizacionTO.setTotalCotizacion(0);
         try {
             if (this.listaCanastaCotizador.isEmpty()) {
                 System.out.println("Error esta vacia");
                 addMessage(FacesMessage.SEVERITY_ERROR, "Error de cotizacion!", "No hay nada seleccionado!");
             }
 
-            List<CaracteristicaTO> listaCotizar = cotizacionTO.getListaCaracteristicas();
-            for (CaracteristicaTO caracTO : listaCotizar) {
+            for (CaracteristicaTO caracTO : listaCanastaCotizador) {
                 this.listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
                 this.totalCotizacion = this.totalCotizacion + caracTO.getPrecioCaracteristica();
             }
@@ -104,9 +103,12 @@ public class CotizadorController implements Serializable {
             } else {
                 this.newCotizacionTO.setClienteCotizacion(0);
             }
+
+            this.newCotizacionTO.setListaCaracteristicas(this.listaCanastaCotizador);
             this.newCotizacionTO.setAnchoCotizacion(this.anchoCotizacion);
             this.newCotizacionTO.setLargoCotizacion(this.largoCotizacion);
-
+            this.newCotizacionTO.setTotalCotizacion(this.totalCotizacion);
+            
             this.servicioCotizacion.insertarCotizacion(this.newCotizacionTO);
             System.out.println("Se cotizo y se creo la nueva cotizacion.");
 

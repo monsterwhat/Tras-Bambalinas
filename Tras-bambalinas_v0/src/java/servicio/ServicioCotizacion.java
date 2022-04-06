@@ -180,8 +180,8 @@ public class ServicioCotizacion extends Servicio {
             
             List<Integer> ListaIDCaracteristicas = null;
             double totalCotizacion = 0;
-            List<CaracteristicaTO> listaCotizar = cotizacionTO.getListaCaracteristicas();
-            for (CaracteristicaTO caracteristicaTO : listaCotizar) {
+
+            for (CaracteristicaTO caracteristicaTO : cotizacionTO.getListaCaracteristicas()) {
                 ListaIDCaracteristicas.add(caracteristicaTO.getIdCaracteristica());
                 totalCotizacion = totalCotizacion + caracteristicaTO.getPrecioCaracteristica();
             }
