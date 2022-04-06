@@ -147,10 +147,10 @@
                 <f:facet name="footer">        
                     <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{userController.agregarUsuarioTO}"
                                      update=":formUsuario:create-user-content, userTable" process="create-user-content @this"
-                                     oncomplete="PF('createUserDialog').hide()"/>
+                                     oncomplete="PF('createUserDialog').hide()" resetValues="true"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createUserDialog').hide()"
-                                     class="ui-button-secondary"/>
+                                     class="ui-button-secondary" resetValues="true"/>
                 </f:facet>
 
             </p:dialog>
@@ -327,12 +327,12 @@
 
                 <f:facet name="footer">        
                     <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCategoriaTO}"
-                                     update=":formCategoria:create-categoria-content, categoriaTable" process="create-categoria-content @this" />
+                                     update=":formCategoria:create-categoria-content, categoriaTable" process="create-categoria-content @this" resetValues="true" />
 
                     <!--                    onclick="PF('createCategoriaDialog').hide()"-->
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCategoriaDialog').hide()"
-                                     class="ui-button-secondary"/>
+                                     class="ui-button-secondary" resetValues="true" />
                 </f:facet>
 
             </p:dialog>
@@ -552,7 +552,7 @@
 
                             <div class="p-field" >
                                 <p:outputLabel for="colorCaracteristica" value="Colores de la Característica" />
-                                <p:inputText id="colorCaracteristica" value="#{OtherController.newCaracteristica.colorCaracteristica}" style="width:25rem" />                               
+                                <p:inputText id="colorCaracteristica" value="#{OtherController.newCaracteristica.colorCaracteristica}" style="width:25rem" onreset="" />                               
                             </div> 
 
                             <div class="p-field" >
@@ -572,7 +572,7 @@
                                     </p:avatar>
                                 </div>
                                 <div class="flex justify-content-between">
-                                    <p:commandButton value="Subir" onclick="PF('imagenCreateUpload').show()" style="margin-right: .5rem"  />
+                                    <p:commandButton value="Subir" onclick="PF('imagenCreateUpload').show()" style="margin-right: .5rem"   />
                                     <p:commandButton value="Eliminar" styleClass="ui-button-danger" actionListener="#{OtherController.seleccionarImagenPorDefecto}"
                                                      update="new-imagen-caracteristica" />
                                 </div>
@@ -584,12 +584,12 @@
                 </p:scrollPanel>
                 <f:facet name="footer">        
                     <p:commandButton value="Agregar" icon="pi pi-check" actionListener="#{OtherController.agregarCaracteristicaTO()}"
-                                     update=":formCaracteristica:create-caracteristica-content, caracteristicaTable" process="create-caracteristica-content @this" />
+                                     update=":formCaracteristica:create-caracteristica-content, caracteristicaTable" process="create-caracteristica-content @this" resetValues="true"/>
 
                     <!--                    onclick="PF('createCaracteristicaDialog').hide()"-->
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCaracteristicaDialog').hide()"
-                                     class="ui-button-secondary" actionListener="#{OtherController.seleccionarImagenPorDefecto}" />
+                                     class="ui-button-secondary" actionListener="#{OtherController.seleccionarImagenPorDefecto}"  resetValues="true"/>
                 </f:facet>
             </p:dialog>
 

@@ -32,14 +32,12 @@ public class CotizadorController implements Serializable {
 
     List<String> listaDeCaracteristica = new ArrayList<>();
     List<Integer> listaIdCaracteristicas = new ArrayList<>();
-    
- 
+
     List<CaracteristicaTO> listaCaracteristicasParaCotizador = new ArrayList<>();
     List<CaracteristicaTO> listaCanastaCotizador = new ArrayList<>();
 
     List<CategoriaTO> listaCategoriaParaCotizar = new ArrayList<>();
     List<CotizacionTO> listaCotizacion = new ArrayList<>();
-   
 
     private int idCategoria;
     private String nombreCategoria;
@@ -70,7 +68,7 @@ public class CotizadorController implements Serializable {
         try {
             this.listaCategoriaParaCotizar = servicioCategoria.listaCategoriaPorEstadoBD();
             this.listaCotizacion = servicioCotizacion.listaCotizaciones();
-          
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -116,7 +114,7 @@ public class CotizadorController implements Serializable {
             this.newCotizacionTO.setAnchoCotizacion(this.anchoCotizacion);
             this.newCotizacionTO.setLargoCotizacion(this.largoCotizacion);
             this.newCotizacionTO.setTotalCotizacion(this.totalCotizacion);
-            
+
             this.servicioCotizacion.insertarCotizacion(this.newCotizacionTO);
             System.out.println("Se cotizo y se creo la nueva cotizacion.");
 
@@ -219,7 +217,6 @@ public class CotizadorController implements Serializable {
     public void setLargoCotizacion(String largoCotizacion) {
         this.largoCotizacion = largoCotizacion;
     }
-    
 
     public CotizacionTO getNewCotizacionTO() {
         return newCotizacionTO;
@@ -237,9 +234,6 @@ public class CotizadorController implements Serializable {
         this.cotizacionTO = cotizacionTO;
     }
 
-    
-
-    
     public ServicioCotizacion getServicioCotizacion() {
         return servicioCotizacion;
     }
@@ -340,7 +334,6 @@ public class CotizadorController implements Serializable {
         return listaCategoriaParaCotizar;
     }
 
- 
     public String getListaDeCaracteristicas() {
         return listaDeCaracteristicas;
     }
@@ -348,7 +341,7 @@ public class CotizadorController implements Serializable {
     public void setListaDeCaracteristicas(String listaDeCaracteristicas) {
         this.listaDeCaracteristicas = listaDeCaracteristicas;
     }
-    
+
     public void setListaCategoriaParaCotizar(List<CategoriaTO> listaCategoriaParaCotizar) {
         this.listaCategoriaParaCotizar = listaCategoriaParaCotizar;
     }
@@ -496,7 +489,7 @@ public class CotizadorController implements Serializable {
             this.listaCanastaCotizador.forEach((caracTO) -> {
                 listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
                 listaDeCaracteristica.add(caracTO.getNombreCaracteristica());
-                
+
             });
             listaDeCaracteristicas = listaIdCaracteristicas.stream()
                     .map(i -> i.toString())

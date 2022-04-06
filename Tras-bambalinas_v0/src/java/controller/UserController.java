@@ -155,6 +155,7 @@ public class UserController implements Serializable {
             String contrasena = ServicioCifrar.encrypt(this.newUser.getContrasenaUsuario());
             this.newUser.setContrasenaUsuario(contrasena);
             this.servicioUsuario.insertarUser(newUser);
+            
             this.cargar();
         } catch (Exception e) {
             System.out.println("Error agregando usuario! " + e);
