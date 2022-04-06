@@ -82,20 +82,20 @@
                     </div> 
 
                     <center>
-                    <div style="margin-top: 1rem ;margin-bottom: 1rem" >
-                        <p:outputLabel for="NanchoCotizacion" value="Ancho: "/>
-                        <p:inputText id="NanchoCotizacion" value="#{cotizadorController.anchoCotizacion}" placeholder="cm" required="true"/>
-                        <p:message for="NanchoCotizacion" display="icon"/> 
-                    </div>
-                    <div style="margin-bottom: 1rem">
-                        <p:outputLabel for="NlargoCotizacion" value="Largo: "/>
-                        <p:inputText id="NlargoCotizacion" value="#{cotizadorController.largoCotizacion}" placeholder="cm" required="true"/>
-                        <p:message for="NlargoCotizacion" display="icon"/> 
-                    </div>
+                        <div style="margin-top: 1rem ;margin-bottom: 1rem" >
+                            <p:outputLabel for="NanchoCotizacion" value="Ancho: "/>
+                            <p:inputText id="NanchoCotizacion" value="#{cotizadorController.anchoCotizacion}" placeholder="cm" required="true"/>
+                            <p:message for="NanchoCotizacion" display="icon"/> 
+                        </div>
+                        <div style="margin-bottom: 1rem">
+                            <p:outputLabel for="NlargoCotizacion" value="Largo: "/>
+                            <p:inputText id="NlargoCotizacion" value="#{cotizadorController.largoCotizacion}" placeholder="cm" required="true"/>
+                            <p:message for="NlargoCotizacion" display="icon"/> 
+                        </div>
 
-                    <div>
-                        <p:commandButton value="Cotizar" actionListener="#{cotizadorController.abrirEIngresarNewCotizacion(loginController.idUser)}" update=":formCotizacion:show-cotizacion-content" onsuccess="PF('showCotizacionDialog').show()"/>
-                    </div>
+                        <div>
+                            <p:commandButton value="Cotizar" actionListener="#{cotizadorController.abrirEIngresarNewCotizacion(loginController.idUser)}" update=":formCotizacion:show-cotizacion-content" onsuccess="PF('showCotizacionDialog').show()"/>
+                        </div>
                     </center>
 
                 </p:panel>
@@ -111,51 +111,57 @@
                     <p:outputPanel rendered="#{not empty cotizadorController.newCotizacionTO}">
 
                         <p:card>
-                        <div class="p-grid">
-                            <div class="p-col">
-                                <p:outputLabel for="numeroCotizacion" value="Numero de Cotización: "/>
-                                <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.newCotizacionTO.numeroCotizacion}" style="width:30rem"/> 
+                            <div class="p-grid">
+                                <div class="p-col">
+                                    <p:outputLabel for="numeroCotizacion" value="Numero de Cotización: "/>
+                                    <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.newCotizacionTO.numeroCotizacion}" style="width:30rem"/> 
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="p-grid">
-                            <div class="p-col">
-                                <p:outputLabel for="listaDeCaracteristicas" value="Lista de productos: "/>
-                                <p:outputLabel id="listaDeCaracteristicas" value="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" style="width:30rem"/>
-                                <p:message for="listaDeCaracteristicas" display="icon"/> 
+                            <div class="p-grid">
+                                <div class="p-col">
+                                    <p:outputLabel for="listaDeCaracteristicas" value="Lista de productos: "/>
+                                    <p:outputLabel id="listaDeCaracteristicas" value="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" style="width:30rem"/>
+                                    <p:message for="listaDeCaracteristicas" display="icon"/> 
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="p-grid">
-                            <div class="p-col">
-                                <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotización: "/>
-                                <p:outputLabel id ="fechaCotizacion" value="#{cotizadorController.newCotizacionTO.fechaCotizacion}" style="width:30rem"/>
+                            <div class="p-grid">
+                                <div class="p-col">
+                                    <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotización: "/>
+                                    <p:outputLabel id ="fechaCotizacion" value="#{cotizadorController.newCotizacionTO.fechaCotizacion}" style="width:30rem"/>
 
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="p-grid">
-                            <div class="p-col">
-                                <p:outputLabel for="clienteCotizacion" value="Cliente que cotizó: "/>
-                                <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.newCotizacionTO.clienteCotizacion}" style="width:30rem"/>
+                            <div class="p-grid">
+                                <div class="p-col">
+                                    <p:outputLabel for="clienteCotizacion" value="Cliente que cotizó: "/>
+                                    <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.newCotizacionTO.clienteCotizacion}" style="width:30rem"/>
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="p-grid">
-                            <div class="p-col">
-                                <p:outputLabel for="anchoCotizacion" value="Ancho que cotizó: "/>
-                                <p:outputLabel id="anchoCotizacion" value="#{cotizadorController.newCotizacionTO.anchoCotizacion}" style="width:30rem"/>
+                            <div class="p-grid">
+                                <div class="p-col">
+                                    <p:outputLabel for="anchoCotizacion" value="Ancho que cotizó: "/>
+                                    <p:outputLabel id="anchoCotizacion" value="#{cotizadorController.newCotizacionTO.anchoCotizacion}" style="width:30rem"/>
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="p-grid">
-                            <div class="p-col">
-                                <p:outputLabel for="largoCotizacion" value="Largo que cotizó: "/>
-                                <p:outputLabel id="largoCotizacion" value="#{cotizadorController.newCotizacionTO.largoCotizacion}" style="width:30rem"/>
+                            <div class="p-grid">
+                                <div class="p-col">
+                                    <p:outputLabel for="largoCotizacion" value="Largo que cotizó: "/>
+                                    <p:outputLabel id="largoCotizacion" value="#{cotizadorController.newCotizacionTO.largoCotizacion}" style="width:30rem"/>
 
+                                </div>
                             </div>
-                        </div>
-                            </p:card>
+                            <div class="p-grid">
+                                <div class="p-col">
+                                    <p:outputLabel for="totalCotizacion" value="Total de la cotizacion: "/>
+                                    <p:outputLabel id="totalCotizacion" value="#{cotizadorController.newCotizacionTO.totalCotizacion}" style="width:30rem"/>
+                                </div>
+                            </div>
+                        </p:card>
 
                     </p:outputPanel>
                 </p:outputPanel>
