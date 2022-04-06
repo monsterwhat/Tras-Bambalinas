@@ -13,6 +13,7 @@ public class CotizacionTO {
     private int clienteCotizacion;
     private String anchoCotizacion;
     private String largoCotizacion;
+    private double totalCotizacion;
     
     List<CaracteristicaTO> listaCaracteristicas = null;
 
@@ -23,26 +24,27 @@ public class CotizacionTO {
 //        this.clienteCotizacion = clienteCotizacion;
 //    }
 
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion, String anchoCotizacion, String largoCotizacion) {
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion, String anchoCotizacion, String largoCotizacion,Double totalCotizacion) {
         this.numeroCotizacion = numeroCotizacion;
         this.listaDeCaracteristicas = listaDeCaracteristicas;
         this.fechaCotizacion = fechaCotizacion;
         this.clienteCotizacion = clienteCotizacion;
         this.anchoCotizacion = anchoCotizacion;
         this.largoCotizacion = largoCotizacion;
+        this.totalCotizacion = totalCotizacion;
     }
     
     
 
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion, List<CaracteristicaTO> listaCaracteristica,String anchoCotizacion, String largoCotizacion){
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion, List<CaracteristicaTO> listaCaracteristicas,String anchoCotizacion, String largoCotizacion, Double totalCotizacion){
         this.numeroCotizacion = numeroCotizacion;
         this.listaDeCaracteristicas = listaDeCaracteristicas;
         this.fechaCotizacion = fechaCotizacion;
         this.clienteCotizacion = clienteCotizacion;
-        this.listaCaracteristicas = listaCaracteristica;
+        this.listaCaracteristicas = listaCaracteristicas;
         this.anchoCotizacion = anchoCotizacion;
         this.largoCotizacion = largoCotizacion;
-
+        this.totalCotizacion = totalCotizacion;
     }
 
     public CotizacionTO() {
@@ -55,6 +57,14 @@ public class CotizacionTO {
 
     public void setListaCaracteristicas(List<CaracteristicaTO> listaCaracteristicas) {
         this.listaCaracteristicas = listaCaracteristicas;
+    }
+
+    public double getTotalCotizacion() {
+        return totalCotizacion;
+    }
+
+    public void setTotalCotizacion(double totalCotizacion) {
+        this.totalCotizacion = totalCotizacion;
     }
 
     public int getNumeroCotizacion() {
