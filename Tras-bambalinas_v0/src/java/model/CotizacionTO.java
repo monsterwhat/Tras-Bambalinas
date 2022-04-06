@@ -5,7 +5,8 @@ import java.util.List;
 
 
 public class CotizacionTO {
-
+    
+    
     private int numeroCotizacion;
     private String listaDeCaracteristicas;
     private Date fechaCotizacion;
@@ -46,6 +47,7 @@ public class CotizacionTO {
 
     public CotizacionTO() {
     }
+    
     
     public List<CaracteristicaTO> getListaCaracteristicas() {
         return listaCaracteristicas;

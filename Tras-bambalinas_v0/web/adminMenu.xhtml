@@ -780,17 +780,37 @@
                                 </div>
 
                                 <div class="card product" style="padding-bottom: 1em">
-                                    <p:dataView var="caracteristica" value="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" rows="12" paginator="false" gridIcon="pi pi-th-large"
-                                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                    
+                                        
                                         <p:dataViewGridItem>
+                                        
+                       
+                                            <p:outputLabel for="imagenC" value="Lista de productos:  "/>
+                                            <p:panel id="imagenC" header="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" style="text-align:center">
+                                            <h:panelGrid columns="4" style="width:100%">
+                                              
+                                                <div class="product-name">#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}</div>
 
+                                                <div class="product-description">#{cotizadorController.newCotizacionTO.numeroCotizacion}</div>
+                                                <p:graphicImage id="imagen-caracteristica-detallada" width="128" height="128" value="/imagenes/#{cotizadorController.cargarImagenCaracteristica(id)}"/>
+                                               
+                                               
+                                              
+                                            </h:panelGrid>
+                                            </p:panel>
 
-                                            <p:graphicImage id="imagen-caracteristica-detallada" width="128" height="128" value="/imagenes/#{OtherController.newCaracteristica.imagenCaracteristica}"/>
-
+                                
+                            
 
                                         </p:dataViewGridItem>
-                                    </p:dataView>
+                                   
+                            
                                 </div>
+                                
+                                
+                                
+                                
+                                
 
                                 <div style="padding-bottom: 1em">
                                     <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotización: "/>

@@ -46,6 +46,7 @@
                                                 <div class="product-grid-item-content">
                                                     <center>
                                                         <p:graphicImage style="padding: 1em" value="/imagenes/#{elCotizadorCaracteristica.imagenCaracteristica}" height="192px" width="192px" />
+                                                       
 
                                                         <div class="product-name">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
 
@@ -105,7 +106,7 @@
 
         <h:form id="formCotizacion">
 
-            <p:dialog header="Detalles de la Cotizacion" showEffect="fade" modal="true"
+            <p:dialog header="Detalles de la Cotización" showEffect="fade" modal="true"
                       widgetVar="showCotizacionDialog" responsive="true" minHeight="350" width="550">
 
                 <p:outputPanel id="show-cotizacion-content" class="ui-fluid">
@@ -115,9 +116,10 @@
                             <div class="p-col">
                                 <p:outputLabel for="numeroCotizacion" value="Numero de Cotización: "/>
                                 <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.newCotizacionTO.numeroCotizacion}" style="width:30rem"/> 
-
+                                
                             </div>
                         </div>
+                        
 
                         <div class="p-grid p-flex-column">
                             <div class="p-col">
