@@ -90,7 +90,6 @@ public class CotizadorController implements Serializable {
         double ancho = 0;
         double largo = 0;
         openNewCotizacion();
-        //this.newCotizacionTO.setTotalCotizacion(0);
         try {
             if (this.listaCanastaCotizador.isEmpty()) {
                 System.out.println("Error esta vacia");
@@ -102,9 +101,9 @@ public class CotizadorController implements Serializable {
                 listaDeCaracteristica.add(caracTO.getNombreCaracteristica());
             });
             for (CaracteristicaTO caracTO : listaCanastaCotizador) {
-                //this.listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
                 suma = suma + caracTO.getPrecioCaracteristica();
             }
+            
             this.newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
             System.out.println("Caracteristicas->" + this.newCotizacionTO.getListaDeCaracteristicas());
             this.newCotizacionTO.setFechaCotizacion(Date.valueOf(LocalDate.now()));
