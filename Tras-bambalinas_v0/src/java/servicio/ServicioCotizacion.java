@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +22,39 @@ import model.UsuarioTO;
 public class ServicioCotizacion extends Servicio {
 
     ServicioCaracteristica servicioCaracteristica = new ServicioCaracteristica();
+
+    public CotizacionTO cotizacionNuevaExistente(String fecha) {
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+        CotizacionTO cotizacionTORetorno = null;
+        try {
+            conectar();
+
+            statement = conexion.createStatement();
+            String sql = "Select * FROM cotizacion where fechaCotizacion='" + fecha + "';";
+            resultSet = statement.executeQuery(sql);     
+            if (resultSet.next()) {
+                System.out.println("Paso");
+                int numeroCotizacion = resultSet.getInt("numeroCotizacion");
+                String listaDeCaracteristicas = resultSet.getString("listaIDCaracteristicaCotizacion");
+                String fechaCotizacion = resultSet.getString("fechaCotizacion");
+                int clienteCotizacion = resultSet.getInt("clienteCotizacion");
+                String anchoCotizacion = resultSet.getString("anchoCotizacion");
+                String largoCotizacion = resultSet.getString("largoCotizacion");
+                Double totalCotizacion = resultSet.getDouble("totalCotizacion");
+
+                cotizacionTORetorno = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, anchoCotizacion, largoCotizacion, totalCotizacion);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error tratando de cargar datos de usuario (conectando!)! " + e.getMessage());
+        } finally {
+            cerrarResultSet(resultSet);
+            cerrarStatement(statement);
+            desconectar();
+        }
+        return cotizacionTORetorno;
+    }
 
     public List<CotizacionTO> listaLargaCotizaciones() {
 
@@ -35,7 +69,7 @@ public class ServicioCotizacion extends Servicio {
         for (CotizacionTO cotizacionTO : lista) {
             int numeroCotizacion = cotizacionTO.getNumeroCotizacion();
             String listaCotizacion = cotizacionTO.getListaDeCaracteristicas();
-            Date fechaCotizacion = cotizacionTO.getFechaCotizacion();
+            String fechaCotizacion = cotizacionTO.getFechaCotizacion();
             int clienteCotizacion = cotizacionTO.getClienteCotizacion();
             List<CaracteristicaTO> listaCotizacionLarga = listaCotizacion(listaCotizacion);
             String anchoCotizacion = cotizacionTO.getAnchoCotizacion();
@@ -76,7 +110,7 @@ public class ServicioCotizacion extends Servicio {
             while (resultSet.next()) {
                 int numeroCotizacion = resultSet.getInt("numeroCotizacion");
                 String listaDeCaracteristicas = resultSet.getString("listaIDCaracteristicaCotizacion");
-                Date fechaCotizacion = resultSet.getDate("fechaCotizacion");
+                String fechaCotizacion = resultSet.getString("fechaCotizacion");
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 String anchoCotizacion = resultSet.getString("anchoCotizacion");
                 String largoCotizacion = resultSet.getString("largoCotizacion");
@@ -110,7 +144,7 @@ public class ServicioCotizacion extends Servicio {
             while (resultSet.next()) {
                 int numeroCotizacion = resultSet.getInt("numeroCotizacion");
                 String listaDeCaracteristicas = resultSet.getString("listaIDCaracteristicaCotizacion");
-                Date fechaCotizacion = resultSet.getDate("fechaCotizacion");
+                String fechaCotizacion = resultSet.getString("fechaCotizacion");
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 String anchoCotizacion = resultSet.getString("anchoCotizacion");
                 String largoCotizacion = resultSet.getString("largoCotizacion");
@@ -173,14 +207,14 @@ public class ServicioCotizacion extends Servicio {
             String sql = "INSERT INTO cotizacion (listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion,anchoCotizacion,largoCotizacion,totalCotizacion) VALUES (?,?,?,?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
             preparedStatement.setString(1, cotizacionTO.getListaDeCaracteristicas());
-            preparedStatement.setDate(2, cotizacionTO.getFechaCotizacion());
+            preparedStatement.setString(2, cotizacionTO.getFechaCotizacion());
             preparedStatement.setInt(3, cotizacionTO.getClienteCotizacion());
             preparedStatement.setString(4, cotizacionTO.getAnchoCotizacion());
             preparedStatement.setString(5, cotizacionTO.getLargoCotizacion());
             preparedStatement.setDouble(6, cotizacionTO.getTotalCotizacion());
 
             preparedStatement.executeUpdate();
-            
+
         } catch (SQLException e) {
             System.out.println("Error al cotizar! " + e.getMessage());
         } finally {

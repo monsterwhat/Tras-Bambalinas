@@ -3,6 +3,9 @@ package controller;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +31,7 @@ public class CotizadorController implements Serializable {
 
     private CategoriaTO categoriaTO;
     private CaracteristicaTO caracteristicaTO;
-    private CotizacionTO cotizacionTO, newCotizacionTO;
+    private CotizacionTO cotizacionTO, newCotizacionTO, mostrarCotizacionNueva;
 
     List<String> listaDeCaracteristica = new ArrayList<>();
     List<Integer> listaIdCaracteristicas = new ArrayList<>();
@@ -57,7 +60,7 @@ public class CotizadorController implements Serializable {
 
     int numeroCotizacion;
     private String listaDeCaracteristicas;
-    Date fechaCotizacion;
+    String fechaCotizacion;
     int clienteCotizacion;
     String anchoCotizacion;
     String largoCotizacion;
@@ -84,7 +87,7 @@ public class CotizadorController implements Serializable {
     }
 
     public void abrirEIngresarNewCotizacion(int id) {
-
+        
         double suma = 0;
         double multiplicacionMedidas = 0;
         double ancho = 0;
@@ -103,10 +106,14 @@ public class CotizadorController implements Serializable {
             for (CaracteristicaTO caracTO : listaCanastaCotizador) {
                 suma = suma + caracTO.getPrecioCaracteristica();
             }
-            
+
             this.newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
             System.out.println("Caracteristicas->" + this.newCotizacionTO.getListaDeCaracteristicas());
-            this.newCotizacionTO.setFechaCotizacion(Date.valueOf(LocalDate.now()));
+                  
+            LocalDateTime fechaActual = LocalDateTime.now();
+            DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            
+            this.newCotizacionTO.setFechaCotizacion(fechaActual.format(formatoFecha));
             System.out.println("Fecha->" + this.newCotizacionTO.getFechaCotizacion());
 
             if (id != 0) {
@@ -135,6 +142,8 @@ public class CotizadorController implements Serializable {
 
             this.servicioCotizacion.insertarCotizacion(this.newCotizacionTO);
             System.out.println("Se cotizo y se creo la nueva cotizacion.");
+            
+            this.mostrarCotizacionNueva = this.servicioCotizacion.cotizacionNuevaExistente(this.newCotizacionTO.getFechaCotizacion());
 
         } catch (Exception e) {
             System.out.println("Quizas la cotizacion se encuentra nula?");
@@ -142,6 +151,20 @@ public class CotizadorController implements Serializable {
         }
 
     }
+
+//    public CotizacionTO cargarCotizacionNueva() {
+//        try {
+//            System.out.println("A: "+this.newCotizacionTO.getFechaCotizacion());
+//            System.out.println("Hizo ALGO");
+//            this.mostrarCotizacionNueva = this.servicioCotizacion.cotizacionNuevaExistente(this.newCotizacionTO.getFechaCotizacion());
+//            System.out.println("A: "+this.mostrarCotizacionNueva.getNumeroCotizacion());
+//            
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//
+//        return this.mostrarCotizacionNueva;
+//    }
 
     public List<CaracteristicaTO> cargarListaCaracteristicas(int id) {
         try {
@@ -220,6 +243,16 @@ public class CotizadorController implements Serializable {
         this.newCotizacionTO = new CotizacionTO();
     }
 
+    public CotizacionTO getMostrarCotizacionNueva() {
+        return mostrarCotizacionNueva;
+    }
+
+    public void setMostrarCotizacionNueva(CotizacionTO mostrarCotizacionNueva) {
+        this.mostrarCotizacionNueva = mostrarCotizacionNueva;
+    }
+    
+    
+
     public String getAnchoCotizacion() {
         return anchoCotizacion;
     }
@@ -292,11 +325,11 @@ public class CotizadorController implements Serializable {
         this.listaDeCaracteristica = listaDeCaracteristica;
     }
 
-    public Date getFechaCotizacion() {
+    public String getFechaCotizacion() {
         return fechaCotizacion;
     }
 
-    public void setFechaCotizacion(Date fechaCotizacion) {
+    public void setFechaCotizacion(String fechaCotizacion) {
         this.fechaCotizacion = fechaCotizacion;
     }
 
@@ -501,7 +534,9 @@ public class CotizadorController implements Serializable {
                 return false;
             }
             System.out.println("Se mando a cotizar");
-            this.fechaCotizacion = Date.valueOf(LocalDate.now());
+            //this.fechaCotizacion = Date.valueOf(LocalDate.now());
+            System.out.println("Fecha aqui(538)");
+                    
 
             servicioCotizacion.Cotizar(this.listaCanastaCotizador, idUser, this.anchoCotizacion, this.largoCotizacion);
             this.listaCanastaCotizador.forEach((caracTO) -> {
