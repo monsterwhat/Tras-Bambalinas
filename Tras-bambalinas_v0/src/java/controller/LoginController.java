@@ -24,6 +24,7 @@ public class LoginController implements Serializable {
 
     private int idUser;
     private String correo;
+    private String tipo;
     private String clave;
     private String claveNueva, verificarClave;
     private String nombreUsuario;
@@ -45,6 +46,14 @@ public class LoginController implements Serializable {
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public int getIdUser() {
@@ -143,9 +152,10 @@ public class LoginController implements Serializable {
                 if (!servicioUsuario.verificarCorreo(this.getCorreo())) {
 
                     if (servicioUsuario.existeUsuarioB(this.getCorreo(), this.getClave())) {
-                        this.usuarioTO = servicioUsuario.existeUsuario(this.getCorreo(), this.getClave());
+                       // this.usuarioTO = servicioUsuario.existeUsuario(this.getCorreo(), this.getClave());
+                        setUsuarioTO(servicioUsuario.existeUsuario(this.getCorreo(), this.getClave()));
                         this.idUser = usuarioTO.getIdusuarios();
-
+                        this.tipo = usuarioTO.getTipoUsuario();
                         switch (this.usuarioTO.getTipoUsuario()) {
                             case "admin":
                                 this.listaUsuarios = servicioUsuario.listaUsuariosBD();

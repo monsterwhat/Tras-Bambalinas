@@ -31,6 +31,7 @@ public class ServicioCaracteristica extends Servicio {
                 double precioCaracteristica = resultSet.getDouble("precioCaracteristica");
                 String colorCaracteristica = resultSet.getString("colorCaracteristica");
                 int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
+               
                 caracteristicaTO = new CaracteristicaTO(idCaracteristica, idCategoriaCaracteristicas, imagenCaracteristica, nombreCaracteristica, descripcionCaracteristica,
                         estadoCaracteristica, precioCaracteristica, colorCaracteristica, prioridadCaracteristica);
             }
@@ -67,6 +68,7 @@ public class ServicioCaracteristica extends Servicio {
                 double precioCaracteristica = resultSet.getDouble("precioCaracteristica");
                 String colorCaracteristica = resultSet.getString("colorCaracteristica");
                 int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
+               
                 caracteristicaTO = new CaracteristicaTO(idCaracteristica, idCategoriaCaracteristicas, imagenCaracteristica, nombreCaracteristica, descripcionCaracteristica,
                         estadoCaracteristica, precioCaracteristica, colorCaracteristica, prioridadCaracteristica);
             }
@@ -83,7 +85,7 @@ public class ServicioCaracteristica extends Servicio {
     }
     
 
-    public List<CaracteristicaTO> listaCaracteristicasPorIdCategoriaYEstado(int id) {
+    public List<CaracteristicaTO> listaCaracteristicasParaCotizador(int id) {
         Statement statement = null;
         ResultSet resultSet = null;
         List<CaracteristicaTO> listaRetorno = new ArrayList<>();
@@ -106,6 +108,7 @@ public class ServicioCaracteristica extends Servicio {
                 double precioCaracteristica = resultSet.getDouble("precioCaracteristica");
                 String colorCaracteristica = resultSet.getString("colorCaracteristica");
                 int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
+                
 
                 CaracteristicaTO caracteristicasTO = new CaracteristicaTO(idCaracteristica, idCategoriaCaracteristicas, imagenCaracteristica, nombreCaracteristica, descripcionCaracteristica,
                         estadoCaracteristica, precioCaracteristica, colorCaracteristica, prioridadCaracteristica);
@@ -144,6 +147,7 @@ public class ServicioCaracteristica extends Servicio {
                 double precioCaracteristica = resultSet.getDouble("precioCaracteristica");
                 String colorCaracteristica = resultSet.getString("colorCaracteristica");
                 int prioridadCaracteristica = resultSet.getInt("prioridadCaracteristica");
+            
 
                 CaracteristicaTO caracteristicasTO = new CaracteristicaTO(idCaracteristica, idCategoriaCaracteristica, imagenCaracteristica, nombreCaracteristica, descripcionCaracteristica,
                         estadoCaracteristica, precioCaracteristica, colorCaracteristica, prioridadCaracteristica);
@@ -174,6 +178,7 @@ public class ServicioCaracteristica extends Servicio {
             preparedStatement.setDouble(6, caracteristicaTO.getPrecioCaracteristica());
             preparedStatement.setString(7, caracteristicaTO.getColorCaracteristica());
             preparedStatement.setInt(8, caracteristicaTO.getPrioridadCaracteristica());
+          
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al insertar caracteristica! " + e);
@@ -199,6 +204,7 @@ public class ServicioCaracteristica extends Servicio {
             preparedStatement.setDouble(6, caracteristicaTO.getPrecioCaracteristica());
             preparedStatement.setString(7, caracteristicaTO.getColorCaracteristica());
             preparedStatement.setInt(8, caracteristicaTO.getPrioridadCaracteristica());
+         
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

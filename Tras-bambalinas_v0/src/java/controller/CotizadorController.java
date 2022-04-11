@@ -17,6 +17,7 @@ import javax.faces.context.FacesContext;
 import model.CaracteristicaTO;
 import model.CategoriaTO;
 import model.CotizacionTO;
+import model.UsuarioTO;
 import servicio.ServicioCaracteristica;
 import servicio.ServicioCategoria;
 import servicio.ServicioCotizacion;
@@ -29,6 +30,9 @@ public class CotizadorController implements Serializable {
     private ServicioCaracteristica servicioCaracteristica = new ServicioCaracteristica();
     private ServicioCotizacion servicioCotizacion = new ServicioCotizacion();
 
+    private LoginController loginController;
+
+    private UsuarioTO usuarioTO;
     private CategoriaTO categoriaTO;
     private CaracteristicaTO caracteristicaTO;
     private CotizacionTO cotizacionTO, newCotizacionTO, mostrarCotizacionNueva;
@@ -39,7 +43,8 @@ public class CotizadorController implements Serializable {
     List<CaracteristicaTO> listaCaracteristicasParaCotizador = new ArrayList<>();
     List<CaracteristicaTO> listaCanastaCotizador = new ArrayList<>();
 
-    List<CategoriaTO> listaCategoriaParaCotizar = new ArrayList<>();
+    List<CategoriaTO> listaCategoriaParaCotizarCliente = new ArrayList<>();
+    List<CategoriaTO> listaCategoriaParaCotizarAdmin = new ArrayList<>();
     List<CotizacionTO> listaCotizacion = new ArrayList<>();
 
     private int idCategoria;
@@ -47,6 +52,7 @@ public class CotizadorController implements Serializable {
     private String descripcionCategoria;
     private String estadoCategoria;
     private String seleccionCategoria;
+    private String visibilidadCategoria;
 
     private int idCaracteristica;
     private int idCategoriaCaracteristica;
@@ -69,11 +75,13 @@ public class CotizadorController implements Serializable {
     @PostConstruct
     public void cargar() {
         try {
-            this.listaCategoriaParaCotizar = servicioCategoria.listaCategoriaPorEstadoBD();
+
+            this.listaCategoriaParaCotizarAdmin = servicioCategoria.listaCategoriaParaCotizadorAdmin();
+            this.listaCategoriaParaCotizarCliente = servicioCategoria.listaCategoriaParaCotizadorCliente();
             this.listaCotizacion = servicioCotizacion.listaCotizaciones();
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -87,7 +95,7 @@ public class CotizadorController implements Serializable {
     }
 
     public void abrirEIngresarNewCotizacion(int id) {
-        
+
         double suma = 0;
         double multiplicacionMedidas = 0;
         double ancho = 0;
@@ -109,10 +117,10 @@ public class CotizadorController implements Serializable {
 
             this.newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
             System.out.println("Caracteristicas->" + this.newCotizacionTO.getListaDeCaracteristicas());
-                  
+
             LocalDateTime fechaActual = LocalDateTime.now();
             DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            
+
             this.newCotizacionTO.setFechaCotizacion(fechaActual.format(formatoFecha));
             System.out.println("Fecha->" + this.newCotizacionTO.getFechaCotizacion());
 
@@ -142,7 +150,7 @@ public class CotizadorController implements Serializable {
 
             this.servicioCotizacion.insertarCotizacion(this.newCotizacionTO);
             System.out.println("Se cotizo y se creo la nueva cotizacion.");
-            
+
             this.mostrarCotizacionNueva = this.servicioCotizacion.cotizacionNuevaExistente(this.newCotizacionTO.getFechaCotizacion());
 
         } catch (Exception e) {
@@ -152,23 +160,9 @@ public class CotizadorController implements Serializable {
 
     }
 
-//    public CotizacionTO cargarCotizacionNueva() {
-//        try {
-//            System.out.println("A: "+this.newCotizacionTO.getFechaCotizacion());
-//            System.out.println("Hizo ALGO");
-//            this.mostrarCotizacionNueva = this.servicioCotizacion.cotizacionNuevaExistente(this.newCotizacionTO.getFechaCotizacion());
-//            System.out.println("A: "+this.mostrarCotizacionNueva.getNumeroCotizacion());
-//            
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//
-//        return this.mostrarCotizacionNueva;
-//    }
-
     public List<CaracteristicaTO> cargarListaCaracteristicas(int id) {
         try {
-            this.listaCaracteristicasParaCotizador = this.servicioCaracteristica.listaCaracteristicasPorIdCategoriaYEstado(id);
+            this.listaCaracteristicasParaCotizador = this.servicioCaracteristica.listaCaracteristicasParaCotizador(id);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -239,6 +233,14 @@ public class CotizadorController implements Serializable {
         }
     }
 
+    public UsuarioTO getUsuarioTO() {
+        return usuarioTO;
+    }
+
+    public void setUsuarioTO(UsuarioTO usuarioTO) {
+        this.usuarioTO = usuarioTO;
+    }
+
     public void openNewCotizacion() {
         this.newCotizacionTO = new CotizacionTO();
     }
@@ -250,8 +252,14 @@ public class CotizadorController implements Serializable {
     public void setMostrarCotizacionNueva(CotizacionTO mostrarCotizacionNueva) {
         this.mostrarCotizacionNueva = mostrarCotizacionNueva;
     }
-    
-    
+
+    public String getVisibilidadCategoria() {
+        return visibilidadCategoria;
+    }
+
+    public void setVisibilidadCategoria(String visibilidadCategoria) {
+        this.visibilidadCategoria = visibilidadCategoria;
+    }
 
     public String getAnchoCotizacion() {
         return anchoCotizacion;
@@ -381,8 +389,20 @@ public class CotizadorController implements Serializable {
         this.listaCaracteristicasParaCotizador = listaCaracteristicasParaCotizador;
     }
 
-    public List<CategoriaTO> getListaCategoriaParaCotizar() {
-        return listaCategoriaParaCotizar;
+    public List<CategoriaTO> getListaCategoriaParaCotizarCliente() {
+        return listaCategoriaParaCotizarCliente;
+    }
+
+    public void setListaCategoriaParaCotizarCliente(List<CategoriaTO> listaCategoriaParaCotizarCliente) {
+        this.listaCategoriaParaCotizarCliente = listaCategoriaParaCotizarCliente;
+    }
+
+    public List<CategoriaTO> getListaCategoriaParaCotizarAdmin() {
+        return listaCategoriaParaCotizarAdmin;
+    }
+
+    public void setListaCategoriaParaCotizarAdmin(List<CategoriaTO> listaCategoriaParaCotizarAdmin) {
+        this.listaCategoriaParaCotizarAdmin = listaCategoriaParaCotizarAdmin;
     }
 
     public String getListaDeCaracteristicas() {
@@ -391,10 +411,6 @@ public class CotizadorController implements Serializable {
 
     public void setListaDeCaracteristicas(String listaDeCaracteristicas) {
         this.listaDeCaracteristicas = listaDeCaracteristicas;
-    }
-
-    public void setListaCategoriaParaCotizar(List<CategoriaTO> listaCategoriaParaCotizar) {
-        this.listaCategoriaParaCotizar = listaCategoriaParaCotizar;
     }
 
     public int getIdCategoria() {
@@ -509,6 +525,14 @@ public class CotizadorController implements Serializable {
         this.prioridadCaracteristica = prioridadCaracteristica;
     }
 
+    public boolean esAdmin(String tipo) {
+        System.out.println("Tipo: " + tipo);
+        if (tipo.equals("admin")) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean esMultiple(CategoriaTO categoriaTO) {
         if (categoriaTO.getSeleccionCategoria().equals("Múltiple")) {
             return true;
@@ -526,7 +550,7 @@ public class CotizadorController implements Serializable {
     }
 
     public boolean Cotizar(int idUser) {
-//        xhtml(87)=<!--actionListener="#{cotizadorController.Cotizar(userController.idUser)}" onclick="#{cotizadorController.openNewCotizacion()}"--> required="true"
+
         try {
             if (this.listaCanastaCotizador.isEmpty()) {
                 System.out.println("Error esta vacia");
@@ -536,7 +560,6 @@ public class CotizadorController implements Serializable {
             System.out.println("Se mando a cotizar");
             //this.fechaCotizacion = Date.valueOf(LocalDate.now());
             System.out.println("Fecha aqui(538)");
-                    
 
             servicioCotizacion.Cotizar(this.listaCanastaCotizador, idUser, this.anchoCotizacion, this.largoCotizacion);
             this.listaCanastaCotizador.forEach((caracTO) -> {

@@ -11,14 +11,16 @@ public class CategoriaTO implements Serializable {
     private String descripcionCategoria;
     private String estadoCategoria;
     private String seleccionCategoria;
+    private String visibilidadCategoria;
 
 
-    public CategoriaTO(int idCategoria, String nombreCategoria, String descripcionCategoria, String estadoCategoria, String seleccionCategoria) {
+    public CategoriaTO(int idCategoria, String nombreCategoria, String descripcionCategoria, String estadoCategoria, String seleccionCategoria,String visibilidadCategoria) {
         this.idCategoria = idCategoria;
         this.nombreCategoria = nombreCategoria;
         this.descripcionCategoria = descripcionCategoria;
         this.estadoCategoria=estadoCategoria;
         this.seleccionCategoria=seleccionCategoria;
+        this.visibilidadCategoria =visibilidadCategoria;
     }
     public CategoriaTO(){
     }
@@ -67,6 +69,14 @@ public class CategoriaTO implements Serializable {
 
     public void setSeleccionCategoria(String seleccionCategoria) {
         this.seleccionCategoria = seleccionCategoria;
+    }
+
+    public String getVisibilidadCategoria() {
+        return visibilidadCategoria;
+    }
+
+    public void setVisibilidadCategoria(String visibilidadCategoria) {
+        this.visibilidadCategoria = visibilidadCategoria;
     }
     
     
