@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -9,7 +10,7 @@ public class CotizacionTO {
     
     private int numeroCotizacion;
     private String listaDeCaracteristicas;
-    private Date fechaCotizacion;
+    private String fechaCotizacion;
     private int clienteCotizacion;
     private String anchoCotizacion;
     private String largoCotizacion;
@@ -18,14 +19,14 @@ public class CotizacionTO {
     List<CaracteristicaTO> listaCaracteristicas = null;
     
 
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion) {
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, int clienteCotizacion) {
         this.numeroCotizacion = numeroCotizacion;
         this.listaDeCaracteristicas = listaDeCaracteristicas;
         this.fechaCotizacion = fechaCotizacion;
         this.clienteCotizacion = clienteCotizacion;
     }
 
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion, String anchoCotizacion, String largoCotizacion, Double totalCotizacion) {
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, int clienteCotizacion, String anchoCotizacion, String largoCotizacion, Double totalCotizacion) {
         this.numeroCotizacion = numeroCotizacion;
         this.listaDeCaracteristicas = listaDeCaracteristicas;
         this.fechaCotizacion = fechaCotizacion;
@@ -37,7 +38,7 @@ public class CotizacionTO {
     
     
 
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, Date fechaCotizacion, int clienteCotizacion, List<CaracteristicaTO> listaCaracteristicas, String anchoCotizacion, String largoCotizacion, Double totalCotizacion){
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, int clienteCotizacion, List<CaracteristicaTO> listaCaracteristicas, String anchoCotizacion, String largoCotizacion, Double totalCotizacion){
         this.numeroCotizacion = numeroCotizacion;
         this.listaDeCaracteristicas = listaDeCaracteristicas;
         this.fechaCotizacion = fechaCotizacion;
@@ -84,11 +85,11 @@ public class CotizacionTO {
         this.listaDeCaracteristicas = listaDeCaracteristicas;
     }
 
-    public Date getFechaCotizacion() {
+    public String getFechaCotizacion() {
         return fechaCotizacion;
     }
 
-    public void setFechaCotizacion(Date fechaCotizacion) {
+    public void setFechaCotizacion(String fechaCotizacion) {
         this.fechaCotizacion = fechaCotizacion;
     }
 

@@ -20,20 +20,144 @@
                     <p:button value="Cotizador" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml" />
                 </p:toolbarGroup>
                 <p:toolbarGroup>
-                    <p:menuButton value="Ingresar/Registrarse" icon="pi pi-user" styleClass="p-mb-2" >
-                        <p:menuitem value="Ingresar"/>
-                        <p:menuitem value="Crear Cuenta"/>
+                    <p:menuButton value="Ingresar/Registrarse" icon="pi pi-user" styleClass="p-mb-2" rendered="#{!loginController.estado()}">
+                        <p:menuitem value="Ingresar" update=":formIngresarUsuario:ingresar-usuario-content growl" oncomplete="PF('ingresarUsuarioDialog').show()" icon="pi pi-sign-in"/>
+                        <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content growl" oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
+                    </p:menuButton>
+                    <p:menuButton value="Cerrar Sesión" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.estado()}">
+                        <p:menuitem id="cerrarSesion" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
                     </p:menuButton>
                 </p:toolbarGroup>
             </p:toolbar>
         </h:form>
+        
+        <h:form id="formRegistrarUsuario">
+
+            <p:dialog header="Crear Cuenta" showEffect="fade" modal="true"
+                      widgetVar="registrarUsuarioDialog" responsive="true">
+
+                <p:outputPanel id="registrar-usuario-content" class="ui-fluid">
+                    <p:outputPanel>
+
+                        <div class="p-field">
+                            <p:outputLabel for="nombre" value="Nombre"/>
+                            <p:inputText id="nombre" value="#{loginController.nombreUsuario}" required="true" />
+                        </div>
+
+                        <div class="p-field">
+                            <p:outputLabel for="correo" value="Correo Electrónico"/>
+                            <p:inputText type="email" id="correo" value="#{loginController.correo}" required="true"/>
+                        </div>
+
+                        <div class="p-field">
+                            <p:outputLabel for="pass" value="Contraseña"/>
+                            <p:password id="pass" value="#{loginController.claveNueva}" required="true" />
+                        </div>
+
+                        <div class="p-field">
+                            <p:outputLabel for="direccion" value="Dirección"/>
+                            <p:inputTextarea id="direccion" value="#{loginController.direccionUsuario}" required="true" />
+                        </div>
+
+                        <div class="p-field">
+                            <p:outputLabel for="telefono" value="Teléfono"/>
+                            <p:inputMask id="telefono" value="#{loginController.telefonoUsuario}" mask="99999999" validateMask="true" required="true"/>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">     
+
+                    <p:commandButton value="Registrar" icon="pi pi-check" actionListener="#{loginController.registrarUsuario()}"
+                                     update=":formRegistrarUsuario:registrar-usuario-content growl" process="registrar-usuario-content @this" 
+                                     oncomplete="PF('registrarUsuarioDialog').hide()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('registrarUsuarioDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formIngresarUsuario">
+
+
+            <p:dialog header="Ingresar" showEffect="fade" modal="true"
+                      widgetVar="ingresarUsuarioDialog" responsive="true">
+
+                <p:outputPanel id="ingresar-usuario-content" class="ui-fluid">
+                    <p:outputPanel>
+
+                        <div class="p-field">
+                            <p:outputLabel for="Ncorreoelectronico" value="Correo Electrónico"/>
+                            <p:inputText type="email" id="Ncorreoelectronico" value="#{loginController.correo}" placeholder="Correo electrónico" required="true" requiredMessage="Por favor digite un correo electronico!"/>
+                        </div>
+
+                        <div class="p-field">
+                            <p:outputLabel for="Ncontrasena" value="Contraseña"/>
+                            <p:password id="Ncontrasena" value="#{loginController.clave}" toggleMask="true" required="true" requiredMessage="Por favor digite una clave"/>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">     
+                    <p:commandButton value="Ingresar" icon="pi pi-check" actionListener="#{loginController.ingresar()}" 
+                                     update=":formIngresarUsuario:ingresar-usuario-content growl" process="ingresar-usuario-content @this" onclick="PF('formloading').show()"/>
+
+                    <p:commandButton value="Cambiar Contraseña" icon="pi pi-check" 
+                                     update=":formCambiarContrasena:change-password-content growl" onsuccess="PF('changePasswordDialog').show()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ingresarUsuarioDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formCambiarContrasena">
+            <p:dialog header="Cambio de Contraseña" showEffect="fade" modal="true"
+                      widgetVar="changePasswordDialog" responsive="true">
+
+                <p:outputPanel id="change-password-content" class="ui-fluid">
+                    <p:outputPanel>
+
+                        <div class="p-field p-grid">
+                            <p:outputLabel for="pass1" styleClass="p-col-fixed" style="width:100px" value="Contraseña Nueva"/>
+                            <div class="p-col">
+                                <p:password id="pass1" value="#{loginController.claveNueva}" match="pass2" label="Password 1"/>
+                            </div>
+                        </div>
+
+                        <div class="p-field p-grid">
+                            <p:outputLabel for="pass2" styleClass="p-col-fixed" style="width:100px" value="Confimar Contraseña"/>
+                            <div class="p-col">
+                                <p:password id="pass2" value="#{loginController.verificarClave}" label="Password 2"/>
+                            </div>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">     
+
+                    <p:commandButton value="Cambiar" icon="pi pi-check" actionListener="#{loginController.cambiarContrasena()}"
+                                     update=":formCambiarContrasena:change-password-content growl" process="change-password-content @this" onstart="PF('formloading').show()" onerror="PF('formloading').hide()" onsuccess="PF('changePasswordDialog').hide()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('changePasswordDialog').hide()"
+                                     class="ui-button-secondary" />
+
+                </f:facet>
+            </p:dialog>
+        </h:form>
+        
 
         <h:form id="formCotizador">
+
             <p:panelGrid  columns="1">
                 <p:panel style="background-color:#A43D42" visible="true">
 
                     <div class="product card">
-                        <p:accordionPanel value="#{cotizadorController.listaCategoriaParaCotizar}" widgetVar="accordionPanel" var="elCotizadorCategoria" multiple="false" style="width: fit-content;">
+                        <p:accordionPanel value="#{cotizadorController.listaCategoriaParaCotizarCliente}" widgetVar="accordionPanel" var="elCotizadorCategoria" multiple="false" style="width: fit-content;" rendered="#{!cotizadorController.esAdmin(loginController.tipo)}" >
                             <p:tab title="#{elCotizadorCategoria.nombreCategoria} - #{elCotizadorCategoria.descripcionCategoria}">
                                 <p:dataView  var="elCotizadorCaracteristica" value="#{cotizadorController.cargarListaCaracteristicas(elCotizadorCategoria.idCategoria)}" rows="4" paginator="true"  
                                              paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" paginatorPosition="bottom"
@@ -79,7 +203,56 @@
                                 </p:dataView>
                             </p:tab>
                         </p:accordionPanel>
-                    </div> 
+                    </div>
+                    
+                    <div class="product card">
+                        <p:accordionPanel value="#{cotizadorController.listaCategoriaParaCotizarAdmin}" widgetVar="accordionPanel" var="elCotizadorCategoria" multiple="false" style="width: fit-content;" rendered="#{cotizadorController.esAdmin(loginController.tipo)}" >
+                            <p:tab title="#{elCotizadorCategoria.nombreCategoria} - #{elCotizadorCategoria.descripcionCategoria}">
+                                <p:dataView  var="elCotizadorCaracteristica" value="#{cotizadorController.cargarListaCaracteristicas(elCotizadorCategoria.idCategoria)}" rows="4" paginator="true"  
+                                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" paginatorPosition="bottom"
+                                             layout="grid" gridRowStyleClass="p-lg-6 p-xl-4 p-md-2 p-sm-1" >
+
+                                    <p:dataViewGridItem>
+                                        <p:card  style="width: 20em; margin-bottom: 2em; padding: 2em; text-align:center;">
+                                            <div class="product-grid-item card border-1">
+                                                <div class="product-grid-item-content">
+                                                    <center>
+                                                        <p:graphicImage style="padding: 1em" value="/imagenes/#{elCotizadorCaracteristica.imagenCaracteristica}" height="192px" width="192px" />
+                                                        <div class="product-name">#{elCotizadorCaracteristica.nombreCaracteristica}</div>
+                                                        <div class="product-description">#{elCotizadorCaracteristica.idCaracteristica}</div>
+                                                        <p:scrollPanel style="width:12em;height:8em; margin: 0.5em" mode="native" >
+                                                            <p class="p-m-0 p-p-3">
+                                                                <div class="elCotizadorCaracteristica-description">#{elCotizadorCaracteristica.descripcionCaracteristica}</div>   
+                                                            </p>
+                                                        </p:scrollPanel>
+                                                    </center>
+                                                </div>
+                                                <div id="seleccionadorProductos"  class="product-grid-item-bottom">
+                                                    <center>
+                                                        <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
+                                                            <f:convertNumber currencySymbol="₡" type="currency"/>
+                                                        </h:outputText>
+                                                        <div>
+                                                            <p:selectOneRadio  id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio" unselectable="true">
+                                                                <f:selectItem itemLabel="Seleccionar" itemValue="null" />
+                                                                <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristica)}" onsuccess="PF('accordionPanel').select(+1)"/>
+                                                            </p:selectOneRadio>
+                                                        </div>
+                                                        <div>
+                                                            <h:selectManyCheckbox id="seleccionMB" rendered="#{cotizadorController.esMultiple(elCotizadorCategoria)}">
+                                                                <f:selectItem id="multiple" itemLabel="Seleccionar" itemValue="null" />
+                                                                <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorMultiple(elCotizadorCaracteristica)}" />
+                                                            </h:selectManyCheckbox>
+                                                        </div>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </p:card>
+                                    </p:dataViewGridItem>
+                                </p:dataView>
+                            </p:tab>
+                        </p:accordionPanel>
+                    </div>
 
                     <center>
                         <div style="margin-top: 1rem ;margin-bottom: 1rem" >
@@ -92,14 +265,19 @@
                             <p:inputText id="NlargoCotizacion" value="#{cotizadorController.largoCotizacion}" placeholder="cm" required="true"/>
                             <p:message for="NlargoCotizacion" display="icon"/> 
                         </div>
-
                         <div>
                             <p:commandButton value="Cotizar" actionListener="#{cotizadorController.abrirEIngresarNewCotizacion(loginController.idUser)}" update=":formCotizacion:show-cotizacion-content" onsuccess="PF('showCotizacionDialog').show()"/>
                         </div>
                     </center>
 
                 </p:panel>
-            </p:panelGrid>
+            </p:panelGrid>                   
+            <!--////////////////////////////////////////////////////////-->
+
+
+
+            <!--///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
         </h:form>
 
         <h:form id="formCotizacion">
@@ -108,20 +286,20 @@
                       widgetVar="showCotizacionDialog" responsive="true" minHeight="350" width="550">
 
                 <p:outputPanel id="show-cotizacion-content" class="ui-fluid">
-                    <p:outputPanel rendered="#{not empty cotizadorController.newCotizacionTO}">
+                    <p:outputPanel rendered="#{not empty cotizadorController.mostrarCotizacionNueva}">
 
                         <p:card>
                             <div class="p-grid">
                                 <div class="p-col">
                                     <p:outputLabel for="numeroCotizacion" value="Numero de Cotización: "/>
-                                    <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.newCotizacionTO.numeroCotizacion}" style="width:30rem"/> 
+                                    <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.mostrarCotizacionNueva.numeroCotizacion}" style="width:30rem"/> 
                                 </div>
                             </div>
 
                             <div class="p-grid">
                                 <div class="p-col">
                                     <p:outputLabel for="listaDeCaracteristicas" value="Lista de productos: "/>
-                                    <p:outputLabel id="listaDeCaracteristicas" value="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" style="width:30rem"/>
+                                    <p:outputLabel id="listaDeCaracteristicas" value="#{cotizadorController.mostrarCotizacionNueva.listaDeCaracteristicas}" style="width:30rem"/>
                                     <p:message for="listaDeCaracteristicas" display="icon"/> 
                                 </div>
                             </div>
@@ -129,7 +307,7 @@
                             <div class="p-grid">
                                 <div class="p-col">
                                     <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotización: "/>
-                                    <p:outputLabel id ="fechaCotizacion" value="#{cotizadorController.newCotizacionTO.fechaCotizacion}" style="width:30rem"/>
+                                    <p:outputLabel id ="fechaCotizacion" value="#{cotizadorController.mostrarCotizacionNueva.fechaCotizacion}" style="width:30rem"/>
 
                                 </div>
                             </div>
@@ -137,28 +315,28 @@
                             <div class="p-grid">
                                 <div class="p-col">
                                     <p:outputLabel for="clienteCotizacion" value="Cliente que cotizó: "/>
-                                    <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.newCotizacionTO.clienteCotizacion}" style="width:30rem"/>
+                                    <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.mostrarCotizacionNueva.clienteCotizacion}" style="width:30rem"/>
 
                                 </div>
                             </div>
                             <div class="p-grid">
                                 <div class="p-col">
                                     <p:outputLabel for="anchoCotizacion" value="Ancho que cotizó: cm"/>
-                                    <p:outputLabel id="anchoCotizacion" value="#{cotizadorController.newCotizacionTO.anchoCotizacion}" style="width:30rem"/>
+                                    <p:outputLabel id="anchoCotizacion" value="#{cotizadorController.mostrarCotizacionNueva.anchoCotizacion}" style="width:30rem"/>
 
                                 </div>
                             </div>
                             <div class="p-grid">
                                 <div class="p-col">
                                     <p:outputLabel for="largoCotizacion" value="Largo que cotizó: cm"/>
-                                    <p:outputLabel id="largoCotizacion" value="#{cotizadorController.newCotizacionTO.largoCotizacion}" style="width:30rem"/>
+                                    <p:outputLabel id="largoCotizacion" value="#{cotizadorController.mostrarCotizacionNueva.largoCotizacion}" style="width:30rem"/>
 
                                 </div>
                             </div>
                             <div class="p-grid">
                                 <div class="p-col">
                                     <p:outputLabel for="totalCotizacion" value="Total de la cotizacion: ₡"/>
-                                    <p:outputLabel id="totalCotizacion" value="#{cotizadorController.newCotizacionTO.totalCotizacion}" style="width:30rem"/>
+                                    <p:outputLabel id="totalCotizacion" value="#{cotizadorController.mostrarCotizacionNueva.totalCotizacion}" style="width:30rem"/>
                                 </div>
                             </div>
                         </p:card>

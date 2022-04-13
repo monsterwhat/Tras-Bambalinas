@@ -14,6 +14,7 @@ public class CaracteristicaTO implements Serializable {
     private String colorCaracteristica;
     private int prioridadCaracteristica;
 
+
     public CaracteristicaTO() {
     }
     
@@ -27,6 +28,7 @@ public class CaracteristicaTO implements Serializable {
         this.precioCaracteristica = precioCaracteristica;
         this.colorCaracteristica = colorCaracteristica;
         this.prioridadCaracteristica = prioridadCaracteristica;
+     
     }
 
     public CaracteristicaTO(int idCategoriaCaracteristica, String imagenCaracteristica, String nombreCaracteristica, String descripcionCaracteristica, String estadoCaracteristica, double precioCaracteristica, String colorCaracteristica, int prioridadCaracteristica) {
@@ -38,6 +40,7 @@ public class CaracteristicaTO implements Serializable {
         this.precioCaracteristica = precioCaracteristica;
         this.colorCaracteristica = colorCaracteristica;
         this.prioridadCaracteristica = prioridadCaracteristica;
+      
     }
 
     public int getIdCaracteristica() {
@@ -111,8 +114,8 @@ public class CaracteristicaTO implements Serializable {
     public void setPrioridadCaracteristica(int prioridadCaracteristica) {
         this.prioridadCaracteristica = prioridadCaracteristica;
     }
-    
-    
+
+
 
     
 }

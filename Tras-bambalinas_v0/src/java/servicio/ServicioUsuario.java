@@ -187,10 +187,11 @@ public class ServicioUsuario extends Servicio {
 
         try {
             conectar();
-            String sql = "UPDATE usuarios SET contrasenaUsuario=? WHERE correoUsuario = '" + correoUsua + "' AND contrasenaUsuario = '" + clave + "'";
+            String sql = "UPDATE usuarios SET contrasenaUsuario=? WHERE correoUsuario = '" + correoUsua + "'";
             preparedStatement = conexion.prepareStatement(sql);
 
-            preparedStatement.setString(1, ServicioCifrar.encrypt(claveNueva));
+            String claveCifrada = ServicioCifrar.encrypt(claveNueva);
+            preparedStatement.setString(1, claveCifrada);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {

@@ -14,6 +14,43 @@
     <h:body>
         <h:outputStylesheet library="css" name="styleAdmin.css"/>
 
+        <h:form id="formMenu">
+            <p:toolbar>
+                <p:toolbarGroup align="left">
+                    <p:sidebar widgetVar="sidebarCrud" position="left">
+                        <div class="card">
+                            <p:menu >
+                                <p:submenu label="Administración">
+                                    <p:menuitem value="Usuarios" update=":formUsuario:show-user-information" oncomplete="PF('showUserInformation').show()"/>
+                                    <p:menuitem value="Categorias" update=":formCategoria:show-categoria-information" oncomplete="PF('showCategoriaInformation').show()"/>
+                                    <p:menuitem value="Características"  update=":formCaracteristica:show-caracteristica-information" oncomplete="PF('showCaracteristicaInformation').show()" />
+                                    <p:menuitem value="Cotización"  update=":formCotizacion:show-cotizaciones-information" oncomplete="PF('showListaCotizacion').show()" />
+
+                                </p:submenu>
+                            </p:menu>
+                        </div>
+                    </p:sidebar>
+                    <p:commandButton id="adminButton" icon="pi pi-bars" type="button" onclick="PF('sidebarCrud').show()" />
+                    <p:tooltip for="adminButton" value="Administración" showEffect="clip" hideEffect="fold"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup style="margin-left: 2rem " >
+                    <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml" />
+                    <p:button value="Cotizador" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>
+                    <!--                        <p:button value="Redes Sociales" styleClass="ui-button-secondary ui-button-flat" />
+                                            <p:button value="Ubicacion" styleClass="ui-button-secondary ui-button-flat" />                       
+                                            <p:button value="Catalogo" styleClass="ui-button-secondary ui-button-flat"/>
+                                            <p:button  value="Servicios" styleClass="ui-button-secondary ui-button-flat"/>-->
+                </p:toolbarGroup>   
+                <p:toolbarGroup align="right">
+                    <p:menuButton icon="pi pi-user" styleClass="p-mb-2">
+                        <p:menuitem id="regresarId" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
+                    </p:menuButton>
+                </p:toolbarGroup>
+
+            </p:toolbar>
+            <h3> BIENVENIDO ADMINISTRADOR </h3>
+        </h:form>
+
         <h:form id="formUsuario">
 
             <p:dialog header="Detalle del usuario" showEffect="fade" modal="true"
@@ -246,6 +283,9 @@
                         <p:column headerText="Selección Categoria" sortBy="#{laCategoria.seleccionCategoria}" >
                             <h:outputText value="#{laCategoria.seleccionCategoria}"/>
                         </p:column>
+                        <p:column headerText="Categoria Visible para" sortBy="#{laCategoria.visibilidadCategoria}" >
+                            <h:outputText value="#{laCategoria.visibilidadCategoria}"/>
+                        </p:column>
 
                         <p:column>
                             <p:commandButton icon="pi pi-pencil" update=":formCategoria:update-categoria-content"
@@ -322,8 +362,6 @@
                             </div>
                         </div>
 
-
-
                         <div class="p-grid p-flex-column">
                             <div class="p-col">
                                 <p:outputLabel for="seleccionCategoria" value="Seleccion de la Categoria *"/>
@@ -333,6 +371,14 @@
                                 </p:selectOneButton>
                                 <p:message for="seleccionCategoria" display="icon"/>  
                             </div>
+                        </div>
+                        <div class="p-field" >
+                            <p:outputLabel for="NvisibilidadCategoria" value="Categoria Visible para"/>
+                            <p:selectOneButton id="NvisibilidadCategoria" value="#{OtherController.newCategoria.visibilidadCategoria}" required="true" style="width:25rem">
+                                <f:selectItem itemLabel="Solo Administradores" itemValue="Solo Administradores"/>
+                                <f:selectItem itemLabel="Para Todos" itemValue="Para Todos"/>
+                            </p:selectOneButton>
+                            <p:message for="NvisibilidadCategoria" display="icon"/>
                         </div>
 
                     </p:outputPanel>
@@ -395,6 +441,15 @@
                                 <p:message for="UseleccionCategoria" display="icon"/> 
                             </div>
                         </div>
+                        <div class="p-field" >
+                            <p:outputLabel for="UvisibilidadCategoria" value="Categoria Visible para"/>
+                            <p:selectOneButton id="UvisibilidadCategoria" value="#{OtherController.newCategoria.visibilidadCategoria}" required="true" style="width:30rem">
+                                <f:selectItem itemLabel="Solo Administradores" itemValue="Solo Administradores"/>
+                                <f:selectItem itemLabel="Para Todos" itemValue="Para Todos"/>
+                            </p:selectOneButton>
+                            <p:message for="UvisibilidadCategoria" display="icon"/>
+                        </div>
+
 
                     </p:outputPanel>
                 </p:outputPanel>
@@ -573,7 +628,8 @@
                                 <p:inputNumber id="prioridadCaracteristica" value="#{OtherController.newCaracteristica.prioridadCaracteristica}" 
                                                minValue="0" inputStyle="width:25rem" required="true" />
 
-                            </div> 
+                            </div>
+
 
                             <div class="p-field mb-3">
                                 <div class="p-field">
@@ -873,44 +929,6 @@
                                              onclick="PF('deleteCotizacionDialog').hide()"/>
                         </p:confirmDialog>-->
 
-        </h:form>
-
-
-        <h:form id="formMenu">
-            <p:toolbar>
-                <p:toolbarGroup align="left">
-                    <p:sidebar widgetVar="sidebarCrud" position="left">
-                        <div class="card">
-                            <p:menu >
-                                <p:submenu label="Administración">
-                                    <p:menuitem value="Usuarios" update=":formUsuario:show-user-information" oncomplete="PF('showUserInformation').show()"/>
-                                    <p:menuitem value="Categorias" update=":formCategoria:show-categoria-information" oncomplete="PF('showCategoriaInformation').show()"/>
-                                    <p:menuitem value="Características"  update=":formCaracteristica:show-caracteristica-information" oncomplete="PF('showCaracteristicaInformation').show()" />
-                                    <p:menuitem value="Cotización"  update=":formCotizacion:show-cotizaciones-information" oncomplete="PF('showListaCotizacion').show()" />
-
-                                </p:submenu>
-                            </p:menu>
-                        </div>
-                    </p:sidebar>
-                    <p:commandButton id="adminButton" icon="pi pi-bars" type="button" onclick="PF('sidebarCrud').show()" />
-                    <p:tooltip for="adminButton" value="Administración" showEffect="clip" hideEffect="fold"/>
-                </p:toolbarGroup>
-                <p:toolbarGroup style="margin-left: 2rem " >
-                    <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml" />
-                    <p:button value="Cotizador" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>
-                    <!--                        <p:button value="Redes Sociales" styleClass="ui-button-secondary ui-button-flat" />
-                                            <p:button value="Ubicacion" styleClass="ui-button-secondary ui-button-flat" />                       
-                                            <p:button value="Catalogo" styleClass="ui-button-secondary ui-button-flat"/>
-                                            <p:button  value="Servicios" styleClass="ui-button-secondary ui-button-flat"/>-->
-                </p:toolbarGroup>   
-                <p:toolbarGroup align="right">
-                    <p:menuButton icon="pi pi-user" styleClass="p-mb-2">
-                        <p:menuitem id="regresarId" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
-                    </p:menuButton>
-                </p:toolbarGroup>
-
-            </p:toolbar>
-            <h3> BIENVENIDO ADMINISTRADOR </h3>
         </h:form>
 
     </h:body>

@@ -24,11 +24,13 @@ public class LoginController implements Serializable {
 
     private int idUser;
     private String correo;
+    private String tipo;
     private String clave;
     private String claveNueva, verificarClave;
     private String nombreUsuario;
     private String direccionUsuario;
     private int telefonoUsuario;
+    private boolean Estado = false;
 
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
     private UsuarioTO usuarioTO;
@@ -45,6 +47,14 @@ public class LoginController implements Serializable {
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public int getIdUser() {
@@ -131,6 +141,22 @@ public class LoginController implements Serializable {
         this.listaUsuarios = listaUsuarios;
     }
 
+    public boolean isEstado() {
+        return Estado;
+    }
+
+    public void setEstado(boolean Estado) {
+        this.Estado = Estado;
+    }
+    
+    public void revisarEstado(){
+        if(this.usuarioTO != null){
+            setEstado(true);
+        }else{
+            setEstado(false);
+        }
+    }
+
     public void ingresar() {
         try {
 
@@ -143,17 +169,18 @@ public class LoginController implements Serializable {
                 if (!servicioUsuario.verificarCorreo(this.getCorreo())) {
 
                     if (servicioUsuario.existeUsuarioB(this.getCorreo(), this.getClave())) {
-                        this.usuarioTO = servicioUsuario.existeUsuario(this.getCorreo(), this.getClave());
+                       // this.usuarioTO = servicioUsuario.existeUsuario(this.getCorreo(), this.getClave());
+                        setUsuarioTO(servicioUsuario.existeUsuario(this.getCorreo(), this.getClave()));
                         this.idUser = usuarioTO.getIdusuarios();
-
+                        this.tipo = usuarioTO.getTipoUsuario();
                         switch (this.usuarioTO.getTipoUsuario()) {
                             case "admin":
                                 this.listaUsuarios = servicioUsuario.listaUsuariosBD();
-                                this.redireccionar("/faces/adminMenu.xhtml");
+                                //this.redireccionar("/faces/adminMenu.xhtml");
                                 break;
                             case "cliente":
-                                this.redireccionar("/faces/clienteMenu.xhtml");
-                                
+                                //this.redireccionar("/faces/clienteMenu.xhtml");
+
                                 break;
                             default:
                                 addMessage(FacesMessage.SEVERITY_ERROR, "Autenticacion", "Las credenciales son invalidas");

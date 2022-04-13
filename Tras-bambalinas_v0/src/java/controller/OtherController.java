@@ -46,6 +46,7 @@ public class OtherController implements Serializable {
     private double precioCaracteristica;
     private String colorCaracteristica;
     private int prioridadCaracteristica;
+    private String visibilidadCaracteristica;
 
     public OtherController() {
     }
@@ -220,6 +221,16 @@ public class OtherController implements Serializable {
     public void setPrioridadCaracteristica(int prioridadCaracteristica) {
         this.prioridadCaracteristica = prioridadCaracteristica;
     }
+
+    public String getVisibilidadCaracteristica() {
+        return visibilidadCaracteristica;
+    }
+
+    public void setVisibilidadCaracteristica(String visibilidadCaracteristica) {
+        this.visibilidadCaracteristica = visibilidadCaracteristica;
+    }
+    
+    
 
     public CategoriaTO getNewCategoria() {
         return newCategoria;
