@@ -12,11 +12,11 @@
         <body style="background-color:#93b5c6;">
         </body>
 
-        <h:form id="formMenu">
-
-            <p:toolbar id="barraUsuario">
+        <h:form id="formMenu" >
+            <p:toolbar>
+                <p:autoUpdate id="menuBar"/>
                 <p:toolbarGroup style="margin-left: 20rem ">
-
+                   
                     <p:button value="FERVA" outcome="/faces/index" icon="pi pi-fw pi-home" styleClass="ui-button-secondary ui-button-flat"  />
                     <p:button  value="Cotizador"  styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>        
 
@@ -24,7 +24,7 @@
 
 
                 <p:toolbarGroup>
-
+                    
                     <p:menuButton value="Ingresar/Registrarse" icon="pi pi-user" styleClass="p-mb-2" rendered="#{!loginController.revisarEstado()}">
                         <p:menuitem value="Ingresar" update=":formIngresarUsuario:ingresar-usuario-content" oncomplete="PF('ingresarUsuarioDialog').show()" icon="pi pi-sign-in"/>
                         <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content" oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
@@ -32,14 +32,11 @@
                     <p:menuButton value="Cerrar Sesión" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.revisarEstado()}">
                         <p:menuitem id="cerrarSesion" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
                     </p:menuButton>
-
+                    
                 </p:toolbarGroup>
 
 
             </p:toolbar>
-
-
-        </h:form>
 
         <h:form id="formRegistrarUsuario">
 
@@ -112,9 +109,7 @@
 
                 <f:facet name="footer">     
                     <p:commandButton value="Ingresar" icon="pi pi-check" actionListener="#{loginController.ingresar()}"
-                                     update=":formIngresarUsuario:ingresar-usuario-content" oncomplete="PF('ingresarUsuarioDialog').hide()" process="ingresar-usuario-content @this">
-                        <p:ajax update=":formMenu" />
-                    </p:commandButton>
+                                     update=":formIngresarUsuario:ingresar-usuario-content" oncomplete="PF('ingresarUsuarioDialog').hide()" process="ingresar-usuario-content @this"/>
 
                     <p:commandButton value="Cambiar Contraseña" icon="pi pi-check" 
                                      update=":formCambiarContrasena:change-password-content" onsuccess="PF('changePasswordDialog').show()"/>
