@@ -30,6 +30,7 @@ public class LoginController implements Serializable {
     private String nombreUsuario;
     private String direccionUsuario;
     private int telefonoUsuario;
+    private boolean Estado = false;
 
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
     private UsuarioTO usuarioTO;
@@ -140,6 +141,22 @@ public class LoginController implements Serializable {
         this.listaUsuarios = listaUsuarios;
     }
 
+    public boolean isEstado() {
+        return Estado;
+    }
+
+    public void setEstado(boolean Estado) {
+        this.Estado = Estado;
+    }
+    
+    public void revisarEstado(){
+        if(this.usuarioTO != null){
+            setEstado(true);
+        }else{
+            setEstado(false);
+        }
+    }
+
     public void ingresar() {
         try {
 
@@ -159,11 +176,11 @@ public class LoginController implements Serializable {
                         switch (this.usuarioTO.getTipoUsuario()) {
                             case "admin":
                                 this.listaUsuarios = servicioUsuario.listaUsuariosBD();
-                                this.redireccionar("/faces/adminMenu.xhtml");
+                                //this.redireccionar("/faces/adminMenu.xhtml");
                                 break;
                             case "cliente":
-                                this.redireccionar("/faces/clienteMenu.xhtml");
-                                
+                                //this.redireccionar("/faces/clienteMenu.xhtml");
+
                                 break;
                             default:
                                 addMessage(FacesMessage.SEVERITY_ERROR, "Autenticacion", "Las credenciales son invalidas");

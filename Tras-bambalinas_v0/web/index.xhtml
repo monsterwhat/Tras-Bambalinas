@@ -13,25 +13,33 @@
         </body>
 
         <h:form id="formMenu">
-            <p:toolbar>
-                <p:toolbarGroup style="margin-left: 20rem " >
-                   
+
+            <p:toolbar id="barraUsuario">
+                <p:toolbarGroup style="margin-left: 20rem ">
+
                     <p:button value="FERVA" outcome="/faces/index" icon="pi pi-fw pi-home" styleClass="ui-button-secondary ui-button-flat"  />
                     <p:button  value="Cotizador"  styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>        
-                    
+
                 </p:toolbarGroup>
+
 
                 <p:toolbarGroup>
-                    
-                    <p:menuButton value="Ingresar/Registrarse" icon="pi pi-user" styleClass="p-mb-2">
-                        <p:menuitem value="Ingresar" update=":formIngresarUsuario:ingresar-usuario-content growl" oncomplete="PF('ingresarUsuarioDialog').show()" icon="pi pi-sign-in"/>
-                        <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content growl" oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
-                    </p:menuButton>
-                </p:toolbarGroup>
-            </p:toolbar>
-        </h:form>
 
-        <p:growl id="growl" showDetail="true" />
+                    <p:menuButton value="Ingresar/Registrarse" icon="pi pi-user" styleClass="p-mb-2" rendered="#{!loginController.revisarEstado()}">
+                        <p:menuitem value="Ingresar" update=":formIngresarUsuario:ingresar-usuario-content" oncomplete="PF('ingresarUsuarioDialog').show()" icon="pi pi-sign-in"/>
+                        <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content" oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
+                    </p:menuButton>
+                    <p:menuButton value="Cerrar Sesión" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.revisarEstado()}">
+                        <p:menuitem id="cerrarSesion" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
+                    </p:menuButton>
+
+                </p:toolbarGroup>
+
+
+            </p:toolbar>
+
+
+        </h:form>
 
         <h:form id="formRegistrarUsuario">
 
@@ -72,7 +80,7 @@
                 <f:facet name="footer">     
 
                     <p:commandButton value="Registrar" icon="pi pi-check" actionListener="#{loginController.registrarUsuario()}"
-                                     update=":formRegistrarUsuario:registrar-usuario-content growl" process="registrar-usuario-content @this" 
+                                     update=":formRegistrarUsuario:registrar-usuario-content" process="registrar-usuario-content @this" 
                                      oncomplete="PF('registrarUsuarioDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('registrarUsuarioDialog').hide()"
@@ -82,7 +90,6 @@
         </h:form>
 
         <h:form id="formIngresarUsuario">
-
 
             <p:dialog header="Ingresar" showEffect="fade" modal="true"
                       widgetVar="ingresarUsuarioDialog" responsive="true">
@@ -104,11 +111,13 @@
                 </p:outputPanel>
 
                 <f:facet name="footer">     
-                    <p:commandButton value="Ingresar" icon="pi pi-check" actionListener="#{loginController.ingresar()}" 
-                                     update=":formIngresarUsuario:ingresar-usuario-content growl" process="ingresar-usuario-content @this" onclick="PF('formloading').show()"/>
+                    <p:commandButton value="Ingresar" icon="pi pi-check" actionListener="#{loginController.ingresar()}"
+                                     update=":formIngresarUsuario:ingresar-usuario-content" oncomplete="PF('ingresarUsuarioDialog').hide()" process="ingresar-usuario-content @this">
+                        <p:ajax update=":formMenu" />
+                    </p:commandButton>
 
                     <p:commandButton value="Cambiar Contraseña" icon="pi pi-check" 
-                                     update=":formCambiarContrasena:change-password-content growl" onsuccess="PF('changePasswordDialog').show()"/>
+                                     update=":formCambiarContrasena:change-password-content" onsuccess="PF('changePasswordDialog').show()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ingresarUsuarioDialog').hide()"
                                      class="ui-button-secondary"/>
@@ -143,7 +152,7 @@
                 <f:facet name="footer">     
 
                     <p:commandButton value="Cambiar" icon="pi pi-check" actionListener="#{loginController.cambiarContrasena()}"
-                                     update=":formCambiarContrasena:change-password-content growl" process="change-password-content @this" onstart="PF('formloading').show()" onerror="PF('formloading').hide()" onsuccess="PF('changePasswordDialog').hide()"/>
+                                     update=":formCambiarContrasena:change-password-content" process="change-password-content @this" onstart="PF('formloading').show()" onerror="PF('formloading').hide()" onsuccess="PF('changePasswordDialog').hide()"/>
 
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('changePasswordDialog').hide()"
                                      class="ui-button-secondary" />
@@ -151,15 +160,6 @@
                 </f:facet>
             </p:dialog>
         </h:form>
-
-        <h:form id="formloading">
-            <p:dialog header="Cargando" showEffect="fade" modal="true" widgetVar="loadingDialog" responsive="true">
-                <p:outputPanel id="loading-dialog" class="ui-fluid">
-                    <p:progressBar id="progressBarIndeterminate" style="height:6px" mode="indeterminate"/>
-                </p:outputPanel>
-            </p:dialog>
-        </h:form>
-
     </h:body>
 </html>
 

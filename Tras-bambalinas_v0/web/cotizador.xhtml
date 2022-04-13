@@ -20,13 +20,136 @@
                     <p:button value="Cotizador" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml" />
                 </p:toolbarGroup>
                 <p:toolbarGroup>
-                    <p:menuButton value="Ingresar/Registrarse" icon="pi pi-user" styleClass="p-mb-2" >
-                        <p:menuitem value="Ingresar"/>
-                        <p:menuitem value="Crear Cuenta"/>
+                    <p:menuButton value="Ingresar/Registrarse" icon="pi pi-user" styleClass="p-mb-2" rendered="#{!loginController.estado()}">
+                        <p:menuitem value="Ingresar" update=":formIngresarUsuario:ingresar-usuario-content growl" oncomplete="PF('ingresarUsuarioDialog').show()" icon="pi pi-sign-in"/>
+                        <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content growl" oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
+                    </p:menuButton>
+                    <p:menuButton value="Cerrar Sesión" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.estado()}">
+                        <p:menuitem id="cerrarSesion" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
                     </p:menuButton>
                 </p:toolbarGroup>
             </p:toolbar>
         </h:form>
+        
+        <h:form id="formRegistrarUsuario">
+
+            <p:dialog header="Crear Cuenta" showEffect="fade" modal="true"
+                      widgetVar="registrarUsuarioDialog" responsive="true">
+
+                <p:outputPanel id="registrar-usuario-content" class="ui-fluid">
+                    <p:outputPanel>
+
+                        <div class="p-field">
+                            <p:outputLabel for="nombre" value="Nombre"/>
+                            <p:inputText id="nombre" value="#{loginController.nombreUsuario}" required="true" />
+                        </div>
+
+                        <div class="p-field">
+                            <p:outputLabel for="correo" value="Correo Electrónico"/>
+                            <p:inputText type="email" id="correo" value="#{loginController.correo}" required="true"/>
+                        </div>
+
+                        <div class="p-field">
+                            <p:outputLabel for="pass" value="Contraseña"/>
+                            <p:password id="pass" value="#{loginController.claveNueva}" required="true" />
+                        </div>
+
+                        <div class="p-field">
+                            <p:outputLabel for="direccion" value="Dirección"/>
+                            <p:inputTextarea id="direccion" value="#{loginController.direccionUsuario}" required="true" />
+                        </div>
+
+                        <div class="p-field">
+                            <p:outputLabel for="telefono" value="Teléfono"/>
+                            <p:inputMask id="telefono" value="#{loginController.telefonoUsuario}" mask="99999999" validateMask="true" required="true"/>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">     
+
+                    <p:commandButton value="Registrar" icon="pi pi-check" actionListener="#{loginController.registrarUsuario()}"
+                                     update=":formRegistrarUsuario:registrar-usuario-content growl" process="registrar-usuario-content @this" 
+                                     oncomplete="PF('registrarUsuarioDialog').hide()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('registrarUsuarioDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formIngresarUsuario">
+
+
+            <p:dialog header="Ingresar" showEffect="fade" modal="true"
+                      widgetVar="ingresarUsuarioDialog" responsive="true">
+
+                <p:outputPanel id="ingresar-usuario-content" class="ui-fluid">
+                    <p:outputPanel>
+
+                        <div class="p-field">
+                            <p:outputLabel for="Ncorreoelectronico" value="Correo Electrónico"/>
+                            <p:inputText type="email" id="Ncorreoelectronico" value="#{loginController.correo}" placeholder="Correo electrónico" required="true" requiredMessage="Por favor digite un correo electronico!"/>
+                        </div>
+
+                        <div class="p-field">
+                            <p:outputLabel for="Ncontrasena" value="Contraseña"/>
+                            <p:password id="Ncontrasena" value="#{loginController.clave}" toggleMask="true" required="true" requiredMessage="Por favor digite una clave"/>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">     
+                    <p:commandButton value="Ingresar" icon="pi pi-check" actionListener="#{loginController.ingresar()}" 
+                                     update=":formIngresarUsuario:ingresar-usuario-content growl" process="ingresar-usuario-content @this" onclick="PF('formloading').show()"/>
+
+                    <p:commandButton value="Cambiar Contraseña" icon="pi pi-check" 
+                                     update=":formCambiarContrasena:change-password-content growl" onsuccess="PF('changePasswordDialog').show()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ingresarUsuarioDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formCambiarContrasena">
+            <p:dialog header="Cambio de Contraseña" showEffect="fade" modal="true"
+                      widgetVar="changePasswordDialog" responsive="true">
+
+                <p:outputPanel id="change-password-content" class="ui-fluid">
+                    <p:outputPanel>
+
+                        <div class="p-field p-grid">
+                            <p:outputLabel for="pass1" styleClass="p-col-fixed" style="width:100px" value="Contraseña Nueva"/>
+                            <div class="p-col">
+                                <p:password id="pass1" value="#{loginController.claveNueva}" match="pass2" label="Password 1"/>
+                            </div>
+                        </div>
+
+                        <div class="p-field p-grid">
+                            <p:outputLabel for="pass2" styleClass="p-col-fixed" style="width:100px" value="Confimar Contraseña"/>
+                            <div class="p-col">
+                                <p:password id="pass2" value="#{loginController.verificarClave}" label="Password 2"/>
+                            </div>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">     
+
+                    <p:commandButton value="Cambiar" icon="pi pi-check" actionListener="#{loginController.cambiarContrasena()}"
+                                     update=":formCambiarContrasena:change-password-content growl" process="change-password-content @this" onstart="PF('formloading').show()" onerror="PF('formloading').hide()" onsuccess="PF('changePasswordDialog').hide()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('changePasswordDialog').hide()"
+                                     class="ui-button-secondary" />
+
+                </f:facet>
+            </p:dialog>
+        </h:form>
+        
 
         <h:form id="formCotizador">
 
