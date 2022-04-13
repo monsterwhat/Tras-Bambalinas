@@ -116,6 +116,8 @@ public class CotizacionTO {
         this.largoCotizacion = largoCotizacion;
     }
 
+   
+
     
     
 }

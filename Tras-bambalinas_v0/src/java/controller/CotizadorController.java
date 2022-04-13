@@ -97,17 +97,19 @@ public class CotizadorController implements Serializable {
             }
 
             this.listaCanastaCotizador.forEach((caracTO) -> {
-                listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
+                //listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
                 listaDeCaracteristica.add(caracTO.getNombreCaracteristica());
             });
             for (CaracteristicaTO caracTO : listaCanastaCotizador) {
                 suma = suma + caracTO.getPrecioCaracteristica();
             }
             
-            this.newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
+            this.newCotizacionTO.setListaDeCaracteristicas(listaDeCaracteristica.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
             System.out.println("Caracteristicas->" + this.newCotizacionTO.getListaDeCaracteristicas());
             this.newCotizacionTO.setFechaCotizacion(Date.valueOf(LocalDate.now()));
             System.out.println("Fecha->" + this.newCotizacionTO.getFechaCotizacion());
+            this.newCotizacionTO.setNumeroCotizacion((numeroCotizacion));
+            System.out.println("Numero Cotizacion->" + this.newCotizacionTO.getNumeroCotizacion());
 
             if (id != 0) {
                 this.newCotizacionTO.setClienteCotizacion(id);
@@ -505,11 +507,11 @@ public class CotizadorController implements Serializable {
 
             servicioCotizacion.Cotizar(this.listaCanastaCotizador, idUser, this.anchoCotizacion, this.largoCotizacion);
             this.listaCanastaCotizador.forEach((caracTO) -> {
-                listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
+                //listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
                 listaDeCaracteristica.add(caracTO.getNombreCaracteristica());
 
             });
-            listaDeCaracteristicas = listaIdCaracteristicas.stream()
+            listaDeCaracteristicas = listaDeCaracteristica.stream()
                     .map(i -> i.toString())
                     .collect(Collectors.joining(", "));
 

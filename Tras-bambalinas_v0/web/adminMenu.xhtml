@@ -797,34 +797,25 @@
 
                                 <div class="card product" style="padding-bottom: 1em">
 
-
+                                    <p:dataView id="cotizacionD" var="cotizacion" value="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" rows="9" layout="grid" gridIcon="pi pi-th-large" > 
                                     <p:dataViewGridItem>
 
 
-                                        <p:outputLabel for="imagenC" value="Lista de productos:  "/>
+<!--                                        <p:outputLabel for="imagenC" value="Lista de productos:  "/>-->
                                         <p:panel id="imagenC" header="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}" style="text-align:center">
-<!--                                            <h:panelGrid columns="4" style="width:100%">
+                                         
+                                        
+                                            <h:panelGrid columns="4" style="width:100%">
 
-                                                <div class="product-name">#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}</div>
-
-                                                <div class="product-description">#{cotizadorController.newCotizacionTO.numeroCotizacion}</div>
                                                 <p:graphicImage id="imagen-caracteristica-detallada" width="128" height="128" value="/imagenes/#{cotizadorController.cargarImagenCaracteristica(id)}"/>
 
-
-
-                                            </h:panelGrid>-->
+                                            </h:panelGrid>
                                         </p:panel>
-
-
-
-
+            
                                     </p:dataViewGridItem>
-
+                                    </p:dataView>
 
                                 </div>
-
-
-
 
 
 
