@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    
+
     <h:head >
         <a href="https://icons8.com/icon/VwyfEmBsUqyQ/sign-out"/>
         <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
@@ -17,10 +17,10 @@
 
         <h:form id="formMenu">
             <p:toolbar>
-<!--                <p:toolbarGroup style="margin-left: 30rem "   >
-                    <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml" />
-                    <p:button value="Cotizador" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>
-                </p:toolbarGroup>-->
+                <!--                <p:toolbarGroup style="margin-left: 30rem "   >
+                                    <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml" />
+                                    <p:button value="Cotizador" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>
+                                </p:toolbarGroup>-->
 
                 <p:toolbarGroup style="margin-left: 30rem " >
                     <p:button value="Administrador" icon="pi pi-bars" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/adminMenu.xhtml" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)}"/>
@@ -29,16 +29,26 @@
                 </p:toolbarGroup>
 
                 <p:toolbarGroup>
+
                     <p:menuButton value="Ingresar/Registrarse" icon="pi pi-user" styleClass="p-mb-2" rendered="#{!loginController.estadoUsuario(loginController.usuarioTO)}">
-                        <p:menuitem value="Ingresar" update=":formIngresarUsuario:ingresar-usuario-content " oncomplete="PF('ingresarUsuarioDialog').show()" icon="pi pi-sign-in"/>
-                        <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content " oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
+                        <p:menuitem value="Ingresar" update=":formIngresarUsuario:ingresar-usuario-content" oncomplete="PF('ingresarUsuarioDialog').show()" icon="pi pi-sign-in"/>
+                        <p:divider/>
+                        <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content" oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
                     </p:menuButton>
 
-                    <p:menuButton  icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.estadoUsuario(loginController.usuarioTO)}">
-                        <p:menuitem id="cerrarSesion" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
+                    <p:menuButton id="menuAdmin" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)=='admin'}">
+                        <p:menuitem icon="pi pi-sign-in" value="Menu Admin" action='#{loginController.redireccionar("/faces/adminMenu.xhtml")}' />
+                        <p:divider/>
+                        <p:menuitem id="cerrarSesionA" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
+                    </p:menuButton>
+
+                    <p:menuButton id="menuCliente" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)=='cliente'}">
+                        <p:divider/>
+                        <p:menuitem id="cerrarSesionU" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
                     </p:menuButton>
 
                 </p:toolbarGroup>
+
             </p:toolbar>
         </h:form>
 
@@ -194,7 +204,7 @@
                                                         <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
                                                             <f:convertNumber currencySymbol="₡" type="currency"/>
                                                         </h:outputText>
-                                                        
+
                                                         <p:outputPanel rendered="#{cotizadorController.tieneMedidas(elCotizadorCategoria)}" >
                                                             <p:outputLabel for="largo" value="Largueza: "/>
                                                             <p:inputText id="largo" value="#{cotizadorController.agregarLargo(largo)}"/>
@@ -274,16 +284,6 @@
                     </div>
 
                     <center>
-                        <div style="margin-top: 1rem ;margin-bottom: 1rem" >
-                            <p:outputLabel for="NanchoCotizacion" value="Ancho: "/>
-                            <p:inputText id="NanchoCotizacion" value="#{cotizadorController.anchoCotizacion}" placeholder="cm" required="true"/>
-                            <p:message for="NanchoCotizacion" display="icon"/> 
-                        </div>
-                        <div style="margin-bottom: 1rem">
-                            <p:outputLabel for="NlargoCotizacion" value="Largo: "/>
-                            <p:inputText id="NlargoCotizacion" value="#{cotizadorController.largoCotizacion}" placeholder="cm" required="true"/>
-                            <p:message for="NlargoCotizacion" display="icon"/> 
-                        </div>
                         <div>
                             <p:commandButton value="Cotizar" actionListener="#{cotizadorController.abrirEIngresarNewCotizacion(loginController.idUser)}" update=":formCotizacion:show-cotizacion-content" onsuccess="PF('showCotizacionDialog').show()"/>
                         </div>

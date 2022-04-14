@@ -164,11 +164,16 @@ public class LoginController implements Serializable {
         return false;
     }
 
-    public boolean tipoUsuarioTO(UsuarioTO usuarioTO) {
-       if(usuarioTO!=null&&usuarioTO.getTipoUsuario().equals("admin")){
-           return true;
-       }
-        return false;
+    public String tipoUsuarioTO(UsuarioTO usuarioTO) {
+        if (usuarioTO != null) {
+            if (usuarioTO.getTipoUsuario().equals("admin")) {
+                return "admin";
+            }
+            if (usuarioTO != null && usuarioTO.getTipoUsuario().equals("cliente")) {
+                return "cliente";
+            }
+        }
+        return "none";
     }
 
     public void ingresar() {
@@ -189,10 +194,10 @@ public class LoginController implements Serializable {
                         switch (this.usuarioTO.getTipoUsuario()) {
                             case "admin":
                                 this.listaUsuarios = servicioUsuario.listaUsuariosBD();
-                                this.redireccionar("/faces/adminMenu.xhtml");
+                                //this.redireccionar("/faces/adminMenu.xhtml");
                                 break;
                             case "cliente":
-                                this.redireccionar("/faces/clienteMenu.xhtml");
+                                //this.redireccionar("/faces/clienteMenu.xhtml");
 
                                 break;
                             default:

@@ -16,7 +16,7 @@
             <p:toolbar>
                 <p:autoUpdate id="menuBar"/>
                 <p:toolbarGroup style="margin-left: 20rem ">
-                   
+
                     <p:button value="FERVA" outcome="/faces/index" icon="pi pi-fw pi-home" styleClass="ui-button-secondary ui-button-flat"  />
                     <p:button  value="Cotizador"  styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>        
 
@@ -24,15 +24,24 @@
 
 
                 <p:toolbarGroup>
-                    
+
                     <p:menuButton value="Ingresar/Registrarse" icon="pi pi-user" styleClass="p-mb-2" rendered="#{!loginController.estadoUsuario(loginController.usuarioTO)}">
                         <p:menuitem value="Ingresar" update=":formIngresarUsuario:ingresar-usuario-content" oncomplete="PF('ingresarUsuarioDialog').show()" icon="pi pi-sign-in"/>
+                        <p:divider/>
                         <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content" oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
                     </p:menuButton>
-                    <p:menuButton icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.estadoUsuario(loginController.usuarioTO)}">
-                        <p:menuitem id="cerrarSesion" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
+
+                    <p:menuButton value="Menu de Administracion" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)=='admin'}">
+                        <p:menuitem icon="pi pi-sign-in" value="Menu Admin" action='#{loginController.redireccionar("/faces/adminMenu.xhtml")}' />
+                         <p:divider/>
+                        <p:menuitem id="cerrarSesionA" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
                     </p:menuButton>
-                    
+
+                    <p:menuButton icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)=='cliente'}">
+                         <p:divider/>
+                        <p:menuitem id="cerrarSesionU" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
+                    </p:menuButton>
+
                 </p:toolbarGroup>
 
 
