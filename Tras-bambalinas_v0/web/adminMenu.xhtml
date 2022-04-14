@@ -287,6 +287,10 @@
                         <p:column headerText="Categoria Visible para" sortBy="#{laCategoria.visibilidadCategoria}" >
                             <h:outputText value="#{laCategoria.visibilidadCategoria}"/>
                         </p:column>
+                        <p:column headerText="Categoria contiene medidas" sortBy="#{laCategoria.medidasCategoria}" >
+                            <h:outputText value="#{laCategoria.medidasCategoria}"/>
+                        </p:column>
+                        
 
                         <p:column>
                             <p:commandButton icon="pi pi-pencil" update=":formCategoria:update-categoria-content"
@@ -381,6 +385,14 @@
                             </p:selectOneButton>
                             <p:message for="NvisibilidadCategoria" display="icon"/>
                         </div>
+                        <div class="p-field" >
+                            <p:outputLabel for="NmedidasCategoria" value="La categoria contiene medidas"/>
+                            <p:selectOneButton id="NmedidasCategoria" value="#{OtherController.newCategoria.medidasCategoria}" required="true" style="width:25rem">
+                                <f:selectItem itemLabel="Tiene Medidas" itemValue="Tiene medidas"/>
+                                <f:selectItem itemLabel="No tiene medidas" itemValue="No tiene medidas"/>
+                            </p:selectOneButton>
+                            <p:message for="NmedidasCategoria" display="icon"/>
+                        </div>
 
                     </p:outputPanel>
                 </p:outputPanel>
@@ -449,6 +461,14 @@
                                 <f:selectItem itemLabel="Para Todos" itemValue="Para Todos"/>
                             </p:selectOneButton>
                             <p:message for="UvisibilidadCategoria" display="icon"/>
+                        </div>
+                        <div class="p-field" >
+                            <p:outputLabel for="UmedidasCategoria" value="La categoria contiene medidas"/>
+                            <p:selectOneButton id="UmedidasCategoria" value="#{OtherController.newCategoria.medidasCategoria}" required="true" style="width:25rem">
+                                <f:selectItem itemLabel="Tiene Medidas" itemValue="Tiene medidas"/>
+                                <f:selectItem itemLabel="No tiene medidas" itemValue="No tiene medidas"/>
+                            </p:selectOneButton>
+                            <p:message for="UmedidasCategoria" display="icon"/>
                         </div>
 
 

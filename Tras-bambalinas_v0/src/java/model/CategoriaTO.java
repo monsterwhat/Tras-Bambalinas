@@ -1,35 +1,42 @@
-
 package model;
 
 import java.io.Serializable;
 
-
 public class CategoriaTO implements Serializable {
-    
+
     private int idCategoria;
     private String nombreCategoria;
     private String descripcionCategoria;
     private String estadoCategoria;
     private String seleccionCategoria;
     private String visibilidadCategoria;
+    private String medidasCategoria;
 
-
-    public CategoriaTO(int idCategoria, String nombreCategoria, String descripcionCategoria, String estadoCategoria, String seleccionCategoria,String visibilidadCategoria) {
+    public CategoriaTO(int idCategoria, String nombreCategoria, String descripcionCategoria, String estadoCategoria, String seleccionCategoria, String visibilidadCategoria, String medidasCategoria) {
         this.idCategoria = idCategoria;
         this.nombreCategoria = nombreCategoria;
         this.descripcionCategoria = descripcionCategoria;
-        this.estadoCategoria=estadoCategoria;
-        this.seleccionCategoria=seleccionCategoria;
-        this.visibilidadCategoria =visibilidadCategoria;
+        this.estadoCategoria = estadoCategoria;
+        this.seleccionCategoria = seleccionCategoria;
+        this.visibilidadCategoria = visibilidadCategoria;
+        this.medidasCategoria = medidasCategoria;
     }
-    public CategoriaTO(){
+
+    public CategoriaTO() {
     }
 
     public CategoriaTO(String nombreCategoria, String descripcionCategoria) {
         this.nombreCategoria = nombreCategoria;
         this.descripcionCategoria = descripcionCategoria;
     }
-    
+
+    public String getMedidasCategoria() {
+        return medidasCategoria;
+    }
+
+    public void setMedidasCategoria(String medidasCategoria) {
+        this.medidasCategoria = medidasCategoria;
+    }
 
     public int getIdCategoria() {
         return idCategoria;
@@ -78,7 +85,5 @@ public class CategoriaTO implements Serializable {
     public void setVisibilidadCategoria(String visibilidadCategoria) {
         this.visibilidadCategoria = visibilidadCategoria;
     }
-    
-    
-    
+
 }

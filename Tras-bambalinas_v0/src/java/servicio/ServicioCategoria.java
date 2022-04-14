@@ -27,7 +27,8 @@ public class ServicioCategoria extends Servicio {
                 String estadoCategoria = resultSet.getString("estadoCategoria");
                 String seleccionCategoria = resultSet.getString("seleccionCategoria");
                 String visibilidadCategoria = resultSet.getString("visibilidadCategoria");
-                categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria,visibilidadCategoria);
+                String medidasCategoria = resultSet.getString("medidasCategoria");
+                categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria,visibilidadCategoria,medidasCategoria);
             }
         } catch (SQLException e) {
             System.out.println("Error al mostrar las categorias! " + e);
@@ -57,7 +58,8 @@ public class ServicioCategoria extends Servicio {
                 String estadoCategoria = resultSet.getString("estadoCategoria");
                 String seleccionCategoria = resultSet.getString("seleccionCategoria");
                 String visibilidadCategoria = resultSet.getString("visibilidadCategoria");
-                CategoriaTO categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria,visibilidadCategoria);
+                String medidasCategoria = resultSet.getString("medidasCategoria");
+                CategoriaTO categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria,visibilidadCategoria,medidasCategoria);
                 listaRetorno.add(categoriaTO);
             }
         } catch (SQLException e) {
@@ -89,7 +91,8 @@ public class ServicioCategoria extends Servicio {
                 String estadoCategoria = resultSet.getString("estadoCategoria");
                 String seleccionCategoria = resultSet.getString("seleccionCategoria");
                 String visibilidadCategoria = resultSet.getString("visibilidadCategoria");
-                CategoriaTO categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria,visibilidadCategoria);
+                String medidasCategoria = resultSet.getString("medidasCategoria");
+                CategoriaTO categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria,visibilidadCategoria,medidasCategoria);
 
                 listaRetorno.add(categoriaTO);
             }
@@ -124,7 +127,8 @@ public class ServicioCategoria extends Servicio {
                 String estadoCategoria = resultSet.getString("estadoCategoria");
                 String seleccionCategoria = resultSet.getString("seleccionCategoria");
                 String visibilidadCategoria = resultSet.getString("visibilidadCategoria");
-                CategoriaTO categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria,visibilidadCategoria);
+                String medidasCategoria = resultSet.getString("medidasCategoria");
+                CategoriaTO categoriaTO = new CategoriaTO(idCategoria, nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria,visibilidadCategoria,medidasCategoria);
 
                 listaRetorno.add(categoriaTO);
             }
@@ -144,13 +148,14 @@ public class ServicioCategoria extends Servicio {
 
         try {
             conectar();
-            String sql = "INSERT INTO categoria ( nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria,visibilidadCategoria ) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO categoria ( nombreCategoria, descripcionCategoria, estadoCategoria, seleccionCategoria,visibilidadCategoria, medidasCategoria) VALUES (?,?,?,?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
             preparedStatement.setString(1, CategoriaTO.getNombreCategoria());
             preparedStatement.setString(2, CategoriaTO.getDescripcionCategoria());
             preparedStatement.setString(3, CategoriaTO.getEstadoCategoria());
             preparedStatement.setString(4, CategoriaTO.getSeleccionCategoria());
             preparedStatement.setString(5, CategoriaTO.getVisibilidadCategoria());
+            preparedStatement.setString(6, CategoriaTO.getMedidasCategoria());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al insertar categoria! " + e);
@@ -165,13 +170,14 @@ public class ServicioCategoria extends Servicio {
 
         try {
             conectar();
-            String sql = "UPDATE categoria SET nombreCategoria=?, descripcionCategoria=?, estadoCategoria=?, seleccionCategoria=?, visibilidadCategoria=?  WHERE idCategoria='" + categoriaTO.getIdCategoria() + "'";
+            String sql = "UPDATE categoria SET nombreCategoria=?, descripcionCategoria=?, estadoCategoria=?, seleccionCategoria=?, visibilidadCategoria=?, medidasCategoria=? WHERE idCategoria='" + categoriaTO.getIdCategoria() + "'";
             preparedStatement = conexion.prepareStatement(sql);
             preparedStatement.setString(1, categoriaTO.getNombreCategoria());
             preparedStatement.setString(2, categoriaTO.getDescripcionCategoria());
             preparedStatement.setString(3, categoriaTO.getEstadoCategoria());
             preparedStatement.setString(4, categoriaTO.getSeleccionCategoria());
             preparedStatement.setString(5, categoriaTO.getVisibilidadCategoria());
+            preparedStatement.setString(6, categoriaTO.getMedidasCategoria());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al actualizar la categoria! " + e);

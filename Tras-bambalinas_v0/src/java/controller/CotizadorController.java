@@ -39,6 +39,8 @@ public class CotizadorController implements Serializable {
 
     List<String> listaDeCaracteristica = new ArrayList<>();
     List<Integer> listaIdCaracteristicas = new ArrayList<>();
+    List<Double> listaAncho = new ArrayList<>();
+    List<Double> listaLargo = new ArrayList<>();
 
     List<CaracteristicaTO> listaCaracteristicasParaCotizador = new ArrayList<>();
     List<CaracteristicaTO> listaCanastaCotizador = new ArrayList<>();
@@ -93,7 +95,15 @@ public class CotizadorController implements Serializable {
     public void cargarImagenCaracteristica(int id) {
 
     }
+    
+    public void agregarAncho(double ancho){
+        this.listaAncho.add(ancho);
+    }
 
+    public void agregarLargo(double largo){
+        this.listaLargo.add(largo);
+    }
+    
     public void abrirEIngresarNewCotizacion(int id) {
 
         double suma = 0;
@@ -537,6 +547,13 @@ public class CotizadorController implements Serializable {
 
     public boolean esMultiple(CategoriaTO categoriaTO) {
         if (categoriaTO.getSeleccionCategoria().equals("Múltiple")) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean tieneMedidas(CategoriaTO categoriaTO){
+        if(categoriaTO.getMedidasCategoria().equals("Tiene medidas")){
             return true;
         }
         return false;
