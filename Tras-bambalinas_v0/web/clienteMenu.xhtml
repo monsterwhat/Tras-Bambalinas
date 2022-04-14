@@ -11,14 +11,14 @@
             <p:toolbar>
                 <p:toolbarGroup style="margin-left: 20rem " >
                                         
-                    <p:button value="FERVA" outcome="/faces/index" icon="pi pi-fw pi-home" styleClass="ui-button-secondary ui-button-flat"  />
+                    <p:button value="FERVA" outcome="/faces/index" icon="pi pi-fw pi-home" styleClass="ui-button-secondary ui-button-flat" />
                     <p:button  value="Cotizador"  styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>        
                            
                 </p:toolbarGroup>
 
-                <p:toolbarGroup>
-                    <p:menuButton value="Cerrar Sesión" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.revisarEstado()}">
-                        <p:menuitem id="cerrarSesion" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
+                <p:toolbarGroup align="right">
+                    <p:menuButton icon="pi pi-user" styleClass="p-mb-2" >
+                        <p:menuitem id="cerrarSesion" styleClass="rounded-button ui-button-danger" value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
                     </p:menuButton>
                 </p:toolbarGroup>
             </p:toolbar>
