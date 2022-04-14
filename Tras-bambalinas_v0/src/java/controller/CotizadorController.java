@@ -75,7 +75,7 @@ public class CotizadorController implements Serializable {
     @PostConstruct
     public void cargar() {
         try {
-
+            
             this.listaCategoriaParaCotizarAdmin = servicioCategoria.listaCategoriaParaCotizadorAdmin();
             this.listaCategoriaParaCotizarCliente = servicioCategoria.listaCategoriaParaCotizadorCliente();
             this.listaCotizacion = servicioCotizacion.listaCotizaciones();

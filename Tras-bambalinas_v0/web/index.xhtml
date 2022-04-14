@@ -25,11 +25,11 @@
 
                 <p:toolbarGroup>
                     
-                    <p:menuButton value="Ingresar/Registrarse" icon="pi pi-user" styleClass="p-mb-2" rendered="#{!loginController.revisarEstado()}">
+                    <p:menuButton value="Ingresar/Registrarse" icon="pi pi-user" styleClass="p-mb-2" rendered="#{!loginController.estadoUsuario(loginController.usuarioTO)}">
                         <p:menuitem value="Ingresar" update=":formIngresarUsuario:ingresar-usuario-content" oncomplete="PF('ingresarUsuarioDialog').show()" icon="pi pi-sign-in"/>
                         <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content" oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
                     </p:menuButton>
-                    <p:menuButton value="Cerrar Sesión" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.revisarEstado()}">
+                    <p:menuButton icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.estadoUsuario(loginController.usuarioTO)}">
                         <p:menuitem id="cerrarSesion" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
                     </p:menuButton>
                     
@@ -37,7 +37,7 @@
 
 
             </p:toolbar>
-        </h:form>>
+        </h:form>
         <h:form id="formRegistrarUsuario">
 
             <p:dialog header="Crear Cuenta" showEffect="fade" modal="true"

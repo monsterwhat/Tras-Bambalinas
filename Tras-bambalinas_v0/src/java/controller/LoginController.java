@@ -148,13 +148,27 @@ public class LoginController implements Serializable {
     public void setEstado(boolean Estado) {
         this.Estado = Estado;
     }
-    
-    public void revisarEstado(){
-        if(this.usuarioTO != null){
+
+    public void revisarEstado() {
+        if (this.usuarioTO != null) {
             setEstado(true);
-        }else{
+        } else {
             setEstado(false);
         }
+    }
+
+    public boolean estadoUsuario(UsuarioTO usuarioTO) {
+        if (usuarioTO != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean tipoUsuarioTO(UsuarioTO usuarioTO) {
+       if(usuarioTO!=null&&usuarioTO.getTipoUsuario().equals("admin")){
+           return true;
+       }
+        return false;
     }
 
     public void ingresar() {
@@ -169,17 +183,16 @@ public class LoginController implements Serializable {
                 if (!servicioUsuario.verificarCorreo(this.getCorreo())) {
 
                     if (servicioUsuario.existeUsuarioB(this.getCorreo(), this.getClave())) {
-                       // this.usuarioTO = servicioUsuario.existeUsuario(this.getCorreo(), this.getClave());
-                        setUsuarioTO(servicioUsuario.existeUsuario(this.getCorreo(), this.getClave()));
+                        this.usuarioTO = servicioUsuario.existeUsuario(this.getCorreo(), this.getClave());
                         this.idUser = usuarioTO.getIdusuarios();
                         this.tipo = usuarioTO.getTipoUsuario();
                         switch (this.usuarioTO.getTipoUsuario()) {
                             case "admin":
                                 this.listaUsuarios = servicioUsuario.listaUsuariosBD();
-                                //this.redireccionar("/faces/adminMenu.xhtml");
+                                this.redireccionar("/faces/adminMenu.xhtml");
                                 break;
                             case "cliente":
-                                //this.redireccionar("/faces/clienteMenu.xhtml");
+                                this.redireccionar("/faces/clienteMenu.xhtml");
 
                                 break;
                             default:
@@ -270,8 +283,7 @@ public class LoginController implements Serializable {
 
     }
 
-    public void testCategoria() {
-        this.redireccionar("/faces/adminCategoria.xhtml");
-    }
-
+//    public void testCategoria() {
+//        this.redireccionar("/faces/adminCategoria.xhtml");
+//    }
 }
