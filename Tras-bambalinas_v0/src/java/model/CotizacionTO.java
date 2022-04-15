@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,7 +15,7 @@ public class CotizacionTO {
     private String largoCotizacion;
     private double totalCotizacion;
     
-    List<CaracteristicaTO> listaCaracteristicas = null;
+    List<CaracteristicaTO> listaCaracteristicas = new ArrayList<>();
     
 
     public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, int clienteCotizacion) {

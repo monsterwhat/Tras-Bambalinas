@@ -39,6 +39,7 @@ public class CotizadorController implements Serializable {
 
     List<String> listaDeCaracteristica = new ArrayList<>();
     List<Integer> listaIdCaracteristicas = new ArrayList<>();
+
     List<Double> listaAncho = new ArrayList<>();
     List<Double> listaLargo = new ArrayList<>();
 
@@ -74,10 +75,13 @@ public class CotizadorController implements Serializable {
     String largoCotizacion;
     double totalCotizacion = 0;
 
+    List<CaracteristicaTO> listaCaracteristicas = new ArrayList<>();
+    List<CaracteristicaTO> listaCaracteristicasCotizacion = null;
+
     @PostConstruct
     public void cargar() {
         try {
-            
+
             this.listaCategoriaParaCotizarAdmin = servicioCategoria.listaCategoriaParaCotizadorAdmin();
             this.listaCategoriaParaCotizarCliente = servicioCategoria.listaCategoriaParaCotizadorCliente();
             this.listaCotizacion = servicioCotizacion.listaCotizaciones();
@@ -92,18 +96,36 @@ public class CotizadorController implements Serializable {
                 addMessage(null, new FacesMessage(severity, summary, detail));
     }
 
-    public void cargarImagenCaracteristica(int id) {
-
+    public List<CaracteristicaTO> getListaCaracteristicasCotizacion() {
+        return listaCaracteristicasCotizacion;
     }
-    
-    public void agregarAncho(double ancho){
+
+    public void setListaCaracteristicasCotizacion(List<CaracteristicaTO> listaCaracteristicasCotizacion) {
+        this.listaCaracteristicasCotizacion = listaCaracteristicasCotizacion;
+    }
+
+    public List<CaracteristicaTO> cargarImagenCaracteristica(String listaDeIds) {
+        listaCaracteristicasCotizacion = new ArrayList<>();
+        System.out.println("String: "+listaDeIds);
+        
+        String[] lista = listaDeIds.split(", ");
+        
+        for(String i: lista){
+            this.listaCaracteristicasCotizacion.add(this.servicioCaracteristica.cargarCaracteristicaTO(i));
+            System.out.println("Id: "+i);
+        }
+        
+        return this.listaCaracteristicasCotizacion;
+    }
+
+    public void agregarAncho(double ancho) {
         this.listaAncho.add(ancho);
     }
 
-    public void agregarLargo(double largo){
+    public void agregarLargo(double largo) {
         this.listaLargo.add(largo);
     }
-    
+
     public void abrirEIngresarNewCotizacion(int id) {
 
         double suma = 0;
@@ -118,14 +140,15 @@ public class CotizadorController implements Serializable {
             }
 
             this.listaCanastaCotizador.forEach((caracTO) -> {
-                //listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
+                listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
                 listaDeCaracteristica.add(caracTO.getNombreCaracteristica());
             });
             for (CaracteristicaTO caracTO : listaCanastaCotizador) {
                 suma = suma + caracTO.getPrecioCaracteristica();
             }
-            
-            this.newCotizacionTO.setListaDeCaracteristicas(listaDeCaracteristica.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
+
+            this.newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
+            //      this.newCotizacionTO.setListaDeCaracteristicas(listaDeCaracteristica.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
             System.out.println("Caracteristicas->" + this.newCotizacionTO.getListaDeCaracteristicas());
 
             LocalDateTime fechaActual = LocalDateTime.now();
@@ -211,6 +234,7 @@ public class CotizadorController implements Serializable {
                     }
                     test++;
                 } while (test < this.listaCanastaCotizador.size());
+
                 for (CaracteristicaTO i : this.listaCanastaCotizador) {
                     System.out.println("Lista->" + i + "/" + i.getIdCategoriaCaracteristica() + "/" + i.getIdCaracteristica());
                 }
@@ -551,9 +575,9 @@ public class CotizadorController implements Serializable {
         }
         return false;
     }
-    
-    public boolean tieneMedidas(CategoriaTO categoriaTO){
-        if(categoriaTO.getMedidasCategoria().equals("Tiene medidas")){
+
+    public boolean tieneMedidas(CategoriaTO categoriaTO) {
+        if (categoriaTO.getMedidasCategoria().equals("Tiene medidas")) {
             return true;
         }
         return false;
