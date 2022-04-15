@@ -13,13 +13,13 @@ public class ServicioCaracteristica extends Servicio {
     public CaracteristicaTO cargarCaracteristicaTO(String id) {
         Statement statement = null;
         ResultSet resultSet = null;
-        CaracteristicaTO caracteristicaTO = new CaracteristicaTO();
+        CaracteristicaTO caracteristicaTO = null;
 
         try {
             conectar();
             statement = conexion.createStatement();
 
-            String sql = "SELECT * FROM caracteristica WHERE idCaracterisitica='" + id + "'";
+            String sql = "SELECT * FROM caracteristica WHERE idCaracteristica='" + id + "'";
             resultSet = statement.executeQuery(sql);
             if (resultSet.next()) {
                 int idCaracteristica = resultSet.getInt("idCaracteristica");
@@ -37,7 +37,7 @@ public class ServicioCaracteristica extends Servicio {
             }
 
         } catch (SQLException e) {
-
+            System.out.println("Error al seleccionar todo de Caracteristicas! " + e);
         } finally {
             cerrarResultSet(resultSet);
             cerrarStatement(statement);
@@ -74,7 +74,7 @@ public class ServicioCaracteristica extends Servicio {
             }
 
         } catch (SQLException e) {
-
+            System.out.println("Error al seleccionar todo de Caracteristicas! " + e);
         } finally {
             cerrarResultSet(resultSet);
             cerrarStatement(statement);

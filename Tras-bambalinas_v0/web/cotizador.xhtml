@@ -206,10 +206,10 @@
                                                         </h:outputText>
 
                                                         <p:outputPanel rendered="#{cotizadorController.tieneMedidas(elCotizadorCategoria)}" >
-                                                            <p:outputLabel for="largo" value="Largueza: "/>
-                                                            <p:inputText id="largo" value="#{cotizadorController.agregarLargo(largo)}"/>
-                                                            <p:outputLabel for="ancho" value="Anchura: "/>
-                                                            <p:inputText id="ancho" value="#{cotizadorController.agregarAncho(ancho)}"/>
+                                                            <p:outputLabel for="Clargo" value="Largueza: "/>
+                                                            <p:inputText id="Clargo" value="#{cotizadorController.agregarLargo(largo)}"/>
+                                                            <p:outputLabel for="Cancho" value="Anchura: "/>
+                                                            <p:inputText id="Cancho" value="#{cotizadorController.agregarAncho(ancho)}"/>
                                                         </p:outputPanel>
 
                                                         <div>
@@ -261,6 +261,14 @@
                                                         <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
                                                             <f:convertNumber currencySymbol="₡" type="currency"/>
                                                         </h:outputText>
+                                                        
+                                                        <p:outputPanel rendered="#{cotizadorController.tieneMedidas(elCotizadorCategoria)}" >
+                                                            <p:outputLabel for="Alargo" value="Largueza: "/>
+                                                            <p:inputText id="Alargo" value="#{cotizadorController.agregarLargo(largo)}"/>
+                                                            <p:outputLabel for="Aancho" value="Anchura: "/>
+                                                            <p:inputText id="Aancho" value="#{cotizadorController.agregarAncho(ancho)}"/>
+                                                        </p:outputPanel>
+                                                        
                                                         <div>
                                                             <p:selectOneRadio  id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio" unselectable="true">
                                                                 <f:selectItem itemLabel="Seleccionar" itemValue="null" />

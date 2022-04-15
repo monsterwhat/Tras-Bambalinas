@@ -115,6 +115,11 @@ public class CotizadorController implements Serializable {
             System.out.println("Id: "+i);
         }
         
+        for(CaracteristicaTO a: listaCaracteristicasCotizacion){
+            System.out.println("Lista TO:"+a.getNombreCaracteristica());
+        }
+            
+        
         return this.listaCaracteristicasCotizacion;
     }
 
@@ -577,6 +582,7 @@ public class CotizadorController implements Serializable {
     }
 
     public boolean tieneMedidas(CategoriaTO categoriaTO) {
+        
         if (categoriaTO.getMedidasCategoria().equals("Tiene medidas")) {
             return true;
         }
