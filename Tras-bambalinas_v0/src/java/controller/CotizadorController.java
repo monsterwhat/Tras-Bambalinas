@@ -91,6 +91,30 @@ public class CotizadorController implements Serializable {
         }
     }
 
+    public List<Double> getListaAncho() {
+        return listaAncho;
+    }
+
+    public void setListaAncho(List<Double> listaAncho) {
+        this.listaAncho = listaAncho;
+    }
+
+    public double getTotalCotizacion() {
+        return totalCotizacion;
+    }
+
+    public void setTotalCotizacion(double totalCotizacion) {
+        this.totalCotizacion = totalCotizacion;
+    }
+
+    public List<CaracteristicaTO> getListaCaracteristicas() {
+        return listaCaracteristicas;
+    }
+
+    public void setListaCaracteristicas(List<CaracteristicaTO> listaCaracteristicas) {
+        this.listaCaracteristicas = listaCaracteristicas;
+    }
+    
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
@@ -130,6 +154,11 @@ public class CotizadorController implements Serializable {
     public void agregarLargo(double largo) {
         this.listaLargo.add(largo);
     }
+    
+    public void noTieneMedidas(){
+        this.listaLargo.add(0.0);
+        this.listaAncho.add(0.0);
+    }
 
     public void abrirEIngresarNewCotizacion(int id) {
 
@@ -138,6 +167,8 @@ public class CotizadorController implements Serializable {
         double ancho = 0;
         double largo = 0;
         openNewCotizacion();
+        String ListaCotizador = "";
+        
         try {
             if (this.listaCanastaCotizador.isEmpty()) {
                 System.out.println("Error esta vacia");
@@ -151,9 +182,15 @@ public class CotizadorController implements Serializable {
             for (CaracteristicaTO caracTO : listaCanastaCotizador) {
                 suma = suma + caracTO.getPrecioCaracteristica();
             }
+            for (int i = 0; i < listaCanastaCotizador.size(); i++) {
+                ListaCotizador = ListaCotizador.trim() + listaDeCaracteristica.get(i);
+                ListaCotizador = ListaCotizador + " - " + listaAncho.get(i).toString();
+                ListaCotizador = ListaCotizador + " cm x " + listaLargo.get(i).toString();
+                ListaCotizador = ListaCotizador + " cm | " ;
+            }
+            System.out.println(ListaCotizador);
 
             this.newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
-            //      this.newCotizacionTO.setListaDeCaracteristicas(listaDeCaracteristica.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
             System.out.println("Caracteristicas->" + this.newCotizacionTO.getListaDeCaracteristicas());
 
             LocalDateTime fechaActual = LocalDateTime.now();
@@ -222,7 +259,7 @@ public class CotizadorController implements Serializable {
             int test;
             CaracteristicaTO auxiliar;
 
-            if (this.listaCanastaCotizador.isEmpty()) {
+            if (this.listaCanastaCotizador.isEmpty() || this.listaAncho.isEmpty() || this.listaLargo.isEmpty()) {
                 this.listaCanastaCotizador.add(caracteristicaSeleccionada);
                 System.out.println("Agregando-> " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
             } else {

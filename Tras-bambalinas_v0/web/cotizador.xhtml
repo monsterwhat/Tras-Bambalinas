@@ -17,13 +17,7 @@
 
         <h:form id="formMenu">
             <p:toolbar>
-                <!--                <p:toolbarGroup style="margin-left: 30rem "   >
-                                    <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml" />
-                                    <p:button value="Cotizador" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>
-                                </p:toolbarGroup>-->
-
                 <p:toolbarGroup style="margin-left: 30rem " >
-                    <p:button value="Administrador" icon="pi pi-bars" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/adminMenu.xhtml" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)}"/>
                     <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml" />
                     <p:button value="Cotizador" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>
                 </p:toolbarGroup>
@@ -171,18 +165,17 @@
             </p:dialog>
         </h:form>
 
-
         <h:form id="formCotizador">
 
             <p:panelGrid  columns="1">
                 <p:panel style="background-color:#A43D42" visible="true">
 
                     <div class="product card">
-                        <p:accordionPanel value="#{cotizadorController.listaCategoriaParaCotizarCliente}" widgetVar="accordionPanel" var="elCotizadorCategoria" multiple="false" style="width: fit-content;" rendered="#{!cotizadorController.esAdmin(loginController.tipo)}" >
+                        <p:accordionPanel value="#{cotizadorController.listaCategoriaParaCotizarCliente}" widgetVar="accordionPanel" var="elCotizadorCategoria" multiple="false" style="width: fit-content;" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)!='admin'}" >
                             <p:tab title="#{elCotizadorCategoria.nombreCategoria} - #{elCotizadorCategoria.descripcionCategoria}">
                                 <p:dataView  var="elCotizadorCaracteristica" value="#{cotizadorController.cargarListaCaracteristicas(elCotizadorCategoria.idCategoria)}" rows="4" paginator="true"  
                                              paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" paginatorPosition="bottom"
-                                             layout="grid" gridRowStyleClass="p-lg-6 p-xl-4 p-md-2 p-sm-1" >
+                                             layout="grid" gridRowStyleClass="p-lg-6 p-xl-4 p-md-2 p-sm-1">
 
                                     <p:dataViewGridItem>
                                         <p:card  style="width: 20em; margin-bottom: 2em; padding: 2em; text-align:center;">
@@ -207,9 +200,11 @@
 
                                                         <p:outputPanel rendered="#{cotizadorController.tieneMedidas(elCotizadorCategoria)}" >
                                                             <p:outputLabel for="Clargo" value="Largueza: "/>
-                                                            <p:inputText id="Clargo" value="#{cotizadorController.agregarLargo(largo)}"/>
+                                                            <p:inputNumber id="Clargo"/>
+                                                            <p:ajax process="@this" listener="#{cotizadorController.agregarLargo(Clargo)}"/>
                                                             <p:outputLabel for="Cancho" value="Anchura: "/>
-                                                            <p:inputText id="Cancho" value="#{cotizadorController.agregarAncho(ancho)}"/>
+                                                            <p:inputNumber id="Cancho"/>
+                                                            <p:ajax process="@this" listener="#{cotizadorController.agregarAncho(Cancho)}"/>
                                                         </p:outputPanel>
 
                                                         <div>
@@ -235,7 +230,7 @@
                     </div>
 
                     <div class="product card">
-                        <p:accordionPanel value="#{cotizadorController.listaCategoriaParaCotizarAdmin}" widgetVar="accordionPanel" var="elCotizadorCategoria" multiple="false" style="width: fit-content;" rendered="#{cotizadorController.esAdmin(loginController.tipo)}" >
+                        <p:accordionPanel value="#{cotizadorController.listaCategoriaParaCotizarAdmin}" widgetVar="accordionPanel" var="elCotizadorCategoria" multiple="false" style="width: fit-content;" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)=='admin'}" >
                             <p:tab title="#{elCotizadorCategoria.nombreCategoria} - #{elCotizadorCategoria.descripcionCategoria}">
                                 <p:dataView  var="elCotizadorCaracteristica" value="#{cotizadorController.cargarListaCaracteristicas(elCotizadorCategoria.idCategoria)}" rows="4" paginator="true"  
                                              paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" paginatorPosition="bottom"
@@ -261,24 +256,26 @@
                                                         <h:outputText value="#{elCotizadorCaracteristica.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
                                                             <f:convertNumber currencySymbol="₡" type="currency"/>
                                                         </h:outputText>
-                                                        
+
                                                         <p:outputPanel rendered="#{cotizadorController.tieneMedidas(elCotizadorCategoria)}" >
                                                             <p:outputLabel for="Alargo" value="Largueza: "/>
-                                                            <p:inputText id="Alargo" value="#{cotizadorController.agregarLargo(largo)}"/>
+                                                            <p:inputNumber id="Alargo" value="#{cotizadorController.agregarLargo(largo)}"/>
                                                             <p:outputLabel for="Aancho" value="Anchura: "/>
-                                                            <p:inputText id="Aancho" value="#{cotizadorController.agregarAncho(ancho)}"/>
+                                                            <p:inputNumber id="Aancho" value="#{cotizadorController.agregarAncho(ancho)}"/>
                                                         </p:outputPanel>
-                                                        
+
                                                         <div>
                                                             <p:selectOneRadio  id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio" unselectable="true">
                                                                 <f:selectItem itemLabel="Seleccionar" itemValue="null" />
+                                                                <p:ajax process="@this" rendered="#{!cotizadorController.tieneMedidas(elCotizadorCategoria)}" listener="#{cotizadorController.noTieneMedidas()}"/>
                                                                 <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristica)}" onsuccess="PF('accordionPanel').select(+1)"/>
                                                             </p:selectOneRadio>
                                                         </div>
                                                         <div>
                                                             <h:selectManyCheckbox id="seleccionMB" rendered="#{cotizadorController.esMultiple(elCotizadorCategoria)}">
                                                                 <f:selectItem id="multiple" itemLabel="Seleccionar" itemValue="null" />
-                                                                <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorMultiple(elCotizadorCaracteristica)}" />
+                                                                <p:ajax process="@this" rendered="#{!cotizadorController.tieneMedidas(elCotizadorCategoria)}" listener="#{cotizadorController.noTieneMedidas()}"/>
+                                                                <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorMultiple(elCotizadorCaracteristica)}"/>
                                                             </h:selectManyCheckbox>
                                                         </div>
                                                     </center>
@@ -299,12 +296,6 @@
 
                 </p:panel>
             </p:panelGrid>                   
-            <!--////////////////////////////////////////////////////////-->
-
-
-
-            <!--///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-
         </h:form>
 
         <h:form id="formCotizacion">
@@ -343,20 +334,6 @@
                                 <div class="p-col">
                                     <p:outputLabel for="clienteCotizacion" value="Cliente que cotizó: "/>
                                     <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.mostrarCotizacionNueva.clienteCotizacion}" style="width:30rem"/>
-
-                                </div>
-                            </div>
-                            <div class="p-grid">
-                                <div class="p-col">
-                                    <p:outputLabel for="anchoCotizacion" value="Ancho que cotizó: cm"/>
-                                    <p:outputLabel id="anchoCotizacion" value="#{cotizadorController.mostrarCotizacionNueva.anchoCotizacion}" style="width:30rem"/>
-
-                                </div>
-                            </div>
-                            <div class="p-grid">
-                                <div class="p-col">
-                                    <p:outputLabel for="largoCotizacion" value="Largo que cotizó: cm"/>
-                                    <p:outputLabel id="largoCotizacion" value="#{cotizadorController.mostrarCotizacionNueva.largoCotizacion}" style="width:30rem"/>
 
                                 </div>
                             </div>

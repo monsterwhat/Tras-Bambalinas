@@ -201,7 +201,7 @@ public class LoginController implements Serializable {
 
                                 break;
                             default:
-                                addMessage(FacesMessage.SEVERITY_ERROR, "Autenticacion", "Las credenciales son invalidas");
+                                addMessage(FacesMessage.SEVERITY_ERROR, "Autenticacion", "El tipo de usuario es invalido");
                                 break;
                         }
                     } else {
