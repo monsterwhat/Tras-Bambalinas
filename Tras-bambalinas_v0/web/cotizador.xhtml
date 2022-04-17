@@ -201,10 +201,10 @@
                                                         <p:outputPanel rendered="#{cotizadorController.tieneMedidas(elCotizadorCategoria)}" >
                                                             <p:outputLabel for="Clargo" value="Largueza: "/>
                                                             <p:inputNumber id="Clargo"/>
-                                                            <p:ajax process="@this" listener="#{cotizadorController.agregarLargo(Clargo)}"/>
+                                                            <p:ajax process="@this" listener="#{cotizadorController.listaLargo}"/>
                                                             <p:outputLabel for="Cancho" value="Anchura: "/>
                                                             <p:inputNumber id="Cancho"/>
-                                                            <p:ajax process="@this" listener="#{cotizadorController.agregarAncho(Cancho)}"/>
+                                                            <p:ajax process="@this" listener="#{cotizadorController.listaAncho}"/>
                                                         </p:outputPanel>
 
                                                         <div>
@@ -259,9 +259,15 @@
 
                                                         <p:outputPanel rendered="#{cotizadorController.tieneMedidas(elCotizadorCategoria)}" >
                                                             <p:outputLabel for="Alargo" value="Largueza: "/>
-                                                            <p:inputNumber id="Alargo" value="#{cotizadorController.agregarLargo(largo)}"/>
+                                                            <p:inputNumber id="Alargo" onchange="#{cotizadorController.listaLargo}">
+                                                                
+                                                            </p:inputNumber>
+
                                                             <p:outputLabel for="Aancho" value="Anchura: "/>
-                                                            <p:inputNumber id="Aancho" value="#{cotizadorController.agregarAncho(ancho)}"/>
+                                                            <p:inputNumber id="Aancho" onchange="#{cotizadorController.listaAncho}">
+                                                               
+                                                            </p:inputNumber>
+
                                                         </p:outputPanel>
 
                                                         <div>

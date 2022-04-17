@@ -91,6 +91,14 @@ public class CotizadorController implements Serializable {
         }
     }
 
+    public List<Double> getListaLargo() {
+        return listaLargo;
+    }
+
+    public void setListaLargo(List<Double> listaLargo) {
+        this.listaLargo = listaLargo;
+    }
+
     public List<Double> getListaAncho() {
         return listaAncho;
     }
@@ -186,7 +194,8 @@ public class CotizadorController implements Serializable {
                 ListaCotizador = ListaCotizador.trim() + listaDeCaracteristica.get(i);
                 ListaCotizador = ListaCotizador + " - " + listaAncho.get(i).toString();
                 ListaCotizador = ListaCotizador + " cm x " + listaLargo.get(i).toString();
-                ListaCotizador = ListaCotizador + " cm | " ;
+                ListaCotizador = ListaCotizador + " cm ( " + listaCanastaCotizador.get(i).getPrecioCaracteristica();
+                ListaCotizador = ListaCotizador + " ) | ";
             }
             System.out.println(ListaCotizador);
 
