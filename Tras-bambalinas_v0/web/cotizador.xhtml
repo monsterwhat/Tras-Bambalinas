@@ -198,19 +198,24 @@
                                                             <f:convertNumber currencySymbol="₡" type="currency"/>
                                                         </h:outputText>
 
-                                                        <p:outputPanel rendered="#{cotizadorController.tieneMedidas(elCotizadorCategoria)}" >
+                                                        <p:outputPanel  id="medidasC" rendered="#{cotizadorController.tieneMedidas(elCotizadorCategoria)}" >
                                                             <p:outputLabel for="Clargo" value="Largueza: "/>
-                                                            <p:inputNumber id="Clargo"/>
-                                                            <p:ajax process="@this" listener="#{cotizadorController.listaLargo}"/>
+                                                            <p:inputNumber  id="Clargo" value="#{cotizadorController.largo}"  >
+                                                               
+                                                            </p:inputNumber>
+
                                                             <p:outputLabel for="Cancho" value="Anchura: "/>
-                                                            <p:inputNumber id="Cancho"/>
-                                                            <p:ajax process="@this" listener="#{cotizadorController.listaAncho}"/>
+                                                            <p:inputNumber id="Cancho" value="#{cotizadorController.ancho}">
+                                                                
+                                                            </p:inputNumber>
+
                                                         </p:outputPanel>
 
                                                         <div>
                                                             <p:selectOneRadio  id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio" unselectable="true">
                                                                 <f:selectItem itemLabel="Seleccionar" itemValue="null" />
                                                                 <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristica)}" onsuccess="PF('accordionPanel').select(+1)"/>
+                                                                <p:ajax process="@this" event="click" listener="#{cotizadorController.updateMedidas(ancho, largo)}" />
                                                             </p:selectOneRadio>
                                                         </div>
                                                         <div>
@@ -260,12 +265,12 @@
                                                         <p:outputPanel rendered="#{cotizadorController.tieneMedidas(elCotizadorCategoria)}" >
                                                             <p:outputLabel for="Alargo" value="Largueza: "/>
                                                             <p:inputNumber id="Alargo" onchange="#{cotizadorController.listaLargo}">
-                                                                
+
                                                             </p:inputNumber>
 
                                                             <p:outputLabel for="Aancho" value="Anchura: "/>
                                                             <p:inputNumber id="Aancho" onchange="#{cotizadorController.listaAncho}">
-                                                               
+
                                                             </p:inputNumber>
 
                                                         </p:outputPanel>

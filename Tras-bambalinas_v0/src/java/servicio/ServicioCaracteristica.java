@@ -154,7 +154,7 @@ public class ServicioCaracteristica extends Servicio {
                 listaRetorno.add(caracteristicasTO);
             }
         } catch (SQLException e) {
-            System.out.println("Error al seleccionar todo de Caracteristicas! " + e);
+            System.out.println("Error al seleccionar todo de Caracteristicas! " + e.getMessage());
         } finally {
             cerrarResultSet(resultSet);
             cerrarStatement(statement);
