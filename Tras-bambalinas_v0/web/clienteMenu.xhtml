@@ -55,7 +55,7 @@
                       widgetVar="showClientInformation" >
                 <p:outputPanel id="show-client-information" class="ui-fluid">
 
-                    <p:dataTable value ="#{userController.listaUserBD}" var="elCliente" rows="5" paginator="true" paginatorPosition="bottom"
+                    <p:dataTable value ="#{userController.cargarUsuario(loginController.idUser)}" var="elCliente" rows="5" paginator="true" paginatorPosition="bottom"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="3,5,10,20,30,40,50,100"
                                  emptyMessage="No existe usuarios registrados"
@@ -81,16 +81,8 @@
                             <h:outputText value="#{elCliente.telefonoUsuario}"/>
                         </p:column>
 
-                        <p:column headerText="Número de Contrato" sortBy="#{elCliente.numeroContratoUsuario}" filterBy="#{elCliente.numeroContratoUsuario}" filterMatchMode="contains">
-                            <h:outputText value="#{elCliente.numeroContratoUsuario}"/>
-                        </p:column>
 
-                        <p:column headerText="Descripción del Trabajo realizado" sortBy="#{elCliente.descripcionTrabajoUsuario}" filterBy="#{elCliente.descripcionTrabajoUsuario}" filterMatchMode="contains">
-                            <h:outputText value="#{elCliente.descripcionTrabajoUsuario}"/>
-                        </p:column>
-
-
-                        <p:column headerText="Contrasena del Usuario" visible="false">
+                        <p:column headerText="Contraseña del Usuario" visible="false">
                             <h:outputText value="#{elCliente.contrasenaUsuario}"/>
                         </p:column>
                         
@@ -135,14 +127,6 @@
                             <p:outputLabel for="telefono" value="Teléfono"/>
                             <p:inputMask id="telefono" value="#{userController.newUser.telefonoUsuario}" mask="99999999" validateMask="true"/>
                         </div>
-                        <div class="p-field">
-                            <p:outputLabel for="contrato" value="Número de Contrato"/>
-                            <p:inputNumber id="contrato" value="#{userController.newUser.numeroContratoUsuario}"/>
-                        </div>
-                        <div class="p-field">
-                            <p:outputLabel for="descripcion" value="Descripción del trabajo realizado"/>
-                            <p:inputTextarea id="descripcion" value="#{userController.newUser.descripcionTrabajoUsuario}"/>
-                        </div>
 
                     </p:outputPanel>
                 </p:outputPanel>
@@ -170,7 +154,7 @@
                         <f:facet name ="header">
                             Cotizaciones
                         </f:facet>
-                    <p:dataTable value ="#{cotizadorController.listaCotizacion}" var="laCotizacionC" rows="5" paginator="true" paginatorPosition="bottom"
+                    <p:dataTable value ="#{userController.cargarCotizacionCliente(loginController.idUser)}" var="laCotizacionC" rows="5" paginator="true" paginatorPosition="bottom"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="3,5,10,20,30,40,50,100" widgetVar="dataTableCotizaciones"
                                  emptyMessage="No existen cotizaciones registradas"

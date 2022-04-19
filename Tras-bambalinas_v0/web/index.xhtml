@@ -38,7 +38,7 @@
                     </p:menuButton>
 
                     <p:menuButton value = "Menu de Clientes" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)=='cliente'}">
-                         <p:menuitem icon="pi pi-sign-in" value="Menu Cliente" action='#{loginController.redireccionar("/faces/clienteMenu.xhtml")}' />
+                    <p:menuitem icon="pi pi-sign-in" value="Menu Cliente" action='#{loginController.redireccionar("/faces/clienteMenu.xhtml")}' />
                          <p:divider/>
                         <p:menuitem id="cerrarSesionU" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
                     </p:menuButton>
