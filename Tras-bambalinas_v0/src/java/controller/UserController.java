@@ -8,7 +8,9 @@ import servicio.ServicioUsuario;
 import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
 import javax.annotation.PostConstruct;
+import model.CotizacionTO;
 import servicio.ServicioCifrar;
+import servicio.ServicioCotizacion;
 
 @ManagedBean(name = "userController")
 @ViewScoped
@@ -25,9 +27,13 @@ public class UserController implements Serializable {
     private String passwordUserDecifrado;
 
     private ServicioUsuario servicioUsuario = new ServicioUsuario();
+     private ServicioCotizacion servicioCotizacion = new ServicioCotizacion();
     private UsuarioTO usuarioTO = null;
     List<UsuarioTO> listaUserBD = new ArrayList<UsuarioTO>();
     private UsuarioTO newUser = null;
+    private UsuarioTO UserCliente = null;
+    List<CotizacionTO> cotizacionCliente = new ArrayList<CotizacionTO>();
+    
 
     public UserController() {
 
@@ -150,6 +156,23 @@ public class UserController implements Serializable {
         this.newUser = new UsuarioTO();
     }
 
+    public UsuarioTO getUserCliente() {
+        return UserCliente;
+    }
+
+    public void setUserCliente(UsuarioTO UserCliente) {
+        this.UserCliente = UserCliente;
+    }
+
+    public List<CotizacionTO> getCotizacionCliente() {
+        return cotizacionCliente;
+    }
+
+    public void setCotizacionCliente(List<CotizacionTO> cotizacionCliente) {
+        this.cotizacionCliente = cotizacionCliente;
+    }
+    
+
     public void agregarUsuarioTO() {
         try {
             String contrasena = ServicioCifrar.encrypt(this.newUser.getContrasenaUsuario());
@@ -178,6 +201,16 @@ public class UserController implements Serializable {
         } catch (Exception e) {
             System.out.println("Error elimando usuario! " + e);
         }
+    }
+    
+    public UsuarioTO cargarUsuario(int id){
+        
+        this.UserCliente=this.servicioUsuario.existeUsuarioCliente(id);
+        return this.UserCliente;
+    }
+    public List <CotizacionTO> cargarCotizacionCliente (int id){
+        this.cotizacionCliente=this.servicioCotizacion.listaCotizacionesCliente(id);
+        return this.cotizacionCliente;
     }
 
 }

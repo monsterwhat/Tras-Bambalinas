@@ -1,0 +1,295 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head >
+        <a href="https://icons8.com/icon/VwyfEmBsUqyQ/sign-out"/>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+         <title>Cortinas Ferva</title>
+         
+          </h:head>
+        <h:body>
+        <h:outputStylesheet library="css" name="styleAdmin.css"/>
+
+        <h:form id="formMenu">
+            <p:toolbar>
+                <p:toolbarGroup align="left">
+                    <p:sidebar widgetVar="sidebarCrud" position="left">
+                        <div class="card">
+                            <p:menu >
+                                <p:submenu label="Cliente">
+                                    <p:menuitem value="Información Cliente" update=":formClient:show-client-information" oncomplete="PF('showClientInformation').show()"/>
+                                    <p:menuitem value="Cotización" update=":formCotizacioncliente:show-cotizacioncliente-information" oncomplete="PF('showCotizacionclienteInformation').show()"/>
+                                </p:submenu>
+                            </p:menu>
+                        </div>
+                    </p:sidebar>
+                    <p:commandButton id="clienteButton" icon="pi pi-bars" type="button" onclick="PF('sidebarCrud').show()" />
+
+                    <p:tooltip for="clienteButton" value="Información de su cuenta" showEffect="clip" hideEffect="fold"/>
+                </p:toolbarGroup>
+             <p:toolbarGroup style="margin-left: 2rem " >
+                    <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml" />
+                    <p:button value="Cotizador" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>
+                  
+                </p:toolbarGroup>   
+             <p:toolbarGroup align="right">
+                    <p:menuButton icon="pi pi-user" styleClass="p-mb-2">
+                        <p:menuitem id="regresarId" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
+                    </p:menuButton>
+                </p:toolbarGroup>
+                
+                
+
+            </p:toolbar>
+            <h3> BIENVENIDO A CORTINAS FERVA</h3>
+        </h:form>
+        
+        <h:form id="formClient">
+  
+        <p:dialog header="Detalles de Usuario" 
+                      widgetVar="showClientInformation" >
+                <p:outputPanel id="show-client-information" class="ui-fluid">
+
+                    <p:dataTable value ="#{userController.cargarUsuario(loginController.idUser)}" var="elCliente" rows="5" paginator="true" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="3,5,10,20,30,40,50,100"
+                                 emptyMessage="No existe usuarios registrados"
+                                 reflow="true" id="clientTable">
+
+                        <f:facet name ="header">
+                            Información Detallada
+                        </f:facet>
+
+                        <p:column headerText="Correo Electrónico" sortBy="#{elCliente.correoUsuario}" filterBy="#{elCliente.correoUsuario}" filterMatchMode="exact">
+                            <h:outputText value="#{elCliente.correoUsuario}"/>
+                        </p:column>
+
+                        <p:column headerText="Nombre" sortBy="#{elCliente.nombreUsuario}" filterBy="#{elCliente.nombreUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{elCliente.nombreUsuario}"/>
+                        </p:column>
+
+                        <p:column headerText="Dirección" sortBy="#{elCliente.direccionUsuario}" filterBy="#{elCliente.direccionUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{elCliente.direccionUsuario}"/>
+                        </p:column>
+
+                        <p:column headerText="Teléfono" sortBy="#{elCliente.telefonoUsuario}" filterBy="#{elCliente.telefonoUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{elCliente.telefonoUsuario}"/>
+                        </p:column>
+
+
+                        <p:column headerText="Contraseña del Usuario" visible="false">
+                            <h:outputText value="#{elCliente.contrasenaUsuario}"/>
+                        </p:column>
+                        
+                        <p:column>
+                            <p:commandButton icon="pi pi-pencil" update=":formClient:update-client-content"
+                                             oncomplete="PF('updateClientDialog').show()"
+                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                <f:setPropertyActionListener value="#{elCliente}" target="#{userController.newUser}"/>
+                                <p:resetInput target=":formClient:update-client-content"/>
+                            </p:commandButton>
+                        </p:column>
+                        
+
+                    </p:dataTable>
+                    <f:facet name="footer">
+
+                    </f:facet>
+
+                </p:outputPanel>  
+
+                    </p:dialog>
+            
+                    <p:dialog header="Detalle de su cuenta" showEffect="fade" modal="true"
+                      widgetVar="updateClientDialog" responsive="true" minHeight="350" width="550">
+
+                <p:outputPanel id="update-client-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty userController.newUser}">
+                        <div class="p-field">
+                            <p:outputLabel for="mail" value="Correo"/>
+                            <p:inputText type="email" id="mail" value="#{userController.newUser.correoUsuario}"/>
+                        </div>
+                      
+                        <div class="p-field">
+                            <p:outputLabel for="nombre" value="Nombre"/>
+                            <p:inputText id="nombre" value="#{userController.newUser.nombreUsuario}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="direccion" value="Dirección"/>
+                            <p:inputTextarea id="direccion" value="#{userController.newUser.direccionUsuario}"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="telefono" value="Teléfono"/>
+                            <p:inputMask id="telefono" value="#{userController.newUser.telefonoUsuario}" mask="99999999" validateMask="true"/>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">     
+                    <p:commandButton value="Actualizar" icon="pi pi-check" actionListener="#{userController.actualizarUsuarioTO}"
+                                     update=":formClient:update-client-content, clientTable" process="update-client-content @this" oncomplete="PF('updateClientDialog').hide()"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('updateClientDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+            </p:dialog>
+
+
+           
+          
+        </h:form>
+
+        <h:form id="formCotizacioncliente">
+        
+         <p:dialog header="Detalle de la cotización" showEffect="fade" modal="true"
+                      widgetVar="showCotizacionclienteInformation" responsive="true">
+                <p:outputPanel id="show-cotizacioncliente-information" class="ui-fluid">
+
+                        <f:facet name ="header">
+                            Cotizaciones
+                        </f:facet>
+                    <p:dataTable value ="#{userController.cargarCotizacionCliente(loginController.idUser)}" var="laCotizacionC" rows="5" paginator="true" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="3,5,10,20,30,40,50,100" widgetVar="dataTableCotizaciones"
+                                 emptyMessage="No existen cotizaciones registradas"
+                                 reflow="true" id="cotizacionCTable" scrollable="true" scrollHeight="250">
+                        <f:facet name ="header">
+                            Lista de Cotizaciones
+                        </f:facet>
+
+                        <p:column headerText="Numero de Cotizacion" sortBy="#{laCotizacionC.numeroCotizacion}" filterBy="#{laCotizacionC.numeroCotizacion}" filterMatchMode="exact">
+                            <h:outputText value="#{laCotizacion.numeroCotizacion}"/>
+                        </p:column>
+                        <p:column headerText="Lista de ID's de Características" sortBy="#{laCotizacionC.listaDeCaracteristicas}" filterBy="#{laCotizacionC.listaDeCaracteristicas}" filterMatchMode="exact">
+                            <h:outputText value="#{laCotizacionC.listaDeCaracteristicas}"/>
+                        </p:column>
+                        <p:column headerText="Fecha de Cotización" sortBy="#{laCotizacionC.fechaCotizacion}" filterBy="#{laCotizacionC.fechaCotizacion}" filterMatchMode="contains">
+                            <h:outputText value="#{laCotizacionC.fechaCotizacion}"/>
+                        </p:column>
+                        <p:column headerText="Cliente" sortBy="#{laCotizacionC.clienteCotizacion}">
+                            <h:outputText value="#{laCotizacionC.clienteCotizacion}"/>
+                        </p:column>
+                        <p:column headerText="Ancho" sortBy="#{laCotizacionC.anchoCotizacion}">
+                            <h:outputText value="#{laCotizacionC.anchoCotizacion}"/>
+                        </p:column>
+                        <p:column headerText="Largo" sortBy="#{laCotizacionC.largoCotizacion}">
+                            <h:outputText value="#{laCotizacionC.largoCotizacion}"/>
+                        </p:column>
+                        <p:column headerText="Monto Total" sortBy="#{laCotizacionC.totalCotizacion}">
+                            <h:outputText value="#{laCotizacionC.totalCotizacion}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton icon="pi pi-eye" update=":formCotizacioncliente:show-cotizacioncliente-content"
+                                             oncomplete="PF('showCotizacionclienteDialog').show()"
+                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                <f:setPropertyActionListener value="#{laCotizacionC}" target="#{cotizadorController.newCotizacionTO}"/>
+                                <p:resetInput target=":formCotizacioncliente:show-cotizacioncliente-content"/>
+                            </p:commandButton>
+
+                        </p:column>
+
+                    </p:dataTable>
+                </p:outputPanel>  
+            </p:dialog>
+            
+            <p:dialog header="Detalles de la Cotización" showEffect="fade" modal="true"
+                      widgetVar="showCotizacionclienteDialog" responsive="true" minHeight="350" width="550">
+
+                <p:outputPanel id="show-cotizacioncliente-content" class="card">
+                    <p:outputPanel rendered="#{not empty cotizadorController.newCotizacionTO}">
+
+                        <div class="p-grid card">
+                            <div class="card">
+
+                                <div style="padding-bottom: 1em">
+                                    <p:outputLabel for="numeroCotizacion" value="Numero de Cotización: "/>
+                                    <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.newCotizacionTO.numeroCotizacion}"  style="width:30rem"/> 
+                                    <p:message for="numeroCotizacion" display="icon"/> 
+                                </div>
+
+                                <div class="card product" style="padding-bottom: 1em">
+                                    <p:scrollPanel mode="native" style="width:500px;height:500px;">
+                                        <p:dataView id="cotizacionDV" var="caracteristica" value="#{cotizadorController.cargarImagenCaracteristica(cotizadorController.newCotizacionTO.listaDeCaracteristicas)}" 
+                                                    layout="grid" gridIcon="pi pi-th-large" paginator="true" paginatorPosition="bottom" 
+                                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"> 
+                                            <p:dataViewGridItem>
+
+                                                <p:panel id="idCaracTO" header="#{caracteristica.idCaracteristica}-#{caracteristica.nombreCaracteristica}" style="text-align:center">
+                                                    <h:panelGrid columns="1" style="width:100%">
+<!--                                                        <p:graphicImage id="imagen-caracteristica-detallada" width="128" height="128" value="/imagenes/"/>-->
+                                                        <p:graphicImage value="/imagenes/#{caracteristica.imagenCaracteristica}" width="100" height="100"/>
+                                                    </h:panelGrid>
+                                                </p:panel>
+
+                                            </p:dataViewGridItem>
+                                        </p:dataView>
+                                    </p:scrollPanel>
+
+                                </div>
+
+
+
+                                <div style="padding-bottom: 1em">
+                                    <p:outputLabel for="fechaCotizacion" value="Fecha de la Cotización: "/>
+                                    <p:outputLabel id ="fechaCotizacion" value="#{cotizadorController.newCotizacionTO.fechaCotizacion}" style="width:30rem"/>
+                                    <p:message for="fechaCotizacion" display="icon"/>
+                                </div>
+
+                                <div style="padding-bottom: 1em">
+                                    <p:outputLabel for="clienteCotizacion" value="Cliente que cotizó: "/>
+                                    <p:outputLabel id="clienteCotizacion" value="#{cotizadorController.newCotizacionTO.clienteCotizacion}" style="width:30rem"/>
+                                    <p:message for="clienteCotizacion" display="icon"/>
+                                </div>
+
+                                <div style="padding-bottom: 1em">
+                                    <p:outputLabel for="anchoCotizacion" value="Ancho de la cotización: "/>
+                                    <p:outputLabel id="anchoCotizacion" value="#{cotizadorController.newCotizacionTO.anchoCotizacion}" style="width:30rem"/>
+                                    <p:message for="anchoCotizacion" display="icon"/>
+                                </div>
+
+                                <div style="padding-bottom: 1em">
+                                    <p:outputLabel for="largoCotizacion" value="Largo de la cotización: "/>
+                                    <p:outputLabel id="largoCotizacion" value="#{cotizadorController.newCotizacionTO.largoCotizacion}" style="width:30rem"/>
+                                    <p:message for="largoCotizacion" display="icon"/>
+                                </div>
+
+                                <div style="padding-bottom: 1em">
+                                    <p:outputLabel for="totalCotizacion" value="Monto Total de la cotización: "/>
+                                    <p:outputLabel id="totalCotizacion" value="#{cotizadorController.newCotizacionTO.totalCotizacion}" style="width:30rem"/>
+                                    <p:message for="totalCotizacion" display="icon"/>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+
+                <f:facet name="footer">     
+
+                    <p:commandButton value="Salir" icon="pi pi-times" onclick="PF('showCotizacionclienteDialog').hide()"
+                                     class="ui-button-secondary"/>
+                </f:facet>
+            </p:dialog>
+
+
+                      
+
+                      
+
+          
+    
+
+        </h:form>
+        
+        </h:body>
+    </html>
+        

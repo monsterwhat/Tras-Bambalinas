@@ -91,6 +91,40 @@ public class ServicioUsuario extends Servicio {
         }
         return false;
     }
+     public UsuarioTO existeUsuarioCliente(int id) {
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+        UsuarioTO usuarioTO = null;
+
+        try {
+            conectar();
+
+            statement = conexion.createStatement();
+            String sql = "SELECT * FROM usuarios WHERE idusuarios = '"+ id+ "'";
+            resultSet = statement.executeQuery(sql);
+            if (resultSet.next()) {
+                int idUsuario = resultSet.getInt("idusuarios");
+                String correoUsuario = resultSet.getString("correoUsuario");
+                String contrasenaUsuario = resultSet.getString("contrasenaUsuario");
+                String tipoUsuario = resultSet.getString("tipoUsuario");
+                String nombreUsuario = resultSet.getString("nombreUsuario");
+                String direccionUsuario = resultSet.getString("direccionUsuario");
+                int telefonoUsuario = resultSet.getInt("telefonoUsuario");
+                int numeroContratoUsuario = resultSet.getInt("numeroContratoUsuario");
+                String descripcionTrabajoUsuario = resultSet.getString("descripcionTrabajoUsuario");
+
+                usuarioTO = new UsuarioTO(idUsuario, correoUsuario, contrasenaUsuario, tipoUsuario, nombreUsuario, direccionUsuario, telefonoUsuario, numeroContratoUsuario, descripcionTrabajoUsuario);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error tratando de cargar datos de usuario (conectando!)! " + e.getMessage());
+        } finally {
+            cerrarResultSet(resultSet);
+            cerrarStatement(statement);
+            desconectar();
+        }
+        return usuarioTO;
+    }
 
     public List<UsuarioTO> listaUsuariosBD() {
         Statement statement = null;
@@ -202,6 +236,8 @@ public class ServicioUsuario extends Servicio {
         }
 
     }
+    
+    
 
     public void eliminarUser(UsuarioTO usuarioTO) {
         PreparedStatement preparedStatement = null;

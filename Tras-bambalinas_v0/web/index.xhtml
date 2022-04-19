@@ -31,13 +31,14 @@
                         <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content" oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
                     </p:menuButton>
 
-                    <p:menuButton value="Menu de Administracion" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)=='admin'}">
+                    <p:menuButton value="Menu de Administración" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)=='admin'}">
                         <p:menuitem icon="pi pi-sign-in" value="Menu Admin" action='#{loginController.redireccionar("/faces/adminMenu.xhtml")}' />
                          <p:divider/>
                         <p:menuitem id="cerrarSesionA" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
                     </p:menuButton>
 
-                    <p:menuButton icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)=='cliente'}">
+                    <p:menuButton value = "Menu de Clientes" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)=='cliente'}">
+                    <p:menuitem icon="pi pi-sign-in" value="Menu Cliente" action='#{loginController.redireccionar("/faces/clienteMenu.xhtml")}' />
                          <p:divider/>
                         <p:menuitem id="cerrarSesionU" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
                     </p:menuButton>

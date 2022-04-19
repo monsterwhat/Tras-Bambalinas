@@ -160,6 +160,41 @@ public class ServicioCotizacion extends Servicio {
         }
         return cotizacion;
     }
+  
+     public List<CotizacionTO> listaCotizacionesCliente(int idCliente) {
+        Statement statement = null;
+        ResultSet resultSet = null;
+        List<CotizacionTO> listaRetorno = new ArrayList<>();
+
+        try {
+
+            conectar();
+            statement = conexion.createStatement();
+            String sql = "Select * FROM cotizacion where clienteCotizacion='" + idCliente + "'";
+
+            resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                int numeroCotizacion = resultSet.getInt("numeroCotizacion");
+                String listaDeCaracteristicas = resultSet.getString("listaIDCaracteristicaCotizacion");
+                String fechaCotizacion = resultSet.getString("fechaCotizacion");
+                int clienteCotizacion = resultSet.getInt("clienteCotizacion");
+                String anchoCotizacion = resultSet.getString("anchoCotizacion");
+                String largoCotizacion = resultSet.getString("largoCotizacion");
+                Double totalCotizacion = resultSet.getDouble("totalCotizacion");
+                CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, anchoCotizacion, largoCotizacion, totalCotizacion);
+
+                listaRetorno.add(cotizacionTO);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al seleccionar todo de cotizaciones! " + e);
+        } finally {
+            cerrarResultSet(resultSet);
+            cerrarStatement(statement);
+            desconectar();
+        }
+        return listaRetorno;
+    }
 
     public void Cotizar(List<CaracteristicaTO> listaCotizar, int idUsuario, String ancho, String largo) {
         PreparedStatement preparedStatement = null;
