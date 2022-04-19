@@ -79,8 +79,8 @@ public class CotizadorController implements Serializable {
     String largoCotizacion;
     double totalCotizacion;
 
-    private double ancho;
-    private double largo;
+    private double ancho = 0.0;
+    private double largo = 0.0;
 
     List<CaracteristicaTO> listaCaracteristicas = new ArrayList<>();
     List<CaracteristicaTO> listaCaracteristicasCotizacion = null;
@@ -103,9 +103,23 @@ public class CotizadorController implements Serializable {
                 addMessage(null, new FacesMessage(severity, summary, detail));
     }
 
-    public void noTieneMedidas() {
-        this.listaLargo.add(0.0);
-        this.listaAncho.add(0.0);
+    public void noTieneMedidas(CategoriaTO categoriaTO, CaracteristicaTO caracteristicaSeleccionada) {
+        this.setAncho(0.0);
+        this.setLargo(0.0);
+
+        switch (categoriaTO.getSeleccionCategoria()) {
+            case "Múltiple": {
+                SeleccionadorMultiple(caracteristicaSeleccionada);
+                break;
+            }
+
+            case "Única": {
+                SeleccionadorUnica(caracteristicaSeleccionada);
+                break;
+            }
+
+        }
+
     }
 
     public boolean esAdmin(String tipo) {
@@ -252,31 +266,57 @@ public class CotizadorController implements Serializable {
     }
 
     public void SeleccionadorUnica(CaracteristicaTO caracteristicaSeleccionada) {
-        System.out.println("Largo: "+this.getLargo());
-        System.out.println("Ancho: "+this.getAncho());
-        System.out.println("Caracteristica "+caracteristicaSeleccionada);
-        
+        int posicion = 0;
+        CaracteristicaTO auxiliar;
+        double auxiliarAncho, auxiliarLargo;
+
         try {
-            int test;
-            CaracteristicaTO auxiliar;
-
-            if (this.listaCanastaCotizador.isEmpty() || this.listaAncho.isEmpty() || this.listaLargo.isEmpty()) {
+            if ((this.listaCanastaCotizador.isEmpty() && this.listaAncho.isEmpty() && this.listaLargo.isEmpty())
+                    || (this.listaCanastaCotizador.isEmpty() || this.listaAncho.isEmpty() || this.listaLargo.isEmpty())) {
                 this.listaCanastaCotizador.add(caracteristicaSeleccionada);
-                System.out.println("Agregando-> " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
-            } else {
-                test = 0;
-                auxiliar = caracteristicaSeleccionada;
-                System.out.println("Nuevo->" + auxiliar + "/" + auxiliar.getIdCategoriaCaracteristica() + "/" + auxiliar.getIdCaracteristica());
-                this.listaCanastaCotizador.add(auxiliar);
-                do {
-                    if (this.listaCanastaCotizador.get(test).getIdCategoriaCaracteristica() == auxiliar.getIdCategoriaCaracteristica()
-                            && this.listaCanastaCotizador.get(test).getIdCaracteristica() != auxiliar.getIdCaracteristica()) {
+                this.listaAncho.add(this.getAncho());
+                this.listaLargo.add(this.getLargo());
+                System.out.println("Agregando-> " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica()
+                        + " Ancho-> " + this.getAncho() + "Lango-> " + this.getLargo());
 
-                        System.out.println("Remover Anterior->" + this.listaCanastaCotizador.get(test) + "/" + this.listaCanastaCotizador.get(test).getIdCategoriaCaracteristica() + "/" + this.listaCanastaCotizador.get(test).getIdCaracteristica());
-                        this.listaCanastaCotizador.remove(this.listaCanastaCotizador.get(test));
+            } else {
+                System.out.println("Cantidad: " + this.listaCanastaCotizador.size());
+                auxiliar = caracteristicaSeleccionada;
+                auxiliarAncho = this.getAncho();
+                auxiliarLargo = this.getLargo();
+                System.out.println("Nuevo->" + auxiliar + "/" + auxiliar.getIdCategoriaCaracteristica() + "/" + auxiliar.getIdCaracteristica() + " Ancho-> " + auxiliarAncho + "Lango-> " + auxiliarLargo);
+                this.listaCanastaCotizador.add(auxiliar);
+                this.listaAncho.add(auxiliarAncho);
+                this.listaLargo.add(auxiliarLargo);
+
+                do {
+
+                    if (this.listaCanastaCotizador.get(posicion).getIdCategoriaCaracteristica() == auxiliar.getIdCategoriaCaracteristica()
+                            && this.listaCanastaCotizador.get(posicion).getIdCaracteristica() == auxiliar.getIdCaracteristica()
+                            && this.listaAncho.get(posicion) != auxiliarAncho && this.listaLargo.get(posicion) != auxiliarLargo) {
+
+                        System.out.println("Remover Repetido->" + this.listaCanastaCotizador.get(posicion) + "/" + this.listaCanastaCotizador.get(posicion).getIdCategoriaCaracteristica() + "/" + this.listaCanastaCotizador.get(posicion).getIdCaracteristica()
+                                + " Ancho-> " + this.listaAncho.get(posicion) + "Lango-> " + this.listaLargo.get(posicion));
+
+                        this.listaCanastaCotizador.remove(this.listaCanastaCotizador.get(posicion));
+                        this.listaAncho.remove(this.listaAncho.get(posicion));
+                        this.listaLargo.remove(this.listaLargo.get(posicion));
                     }
-                    test++;
-                } while (test < this.listaCanastaCotizador.size());
+
+                    if (this.listaCanastaCotizador.get(posicion).getIdCategoriaCaracteristica() == auxiliar.getIdCategoriaCaracteristica()
+                            && this.listaCanastaCotizador.get(posicion).getIdCaracteristica() != auxiliar.getIdCaracteristica()) {
+
+                        System.out.println("Remover Anterior->" + this.listaCanastaCotizador.get(posicion) + "/" + this.listaCanastaCotizador.get(posicion).getIdCategoriaCaracteristica() + "/" + this.listaCanastaCotizador.get(posicion).getIdCaracteristica()
+                                + " Ancho-> " + this.listaAncho.get(posicion) + "Lango-> " + this.listaLargo.get(posicion));
+
+                        this.listaCanastaCotizador.remove(this.listaCanastaCotizador.get(posicion));
+                        this.listaAncho.remove(this.listaAncho.get(posicion));
+                        this.listaLargo.remove(this.listaLargo.get(posicion));
+                    }
+
+                    System.out.println("Lista: " + posicion);
+                    posicion++;
+                } while (posicion < this.listaCanastaCotizador.size());
 
                 for (CaracteristicaTO i : this.listaCanastaCotizador) {
                     System.out.println("Lista->" + i + "/" + i.getIdCategoriaCaracteristica() + "/" + i.getIdCaracteristica());
@@ -284,31 +324,72 @@ public class CotizadorController implements Serializable {
 
             }
         } catch (Exception e) {
-            System.out.println("Error seleccionando productos! " + e.getMessage());
+            System.out.println("Error seleccionando productos! " + e.getMessage() + "/ " + e.getLocalizedMessage());
         }
     }
 
     public void SeleccionadorMultiple(CaracteristicaTO caracteristicaSeleccionada) {
+        int posicion = 0;
+        CaracteristicaTO auxiliar;
+        double auxiliarAncho, auxiliarLargo;
+
         try {
-            if (this.listaCanastaCotizador.isEmpty()) {
+            if ((this.listaCanastaCotizador.isEmpty() && this.listaAncho.isEmpty() && this.listaLargo.isEmpty())
+                    || (this.listaCanastaCotizador.isEmpty() || this.listaAncho.isEmpty() || this.listaLargo.isEmpty())) {
                 this.listaCanastaCotizador.add(caracteristicaSeleccionada);
-                System.out.println("Agregando-> " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
+                this.listaAncho.add(this.getAncho());
+                this.listaLargo.add(this.getLargo());
+                System.out.println("Agregando-> " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica()
+                        + " Ancho-> " + this.getAncho() + "Lango-> " + this.getLargo());
+
             } else {
-                System.out.println("Nuevo-> " + caracteristicaSeleccionada + "/" + caracteristicaSeleccionada.getIdCategoriaCaracteristica() + "/" + caracteristicaSeleccionada.getIdCaracteristica());
-                CaracteristicaTO auxiliar = caracteristicaSeleccionada;
+                System.out.println("Cantidad: " + this.listaCanastaCotizador.size());
+                auxiliar = caracteristicaSeleccionada;
+                auxiliarAncho = this.getAncho();
+                auxiliarLargo = this.getLargo();
+                System.out.println("Valor Entrante->" + auxiliar + "/" + auxiliar.getIdCategoriaCaracteristica() + "/" + auxiliar.getIdCaracteristica()
+                        + " Ancho-> " + auxiliarAncho + "Lango-> " + auxiliarLargo);
+
+                do {
+                   
+
+                    if (this.listaCanastaCotizador.get(posicion).getIdCaracteristica() == auxiliar.getIdCaracteristica()) {
+
+                        System.out.println("Remover Repetido->" + this.listaCanastaCotizador.get(posicion) + "/" + this.listaCanastaCotizador.get(posicion).getIdCategoriaCaracteristica() + "/" + this.listaCanastaCotizador.get(posicion).getIdCaracteristica()
+                                + " Ancho-> " + this.listaAncho.get(posicion) + "Lango-> " + this.listaLargo.get(posicion));
+                        this.listaCanastaCotizador.remove(this.listaCanastaCotizador.get(posicion));
+                        this.listaAncho.remove(this.listaAncho.get(posicion));
+                        this.listaLargo.remove(this.listaLargo.get(posicion));
+
+                        break;
+                    } else {
+                        if (this.listaCanastaCotizador.get(posicion).getIdCaracteristica() != auxiliar.getIdCaracteristica()) {
+                            System.out.println("Agregado Valor Entrante->" + auxiliar + "/" + auxiliar.getIdCategoriaCaracteristica() + "/" + auxiliar.getIdCaracteristica()
+                                    + " Ancho-> " + auxiliarAncho + "Lango-> " + auxiliarLargo);
+                            this.listaCanastaCotizador.add(auxiliar);
+                            this.listaAncho.add(auxiliarAncho);
+                            this.listaLargo.add(auxiliarLargo);
+                        }
+
+                        break;
+                    }
+
+                } while (posicion < this.listaCanastaCotizador.size());
+
                 for (CaracteristicaTO i : this.listaCanastaCotizador) {
                     System.out.println("Lista->" + i + "/" + i.getIdCategoriaCaracteristica() + "/" + i.getIdCaracteristica());
-                    if (i.getIdCaracteristica() == auxiliar.getIdCaracteristica()) {
-                        CaracteristicaTO a = i;
-                        System.out.println("Remover->" + a + "/" + a.getIdCategoriaCaracteristica() + "/" + a.getIdCaracteristica());
-                        this.listaCanastaCotizador.remove(a);
-                    }
                 }
+                for (double a : this.listaAncho) {
+                    System.out.println("ListaAncho->" + a);
+                }
+                for (double l : this.listaLargo) {
+                    System.out.println("ListaLargo->" + l);
+                }
+
             }
-            this.listaCanastaCotizador.add(caracteristicaSeleccionada);
 
         } catch (Exception e) {
-            System.out.println("Error seleccionando productos! " + e.getLocalizedMessage() + " / " + e.getMessage());
+            System.out.println("Error seleccionando productos! " + e.getMessage() + "/ " + e.getLocalizedMessage());
         }
     }
 

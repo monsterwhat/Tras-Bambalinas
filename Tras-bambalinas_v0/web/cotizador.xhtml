@@ -37,7 +37,7 @@
                     </p:menuButton>
 
                     <p:menuButton id="menuCliente" icon="pi pi-user" styleClass="p-mb-2" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)=='cliente'}">
-                <p:menuitem icon="pi pi-sign-in" value="Menu Cliente" action='#{loginController.redireccionar("/faces/clienteMenu.xhtml")}' />
+                        <p:menuitem icon="pi pi-sign-in" value="Menu Cliente" action='#{loginController.redireccionar("/faces/clienteMenu.xhtml")}' />
                         <p:divider/>
                         <p:menuitem id="cerrarSesionU" styleClass="rounded-button ui-button-danger"  value="Cerrar Sesión" icon="pi pi-sign-out" action="#{loginController.salir()}" />   
                     </p:menuButton>
@@ -204,20 +204,37 @@
                                                                              rendered="#{cotizadorController.tieneMedidas(elCotizadorCategoria)}"/>
                                                         </div>
 
-                                                        <div>
-                                                            <p:selectOneRadio  id="selectOneRadio" styleClass="p-mr-2" rendered="#{!cotizadorController.esMultiple(elCotizadorCategoria)}" widgetVar="selectRadio" unselectable="true">
-                                                                <f:selectItem itemLabel="Seleccionar" itemValue="null" />
-                                                                <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristicaC)}" onsuccess="PF('accordionPanel').select(+1)"/>
+                                                        <div >
+                                                            <p:selectOneRadio  id="selectOneRadioCM" styleClass="p-mr-2" rendered="#{( (!cotizadorController.esMultiple(elCotizadorCategoria)) and (cotizadorController.tieneMedidas(elCotizadorCategoria)) )}"
+                                                                               widgetVar="selectRadioCM" unselectable="true">                                                               
+                                                                <f:selectItem  id="unicaConMedidas" itemLabel="Seleccionar" itemValue="null" />
+                                                                <p:ajax process="selectOneRadioCM"  listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristicaC)}" onsuccess="PF('accordionPanel').select(+1)"/>
+                                                            </p:selectOneRadio>
+                                                            
+                                                            
+                                                            <p:selectOneRadio  id="selectOneRadioSM" styleClass="p-mr-2" rendered="#{ (!cotizadorController.tieneMedidas(elCotizadorCategoria)) and (!cotizadorController.tieneMedidas(elCotizadorCategoria)) }"
+                                                                               widgetVar="selectRadioSM" unselectable="true">                                                               
+                                                                <f:selectItem  id="unicaSinMedidas" itemLabel="Seleccionar" itemValue="null" />
+                                                                <p:ajax process="selectOneRadioSM"  listener="#{cotizadorController.noTieneMedidas(elCotizadorCategoria, elCotizadorCaracteristicaC)}" />
+                                                                
                                                             </p:selectOneRadio>
                                                         </div>
-
+                                                        
                                                         <div>
-                                                            <h:selectManyCheckbox id="seleccionMB" rendered="#{cotizadorController.esMultiple(elCotizadorCategoria)}">
-                                                                <f:selectItem id="multiple" itemLabel="Seleccionar" itemValue="null" />
-                                                                <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorMultiple(elCotizadorCaracteristica)}" />
+                                                            <h:selectManyCheckbox id="selectManyCheckCM" rendered="#{( (cotizadorController.esMultiple(elCotizadorCategoria))and (cotizadorController.tieneMedidas(elCotizadorCategoria)) )}">
+                                                                <f:selectItem id="selectCheckCM" itemLabel="Seleccionar" itemValue="null" />
+                                                                <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorMultiple(elCotizadorCaracteristicaC)}" />
                                                             </h:selectManyCheckbox>
+                                                            
+                                                            <h:selectManyCheckbox id="selectManyCheckSM"  rendered="#{( (cotizadorController.esMultiple(elCotizadorCategoria))and (!cotizadorController.tieneMedidas(elCotizadorCategoria)) )}">
+                                                                <f:selectItem id="selectCheckSM" itemLabel="Seleccionar" itemValue="null" />
+                                                                <p:ajax process="@this" listener="#{cotizadorController.noTieneMedidas(elCotizadorCategoria, elCotizadorCaracteristicaC)}" />
+                                                    
+                                                            </h:selectManyCheckbox>
+                                                            
                                                         </div>
-
+                                                        
+                  
                                                     </center>
                                                 </div>
                                             </div>
@@ -228,7 +245,7 @@
                         </p:accordionPanel>
 
                     </div>
-                    
+
                     <p:dialog header="Seleccion" widgetVar="selectSeleccionDialog" showEffect="fade" minHeight="350" width="550">
 
                         <div class="p-grid p-flex-column">
