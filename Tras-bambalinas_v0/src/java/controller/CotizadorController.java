@@ -7,17 +7,22 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import model.CaracteristicaTO;
 import model.CategoriaTO;
 import model.CotizacionTO;
 import model.UsuarioTO;
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.RowEditEvent;
 import servicio.ServicioCaracteristica;
 import servicio.ServicioCategoria;
 import servicio.ServicioCotizacion;
@@ -31,11 +36,9 @@ public class CotizadorController implements Serializable {
     private ServicioCaracteristica servicioCaracteristica = new ServicioCaracteristica();
     private ServicioCotizacion servicioCotizacion = new ServicioCotizacion();
 
-    private LoginController loginController;
-
     private UsuarioTO usuarioTO;
     private CategoriaTO categoriaTO;
-    private CaracteristicaTO caracteristicaTO;
+    private CaracteristicaTO caracteristicaTO, caracteristicasSeleccionada;
     private CotizacionTO cotizacionTO, newCotizacionTO, mostrarCotizacionNueva;
 
     List<String> listaDeCaracteristica = new ArrayList<>();
@@ -74,7 +77,7 @@ public class CotizadorController implements Serializable {
     int clienteCotizacion;
     String anchoCotizacion;
     String largoCotizacion;
-    double totalCotizacion = 0;
+    double totalCotizacion;
 
     private double ancho;
     private double largo;
@@ -95,73 +98,54 @@ public class CotizadorController implements Serializable {
         }
     }
 
-    public void updateMedidas(double ancho, double largo) {
-        System.out.println("uA: " + ancho);
-        System.out.println("uL: " + largo);
-;
-        this.listaAncho.add(ancho);
-        this.listaLargo.add(largo);
-    }
-
-    public double getAncho() {
-        return ancho;
-    }
-
-    public void setAncho(double ancho) {
-        this.ancho = ancho;
-    }
-
-    public double getLargo() {
-        return largo;
-    }
-
-    public void setLargo(double largo) {
-        this.largo = largo;
-    }
-
-    public List<Double> getListaLargo() {
-        return listaLargo;
-    }
-
-    public void setListaLargo(List<Double> listaLargo) {
-        this.listaLargo = listaLargo;
-    }
-
-    public List<Double> getListaAncho() {
-        return listaAncho;
-    }
-
-    public void setListaAncho(List<Double> listaAncho) {
-        this.listaAncho = listaAncho;
-    }
-
-    public double getTotalCotizacion() {
-        return totalCotizacion;
-    }
-
-    public void setTotalCotizacion(double totalCotizacion) {
-        this.totalCotizacion = totalCotizacion;
-    }
-
-    public List<CaracteristicaTO> getListaCaracteristicas() {
-        return listaCaracteristicas;
-    }
-
-    public void setListaCaracteristicas(List<CaracteristicaTO> listaCaracteristicas) {
-        this.listaCaracteristicas = listaCaracteristicas;
-    }
-
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
     }
 
-    public List<CaracteristicaTO> getListaCaracteristicasCotizacion() {
-        return listaCaracteristicasCotizacion;
+    public void noTieneMedidas() {
+        this.listaLargo.add(0.0);
+        this.listaAncho.add(0.0);
     }
 
-    public void setListaCaracteristicasCotizacion(List<CaracteristicaTO> listaCaracteristicasCotizacion) {
-        this.listaCaracteristicasCotizacion = listaCaracteristicasCotizacion;
+    public boolean esAdmin(String tipo) {
+        System.out.println("Tipo: " + tipo);
+        if (tipo.equals("admin")) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean esMultiple(CategoriaTO categoriaTO) {
+        if (categoriaTO.getSeleccionCategoria().equals("Múltiple")) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean tieneMedidas(CategoriaTO categoriaTO) {
+        if (categoriaTO.getMedidasCategoria().equals("Tiene medidas")) {
+            return true;
+        }
+        return false;
+    }
+
+    public void eliminarCotizacionTO() {
+        try {
+            this.servicioCotizacion.eliminarCotizacion(newCotizacionTO);
+            this.cargar();
+        } catch (Exception e) {
+            System.out.println("Error elimando cotizacion! " + e);
+        }
+    }
+
+    public List<CaracteristicaTO> cargarListaCaracteristicas(int id) {
+        try {
+            this.listaCaracteristicasParaCotizador = this.servicioCaracteristica.listaCaracteristicasParaCotizador(id);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return listaCaracteristicasParaCotizador;
     }
 
     public List<CaracteristicaTO> cargarImagenCaracteristica(String listaDeIds) {
@@ -181,19 +165,9 @@ public class CotizadorController implements Serializable {
 
         return this.listaCaracteristicasCotizacion;
     }
-    
-    public void agregarAncho(double ancho) {
-        System.out.println("aA: "+ ancho);
-        this.listaAncho.add(ancho);
-    }
 
-    public void agregarLargo(double largo) {
-        System.out.println("aL: "+largo);
-        this.listaLargo.add(largo);
-    }
-    public void noTieneMedidas() {
-        this.listaLargo.add(0.0);
-        this.listaAncho.add(0.0);
+    public void openNewCotizacion() {
+        this.newCotizacionTO = new CotizacionTO();
     }
 
     public void abrirEIngresarNewCotizacion(int id) {
@@ -277,27 +251,11 @@ public class CotizadorController implements Serializable {
 
     }
 
-    public List<CaracteristicaTO> cargarListaCaracteristicas(int id) {
-        try {
-            this.listaCaracteristicasParaCotizador = this.servicioCaracteristica.listaCaracteristicasParaCotizador(id);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return listaCaracteristicasParaCotizador;
-    }
-
-    public List<CaracteristicaTO> getListaCanastaCotizador() {
-        return listaCanastaCotizador;
-    }
-
-    public void setListaCanastaCotizador(CaracteristicaTO caracteristica) {
-        SeleccionadorUnica(caracteristica);
-    }
-
     public void SeleccionadorUnica(CaracteristicaTO caracteristicaSeleccionada) {
-        System.out.println("Ancho-> " + this.listaAncho);
-        System.out.println("Largo-> " + this.listaLargo);
-
+        System.out.println("Largo: "+this.getLargo());
+        System.out.println("Ancho: "+this.getAncho());
+        System.out.println("Caracteristica "+caracteristicaSeleccionada);
+        
         try {
             int test;
             CaracteristicaTO auxiliar;
@@ -354,64 +312,21 @@ public class CotizadorController implements Serializable {
         }
     }
 
-    public UsuarioTO getUsuarioTO() {
-        return usuarioTO;
+    ////////////////////////////////////////////////////////////////////////////Servicios
+    public ServicioCategoria getServicioCategoria() {
+        return servicioCategoria;
     }
 
-    public void setUsuarioTO(UsuarioTO usuarioTO) {
-        this.usuarioTO = usuarioTO;
+    public void setServicioCategoria(ServicioCategoria servicioCategoria) {
+        this.servicioCategoria = servicioCategoria;
     }
 
-    public void openNewCotizacion() {
-        this.newCotizacionTO = new CotizacionTO();
+    public ServicioCaracteristica getServicioCaracteristica() {
+        return servicioCaracteristica;
     }
 
-    public CotizacionTO getMostrarCotizacionNueva() {
-        return mostrarCotizacionNueva;
-    }
-
-    public void setMostrarCotizacionNueva(CotizacionTO mostrarCotizacionNueva) {
-        this.mostrarCotizacionNueva = mostrarCotizacionNueva;
-    }
-
-    public String getVisibilidadCategoria() {
-        return visibilidadCategoria;
-    }
-
-    public void setVisibilidadCategoria(String visibilidadCategoria) {
-        this.visibilidadCategoria = visibilidadCategoria;
-    }
-
-    public String getAnchoCotizacion() {
-        return anchoCotizacion;
-    }
-
-    public void setAnchoCotizacion(String anchoCotizacion) {
-        this.anchoCotizacion = anchoCotizacion;
-    }
-
-    public String getLargoCotizacion() {
-        return largoCotizacion;
-    }
-
-    public void setLargoCotizacion(String largoCotizacion) {
-        this.largoCotizacion = largoCotizacion;
-    }
-
-    public CotizacionTO getNewCotizacionTO() {
-        return newCotizacionTO;
-    }
-
-    public void setNewCotizacionTO(CotizacionTO newCotizacionTO) {
-        this.newCotizacionTO = newCotizacionTO;
-    }
-
-    public CotizacionTO getCotizacionTO() {
-        return cotizacionTO;
-    }
-
-    public void setCotizacionTO(CotizacionTO cotizacionTO) {
-        this.cotizacionTO = cotizacionTO;
+    public void setServicioCaracteristica(ServicioCaracteristica servicioCaracteristica) {
+        this.servicioCaracteristica = servicioCaracteristica;
     }
 
     public ServicioCotizacion getServicioCotizacion() {
@@ -422,6 +337,68 @@ public class CotizadorController implements Serializable {
         this.servicioCotizacion = servicioCotizacion;
     }
 
+    ////////////////////////////////////////////////////////////////////////////ModeloTO
+    public CotizacionTO getNewCotizacionTO() {
+        return newCotizacionTO;
+    }
+
+    public CaracteristicaTO getCaracteristicasSeleccionada() {
+        return caracteristicasSeleccionada;
+    }
+
+    public void setCaracteristicasSeleccionada(CaracteristicaTO caracteristicasSeleccionada) {
+        this.caracteristicasSeleccionada = caracteristicasSeleccionada;
+    }
+
+    public void setNewCotizacionTO(CotizacionTO newCotizacionTO) {
+        this.newCotizacionTO = newCotizacionTO;
+    }
+
+    public CotizacionTO getCotizacionTO() {
+        return cotizacionTO;
+    }
+
+    public CotizacionTO getMostrarCotizacionNueva() {
+        return mostrarCotizacionNueva;
+    }
+
+    public void setMostrarCotizacionNueva(CotizacionTO mostrarCotizacionNueva) {
+        this.mostrarCotizacionNueva = mostrarCotizacionNueva;
+    }
+
+    public CategoriaTO getCategoriaTO() {
+        return categoriaTO;
+    }
+
+    public void setCategoriaTO(CategoriaTO categoriaTO) {
+        this.categoriaTO = categoriaTO;
+    }
+
+    public CaracteristicaTO getCaracteristicaTO() {
+        return caracteristicaTO;
+    }
+
+    public void setCaracteristicaTO(CaracteristicaTO caracteristicaTO) {
+        this.caracteristicaTO = caracteristicaTO;
+    }
+
+    public UsuarioTO getUsuarioTO() {
+        return usuarioTO;
+    }
+
+    public void setUsuarioTO(UsuarioTO usuarioTO) {
+        this.usuarioTO = usuarioTO;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////Listas
+    public List<CaracteristicaTO> getListaCanastaCotizador() {
+        return listaCanastaCotizador;
+    }
+
+    public void setListaCanastaCotizador(List<CaracteristicaTO> listaCanastaCotizador) {
+        this.listaCanastaCotizador = listaCanastaCotizador;
+    }
+
     public List<CotizacionTO> getListaCotizacion() {
         return listaCotizacion;
     }
@@ -430,12 +407,61 @@ public class CotizadorController implements Serializable {
         this.listaCotizacion = listaCotizacion;
     }
 
+    public List<CaracteristicaTO> getListaCaracteristicas() {
+        return listaCaracteristicas;
+    }
+
+    public void setListaCaracteristicas(List<CaracteristicaTO> listaCaracteristicas) {
+        this.listaCaracteristicas = listaCaracteristicas;
+    }
+
+    public List<CaracteristicaTO> getListaCaracteristicasCotizacion() {
+        return listaCaracteristicasCotizacion;
+    }
+
+    public void setListaCaracteristicasCotizacion(List<CaracteristicaTO> listaCaracteristicasCotizacion) {
+        this.listaCaracteristicasCotizacion = listaCaracteristicasCotizacion;
+    }
+
+    public List<CaracteristicaTO> getListaCaracteristicasParaCotizador() {
+        return listaCaracteristicasParaCotizador;
+    }
+
+    public void setListaCaracteristicasParaCotizador(List<CaracteristicaTO> listaCaracteristicasParaCotizador) {
+        this.listaCaracteristicasParaCotizador = listaCaracteristicasParaCotizador;
+    }
+
+    public List<CategoriaTO> getListaCategoriaParaCotizarCliente() {
+        return listaCategoriaParaCotizarCliente;
+    }
+
+    public void setListaCategoriaParaCotizarCliente(List<CategoriaTO> listaCategoriaParaCotizarCliente) {
+        this.listaCategoriaParaCotizarCliente = listaCategoriaParaCotizarCliente;
+    }
+
+    public List<CategoriaTO> getListaCategoriaParaCotizarAdmin() {
+        return listaCategoriaParaCotizarAdmin;
+    }
+
+    public void setListaCategoriaParaCotizarAdmin(List<CategoriaTO> listaCategoriaParaCotizarAdmin) {
+        this.listaCategoriaParaCotizarAdmin = listaCategoriaParaCotizarAdmin;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////Cotizacion
     public int getNumeroCotizacion() {
         return numeroCotizacion;
     }
 
     public void setNumeroCotizacion(int numeroCotizacion) {
         this.numeroCotizacion = numeroCotizacion;
+    }
+
+    public String getListaDeCaracteristicas() {
+        return listaDeCaracteristicas;
+    }
+
+    public void setListaDeCaracteristicas(String listaDeCaracteristicas) {
+        this.listaDeCaracteristicas = listaDeCaracteristicas;
     }
 
     public List<Integer> getListaIdCaracteristicas() {
@@ -470,70 +496,63 @@ public class CotizadorController implements Serializable {
         this.clienteCotizacion = clienteCotizacion;
     }
 
-    public ServicioCategoria getServicioCategoria() {
-        return servicioCategoria;
+    public String getAnchoCotizacion() {
+        return anchoCotizacion;
     }
 
-    public void setServicioCategoria(ServicioCategoria servicioCategoria) {
-        this.servicioCategoria = servicioCategoria;
+    public void setAnchoCotizacion(String anchoCotizacion) {
+        this.anchoCotizacion = anchoCotizacion;
     }
 
-    public ServicioCaracteristica getServicioCaracteristica() {
-        return servicioCaracteristica;
+    public String getLargoCotizacion() {
+        return largoCotizacion;
     }
 
-    public void setServicioCaracteristica(ServicioCaracteristica servicioCaracteristica) {
-        this.servicioCaracteristica = servicioCaracteristica;
+    public void setLargoCotizacion(String largoCotizacion) {
+        this.largoCotizacion = largoCotizacion;
     }
 
-    public CategoriaTO getCategoriaTO() {
-        return categoriaTO;
+    public double getTotalCotizacion() {
+        return totalCotizacion;
     }
 
-    public void setCategoriaTO(CategoriaTO categoriaTO) {
-        this.categoriaTO = categoriaTO;
+    public void setTotalCotizacion(double totalCotizacion) {
+        this.totalCotizacion = totalCotizacion;
     }
 
-    public CaracteristicaTO getCaracteristicaTO() {
-        return caracteristicaTO;
+    public double getAncho() {
+        return ancho;
     }
 
-    public void setCaracteristicaTO(CaracteristicaTO caracteristicaTO) {
-        this.caracteristicaTO = caracteristicaTO;
+    public void setAncho(double ancho) {
+        this.ancho = ancho;
     }
 
-    public List<CaracteristicaTO> getListaCaracteristicasParaCotizador() {
-        return listaCaracteristicasParaCotizador;
+    public double getLargo() {
+        return largo;
     }
 
-    public void setListaCaracteristicasParaCotizador(List<CaracteristicaTO> listaCaracteristicasParaCotizador) {
-        this.listaCaracteristicasParaCotizador = listaCaracteristicasParaCotizador;
+    public void setLargo(double largo) {
+        this.largo = largo;
     }
 
-    public List<CategoriaTO> getListaCategoriaParaCotizarCliente() {
-        return listaCategoriaParaCotizarCliente;
+    public List<Double> getListaAncho() {
+        return listaAncho;
     }
 
-    public void setListaCategoriaParaCotizarCliente(List<CategoriaTO> listaCategoriaParaCotizarCliente) {
-        this.listaCategoriaParaCotizarCliente = listaCategoriaParaCotizarCliente;
+    public void setListaAncho(List<Double> listaAncho) {
+        this.listaAncho = listaAncho;
     }
 
-    public List<CategoriaTO> getListaCategoriaParaCotizarAdmin() {
-        return listaCategoriaParaCotizarAdmin;
+    public List<Double> getListaLargo() {
+        return listaLargo;
     }
 
-    public void setListaCategoriaParaCotizarAdmin(List<CategoriaTO> listaCategoriaParaCotizarAdmin) {
-        this.listaCategoriaParaCotizarAdmin = listaCategoriaParaCotizarAdmin;
+    public void setListaLargo(List<Double> listaLargo) {
+        this.listaLargo = listaLargo;
     }
 
-    public String getListaDeCaracteristicas() {
-        return listaDeCaracteristicas;
-    }
-
-    public void setListaDeCaracteristicas(String listaDeCaracteristicas) {
-        this.listaDeCaracteristicas = listaDeCaracteristicas;
-    }
-
+    ////////////////////////////////////////////////////////////////////////////Categorias
     public int getIdCategoria() {
         return idCategoria;
     }
@@ -574,6 +593,15 @@ public class CotizadorController implements Serializable {
         this.seleccionCategoria = seleccionCategoria;
     }
 
+    public String getVisibilidadCategoria() {
+        return visibilidadCategoria;
+    }
+
+    public void setVisibilidadCategoria(String visibilidadCategoria) {
+        this.visibilidadCategoria = visibilidadCategoria;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////Caracteristicas
     public int getIdCaracteristica() {
         return idCaracteristica;
     }
@@ -644,68 +672,6 @@ public class CotizadorController implements Serializable {
 
     public void setPrioridadCaracteristica(int prioridadCaracteristica) {
         this.prioridadCaracteristica = prioridadCaracteristica;
-    }
-
-    public boolean esAdmin(String tipo) {
-        System.out.println("Tipo: " + tipo);
-        if (tipo.equals("admin")) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean esMultiple(CategoriaTO categoriaTO) {
-        if (categoriaTO.getSeleccionCategoria().equals("Múltiple")) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean tieneMedidas(CategoriaTO categoriaTO) {
-
-        if (categoriaTO.getMedidasCategoria().equals("Tiene medidas")) {
-            return true;
-        }
-        return false;
-    }
-
-    public void eliminarCotizacionTO() {
-        try {
-            this.servicioCotizacion.eliminarCotizacion(newCotizacionTO);
-            this.cargar();
-        } catch (Exception e) {
-            System.out.println("Error elimando cotizacion! " + e);
-        }
-    }
-
-    public boolean Cotizar(int idUser) {
-
-        try {
-            if (this.listaCanastaCotizador.isEmpty()) {
-                System.out.println("Error esta vacia");
-                addMessage(FacesMessage.SEVERITY_ERROR, "Error de cotizacion!", "No hay items seleccionados!");
-                return false;
-            }
-            System.out.println("Se mando a cotizar");
-            //this.fechaCotizacion = Date.valueOf(LocalDate.now());
-            System.out.println("Fecha aqui(538)");
-
-            servicioCotizacion.Cotizar(this.listaCanastaCotizador, idUser, this.anchoCotizacion, this.largoCotizacion);
-            this.listaCanastaCotizador.forEach((caracTO) -> {
-                //listaIdCaracteristicas.add(caracTO.getIdCaracteristica());
-                listaDeCaracteristica.add(caracTO.getNombreCaracteristica());
-
-            });
-            listaDeCaracteristicas = listaDeCaracteristica.stream()
-                    .map(i -> i.toString())
-                    .collect(Collectors.joining(", "));
-
-            System.out.println("Se cotizo y se creo la nueva cotizacion.");
-            return true;
-        } catch (Exception e) {
-            System.out.println("Error al tratar de cotizar! " + e.getMessage());
-        }
-        return false;
     }
 
 }
