@@ -1,28 +1,20 @@
 package controller;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import model.CaracteristicaTO;
 import model.CategoriaTO;
 import model.CotizacionTO;
 import model.UsuarioTO;
-import org.primefaces.PrimeFaces;
-import org.primefaces.event.RowEditEvent;
 import servicio.ServicioCaracteristica;
 import servicio.ServicioCategoria;
 import servicio.ServicioCotizacion;
@@ -78,6 +70,7 @@ public class CotizadorController implements Serializable {
     String anchoCotizacion;
     String largoCotizacion;
     double totalCotizacion;
+    String listaLargaCotizacion;
 
     private double ancho = 0.0;
     private double largo = 0.0;
@@ -101,6 +94,10 @@ public class CotizadorController implements Serializable {
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+
+    public void medidasMessage() {
+        addMessage(FacesMessage.SEVERITY_INFO, "Exito", "Se guardaron las medidas");
     }
 
     public void noTieneMedidas(CategoriaTO categoriaTO, CaracteristicaTO caracteristicaSeleccionada) {
@@ -187,9 +184,6 @@ public class CotizadorController implements Serializable {
     public void abrirEIngresarNewCotizacion(int id) {
 
         double suma = 0;
-        double multiplicacionMedidas = 0;
-        double ancho = 0;
-        double largo = 0;
         openNewCotizacion();
         String ListaCotizador = "";
 
@@ -210,24 +204,23 @@ public class CotizadorController implements Serializable {
             }
 
             for (int i = 0; i < listaCanastaCotizador.size(); i++) {
-                ListaCotizador = ListaCotizador.trim() + listaDeCaracteristica.get(i);
+                
+                ListaCotizador = ListaCotizador + listaDeCaracteristica.get(i);
                 ListaCotizador = ListaCotizador + " - " + listaAncho.get(i).toString();
                 ListaCotizador = ListaCotizador + " cm x " + listaLargo.get(i).toString();
-                ListaCotizador = ListaCotizador + " cm ( " + listaCanastaCotizador.get(i).getPrecioCaracteristica();
-                ListaCotizador = ListaCotizador + " ) | ";
-            }
-            System.out.println(ListaCotizador);
+                ListaCotizador = ListaCotizador + " cm (" + listaCanastaCotizador.get(i).getPrecioCaracteristica();
+                ListaCotizador = ListaCotizador + "₡) x cm | ";
 
-            this.newCotizacionTO.setListaDeCaracteristicas(listaIdCaracteristicas.stream().map(i -> i.toString()).collect(Collectors.joining(", ")));
-            System.out.println("Caracteristicas->" + this.newCotizacionTO.getListaDeCaracteristicas());
+                suma = suma + (listaCanastaCotizador.get(i).getPrecioCaracteristica() * listaAncho.get(i) * listaLargo.get(i));
+            }
+
+            this.newCotizacionTO.setListaDeCaracteristicas(ListaCotizador);
 
             LocalDateTime fechaActual = LocalDateTime.now();
             DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
             this.newCotizacionTO.setFechaCotizacion(fechaActual.format(formatoFecha));
-            System.out.println("Fecha->" + this.newCotizacionTO.getFechaCotizacion());
             this.newCotizacionTO.setNumeroCotizacion((numeroCotizacion));
-            System.out.println("Numero Cotizacion->" + this.newCotizacionTO.getNumeroCotizacion());
 
             if (id != 0) {
                 this.newCotizacionTO.setClienteCotizacion(id);
@@ -238,20 +231,8 @@ public class CotizadorController implements Serializable {
             }
 
             this.newCotizacionTO.setListaCaracteristicas(this.listaCanastaCotizador);
-            this.newCotizacionTO.setAnchoCotizacion(this.anchoCotizacion);
-            System.out.println("Ancho->" + this.newCotizacionTO.getAnchoCotizacion());
-
-            this.newCotizacionTO.setLargoCotizacion(this.largoCotizacion);
-            System.out.println("Largo->" + this.newCotizacionTO.getLargoCotizacion());
-
-            ancho = Integer.parseInt(this.newCotizacionTO.getAnchoCotizacion());
-            largo = Integer.parseInt(this.newCotizacionTO.getLargoCotizacion());
-            multiplicacionMedidas = largo * ancho;
-
-            this.totalCotizacion = suma * multiplicacionMedidas;
-
+            this.totalCotizacion = suma;
             this.newCotizacionTO.setTotalCotizacion(this.totalCotizacion);
-            System.out.println("Monto->" + this.newCotizacionTO.getTotalCotizacion());
 
             this.servicioCotizacion.insertarCotizacion(this.newCotizacionTO);
             System.out.println("Se cotizo y se creo la nueva cotizacion.");
@@ -351,7 +332,6 @@ public class CotizadorController implements Serializable {
                         + " Ancho-> " + auxiliarAncho + "Lango-> " + auxiliarLargo);
 
                 do {
-                   
 
                     if (this.listaCanastaCotizador.get(posicion).getIdCaracteristica() == auxiliar.getIdCaracteristica()) {
 

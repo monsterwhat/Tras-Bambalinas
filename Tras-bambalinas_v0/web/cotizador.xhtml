@@ -168,6 +168,8 @@
 
         <h:form id="formCotizador">
 
+            <p:growl id="growl" showDetail="true" />
+
             <p:panelGrid  columns="1">
                 <p:panel style="background-color:#A43D42" visible="true">
 
@@ -210,31 +212,30 @@
                                                                 <f:selectItem  id="unicaConMedidas" itemLabel="Seleccionar" itemValue="null" />
                                                                 <p:ajax process="selectOneRadioCM"  listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristicaC)}" onsuccess="PF('accordionPanel').select(+1)"/>
                                                             </p:selectOneRadio>
-                                                            
-                                                            
-                                                            <p:selectOneRadio  id="selectOneRadioSM" styleClass="p-mr-2" rendered="#{ (!cotizadorController.tieneMedidas(elCotizadorCategoria)) and (!cotizadorController.tieneMedidas(elCotizadorCategoria)) }"
+
+
+                                                            <p:selectOneRadio  id="selectOneRadioSM" styleClass="p-mr-2" rendered="#{ (!cotizadorController.esMultiple(elCotizadorCategoria)) and (!cotizadorController.tieneMedidas(elCotizadorCategoria)) }"
                                                                                widgetVar="selectRadioSM" unselectable="true">                                                               
                                                                 <f:selectItem  id="unicaSinMedidas" itemLabel="Seleccionar" itemValue="null" />
                                                                 <p:ajax process="selectOneRadioSM"  listener="#{cotizadorController.noTieneMedidas(elCotizadorCategoria, elCotizadorCaracteristicaC)}" />
-                                                                
+
                                                             </p:selectOneRadio>
                                                         </div>
-                                                        
+
                                                         <div>
                                                             <h:selectManyCheckbox id="selectManyCheckCM" rendered="#{( (cotizadorController.esMultiple(elCotizadorCategoria))and (cotizadorController.tieneMedidas(elCotizadorCategoria)) )}">
                                                                 <f:selectItem id="selectCheckCM" itemLabel="Seleccionar" itemValue="null" />
                                                                 <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorMultiple(elCotizadorCaracteristicaC)}" />
                                                             </h:selectManyCheckbox>
-                                                            
+
                                                             <h:selectManyCheckbox id="selectManyCheckSM"  rendered="#{( (cotizadorController.esMultiple(elCotizadorCategoria))and (!cotizadorController.tieneMedidas(elCotizadorCategoria)) )}">
                                                                 <f:selectItem id="selectCheckSM" itemLabel="Seleccionar" itemValue="null" />
                                                                 <p:ajax process="@this" listener="#{cotizadorController.noTieneMedidas(elCotizadorCategoria, elCotizadorCaracteristicaC)}" />
-                                                    
                                                             </h:selectManyCheckbox>
-                                                            
+
                                                         </div>
-                                                        
-                  
+
+
                                                     </center>
                                                 </div>
                                             </div>
@@ -265,20 +266,13 @@
                         </div> 
 
                         <f:facet name="footer">
-                            <p:commandButton value="Agregar" icon="pi pi-check" resetValues="true"
-                                             >
-
-                            </p:commandButton>
+                            <p:commandButton value="Agregar" icon="pi pi-check" resetValues="true" actionListener="#{cotizadorController.medidasMessage()}" update="growl" onclick="PF('selectSeleccionDialog').hide()" />
 
                             <p:commandButton value="Cancelar" icon="pi pi-times" resetValues="true" 
-                                             class="ui-button-secondary">
-
-                            </p:commandButton>
+                                             class="ui-button-secondary" onclick="PF('selectSeleccionDialog').hide()"/>
                         </f:facet>
 
                     </p:dialog>
-
-
 
                     <div class="product card">
                         <p:accordionPanel value="#{cotizadorController.listaCategoriaParaCotizarAdmin}" widgetVar="accordionPanel" var="elCotizadorCategoria" multiple="false" style="width: fit-content;" rendered="#{loginController.tipoUsuarioTO(loginController.usuarioTO)=='admin'}" >
@@ -307,43 +301,40 @@
                                                         <h:outputText value="#{elCotizadorCaracteristicaA.precioCaracteristica}" styleClass="elCotizadorCaracteristica-price">
                                                             <f:convertNumber currencySymbol="₡" type="currency"/>
                                                         </h:outputText>
-                                                        
+
                                                         <div>
                                                             <p:commandButton value="Medidas" type="button" styleClass="rounded-button ui-button-info" onclick="PF('selectSeleccionDialog').show()"
                                                                              rendered="#{cotizadorController.tieneMedidas(elCotizadorCategoria)}"/>
                                                         </div>
-                                                        
+
                                                         <div >
                                                             <p:selectOneRadio  id="selectOneRadioCM" styleClass="p-mr-2" rendered="#{( (!cotizadorController.esMultiple(elCotizadorCategoria)) and (cotizadorController.tieneMedidas(elCotizadorCategoria)) )}"
                                                                                widgetVar="selectRadioCM" unselectable="true">                                                               
                                                                 <f:selectItem  id="unicaConMedidas" itemLabel="Seleccionar" itemValue="null" />
                                                                 <p:ajax process="selectOneRadioCM"  listener="#{cotizadorController.SeleccionadorUnica(elCotizadorCaracteristicaA)}" onsuccess="PF('accordionPanel').select(+1)"/>
                                                             </p:selectOneRadio>
-                                                            
-                                                            
-                                                            <p:selectOneRadio  id="selectOneRadioSM" styleClass="p-mr-2" rendered="#{ (!cotizadorController.tieneMedidas(elCotizadorCategoria)) and (!cotizadorController.tieneMedidas(elCotizadorCategoria)) }"
+
+
+                                                            <p:selectOneRadio  id="selectOneRadioSM" styleClass="p-mr-2" rendered="#{ (!cotizadorController.esMultiple(elCotizadorCategoria)) and (!cotizadorController.tieneMedidas(elCotizadorCategoria)) }"
                                                                                widgetVar="selectRadioSM" unselectable="true">                                                               
                                                                 <f:selectItem  id="unicaSinMedidas" itemLabel="Seleccionar" itemValue="null" />
                                                                 <p:ajax process="selectOneRadioSM"  listener="#{cotizadorController.noTieneMedidas(elCotizadorCategoria, elCotizadorCaracteristicaA)}" />
-                                                                
+
                                                             </p:selectOneRadio>
                                                         </div>
-                                                        
+
                                                         <div>
                                                             <h:selectManyCheckbox id="selectManyCheckCM" rendered="#{( (cotizadorController.esMultiple(elCotizadorCategoria))and (cotizadorController.tieneMedidas(elCotizadorCategoria)) )}">
                                                                 <f:selectItem id="selectCheckCM" itemLabel="Seleccionar" itemValue="null" />
                                                                 <p:ajax process="@this" listener="#{cotizadorController.SeleccionadorMultiple(elCotizadorCaracteristicaA)}" />
                                                             </h:selectManyCheckbox>
-                                                            
+
                                                             <h:selectManyCheckbox id="selectManyCheckSM"  rendered="#{( (cotizadorController.esMultiple(elCotizadorCategoria))and (!cotizadorController.tieneMedidas(elCotizadorCategoria)) )}">
                                                                 <f:selectItem id="selectCheckSM" itemLabel="Seleccionar" itemValue="null" />
                                                                 <p:ajax process="@this" listener="#{cotizadorController.noTieneMedidas(elCotizadorCategoria, elCotizadorCaracteristicaA)}" />
-                                                    
+
                                                             </h:selectManyCheckbox>
-                                                            
                                                         </div>
-
-
                                                     </center>
                                                 </div>
                                             </div>
@@ -353,23 +344,14 @@
                             </p:tab>
                         </p:accordionPanel>
                     </div>
-
                     <center>
                         <div>
                             <p:commandButton value="Cotizar" actionListener="#{cotizadorController.abrirEIngresarNewCotizacion(loginController.idUser)}" update=":formCotizacion:show-cotizacion-content" onsuccess="PF('showCotizacionDialog').show()"/>
                         </div>
                     </center>
-
                 </p:panel>
             </p:panelGrid>
-
-
-
         </h:form>
-
-
-
-
 
         <h:form id="formCotizacion">
 
