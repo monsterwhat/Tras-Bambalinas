@@ -81,7 +81,6 @@
                             <h:outputText value="#{elCliente.telefonoUsuario}"/>
                         </p:column>
 
-
                         <p:column headerText="Contraseña del Usuario" visible="false">
                             <h:outputText value="#{elCliente.contrasenaUsuario}"/>
                         </p:column>
@@ -147,7 +146,7 @@
                     <f:facet name ="header">
                         Cotizaciones
                     </f:facet>
-                    <p:dataTable value ="#{userController.cargarCotizacionCliente(loginController.idUser)}" var="laCotizacionC" rows="5" paginator="true" paginatorPosition="bottom"
+                    <p:dataTable value="#{userController.cargarCotizacionCliente(loginController.idUser)}" var="laCotizacionC" rows="5" paginator="true" paginatorPosition="bottom"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="3,5,10,20,30,40,50,100" widgetVar="dataTableCotizaciones"
                                  emptyMessage="No existen cotizaciones registradas"
@@ -157,7 +156,7 @@
                         </f:facet>
 
                         <p:column headerText="Numero de Cotizacion" sortBy="#{laCotizacionC.numeroCotizacion}" filterBy="#{laCotizacionC.numeroCotizacion}" filterMatchMode="exact">
-                            <h:outputText value="#{laCotizacion.numeroCotizacion}"/>
+                            <h:outputText value="#{laCotizacionC.numeroCotizacion}"/>
                         </p:column>
                         <p:column headerText="Lista de ID's de Características" sortBy="#{laCotizacionC.listaDeCaracteristicas}" filterBy="#{laCotizacionC.listaDeCaracteristicas}" filterMatchMode="exact">
                             <h:outputText value="#{laCotizacionC.listaDeCaracteristicas}"/>
@@ -181,14 +180,32 @@
                                 <f:setPropertyActionListener value="#{laCotizacionC}" target="#{cotizadorController.newCotizacionTO}"/>
                                 <p:resetInput target=":formCotizacioncliente:show-cotizacioncliente-content"/>
                             </p:commandButton>
-                            <p:commandButton icon="pi pi-check-circle"
-                            </p:commandButton>
+
+                        </p:column>
+
+                        <p:column>
+
+                            <p:commandButton styleClass="edit-button rounded-button ui-button-success" icon="pi pi-check-circle" process="@this"
+                                             oncomplete="PF('sendCotizacionDialog').show()">
+                                <f:setPropertyActionListener value="#{laCotizacionC}" target="#{cotizadorController.newCotizacionTO}"/>
+                            </p:commandButton> 
 
                         </p:column>
 
                     </p:dataTable>
                 </p:outputPanel>  
             </p:dialog>
+            
+            <p:confirmDialog widgetVar="sendCotizacionDialog" showEffect="fade" width="300"
+                             message="Desea enviar esta cotizacion a FERVA?" header="Confirmación" severity="warn">
+
+                <p:commandButton value="Sí" icon="pi pi-check" actionListener="#{cotizadorController.cambiarEstadoCotizacionCotizado()}"
+                                 process="@this"  update="cotizacionCTable" oncomplete="PF('sendCotizacionDialog').hide()"/>
+
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('sendCotizacionDialog').hide()"/>
+            </p:confirmDialog>
+
 
             <p:dialog header="Detalles de la Cotización" showEffect="fade" modal="true"
                       widgetVar="showCotizacionclienteDialog" responsive="true" minHeight="350" width="550">
@@ -203,7 +220,7 @@
                                     <p:outputLabel id="numeroCotizacion" value="#{cotizadorController.newCotizacionTO.numeroCotizacion}"  style="width:30rem"/> 
                                     <p:message for="numeroCotizacion" display="icon"/> 
                                 </div>
-                                
+
                                 <div style="padding-bottom: 1em">
                                     <p:outputLabel for="listaCotizacion" value="Detalles de la cotización: "/>
                                     <p:outputLabel id="listaCotizacion" value="#{cotizadorController.newCotizacionTO.listaDeCaracteristicas}"  style="width:30rem"/> 
@@ -237,12 +254,12 @@
                         </div>
                     </p:outputPanel>
                 </p:outputPanel>
-                
+
                 <f:facet name="footer">     
                     <p:commandButton value="Salir" icon="pi pi-times" onclick="PF('showCotizacionclienteDialog').hide()"
                                      class="ui-button-secondary"/>
                 </f:facet>
-                
+
             </p:dialog>
         </h:form>
     </h:body>

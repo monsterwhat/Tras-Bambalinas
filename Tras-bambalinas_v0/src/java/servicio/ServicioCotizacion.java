@@ -1,4 +1,3 @@
-
 package servicio;
 
 import java.sql.Date;
@@ -27,7 +26,7 @@ public class ServicioCotizacion extends Servicio {
 
             statement = conexion.createStatement();
             String sql = "Select * FROM cotizacion where fechaCotizacion='" + fecha + "';";
-            resultSet = statement.executeQuery(sql);     
+            resultSet = statement.executeQuery(sql);
             if (resultSet.next()) {
                 int numeroCotizacion = resultSet.getInt("numeroCotizacion");
                 String listaDeCaracteristicas = resultSet.getString("listaIDCaracteristicaCotizacion");
@@ -104,7 +103,7 @@ public class ServicioCotizacion extends Servicio {
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 Double totalCotizacion = resultSet.getDouble("totalCotizacion");
                 String estadoCotizacion = resultSet.getString("estadoCotizacion");
-                CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion,estadoCotizacion);
+                CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion, estadoCotizacion);
 
                 listaRetorno.add(cotizacionTO);
             }
@@ -137,7 +136,7 @@ public class ServicioCotizacion extends Servicio {
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 double totalCotizacion = resultSet.getDouble("totalCotizacion");
                 String estadoCotizacion = resultSet.getString("estadoCotizacion");
-                cotizacion = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion,estadoCotizacion);
+                cotizacion = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion, estadoCotizacion);
 
                 return cotizacion;
             }
@@ -148,8 +147,8 @@ public class ServicioCotizacion extends Servicio {
         }
         return cotizacion;
     }
-  
-     public List<CotizacionTO> listaCotizacionesCliente(int idCliente) {
+
+    public List<CotizacionTO> listaCotizacionesCliente(int idCliente) {
         Statement statement = null;
         ResultSet resultSet = null;
         List<CotizacionTO> listaRetorno = new ArrayList<>();
@@ -169,7 +168,7 @@ public class ServicioCotizacion extends Servicio {
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 Double totalCotizacion = resultSet.getDouble("totalCotizacion");
                 String estadoCotizacion = resultSet.getString("estadoCotizacion");
-                CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion,estadoCotizacion);
+                CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion, estadoCotizacion);
 
                 listaRetorno.add(cotizacionTO);
             }
@@ -237,6 +236,42 @@ public class ServicioCotizacion extends Servicio {
 
         } catch (SQLException e) {
             System.out.println("Error al cotizar! " + e.getMessage());
+        } finally {
+            cerrarPreparedStatement(preparedStatement);
+            desconectar();
+        }
+    }
+
+    public void cambiarEstadoACotizado(CotizacionTO cotizacionTO) {
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            conectar();
+            String sql = "UPDATE cotizacion SET estadoCotizacion='Cotizado' WHERE numeroCotizacion='" + cotizacionTO.getNumeroCotizacion() + "'";
+            preparedStatement = conexion.prepareStatement(sql);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al cambiar estado de Cotizacion a Cotizado! " + e);
+        } finally {
+            cerrarPreparedStatement(preparedStatement);
+            desconectar();
+        }
+    }
+
+    public void cambiarEstadoACancelado(CotizacionTO cotizacionTO) {
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            conectar();
+            String sql = "UPDATE cotizacion SET estadoCotizacion=? WHERE numeroCotizacion='" + cotizacionTO.getNumeroCotizacion() + "'";
+            preparedStatement = conexion.prepareStatement(sql);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al cambiar estado de Cotizacion a Cancelado! " + e);
         } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();
