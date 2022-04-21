@@ -16,8 +16,7 @@ public class Servicio {
     private String nombreBD = "trasbambalinas";
     private String usuario = "Telon";
     private String clave = "admin";
-    
-    
+
     public void conectar(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");

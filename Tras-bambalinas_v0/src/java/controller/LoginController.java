@@ -251,7 +251,7 @@ public class LoginController implements Serializable {
                     System.out.println("El valor digitado por el usuario (Nombre) es: " + this.getNombreUsuario());
                     System.out.println("El valor digitado por el usuario (Direccion) es: " + this.getDireccionUsuario());
                     System.out.println("El valor digitado por el usuario (Telefono) es: " + this.getTelefonoUsuario());
-                    UsuarioTO nuevoUsuario = new UsuarioTO(this.getCorreo(), ServicioCifrar.encrypt(this.getClaveNueva()), "admin", this.getNombreUsuario(), this.getDireccionUsuario(), this.getTelefonoUsuario());
+                    UsuarioTO nuevoUsuario = new UsuarioTO(this.getCorreo(), ServicioCifrar.encrypt(this.getClaveNueva()), "cliente", this.getNombreUsuario(), this.getDireccionUsuario(), this.getTelefonoUsuario());
                     this.servicioUsuario.insertarUser(nuevoUsuario);
                     addMessage(FacesMessage.SEVERITY_INFO, "Registro exitoso!", "Se registro de manera exitosa al usuario!");
                 } else {
@@ -288,7 +288,4 @@ public class LoginController implements Serializable {
 
     }
 
-//    public void testCategoria() {
-//        this.redireccionar("/faces/adminCategoria.xhtml");
-//    }
 }
