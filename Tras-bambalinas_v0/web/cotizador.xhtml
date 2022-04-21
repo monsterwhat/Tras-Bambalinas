@@ -19,7 +19,7 @@
 
             <p:toolbar>
                 <p:toolbarGroup rendered="#{!loginController.estadoUsuario(loginController.usuarioTO)}"  >
-                    <p:button value="INFORMACION IMPORTANTE" styleClass="ui-button-raised ui-button-danger" icon="pi pi-exclamation-triangle" onfocus="PF('WarningCuenta').show()" />
+                    <p:button value="INFORMACIÓN IMPORTANTE" styleClass="ui-button-raised ui-button-danger" icon="pi pi-exclamation-triangle" onfocus="PF('WarningCuenta').show()" />
                     <p:button value="FERVA" styleClass="ui-button-secondary ui-button-flat" icon="pi pi-fw pi-home" outcome="/faces/index.xhtml" style="margin-left: 17rem" />
                     <p:button value="Cotizador" styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>
                 </p:toolbarGroup>
@@ -54,19 +54,19 @@
 
             </p:toolbar>
 
-            <p:dialog header="Advertencia! No ha ingresado o no se ha registrado al sistema" widgetVar="WarningCuenta" minHeight="40" width="450" showEffect="fade" modal="true">
+            <p:dialog header="¡Advertencia! No ha ingresado o no se ha registrado en el sistema" widgetVar="WarningCuenta" minHeight="40" width="450" showEffect="fade" modal="true">
          
                 <p class="p-m-0">
-                    Querido Cliente le advertimos que si sigue con el 
-                    proceso de cotizacion sin haber iniciado sesion con 
-                    su cuenta o se haya creado un cuenta, 
+                    Querido Cliente, le informamos que si desea continuar con el 
+                    proceso de cotización sin haber realizado el inicio de sesión con 
+                    su cuenta o haber hecho un registro de cuenta previamente, 
                     desafortunadamente se va a perder de lo siguiente: 
                 </p>
                 <h4>
-                    1. La cotizacion no se va a guardar en sistema, pero no relacionada a su usuario, por lo que usted no va poder visualizar.
+                    1. La cotización se va a guardar en el sistema, pero no será relacionada a su usuario, por lo que usted no va poder visualizarla cuando lo desee.
                 </h4>
                 <h4>
-                    2. No va poder enviar la cotizacion a los trabajadores de ferva para que ellos se pongan en contacto con usted.
+                    2. La cotización no podrá ser enviada a los trabajadores de Ferva con la finalidad de ponerse en contacto con usted.
                 </h4>
                 
             </p:dialog>
@@ -271,7 +271,7 @@
 
                     </div>
 
-                    <p:dialog header="Seleccion" widgetVar="selectSeleccionDialog" showEffect="fade" minHeight="350" width="550">
+                    <p:dialog header="Selección" widgetVar="selectSeleccionDialog" showEffect="fade" minHeight="350" width="550">
 
                         <div class="p-grid p-flex-column">
                             <div class="p-col">
@@ -420,7 +420,7 @@
                             </div>
                             <div class="p-grid">
                                 <div class="p-col">
-                                    <p:outputLabel for="totalCotizacion" value="Total de la cotizacion: ₡"/>
+                                    <p:outputLabel for="totalCotizacion" value="Total de la cotización: ₡"/>
                                     <p:outputLabel id="totalCotizacion" value="#{cotizadorController.mostrarCotizacionNueva.totalCotizacion}" style="width:30rem"/>
                                 </div>
                             </div>
