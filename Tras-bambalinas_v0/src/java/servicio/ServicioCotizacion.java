@@ -266,7 +266,7 @@ public class ServicioCotizacion extends Servicio {
 
         try {
             conectar();
-            String sql = "UPDATE cotizacion SET estadoCotizacion=? WHERE numeroCotizacion='" + cotizacionTO.getNumeroCotizacion() + "'";
+            String sql = "UPDATE cotizacion SET estadoCotizacion='Verificada' WHERE numeroCotizacion='" + cotizacionTO.getNumeroCotizacion() + "'";
             preparedStatement = conexion.prepareStatement(sql);
 
             preparedStatement.executeUpdate();

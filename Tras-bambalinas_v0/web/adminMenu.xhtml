@@ -821,9 +821,11 @@
                         <p:column headerText="Monto Total" sortBy="#{laCotizacion.totalCotizacion}">
                             <h:outputText value="#{laCotizacion.totalCotizacion}"/>
                         </p:column>
-                        <p:column headerText="Estado" sortBy="#{laCotizacion.estadoCotizacion}" sortBy="#{laCotizacion.estadoCotizacion}" filterBy="#{laCotizacion.estadoCotizacion}" filterMatchMode="contains">
+                        <p:column headerText="Estado" sortBy="#{laCotizacion.estadoCotizacion}"  filterBy="#{laCotizacion.estadoCotizacion}" filterMatchMode="contains">
                             <h:outputText value="#{laCotizacion.estadoCotizacion}"/>
                         </p:column>
+                        
+                        
                         <p:column>
                             <p:commandButton icon="pi pi-eye" update=":formCotizacion:show-cotizacion-content"
                                              oncomplete="PF('showCotizacionDialog').show()"
@@ -831,6 +833,15 @@
                                 <f:setPropertyActionListener value="#{laCotizacion}" target="#{cotizadorController.newCotizacionTO}"/>
                                 <p:resetInput target=":formCotizacion:show-cotizacion-content"/>
                             </p:commandButton>
+
+                        </p:column>
+
+                        <p:column>
+
+                            <p:commandButton styleClass="edit-button rounded-button ui-button-success" icon="pi pi-check-circle" process="@this"
+                                             oncomplete="PF('sendCotizacionDialog').show()">
+                                <f:setPropertyActionListener value="#{laCotizacion}" target="#{cotizadorController.newCotizacionTO}"/>
+                            </p:commandButton> 
 
                         </p:column>
                         <p:column>
@@ -852,7 +863,16 @@
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                  onclick="PF('deleteCotizacionDialog').hide()"/>
             </p:confirmDialog>
+            
+            <p:confirmDialog widgetVar="sendCotizacionDialog" showEffect="fade" width="300"
+                             message="Desea verificar esta cotización?" header="Confirmación" severity="warn">
 
+                <p:commandButton value="Sí" icon="pi pi-check" actionListener="#{cotizadorController.cambiarEstadoCotizacionEliminado()}"
+                                 process="@this"  update="cotizacionTable" oncomplete="PF('sendCotizacionDialog').hide()"/>
+
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('sendCotizacionDialog').hide()"/>
+            </p:confirmDialog>
 
 
             <p:dialog header="Detalles de la Cotización" showEffect="fade" modal="true"
@@ -909,6 +929,8 @@
                                      class="ui-button-secondary"/>
                 </f:facet>
             </p:dialog>
+            
+          
         </h:form>
     </h:body>
 </html>

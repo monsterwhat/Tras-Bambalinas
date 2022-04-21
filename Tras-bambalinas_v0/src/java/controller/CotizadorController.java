@@ -158,6 +158,14 @@ public class CotizadorController implements Serializable {
             System.out.println("Error Cambiando Estado! " + e);
         }
     }
+    public void cambiarEstadoCotizacionEliminado() {
+        try {
+            this.servicioCotizacion.cambiarEstadoACancelado(newCotizacionTO);
+            this.cargar();
+        } catch (Exception e) {
+            System.out.println("Error Cambiando Estado! " + e);
+        }
+    }
 
     public List<CaracteristicaTO> cargarListaCaracteristicas(int id) {
         try {
