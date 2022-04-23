@@ -15,7 +15,7 @@
         <h:form id="formMenu" >
             <p:toolbar>
                 <p:autoUpdate id="menuBar"/>
-                <p:toolbarGroup style="margin-left: 20rem ">
+                <p:toolbarGroup style="margin-left: 30rem ">
 
                     <p:button value="FERVA" outcome="/faces/index" icon="pi pi-fw pi-home" styleClass="ui-button-secondary ui-button-flat"  />
                     <p:button  value="Cotizador"  styleClass="ui-button-secondary ui-button-flat" outcome="/faces/cotizador.xhtml"/>        
@@ -168,43 +168,3 @@
     </h:body>
 </html>
 
-<!--            <p:menubar id="menuBarFunciones" >
-
-                <p:menuitem value="Redes Sociales" icon="pi pi-mobile">
-                    <f:param name="i" value="0"/>
-                </p:menuitem>
-
-                <p:menuitem value="Ubicacion" >
-                    <f:param name="i" value="0"/>
-                </p:menuitem>
-
-                <p:menuitem value="FERVA" outcome="/faces/index" icon="pi pi-fw pi-home"  >
-                    <f:param name="i" value="0"/>
-                </p:menuitem>
-
-                <p:menuitem value="Catalogo" >
-                    <f:param name="i" value="0"/>
-                </p:menuitem>
-
-                <p:menuitem value="Cotizar" >
-                    <f:param name="i" value="0"/>
-                </p:menuitem>
-
-                <p:submenu label="Servicio">
-                   <p:menuitem value="Mantenimiento"/>
-                   <p:menuitem value="Reparaciones" />
-                   <p:menuitem value="Asesoria" />
-                </p:submenu>
-
-                <p:divider layout="vertical"/>
-
-                <p:menuitem  icon="pi pi-shopping-cart" >
-                    <f:param name="i" value="0"/>
-                </p:menuitem>
-
-                <p:submenu  icon="pi pi-fw pi-user" >
-                   <p:menuitem value="Ingresar" update=":formIngresarUsuario:ingresar-usuario-content" oncomplete="PF('ingresarUsuarioDialog').show()" icon="pi pi-sign-in"/>
-                   <p:menuitem value="Crear cuenta" update="formRegistrarUsuario:registrar-usuario-content" oncomplete="PF('registrarUsuarioDialog').show()" icon="pi pi-fw pi-user-plus"/>
-                </p:submenu>
-
-            </p:menubar>-->

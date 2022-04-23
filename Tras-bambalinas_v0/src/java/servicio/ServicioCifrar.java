@@ -64,4 +64,35 @@ public class ServicioCifrar {
         }
         return null;
     }
+    
+
+    public static String encriptarHora(String strToEncrypt) {
+        try {
+            /* Declare a byte array. */
+            byte[] iv = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+            IvParameterSpec ivspec = new IvParameterSpec(iv);
+            /* Create factory for secret keys. */
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            /* PBE password based encryption*/
+            /* PBEKeySpec class implements KeySpec interface. */
+            KeySpec spec = new PBEKeySpec(SECRET_KEY.toCharArray(), SALT.getBytes(), 65536, 256);
+            SecretKey tmp = factory.generateSecret(spec);
+            SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivspec);
+            /* Retruns encrypted value. */
+            return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8))).substring(0, 8);
+        } catch (InvalidAlgorithmParameterException | InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException e) {
+            System.out.println("Error encriptando! " + e.toString());
+        }
+        return null;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 }

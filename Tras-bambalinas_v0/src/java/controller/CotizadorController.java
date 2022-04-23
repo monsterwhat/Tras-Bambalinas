@@ -15,8 +15,12 @@ import model.CaracteristicaTO;
 import model.CategoriaTO;
 import model.CotizacionTO;
 import model.UsuarioTO;
+import org.primefaces.PrimeFaces;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.component.export.Exporter;
 import servicio.ServicioCaracteristica;
 import servicio.ServicioCategoria;
+import servicio.ServicioCifrar;
 import servicio.ServicioCotizacion;
 
 @ManagedBean(name = "cotizadorController")
@@ -75,6 +79,9 @@ public class CotizadorController implements Serializable {
     private double ancho = 0.0;
     private double largo = 0.0;
 
+    private int numeroCotizacionRecuperar;
+    private String codigoCotizacionRecuperar;
+
     List<CaracteristicaTO> listaCaracteristicas = new ArrayList<>();
     List<CaracteristicaTO> listaCaracteristicasCotizacion = null;
 
@@ -86,6 +93,8 @@ public class CotizadorController implements Serializable {
             this.listaCategoriaParaCotizarCliente = servicioCategoria.listaCategoriaParaCotizadorCliente();
             this.listaCotizacion = servicioCotizacion.listaCotizaciones();
 
+            advertenciaSinUsuario();
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -94,6 +103,12 @@ public class CotizadorController implements Serializable {
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+
+    public void advertenciaSinUsuario() {
+
+        PrimeFaces.current().executeScript("PF('WarningCuenta').show()");
+
     }
 
     public void medidasMessage() {
@@ -114,9 +129,7 @@ public class CotizadorController implements Serializable {
                 SeleccionadorUnica(caracteristicaSeleccionada);
                 break;
             }
-
         }
-
     }
 
     public boolean esAdmin(String tipo) {
@@ -141,6 +154,15 @@ public class CotizadorController implements Serializable {
         return false;
     }
 
+    public void recuperarCotizacion(int id) {
+        try {
+            this.servicioCotizacion.cambiarClienteCotizacion(id, this.numeroCotizacionRecuperar, this.codigoCotizacionRecuperar);
+            this.cargar();
+        } catch (Exception e) {
+            System.out.println("Error recuperando cotizacion! " + e);
+        }
+    }
+
     public void eliminarCotizacionTO() {
         try {
             this.servicioCotizacion.eliminarCotizacion(newCotizacionTO);
@@ -149,7 +171,7 @@ public class CotizadorController implements Serializable {
             System.out.println("Error elimando cotizacion! " + e);
         }
     }
-    
+
     public void cambiarEstadoCotizacionCotizado() {
         try {
             this.servicioCotizacion.cambiarEstadoACotizado(newCotizacionTO);
@@ -158,6 +180,7 @@ public class CotizadorController implements Serializable {
             System.out.println("Error Cambiando Estado! " + e);
         }
     }
+
     public void cambiarEstadoCotizacionEliminado() {
         try {
             this.servicioCotizacion.cambiarEstadoACancelado(newCotizacionTO);
@@ -216,12 +239,8 @@ public class CotizadorController implements Serializable {
                 listaDeCaracteristica.add(caracTO.getNombreCaracteristica());
             });
 
-            for (CaracteristicaTO caracTO : listaCanastaCotizador) {
-                suma = suma + caracTO.getPrecioCaracteristica();
-            }
-
             for (int i = 0; i < listaCanastaCotizador.size(); i++) {
-                
+
                 ListaCotizador = ListaCotizador + listaDeCaracteristica.get(i);
                 ListaCotizador = ListaCotizador + " - " + listaAncho.get(i).toString();
                 ListaCotizador = ListaCotizador + " cm x " + listaLargo.get(i).toString();
@@ -237,7 +256,12 @@ public class CotizadorController implements Serializable {
             DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
             this.newCotizacionTO.setFechaCotizacion(fechaActual.format(formatoFecha));
+
+            this.newCotizacionTO.setCodigoCotizacion(ServicioCifrar.encriptarHora(fechaActual.format(formatoFecha)));
+            System.out.println("Codigo Cotizacion: " + this.newCotizacionTO.getCodigoCotizacion());
+
             this.newCotizacionTO.setNumeroCotizacion((numeroCotizacion));
+            System.out.println("Numero Cotizacion: " + this.newCotizacionTO.getNumeroCotizacion());
 
             if (id != 0) {
                 this.newCotizacionTO.setClienteCotizacion(id);
@@ -413,6 +437,10 @@ public class CotizadorController implements Serializable {
 
     public void setServicioCotizacion(ServicioCotizacion servicioCotizacion) {
         this.servicioCotizacion = servicioCotizacion;
+    }
+
+    public String getClavecifrada() {
+        return ServicioCifrar.encrypt(fechaCotizacion);
     }
 
     ////////////////////////////////////////////////////////////////////////////ModeloTO
@@ -630,6 +658,22 @@ public class CotizadorController implements Serializable {
         this.listaLargo = listaLargo;
     }
 
+    public int getNumeroCotizacionRecuperar() {
+        return numeroCotizacionRecuperar;
+    }
+
+    public void setNumeroCotizacionRecuperar(int numeroCotizacionRecuperar) {
+        this.numeroCotizacionRecuperar = numeroCotizacionRecuperar;
+    }
+
+    public String getCodigoCotizacionRecuperar() {
+        return codigoCotizacionRecuperar;
+    }
+
+    public void setCodigoCotizacionRecuperar(String codigoCotizacionRecuperar) {
+        this.codigoCotizacionRecuperar = codigoCotizacionRecuperar;
+    }
+
     ////////////////////////////////////////////////////////////////////////////Categorias
     public int getIdCategoria() {
         return idCategoria;
@@ -752,4 +796,5 @@ public class CotizadorController implements Serializable {
         this.prioridadCaracteristica = prioridadCaracteristica;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
 }

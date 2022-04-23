@@ -34,7 +34,8 @@ public class ServicioCotizacion extends Servicio {
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 Double totalCotizacion = resultSet.getDouble("totalCotizacion");
                 String estadoCotizacion = resultSet.getString("estadoCotizacion");
-                cotizacionTORetorno = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion, estadoCotizacion);
+                String codigoCotizacion = resultSet.getString("codigoCotizacion");
+                cotizacionTORetorno = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion, estadoCotizacion,codigoCotizacion);
             }
         } catch (SQLException e) {
             System.out.println("Error tratando de cargar datos de usuario (conectando!)! " + e.getMessage());
@@ -64,7 +65,8 @@ public class ServicioCotizacion extends Servicio {
             List<CaracteristicaTO> listaCotizacionLarga = listaCotizacion(listaCotizacion);
             Double totalCotizacion = cotizacionTO.getTotalCotizacion();
             String estadoCotizacion = cotizacionTO.getEstadoCotizacion();
-            CotizacionTO cotizacionTO1 = new CotizacionTO(numeroCotizacion, listaCotizacion, fechaCotizacion, clienteCotizacion, listaCotizacionLarga, totalCotizacion, estadoCotizacion);
+            String codigoCotizacion = cotizacionTO.getCodigoCotizacion();
+            CotizacionTO cotizacionTO1 = new CotizacionTO(numeroCotizacion, listaCotizacion, fechaCotizacion, clienteCotizacion, listaCotizacionLarga, totalCotizacion, estadoCotizacion,codigoCotizacion);
             listaLarga.add(cotizacionTO1);
         }
         return listaLarga;
@@ -103,7 +105,8 @@ public class ServicioCotizacion extends Servicio {
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 Double totalCotizacion = resultSet.getDouble("totalCotizacion");
                 String estadoCotizacion = resultSet.getString("estadoCotizacion");
-                CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion, estadoCotizacion);
+                String codigoCotizacion = resultSet.getString("codigoCotizacion");
+                CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion, estadoCotizacion,codigoCotizacion);
 
                 listaRetorno.add(cotizacionTO);
             }
@@ -136,7 +139,8 @@ public class ServicioCotizacion extends Servicio {
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 double totalCotizacion = resultSet.getDouble("totalCotizacion");
                 String estadoCotizacion = resultSet.getString("estadoCotizacion");
-                cotizacion = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion, estadoCotizacion);
+                String codigoCotizacion = resultSet.getString("codigoCotizacion");
+                cotizacion = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion, estadoCotizacion,codigoCotizacion);
 
                 return cotizacion;
             }
@@ -168,7 +172,8 @@ public class ServicioCotizacion extends Servicio {
                 int clienteCotizacion = resultSet.getInt("clienteCotizacion");
                 Double totalCotizacion = resultSet.getDouble("totalCotizacion");
                 String estadoCotizacion = resultSet.getString("estadoCotizacion");
-                CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion, estadoCotizacion);
+                String codigoCotizacion = resultSet.getString("codigoCotizacion");
+                CotizacionTO cotizacionTO = new CotizacionTO(numeroCotizacion, listaDeCaracteristicas, fechaCotizacion, clienteCotizacion, totalCotizacion, estadoCotizacion,codigoCotizacion);
 
                 listaRetorno.add(cotizacionTO);
             }
@@ -187,7 +192,7 @@ public class ServicioCotizacion extends Servicio {
 
         try {
             conectar();
-            String sql = "INSERT INTO cotizacion (listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion,totalCotizacion,estadoCotizacion) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO cotizacion (listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion,totalCotizacion,estadoCotizacion,codigoCotizacion) VALUES (?,?,?,?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
             List<Integer> ListaIDCaracteristicas = null;
             double totalCotizacion = 0;
@@ -209,6 +214,7 @@ public class ServicioCotizacion extends Servicio {
             }
             preparedStatement.setDouble(4, totalCotizacion);
             preparedStatement.setString(5, "Pre-Cotizado");
+            preparedStatement.setString(6, "Codigo");
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -224,13 +230,14 @@ public class ServicioCotizacion extends Servicio {
 
         try {
             conectar();
-            String sql = "INSERT INTO cotizacion (listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion,totalCotizacion,estadoCotizacion) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO cotizacion (listaIDCaracteristicaCotizacion,fechaCotizacion,clienteCotizacion,totalCotizacion,estadoCotizacion,codigoCotizacion) VALUES (?,?,?,?,?,?)";
             preparedStatement = conexion.prepareStatement(sql);
             preparedStatement.setString(1, cotizacionTO.getListaDeCaracteristicas());
             preparedStatement.setString(2, cotizacionTO.getFechaCotizacion());
             preparedStatement.setInt(3, cotizacionTO.getClienteCotizacion());
             preparedStatement.setDouble(4, cotizacionTO.getTotalCotizacion());
             preparedStatement.setString(5, "Pre-Cotizado");
+            preparedStatement.setString(6, cotizacionTO.getCodigoCotizacion());
 
             preparedStatement.executeUpdate();
 
@@ -290,6 +297,25 @@ public class ServicioCotizacion extends Servicio {
 
         } catch (SQLException e) {
             System.out.println("Error al eliminar la cotizacion! " + e.getMessage());
+        } finally {
+            cerrarPreparedStatement(preparedStatement);
+            desconectar();
+        }
+    }
+    
+    public void cambiarClienteCotizacion(int idUser ,int numCotizacion, String codCotizacion) {
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            conectar();
+            String sql = "UPDATE cotizacion SET clienteCotizacion=?  WHERE numeroCotizacion='" + numCotizacion + "' AND codigoCotizacion = '"+codCotizacion+"'";
+            preparedStatement = conexion.prepareStatement(sql);
+            preparedStatement.setInt(1, idUser);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al cambiar estado de Cotizacion a Cancelado! " + e);
         } finally {
             cerrarPreparedStatement(preparedStatement);
             desconectar();

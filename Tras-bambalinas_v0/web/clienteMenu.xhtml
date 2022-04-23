@@ -172,7 +172,11 @@
                         </p:column>
                         <p:column headerText="Estado" sortBy="#{laCotizacionC.estadoCotizacion}">
                             <h:outputText value="#{laCotizacionC.estadoCotizacion}"/>
+                        </p:column>                     
+                        <p:column headerText="Codigo de Recuperación" >
+                            <h:outputText value="#{laCotizacionC.codigoCotizacion}"/>
                         </p:column>
+
                         <p:column>
                             <p:commandButton icon="pi pi-eye" update=":formCotizacioncliente:show-cotizacioncliente-content"
                                              oncomplete="PF('showCotizacionclienteDialog').show()"
@@ -193,6 +197,14 @@
                         </p:column>
 
                     </p:dataTable>
+
+                    <p:commandButton value="Recuperar Cotización" icon="pi pi-plus" 
+                                     update=":formCotizacioncliente:save-cotizacioncliente-content" oncomplete="PF('saveCotizacionDialog').show()"
+                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":formCotizacioncliente:save-cotizacioncliente-content"/>
+                    </p:commandButton>
+
+
                 </p:outputPanel>  
             </p:dialog>
 
@@ -205,6 +217,35 @@
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                  onclick="PF('sendCotizacionDialog').hide()"/>
             </p:confirmDialog>
+
+
+            <p:dialog header="Recuperacion de Cotización" showEffect="fade" modal="true"
+                      widgetVar="saveCotizacionDialog" responsive="true" minHeight="350" width="550">
+
+                <p:outputPanel id="save-cotizacioncliente-content" class="ui-fluid">
+                    
+                    <div class="p-field">
+                        <p:outputLabel for="RnumeroCotizacion" value="Numero de Cotización: "/>
+                        <p:inputNumber id="RnumeroCotizacion" value="#{cotizadorController.numeroCotizacionRecuperar}"  /> 
+                        <p:message for="RnumeroCotizacion" display="icon"/> 
+                    </div>
+
+                    <div class="p-field">
+                        <p:outputLabel for="RcodigoCotizacion" value="Codigo de Recuperación: "/>
+                        <p:inputText id="RcodigoCotizacion" value="#{cotizadorController.codigoCotizacionRecuperar}" style="width:31rem"/> 
+                    </div>
+                </p:outputPanel>
+
+                <f:facet name="footer">     
+                    <p:commandButton value="Recuperar" icon="pi pi-check" actionListener="#{cotizadorController.recuperarCotizacion(loginController.idUser)}"
+                                     update=":formCotizacioncliente:save-cotizacioncliente-content, cotizacionCTable" process="save-cotizacioncliente-content @this" resetValues="true"/>
+
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createCaracteristicaDialog').hide()"
+                                     class="ui-button-secondary" resetValues="true"/>
+                </f:facet>
+
+            </p:dialog>
+
 
 
             <p:dialog header="Detalles de la Cotización" showEffect="fade" modal="true"
@@ -249,6 +290,12 @@
                                     <p:outputLabel for="estadoCotizacion" value="Estado de la Cotizacion: "/>
                                     <p:outputLabel id="estadoCotizacion" value="#{cotizadorController.newCotizacionTO.estadoCotizacion}" style="width:30rem"/>
                                     <p:message for="estadoCotizacion" display="icon"/>
+                                </div>
+                                <div class="p-grid">
+                                    <div class="p-col">
+                                        <p:outputLabel for="codigoCotizacion" value="Codigo de Recuperación: "/>
+                                        <p:outputLabel id="codigoCotizacion" value="#{cotizadorController.newCotizacionTO.codigoCotizacion}" style="width:30rem"/> 
+                                    </div>
                                 </div>
                             </div>
                         </div>

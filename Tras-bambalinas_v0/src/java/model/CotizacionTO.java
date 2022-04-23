@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CotizacionTO {
+    //VRML
 
     private int numeroCotizacion;
     private String listaDeCaracteristicas;
@@ -11,36 +12,40 @@ public class CotizacionTO {
     private int clienteCotizacion;
     private double totalCotizacion;
     private String estadoCotizacion;
+    private String codigoCotizacion;
 
     List<CaracteristicaTO> listaCaracteristicas = new ArrayList<>();
 
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, int clienteCotizacion, String estadoCotizacion) {
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, int clienteCotizacion, String estadoCotizacion, String codigoCotizacion) {
         this.numeroCotizacion = numeroCotizacion;
         this.listaDeCaracteristicas = listaDeCaracteristicas;
         this.fechaCotizacion = fechaCotizacion;
         this.clienteCotizacion = clienteCotizacion;
         this.estadoCotizacion = estadoCotizacion;
+        this.codigoCotizacion = codigoCotizacion;
     }
 
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, int clienteCotizacion, double totalCotizacion, String estadoCotizacion) {
-        this.numeroCotizacion = numeroCotizacion;
-        this.listaDeCaracteristicas = listaDeCaracteristicas;
-        this.fechaCotizacion = fechaCotizacion;
-        this.clienteCotizacion = clienteCotizacion;
-        this.totalCotizacion = totalCotizacion;
-        this.estadoCotizacion = estadoCotizacion;
-    }
-
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, int clienteCotizacion, Double totalCotizacion, String estadoCotizacion) {
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, int clienteCotizacion, double totalCotizacion, String estadoCotizacion, String codigoCotizacion) {
         this.numeroCotizacion = numeroCotizacion;
         this.listaDeCaracteristicas = listaDeCaracteristicas;
         this.fechaCotizacion = fechaCotizacion;
         this.clienteCotizacion = clienteCotizacion;
         this.totalCotizacion = totalCotizacion;
         this.estadoCotizacion = estadoCotizacion;
+        this.codigoCotizacion = codigoCotizacion;
     }
 
-    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, int clienteCotizacion, List<CaracteristicaTO> listaCaracteristicas, Double totalCotizacion, String estadoCotizacion) {
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, int clienteCotizacion, Double totalCotizacion, String estadoCotizacion, String codigoCotizacion) {
+        this.numeroCotizacion = numeroCotizacion;
+        this.listaDeCaracteristicas = listaDeCaracteristicas;
+        this.fechaCotizacion = fechaCotizacion;
+        this.clienteCotizacion = clienteCotizacion;
+        this.totalCotizacion = totalCotizacion;
+        this.estadoCotizacion = estadoCotizacion;
+        this.codigoCotizacion = codigoCotizacion;
+    }
+
+    public CotizacionTO(int numeroCotizacion, String listaDeCaracteristicas, String fechaCotizacion, int clienteCotizacion, List<CaracteristicaTO> listaCaracteristicas, Double totalCotizacion, String estadoCotizacion, String codigoCotizacion) {
         this.numeroCotizacion = numeroCotizacion;
         this.listaDeCaracteristicas = listaDeCaracteristicas;
         this.fechaCotizacion = fechaCotizacion;
@@ -48,9 +53,18 @@ public class CotizacionTO {
         this.listaCaracteristicas = listaCaracteristicas;
         this.totalCotizacion = totalCotizacion;
         this.estadoCotizacion = estadoCotizacion;
+        this.codigoCotizacion = codigoCotizacion;
     }
 
     public CotizacionTO() {
+    }
+
+    public String getCodigoCotizacion() {
+        return codigoCotizacion;
+    }
+
+    public void setCodigoCotizacion(String codigoCotizacion) {
+        this.codigoCotizacion = codigoCotizacion;
     }
 
     public List<CaracteristicaTO> getListaCaracteristicas() {
